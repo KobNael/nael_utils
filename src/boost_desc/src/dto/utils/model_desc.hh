@@ -2,14 +2,32 @@
 
 #include <boost/preprocessor.hpp>
 #include <boost/describe.hpp>
-
-
-#define STREAM_ATT_NAME_VARIABLE(r, data, i, elem) \
-	BOOST_PP_IF(i, << ", " <<,)\
-    BOOST_PP_STRINGIZE( BOOST_PP_TUPLE_ELEM(1, elem) ) << "=" << obj.BOOST_PP_TUPLE_ELEM(1, elem)
+namespace details
+{
+template<typename T>
+std::ostream &print(std::ostream &os, T const &obj)
+{
+    return os << obj;
+}
+template<typename T>
+std::ostream &print(std::ostream &os, std::vector<T> const &obj)
+{
+    os << "[";
+    bool first{true};
+    for(T const &e : obj)
+    {
+        os << ((first)?"":",") << e;
+        first = false;
+    }
+    return os << "]";
+}
+}//details
+#define STREAM_ATT_VALUE_VARIABLE(r, data, i, elem) \
+	details::print( os << BOOST_PP_IF(i, ", " <<,) BOOST_PP_STRINGIZE( BOOST_PP_TUPLE_ELEM(1, elem) ) << "=" BOOST_PP_COMMA() \
+    obj.BOOST_PP_TUPLE_ELEM(1, elem) );
 
 #define STREAM_ATT_VALUES(seq) \
-    BOOST_PP_SEQ_FOR_EACH_I(STREAM_ATT_NAME_VARIABLE, , BOOST_PP_VARIADIC_SEQ_TO_SEQ(seq))
+    BOOST_PP_SEQ_FOR_EACH_I(STREAM_ATT_VALUE_VARIABLE, , BOOST_PP_VARIADIC_SEQ_TO_SEQ(seq))
 
 /**
  @brief Create the declaration of every attribute in a sequence
@@ -58,7 +76,9 @@
 	};\
     std::ostream& operator<<(std::ostream& os, STRUCT_NAME const&obj) \
     {\
-        return os << BOOST_PP_STRINGIZE(STRUCT_NAME) << "[" << STREAM_ATT_VALUES(ATT) << "]"; \
+        os << BOOST_PP_STRINGIZE(STRUCT_NAME) << "{";\
+        STREAM_ATT_VALUES(ATT)\
+        return os << "}"; \
     }\
 	BOOST_DESCRIBE_STRUCT(STRUCT_NAME, (), (GET_ATT_NAMES(ATT)))
 

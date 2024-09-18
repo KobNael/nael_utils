@@ -16,8 +16,13 @@ int processArgs(po::variables_map const &vm_p)
 	//input
 	if( vm_p.count("input-file") )
 	{
-        dto::DtoIn myContext;
-		json::import(vm_p["input-file"].as< std::string >(), &myContext);
+	    dto::ContextDto *myContext = new dto::ContextDto();
+		json::import_from_file(vm_p["input-file"].as< std::string >(), *myContext);
+		if( vm_p.count("output-file") )
+		{
+			json::export_to_file(vm_p["output-file"].as< std::string >(), *myContext);
+		}
+		delete myContext;
 	}
 
 	return exitAndReturn(0);
