@@ -1,7 +1,7 @@
 #include <boost/program_options.hpp>
 #include <iostream>
 
-#include "dto/in/DtoIn.hh"
+#include "dto/In.hh"
 #include "json/json_handler.hh"
 
 namespace po = boost::program_options;

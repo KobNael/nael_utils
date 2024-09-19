@@ -1,6 +1,6 @@
 #pragma once
 
-#include "dto/utils/model_desc.hh"
+#include "utils/model_desc.hh"
 
 #include<vector>
 
@@ -17,19 +17,19 @@ MAKE_DTO_STRUCT(
 //Mold description
 MAKE_DTO_STRUCT(
 	MoldDto,
-	(std::string, id, identifier)
-	(std::vector<std::string>, idPresses, list of eligible presses)
-    (unsigned, setUpInSeconds, set up time)
-    (unsigned, setDownInSeconds, set down time)
-    (bool, allowOffloading, is offloading allowed)
+	(std::string, id) // identifier
+	(std::vector<std::string>, idPresses) // list of eligible presses
+    (unsigned, setUpInSeconds) // set up time
+    (unsigned, setDownInSeconds) // set down time
+    (bool, allowOffloading) // is offloading allowed
 )
 
 //Description of a change of granulate
 MAKE_DTO_STRUCT(
 	ChangeOfGranulateDto,
-    (std::string, from, old granulate identifier)
-    (std::string, to, new granulate identifier)
-    (unsigned, nbCycles, number of cyles)
+    (std::string, from) //old granulate identifier
+    (std::string, to) //new granulate identifier
+    (unsigned, nbCycles) //number of cyles
 )
 
 //List of known parameters
@@ -50,20 +50,20 @@ BOOST_DEFINE_ENUM( ParamaterNameDto,
 //Description of a parameter
 MAKE_DTO_STRUCT(
 	ParametersDto,
-    (ParamaterNameDto, name, parameter name)
-    (std::string, value, parameter value)
+    (ParamaterNameDto, name) //parameter name
+    (std::string, value) //parameter value
 )
 
 //Full instance
 MAKE_DTO_STRUCT(
 	ContextDto,
-	(std::vector<PressDto>, presses, list of presses)
-	(std::vector<MoldDto>, molds, list of molds)
-    (std::vector<std::string>, colors, list of colors)
-    (std::vector<std::string>, granulates, list of granulates)
-    (std::vector<std::string>, shades, list of shades)
-    (std::vector<ChangeOfGranulateDto>, changesOfGranulate, list of description of change of granulate)
-    (std::vector<ParametersDto>, parameters, list of parameters with value)
+	(std::vector<PressDto>, presses) //list of presses
+	(std::vector<MoldDto>, molds) //list of molds
+    (std::vector<std::string>, colors) //list of colors
+    (std::vector<std::string>, granulates) //list of granulates
+    (std::vector<std::string>, shades) //list of shades
+    (std::vector<ChangeOfGranulateDto>, changesOfGranulate) //list of description of change of granulate
+    (std::vector<ParametersDto>, parameters) //list of parameters with value
 )
 
 }
