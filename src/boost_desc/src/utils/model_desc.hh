@@ -4,6 +4,10 @@
 #include "model_desc_att.hh"
 
 #include <boost/describe.hpp>
+#include <boost/date_time/posix_time/posix_time_types.hpp>
+
+#include<vector>
+#include<vector>
 
 /**
   @brief allow the declaration of a structure
@@ -20,16 +24,16 @@
     };
  */
 #define MAKE_DTO_STRUCT(struct_name, att_seq) \
-    struct struct_name \
+    struct struct_name : public details::streamable\
 	{\
 	    MAKE_ATT(att_seq) \
+        std::ostream& stream(std::ostream& os) const override\
+        {\
+            os << BOOST_PP_STRINGIZE(struct_name) << "{";\
+            STREAM_ATT_VALUES(att_seq)\
+            return os << "}"; \
+        }\
 	};\
-    std::ostream& operator<<(std::ostream& os, struct_name const&obj) \
-    {\
-        os << BOOST_PP_STRINGIZE(struct_name) << "{";\
-        STREAM_ATT_VALUES(att_seq)\
-        return os << "}"; \
-    }\
 	BOOST_DESCRIBE_STRUCT(struct_name, (), (GET_ATT_NAMES(att_seq)))
 
 /**

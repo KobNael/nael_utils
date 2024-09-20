@@ -9,7 +9,8 @@ set_target_properties (boost_desc
 
 target_sources (boost_desc
 	PRIVATE
-		src/main.cc
+	src/main.cc
+	src/utils/model_desc_print.cc
 	)
 
 set_default_warnings (TARGET boost_desc)
