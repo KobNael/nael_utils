@@ -15,8 +15,6 @@ struct streamable
     virtual std::ostream &stream(std::ostream &os) const = 0;
 };
 
-std::ostream &operator<<(std::ostream &os, streamable const &obj);
-
 /**
  * @brief Print an object in a stream
  * @param os the ostream
@@ -45,6 +43,9 @@ std::ostream &print(std::ostream &os, std::vector<T> const &vec)
     return os << "]";
 }
 }//details
+
+/**@brief stream operator for streamable structure */
+std::ostream &operator<<(std::ostream &os, details::streamable const &obj);
 
 #define STREAM_ATT_VALUE_VARIABLE(r, data, i, att_desc) \
 	details::print( os << BOOST_PP_IF(i, ", " <<,) BOOST_PP_STRINGIZE( BOOST_PP_TUPLE_ELEM(1, att_desc) ) << "=" BOOST_PP_COMMA() \

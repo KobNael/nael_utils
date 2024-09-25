@@ -1,12 +1,6 @@
 #include "model_desc_print.hh"
 
-namespace details
-{
-
-std::ostream &operator<<(std::ostream &os, streamable const &obj)
+std::ostream &operator<<(std::ostream &os, details::streamable const &obj)
 {
     return obj.stream(os);
 }
-
-}//details
-

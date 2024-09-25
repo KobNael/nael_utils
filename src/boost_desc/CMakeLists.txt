@@ -10,6 +10,8 @@ set_target_properties (boost_desc
 target_sources (boost_desc
 	PRIVATE
 	src/main.cc
+	src/bo/In.cc
+	src/dto_handler/dto_handler.cc
 	src/utils/model_desc_print.cc
 	)
 

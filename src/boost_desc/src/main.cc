@@ -2,6 +2,8 @@
 #include <iostream>
 
 #include "dto/In.hh"
+#include "bo/In.hh"
+#include "dto_handler/dto_handler.hh"
 #include "json/json_handler.hh"
 
 namespace po = boost::program_options;
@@ -16,13 +18,25 @@ int processArgs(po::variables_map const &vm_p)
 	//input
 	if( vm_p.count("input-file") )
 	{
-	    dto::ContextDto *myContext = new dto::ContextDto();
-		json::import_from_file(vm_p["input-file"].as< std::string >(), *myContext);
+		//Import dto
+	    dto::DtoContext *dto_context = new dto::DtoContext();
+		json::import_from_file(vm_p["input-file"].as< std::string >(), *dto_context);
+
+		//convert dto to bo
+		bo::BoContext *bo_context = new bo::BoContext();
+		dto_handler::dto_to_bo(*dto_context, *bo_context);
+		//Test print
+		for(dto::PressDto const &p : dto_context->presses)
+		{
+			std::cout << p << std::endl;
+		}
+		//export dto to file
 		if( vm_p.count("output-file") )
 		{
-			json::export_to_file(vm_p["output-file"].as< std::string >(), *myContext);
+			json::export_to_file(vm_p["output-file"].as< std::string >(), *dto_context);
 		}
-		delete myContext;
+		delete dto_context;
+		delete bo_context;
 	}
 
 	return exitAndReturn(0);
