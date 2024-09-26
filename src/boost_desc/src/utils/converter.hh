@@ -3,6 +3,7 @@
 #include <boost/describe.hpp>
 #include <boost/mp11.hpp>
 #include <boost/json.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/date_time/posix_time/posix_time_duration.hpp>
 #include <boost/date_time/gregorian/gregorian_types.hpp>
 #include <type_traits>

@@ -9,13 +9,7 @@
 
 namespace bo
 {
-/**
-        CLASS AbstractClosing ABSTRACT
-            ID from
-            DATETIME from CONST
-            DATETIME to CONST
-        END CLASS
- */
+
 class AbstractClosing
 {
 public:

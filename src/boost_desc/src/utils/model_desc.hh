@@ -39,8 +39,8 @@ public: \
   @brief allow the declaration of a structure
     MAKE_DTO_STRUCT(
         PressDto,
-        (std::string, id)
-        (unsigned, pos)
+        ((std::string) (id))
+        ((unsigned) (pos))
     )
   expands to
     struct PressDto
@@ -66,8 +66,11 @@ public: \
 /**
   @brief Generate every set / get for attributes
     MAKE_CLASS_ATT(
-        ( (std::string, id) ), //non editable attributes
-        ( (unsigned, x) (unsigned, pos) ) //editable attributes
+        //non editable attributes
+        ( (std::string)(id) ),
+        //editable attributes
+        ( (unsigned)(x) )
+        ( (unsigned)(pos) )
     )
   expands to
     private:

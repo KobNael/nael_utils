@@ -48,9 +48,9 @@ std::ostream &print(std::ostream &os, std::vector<T> const &vec)
 std::ostream &operator<<(std::ostream &os, details::streamable const &obj);
 
 #define STREAM_ATT_VALUE_VARIABLE(r, data, i, att_desc) \
-	details::print( os << BOOST_PP_IF(i, ", " <<,) BOOST_PP_STRINGIZE( BOOST_PP_TUPLE_ELEM(1, att_desc) ) << "=" BOOST_PP_COMMA() \
-    BOOST_PP_TUPLE_ELEM(1, att_desc) );
+	details::print( os << BOOST_PP_IF(i, ", " <<,) BOOST_PP_STRINGIZE( BOOST_PP_SEQ_ELEM(1, att_desc) ) << "=" BOOST_PP_COMMA() \
+    BOOST_PP_SEQ_ELEM(1, att_desc) );
 
 #define STREAM_ATT_VALUES(att_seq) \
-    BOOST_PP_SEQ_FOR_EACH_I(STREAM_ATT_VALUE_VARIABLE, , BOOST_PP_VARIADIC_SEQ_TO_SEQ(att_seq))
+    BOOST_PP_SEQ_FOR_EACH_I(STREAM_ATT_VALUE_VARIABLE, , att_seq)
 
