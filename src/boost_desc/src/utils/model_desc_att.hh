@@ -21,13 +21,13 @@
  adding a separator if needed
  */
 #define GET_ATT_NAME_VARIABLE(r, data, i, att_desc) \
-    BOOST_PP_COMMA_IF(i) BOOST_PP_TUPLE_ELEM(1, att_desc)
+    BOOST_PP_COMMA_IF(i) BOOST_PP_SEQ_ELEM(1, att_desc)
 
 /**
  @brief List every attribute in a sequence
  */
 #define GET_ATT_NAMES(att_seq) \
-    BOOST_PP_SEQ_FOR_EACH_I(GET_ATT_NAME_VARIABLE, , BOOST_PP_VARIADIC_SEQ_TO_SEQ(att_seq))
+    BOOST_PP_SEQ_FOR_EACH_I(GET_ATT_NAME_VARIABLE, , att_seq)
 
 
 
