@@ -35,31 +35,31 @@
  @brief Create the declaration of an attribute described as a tuple (type, name)
  */
 #define MAKE_ATT_SETTER_VARIABLE(r, data, att_desc) \
-    void BOOST_PP_CAT(set_, BOOST_PP_TUPLE_ELEM(1, att_desc))( BOOST_PP_TUPLE_ELEM(0,att_desc) const & val ) \
-    { BOOST_PP_TUPLE_ELEM(1, att_desc) = val ;}
+    void BOOST_PP_CAT(set_, BOOST_PP_SEQ_ELEM(1, att_desc))( BOOST_PP_SEQ_ELEM(0,att_desc) const & val ) \
+    { BOOST_PP_SEQ_ELEM(1, att_desc) = val ;}
 /**
  @brief Create the getters for every attribute in a sequence of attribute description
  */
 #define MAKE_ATT_SETTER(att_seq) \
-    BOOST_PP_SEQ_FOR_EACH(MAKE_ATT_SETTER_VARIABLE, , BOOST_PP_VARIADIC_SEQ_TO_SEQ(att_seq))
+    BOOST_PP_SEQ_FOR_EACH(MAKE_ATT_SETTER_VARIABLE, , att_seq)
 
 /**
  @brief Create the declaration of an attribute described as a tuple (type, name)
  */
 #define MAKE_ATT_GETTER_VARIABLE(r, is_const, att_desc) \
-    BOOST_PP_TUPLE_ELEM(0,att_desc) BOOST_PP_IF( is_const, const , ) &\
-    BOOST_PP_CAT(get_, BOOST_PP_TUPLE_ELEM(1, att_desc))() BOOST_PP_IF( is_const, const, )\
-    { return BOOST_PP_TUPLE_ELEM(1, att_desc);}
+    BOOST_PP_SEQ_ELEM(0,att_desc) BOOST_PP_IF( is_const, const , ) &\
+    BOOST_PP_CAT(get_, BOOST_PP_SEQ_ELEM(1, att_desc))() BOOST_PP_IF( is_const, const, )\
+    { return BOOST_PP_SEQ_ELEM(1, att_desc);}
 /**
  @brief Create the getters for every attribute in a sequence of attribute description
  */
 #define MAKE_ATT_GETTER(att_seq, is_const) \
-    BOOST_PP_SEQ_FOR_EACH(MAKE_ATT_GETTER_VARIABLE, 1, BOOST_PP_VARIADIC_SEQ_TO_SEQ(att_seq)) /* always const getter*/ \
-    BOOST_PP_IF(is_const, ,BOOST_PP_SEQ_FOR_EACH(MAKE_ATT_GETTER_VARIABLE, 0, BOOST_PP_VARIADIC_SEQ_TO_SEQ(att_seq))) /*editable getter is non const*/
+    BOOST_PP_SEQ_FOR_EACH(MAKE_ATT_GETTER_VARIABLE, 1, att_seq) /* always const getter*/ \
+    BOOST_PP_IF(is_const, ,BOOST_PP_SEQ_FOR_EACH(MAKE_ATT_GETTER_VARIABLE, 0, att_seq)) /*editable getter is non const*/
 
 //#define MAKE_CLASS_ATT_VARIABLE(r, data, i, att_desc)
 //    private: MAKE_ATT_DECLARATION()
-//    BOOST_PP_TUPLE_ELEM(0, att_desc) BOOST_PP_TUPLE_ELEM(1,att_desc);
+//    BOOST_PP_SEQ_ELEM(0, att_desc) BOOST_PP_SEQ_ELEM(1,att_desc);
 
 
 /**
@@ -68,7 +68,6 @@
  @param is_const true if the attribute is const and not editable
  */
 #define MAKE_CLASS_BASIC_ATT(att_seq, is_const) \
-    BOOST_PP_SEQ_SIZE(att_seq) \
     BOOST_PP_IF( BOOST_PP_SEQ_SIZE(att_seq) \
     ,\
         private: MAKE_ATT_DECLARATION(att_seq) \

@@ -2,14 +2,22 @@
 
 #include "model_desc_print.hh"
 #include "model_desc_att.hh"
+#include "safe_comp.hh"
 
 #include <boost/describe.hpp>
 #include<vector>
 
 #define COMPARE_ATT_VARIABLE(r, data, att) \
-    if( BOOST_PP_CAT(get_, BOOST_PP_TUPLE_ELEM(0, att))() < other.BOOST_PP_CAT(get_, BOOST_PP_TUPLE_ELEM(0, att))()) \
-    { \
-        return true; \
+    if( safecomp::neq( BOOST_PP_CAT(get_, BOOST_PP_TUPLE_ELEM(0, att))() BOOST_PP_COMMA() other.BOOST_PP_CAT(get_, BOOST_PP_TUPLE_ELEM(0, att))() ) ) \
+    {\
+        if( safecomp::lt( BOOST_PP_CAT(get_, BOOST_PP_TUPLE_ELEM(0, att))() BOOST_PP_COMMA() other.BOOST_PP_CAT(get_, BOOST_PP_TUPLE_ELEM(0, att))() ) ) \
+        {\
+            return true; \
+        }\
+        else \
+        {\
+            return false;\
+        }\
     }
 
 #define COMPARE_ATT_LIST(att_list) \
