@@ -1,38 +1,41 @@
 #pragma once
 
-#include "model_desc_print.hh"
-#include "model_desc_att.hh"
+#include "details/model_desc_print.hh"
+#include "details/model_desc_att.hh"
 #include "safe_comp.hh"
 
 #include <boost/describe.hpp>
-#include<vector>
-
-#define COMPARE_ATT_VARIABLE(r, data, att) \
-    if( safecomp::neq( BOOST_PP_CAT(get_, BOOST_PP_TUPLE_ELEM(0, att))() BOOST_PP_COMMA() other.BOOST_PP_CAT(get_, BOOST_PP_TUPLE_ELEM(0, att))() ) ) \
-    {\
-        if( safecomp::lt( BOOST_PP_CAT(get_, BOOST_PP_TUPLE_ELEM(0, att))() BOOST_PP_COMMA() other.BOOST_PP_CAT(get_, BOOST_PP_TUPLE_ELEM(0, att))() ) ) \
-        {\
-            return true; \
-        }\
-        else \
-        {\
-            return false;\
-        }\
-    }
-
-#define COMPARE_ATT_LIST(att_list) \
-    BOOST_PP_SEQ_FOR_EACH(COMPARE_ATT_VARIABLE, , BOOST_PP_VARIADIC_SEQ_TO_SEQ(att_list))
 
 /**
   @brief Create an operator< based on a list of attributes
     MAKE_CLASS_SORT(AbstractClosing, (from, to) )
   expands to
-    bool operator<(AbstractClosing const&other) const
+    public: bool operator<(AbstractClosing const&other) const
     {
-        if( get_from() < other.get_from()) { return true; }
-        if( get_to() < other.get_to()) { return true; }
-        return false;
-    }
+      if( safecomp::neq( get_from(), other.get_from() ) )
+      {
+         if( safecomp::lt( get_from(), other.get_from() ) )
+         {
+            return true;
+         }
+         else
+         {
+            return false;
+         }
+      }
+      if( safecomp::neq( get_to(), other.get_to() ) )
+      {
+         if( safecomp::lt( get_to() , other.get_to() ) )
+         {
+            return true;
+         }
+         else
+         {
+            return false;
+         }
+      }
+      return false;
+   }
 */
 #define MAKE_CLASS_SORT(class_name, att_list) \
 public: \
@@ -47,8 +50,8 @@ public: \
   @brief allow the declaration of a structure
     MAKE_DTO_STRUCT(
         PressDto,
-        ((std::string) (id))
-        ((unsigned) (pos))
+        ( (std::string)(id) )
+        ( (unsigned)(pos) )
     )
   expands to
     struct PressDto
@@ -56,6 +59,7 @@ public: \
         std::string id;
         unsigned pos;
     };
+  @remark these structures are serializable (see json::import_from_file)
  */
 #define MAKE_DTO_STRUCT(struct_name, att_seq) \
     struct struct_name : public details::streamable\
@@ -72,7 +76,29 @@ public: \
     BOOST_DESCRIBE_STRUCT(struct_name, (), (GET_ATT_NAMES(att_seq)))
 
 /**
-  @brief Generate every set / get for attributes
+ @brief Generate an editable attribute std::unordered_map<key, value> name
+ along with its getters
+ */
+#define MAKE_MAP(key, value, name) MAKE_MAP_ATT(key, value, name, 0)
+/**
+ @brief Generate an editable attribute std::map<key, value> name
+ along with its getters
+ */
+#define MAKE_UNORDERED_MAP(key, value, name) MAKE_MAP_ATT(key, value, name, 1)
+
+/**
+ @brief Generate an editable attribute std::set<value> name
+ along with its getters
+ */
+#define MAKE_SET(value, name) MAKE_SET_ATT(value, name, 0)
+/**
+ @brief Generate an editable attribute std::unordered_set<value> name
+ along with its getters
+ */
+#define MAKE_UNORDERED_SET(value, name) MAKE_SET_ATT(value, name, 1)
+
+/**
+  @brief Generate every set / get for basic attributes
     MAKE_CLASS_ATT(
         //non editable attributes
         ( (std::string)(id) ),

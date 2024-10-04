@@ -1,6 +1,6 @@
 #pragma once
 #include <fstream>
-#include "utils/converter.hh"
+#include "details/converter.hh"
 
 namespace json
 {

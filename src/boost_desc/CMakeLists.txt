@@ -12,7 +12,7 @@ target_sources (boost_desc
 	src/main.cc
 	src/bo/In.cc
 	src/dto_handler/dto_handler.cc
-	src/utils/model_desc_print.cc
+	src/utils/details/model_desc_print.cc
 	)
 
 set_default_warnings (TARGET boost_desc)
