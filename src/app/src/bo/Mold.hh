@@ -2,6 +2,7 @@
 
 #include "utils/model_desc.hh"
 #include "Closing.hh"
+#include "Press.hh"
 
 #include<vector>
 #include<set>
@@ -23,9 +24,10 @@ class Mold
         ( (boost::posix_time::time_duration)(idleTimeBeforeChangeOver) )
         ( (boost::posix_time::time_duration)(idleTimeAfterChangeOver) )
         ( (std::set<MoldClosing>)(mold_closing) )
-        ( (std::vector<std::string>)(presses) )
+        ( (std::vector<Press const*>)(presses) )
         ( (std::vector<std::string>)(configurations) )
     )
+
 };
 
 }

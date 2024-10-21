@@ -20,9 +20,9 @@ class Product
         ( ( unsigned)(capacity) )
         ( ( float)(maxUsage) )
         ( ( float)(maxUsageIfRelax) )
-        ( ( boost::posix_time::time_duration)(productionTime) ),
+        ( ( boost::posix_time::time_duration)(productionTime)(boost::posix_time::seconds(0)) ),
         ( ( std::set<Demand>)(demands) )
-        ( ( std::vector<Mold>)(molds) )
+        ( ( std::vector<Mold*>)(molds) )
         ( ( unsigned)(safety) )
     )
 };
