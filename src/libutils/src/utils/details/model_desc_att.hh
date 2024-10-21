@@ -25,11 +25,16 @@
 #define COMPARE_ATT_LIST(att_list) \
     BOOST_PP_SEQ_FOR_EACH(COMPARE_ATT_VARIABLE, , BOOST_PP_VARIADIC_SEQ_TO_SEQ(att_list))
 
+#define MAKE_ATT_INIT(add, val) \
+    BOOST_PP_IF(add, ={val},);
 /**
  @brief Create the declaration of an attribute described as a tuple (type, name)
  */
 #define MAKE_ATT_DECL_VARIABLE(r, data, att_desc) \
-    BOOST_PP_SEQ_ELEM(0, att_desc) BOOST_PP_SEQ_ELEM(1, att_desc);
+    BOOST_PP_SEQ_ELEM(0, att_desc) BOOST_PP_SEQ_ELEM(1, att_desc) \
+    MAKE_ATT_INIT(BOOST_PP_EQUAL(BOOST_PP_SEQ_SIZE(att_desc), 3),\
+        BOOST_PP_IF(BOOST_PP_EQUAL(BOOST_PP_SEQ_SIZE(att_desc), 3),BOOST_PP_SEQ_ELEM,BOOST_PP_TUPLE_EAT(2))(2, att_desc) \
+    )
 
 /**
  @brief Create the declaration of every attribute in a sequence of attribute description

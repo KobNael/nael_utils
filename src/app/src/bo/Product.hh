@@ -1,6 +1,9 @@
 #pragma once
 
-#include "utils/model_desc.hh"
+#include "Demand.hh"
+#include "Mold.hh"
+
+#include <utils/model_desc.hh>
 
 #include<vector>
 
@@ -22,6 +25,6 @@ class Product
         ( ( std::vector<Mold>)(molds) )
         ( ( unsigned)(safety) )
     )
-}
+};
 
 }
