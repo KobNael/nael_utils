@@ -120,8 +120,7 @@ endif ()
 # Targets configurations
 # ============================================================================
 
-#add_subdirectory (src/unit_tests)
-add_subdirectory (src/boost_desc)
+add_subdirectory (src)
 
 # ============================================================================
 # Documentation

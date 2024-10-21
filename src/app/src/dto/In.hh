@@ -13,6 +13,7 @@ namespace dto
 MAKE_DTO_STRUCT(
     PressDto,
     ((std::string)(id)) // identifier
+    ((unsigned)(relativePosition)) // identifier
 )
 
 

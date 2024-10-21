@@ -16,10 +16,11 @@ public:
     virtual ~AbstractClosing() = 0;
 
     MAKE_CLASS_ATT(
-        ( std::string, id ),
-        ( boost::posix_time::ptime, from )
-        ( boost::posix_time::ptime, to ) )
-    MAKE_CLASS_SORT(AbstractClosing, (from, to) )
+        ( (std::string)(id) ),
+        ( (boost::posix_time::ptime)(from) )
+        ( (boost::posix_time::ptime)(to) )
+    )
+    MAKE_CLASS_SORT( AbstractClosing, (from,to) )
 };
 
 class PressClosing : public AbstractClosing

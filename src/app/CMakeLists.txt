@@ -12,7 +12,6 @@ target_sources (boost_desc
 	src/main.cc
 	src/bo/In.cc
 	src/dto_handler/dto_handler.cc
-	src/utils/details/model_desc_print.cc
 	)
 
 set_default_warnings (TARGET boost_desc)
@@ -24,6 +23,7 @@ target_include_directories (boost_desc
 
 target_link_libraries (boost_desc
 	PRIVATE
+		libutils
 		Boost::boost
 		Boost::json
 		Boost::program_options
