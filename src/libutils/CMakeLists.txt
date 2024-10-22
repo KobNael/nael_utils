@@ -9,7 +9,7 @@ set_target_properties (libutils
 
 target_sources (libutils
 	PRIVATE
-	src/utils/details/model_desc_print.cc
+	src/utils/model/details/model_desc_print.cc
 	)
 
 set_default_warnings (TARGET libutils)

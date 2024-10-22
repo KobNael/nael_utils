@@ -2,7 +2,7 @@
 
 #include "details/model_desc_print.hh"
 #include "details/model_desc_att.hh"
-#include "safe_comp.hh"
+#include "utils/safe_comp/safe_comp.hh"
 
 #include <boost/describe.hpp>
 

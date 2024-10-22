@@ -3,7 +3,7 @@
 #include "Demand.hh"
 #include "Mold.hh"
 
-#include <utils/model_desc.hh>
+#include <utils/model/model_desc.hh>
 
 #include<vector>
 
