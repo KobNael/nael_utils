@@ -5,30 +5,37 @@
 #include "bo/In.hh"
 #include "dto_handler/dto_handler.hh"
 #include <utils/json/json_handler.hh>
+#include <utils/log/log.hh>
 
 namespace po = boost::program_options;
 
 int exitAndReturn(int retCode_p){
+	io::ClearLogger();
 	//Return
 	return retCode_p;
 }
 
 int processArgs(po::variables_map const &vm_p)
 {
+	if( vm_p.count("debug") )
+	{
+		io::SetLogLevel(io::DEBUG_LVL);
+	}
 	//input
 	if( vm_p.count("input-file") )
 	{
 		//Import dto
 	    dto::DtoContext *dto_context = new dto::DtoContext();
+		INFOLOG << "Import " << vm_p["input-file"].as< std::string >() << std::endl;
 		json::import_from_file(vm_p["input-file"].as< std::string >(), *dto_context);
-
+		DBUGLOG << "Got " << *dto_context << std::endl;
 		//convert dto to bo
 		bo::BoContext *bo_context = new bo::BoContext();
 		dto_handler::dto_to_bo(*dto_context, *bo_context);
 		//Test print
 		for(dto::PressDto const &p : dto_context->presses)
 		{
-			std::cout << p << std::endl;
+			INFOLOG << p << std::endl;
 		}
 		//export dto to file
 		if( vm_p.count("output-file") )
@@ -46,9 +53,11 @@ int main(int argc, char* argv[])
 {
 	std::ostringstream usage;
 	try {
+		io::CreateLogger("app.log");
 		po::options_description desc("Available options");
 		desc.add_options()
 			("help,h", "Print this message")
+			("debug,d", "Activate debug log")
 			("input-file,i", po::value< std::string >(), "Input file (.dbg | .json)")
 			("output-file,o", po::value< std::string >(), "Output file (.json)")
 		;
