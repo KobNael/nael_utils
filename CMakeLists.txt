@@ -41,7 +41,7 @@ set (CMAKE_FIND_PACKAGE_PREFER_CONFIG ON)
 # ----------------------------------------------------------------------------
 # Compilation settings
 # ----------------------------------------------------------------------------
-set (CMAKE_CXX_STANDARD 14)
+set (CMAKE_CXX_STANDARD 17)
 set (CMAKE_CXX_STANDARD_REQUIRED ON)
 set (CMAKE_CXX_EXTENSIONS OFF)
 
