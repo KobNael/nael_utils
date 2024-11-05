@@ -7,7 +7,7 @@
 namespace bg = boost::gregorian;
 namespace bpt = boost::posix_time;
 
-TEST(capa_period, getInter)
+TEST(capa_period, get_inter)
 {
     bg::date d = bg::day_clock::local_day();;
 
@@ -15,16 +15,16 @@ TEST(capa_period, getInter)
     LCapaPeriod mylist1, mylist2, interRes, expRes;
 
     //empty lists
-    interRes = getInter(mylist1, mylist2);
+    interRes = get_inter(mylist1, mylist2);
     ASSERT_EQ(interRes, expRes);
-    interRes = getInter(mylist2, mylist1);
+    interRes = get_inter(mylist2, mylist1);
     ASSERT_EQ(interRes, expRes);
 
     //one empty list
     mylist1 = {capa_period(1,  bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)) )};
-    interRes = getInter(mylist1, mylist2);
+    interRes = get_inter(mylist1, mylist2);
     ASSERT_EQ(interRes, expRes);
-    interRes = getInter(mylist2, mylist1);
+    interRes = get_inter(mylist2, mylist1);
     ASSERT_EQ(interRes, expRes);
 
     //list are identical
@@ -33,9 +33,9 @@ TEST(capa_period, getInter)
     mylist2 = { capa_period(1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)))
             , capa_period(1, bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
     ASSERT_EQ(mylist1, mylist2);
-    interRes = getInter(mylist1, mylist2);
+    interRes = get_inter(mylist1, mylist2);
     ASSERT_EQ(interRes, mylist1);
-    interRes = getInter(mylist2, mylist1);
+    interRes = get_inter(mylist2, mylist1);
     ASSERT_EQ(interRes, mylist1);
 
     //Invalid list
@@ -43,8 +43,8 @@ TEST(capa_period, getInter)
     mylist1 = { capa_period(1, bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11)))
             , capa_period(1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)))
             , capa_period(1, bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
-    ASSERT_THROW(getInter(mylist1, mylist2), std::logic_error);
-    ASSERT_THROW(getInter(mylist2, mylist1), std::logic_error);
+    ASSERT_THROW(get_inter(mylist1, mylist2), std::logic_error);
+    ASSERT_THROW(get_inter(mylist2, mylist1), std::logic_error);
 #endif
     //Some tests on intersection computation
     mylist1 = { capa_period(1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)))
@@ -52,17 +52,17 @@ TEST(capa_period, getInter)
             , capa_period(1, bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
     mylist2 = { capa_period(1, bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11))) };
 
-    interRes = getInter(mylist1, mylist2);
+    interRes = get_inter(mylist1, mylist2);
     ASSERT_EQ(interRes, mylist2);
-    interRes = getInter(mylist2, mylist1);
+    interRes = get_inter(mylist2, mylist1);
     ASSERT_EQ(interRes, mylist2);
 
     mylist1 = { capa_period(1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(12)))
             , capa_period(1, bpt::ptime(d,bpt::hours(13)) , bpt::ptime(d,bpt::hours(14))) } ;
     mylist2 = { capa_period(1, bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11))) };
-    interRes = getInter(mylist1, mylist2);
+    interRes = get_inter(mylist1, mylist2);
     ASSERT_EQ(interRes, mylist2);
-    interRes = getInter(mylist2, mylist1);
+    interRes = get_inter(mylist2, mylist1);
     ASSERT_EQ(interRes, mylist2);
 
     mylist1 = { capa_period(1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(12)))
@@ -72,9 +72,9 @@ TEST(capa_period, getInter)
     expRes = { capa_period(1, bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12)))
                     , capa_period(1, bpt::ptime(d,bpt::hours(13)) , bpt::ptime(d,bpt::hours(14))) };
 
-    interRes = getInter(mylist1, mylist2);
+    interRes = get_inter(mylist1, mylist2);
     ASSERT_EQ(interRes, expRes);
-    interRes = getInter(mylist2, mylist1);
+    interRes = get_inter(mylist2, mylist1);
     ASSERT_EQ(interRes, expRes);
 
     mylist1 = { capa_period(1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(12)))
@@ -84,13 +84,13 @@ TEST(capa_period, getInter)
     expRes = { capa_period(1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(12)))
                         , capa_period(1, bpt::ptime(d,bpt::hours(13)) , bpt::ptime(d,bpt::hours(18))) };
 
-    interRes = getInter(mylist2, mylist1);
+    interRes = get_inter(mylist2, mylist1);
     ASSERT_EQ(interRes, expRes);
-    interRes = getInter(mylist1, mylist2);
+    interRes = get_inter(mylist1, mylist2);
     ASSERT_EQ(interRes, expRes);
 }
 
-TEST(capa_period,getUnion)
+TEST(capa_period,get_union)
 {
     bg::date d = bg::day_clock::local_day();;
 
@@ -98,16 +98,16 @@ TEST(capa_period,getUnion)
     LCapaPeriod mylist1, mylist2, unionRes, expRes;
 
     //empty lists
-    unionRes = getUnion(mylist1, mylist2);
+    unionRes = get_union(mylist1, mylist2);
     ASSERT_EQ(unionRes, expRes);
-    unionRes = getUnion(mylist2, mylist1);
+    unionRes = get_union(mylist2, mylist1);
     ASSERT_EQ(unionRes, expRes);
 
     //one empty list
     mylist1 = { capa_period(1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10))) };
-    unionRes = getUnion(mylist1, mylist2);
+    unionRes = get_union(mylist1, mylist2);
     ASSERT_EQ(unionRes, mylist1);
-    unionRes = getUnion(mylist2, mylist1);
+    unionRes = get_union(mylist2, mylist1);
     ASSERT_EQ(unionRes, mylist1);
 
     //list are identical
@@ -119,9 +119,9 @@ TEST(capa_period,getUnion)
             , capa_period(1, bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
     expRes = { capa_period(2, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(12))) };
     ASSERT_EQ(mylist1, mylist2);
-    unionRes = getUnion(mylist1, mylist2);
+    unionRes = get_union(mylist1, mylist2);
     ASSERT_EQ(unionRes, expRes);
-    unionRes = getUnion(mylist2, mylist1);
+    unionRes = get_union(mylist2, mylist1);
     ASSERT_EQ(unionRes, expRes);
 
 #ifndef NDEBUG
@@ -129,8 +129,8 @@ TEST(capa_period,getUnion)
     mylist1 = { capa_period(1, bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11)))
             , capa_period(1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)))
             , capa_period(1, bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
-    ASSERT_THROW(getUnion(mylist1, mylist2), std::logic_error);
-    ASSERT_THROW(getUnion(mylist2, mylist1), std::logic_error);
+    ASSERT_THROW(get_union(mylist1, mylist2), std::logic_error);
+    ASSERT_THROW(get_union(mylist2, mylist1), std::logic_error);
 #endif
     //Some tests on union computation
     mylist1 = { capa_period(1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)))
@@ -141,9 +141,9 @@ TEST(capa_period,getUnion)
                     , capa_period(2, bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11)))
                     , capa_period(1, bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
 
-    unionRes = getUnion(mylist1, mylist2);
+    unionRes = get_union(mylist1, mylist2);
     ASSERT_EQ(unionRes, expRes);
-    unionRes = getUnion(mylist2, mylist1);
+    unionRes = get_union(mylist2, mylist1);
     ASSERT_EQ(unionRes, expRes);
 
     mylist1 = { capa_period(1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(12)))
@@ -153,9 +153,9 @@ TEST(capa_period,getUnion)
                     , capa_period(2, bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11)))
                     , capa_period(1, bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12)))
                     , capa_period(1, bpt::ptime(d,bpt::hours(13)) , bpt::ptime(d,bpt::hours(14))) };
-    unionRes = getUnion(mylist1, mylist2);
+    unionRes = get_union(mylist1, mylist2);
     ASSERT_EQ(unionRes, expRes);
-    unionRes = getUnion(mylist2, mylist1);
+    unionRes = get_union(mylist2, mylist1);
     ASSERT_EQ(unionRes, expRes);
 
     mylist1 = { capa_period(1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(12)))
@@ -168,9 +168,9 @@ TEST(capa_period,getUnion)
                     , capa_period(2, bpt::ptime(d,bpt::hours(13)) , bpt::ptime(d,bpt::hours(14)))
                      , capa_period(1, bpt::ptime(d,bpt::hours(14)) , bpt::ptime(d,bpt::hours(15))) };
 
-    unionRes = getUnion(mylist1, mylist2);
+    unionRes = get_union(mylist1, mylist2);
     ASSERT_EQ(unionRes, expRes);
-    unionRes = getUnion(mylist2, mylist1);
+    unionRes = get_union(mylist2, mylist1);
     ASSERT_EQ(unionRes, expRes);
 
     mylist1 = { capa_period(1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(12)))
@@ -180,9 +180,9 @@ TEST(capa_period,getUnion)
                     , capa_period(1, bpt::ptime(d,bpt::hours(12)) , bpt::ptime(d,bpt::hours(13)))
                     , capa_period(2, bpt::ptime(d,bpt::hours(13)) , bpt::ptime(d,bpt::hours(18))) };
 
-    unionRes = getUnion(mylist2, mylist1);
+    unionRes = get_union(mylist2, mylist1);
     ASSERT_EQ(unionRes, expRes);
-    unionRes = getUnion(mylist1, mylist2);
+    unionRes = get_union(mylist1, mylist2);
     ASSERT_EQ(unionRes, expRes);
 
     //disjoints slots, no merge
@@ -197,18 +197,18 @@ TEST(capa_period,getUnion)
                     , capa_period(1, bpt::ptime(d,bpt::hours(12)) , bpt::ptime(d,bpt::hours(13)))
                     , capa_period(1, bpt::ptime(d,bpt::hours(13)) , bpt::ptime(d,bpt::hours(14)))
                     , capa_period(1, bpt::ptime(d,bpt::hours(14)) , bpt::ptime(d,bpt::hours(15))) };
-    unionRes = getUnion(mylist2, mylist1, false);
+    unionRes = get_union(mylist2, mylist1, false);
     ASSERT_EQ(unionRes, expRes);
-    unionRes = getUnion(mylist1, mylist2, false);
+    unionRes = get_union(mylist1, mylist2, false);
     ASSERT_EQ(unionRes, expRes);
 
     expRes = { capa_period(1, bpt::ptime(d,bpt::hours( 9)) , bpt::ptime(d,bpt::hours(11)))
                     , capa_period(1, bpt::ptime(d,bpt::hours(12)) , bpt::ptime(d,bpt::hours(15))) };
-    ASSERT_EQ(getUnion(mylist1, mylist2, true), expRes);
-    ASSERT_EQ(getUnion(mylist2, mylist1, true), expRes);
+    ASSERT_EQ(get_union(mylist1, mylist2, true), expRes);
+    ASSERT_EQ(get_union(mylist2, mylist1, true), expRes);
 }
 
-TEST(capa_period,getDiff)
+TEST(capa_period,get_diff)
 {
     bg::date d = bg::day_clock::local_day();;
 
@@ -216,18 +216,18 @@ TEST(capa_period,getDiff)
     LCapaPeriod mylist1, mylist2, diffRes, expRes;
 
     //empty lists
-    diffRes = getDiff(mylist1, mylist2);
+    diffRes = get_diff(mylist1, mylist2);
     ASSERT_EQ(diffRes, expRes);
-    diffRes = getDiff(mylist2, mylist1);
+    diffRes = get_diff(mylist2, mylist1);
     ASSERT_EQ(diffRes, expRes);
 
     //one empty list
     mylist1 = { capa_period(1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10))) };
-    diffRes = getDiff(mylist1, mylist2);
+    diffRes = get_diff(mylist1, mylist2);
     ASSERT_EQ(diffRes, mylist1);
 
     expRes = { capa_period(-1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10))) };
-    diffRes = getDiff(mylist2, mylist1);
+    diffRes = get_diff(mylist2, mylist1);
     ASSERT_EQ(diffRes, expRes);
 
     //list are identical
@@ -239,9 +239,9 @@ TEST(capa_period,getDiff)
             , capa_period(1, bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
     expRes = { capa_period(1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(12))) };
     ASSERT_EQ(mylist1, mylist2);
-    diffRes = getDiff(mylist1, mylist2);
+    diffRes = get_diff(mylist1, mylist2);
     ASSERT_EQ(diffRes, LCapaPeriod());
-    diffRes = getDiff(mylist2, mylist1);
+    diffRes = get_diff(mylist2, mylist1);
     ASSERT_EQ(diffRes, LCapaPeriod());
 
     //Invalid list
@@ -249,8 +249,8 @@ TEST(capa_period,getDiff)
     mylist1 = { capa_period(1, bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11)))
             , capa_period(1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)))
             , capa_period(1, bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
-    ASSERT_THROW(getDiff(mylist1, mylist2), std::logic_error);
-    ASSERT_THROW(getDiff(mylist2, mylist1), std::logic_error);
+    ASSERT_THROW(get_diff(mylist1, mylist2), std::logic_error);
+    ASSERT_THROW(get_diff(mylist2, mylist1), std::logic_error);
 #endif
     //Some tests on difference computation
     mylist1 = { capa_period(1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)))
@@ -260,12 +260,12 @@ TEST(capa_period,getDiff)
     expRes = { capa_period(1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)))
                     , capa_period(1, bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
 
-    diffRes = getDiff(mylist1, mylist2);
+    diffRes = get_diff(mylist1, mylist2);
     ASSERT_EQ(diffRes, expRes);
 
     expRes = { capa_period(-1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)))
                     , capa_period(-1, bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
-    diffRes = getDiff(mylist2, mylist1);
+    diffRes = get_diff(mylist2, mylist1);
     ASSERT_EQ(diffRes, expRes);
 
     mylist1 = { capa_period(1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(12)))
@@ -274,13 +274,13 @@ TEST(capa_period,getDiff)
     expRes = { capa_period(1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)))
                     , capa_period(1, bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12)))
                     , capa_period(1, bpt::ptime(d,bpt::hours(13)) , bpt::ptime(d,bpt::hours(14))) };
-    diffRes = getDiff(mylist1, mylist2);
+    diffRes = get_diff(mylist1, mylist2);
     ASSERT_EQ(diffRes, expRes);
 
     expRes = { capa_period(-1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)))
                     , capa_period(-1, bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12)))
                     , capa_period(-1, bpt::ptime(d,bpt::hours(13)) , bpt::ptime(d,bpt::hours(14))) };
-    diffRes = getDiff(mylist2, mylist1);
+    diffRes = get_diff(mylist2, mylist1);
     ASSERT_EQ(diffRes, expRes);
 
     mylist1 = { capa_period(1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(12)))
@@ -289,22 +289,22 @@ TEST(capa_period,getDiff)
     expRes = { capa_period(1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(11)))
                     , capa_period(-1, bpt::ptime(d,bpt::hours(12)) , bpt::ptime(d,bpt::hours(13)))
                     , capa_period(-1, bpt::ptime(d,bpt::hours(14)) , bpt::ptime(d,bpt::hours(15))) };
-    diffRes = getDiff(mylist1, mylist2);
+    diffRes = get_diff(mylist1, mylist2);
     ASSERT_EQ(diffRes, expRes);
     expRes = { capa_period(-1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(11)))
                     , capa_period(1, bpt::ptime(d,bpt::hours(12)) , bpt::ptime(d,bpt::hours(13)))
                     , capa_period(1, bpt::ptime(d,bpt::hours(14)) , bpt::ptime(d,bpt::hours(15))) };
-    diffRes = getDiff(mylist2, mylist1);
+    diffRes = get_diff(mylist2, mylist1);
     ASSERT_EQ(diffRes, expRes);
 
     mylist1 = { capa_period(1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(12)))
             , capa_period(1, bpt::ptime(d,bpt::hours(13)) , bpt::ptime(d,bpt::hours(18))) };
     mylist2 = { capa_period(1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(18))) };
     expRes = { capa_period(-1, bpt::ptime(d,bpt::hours(12)) , bpt::ptime(d,bpt::hours(13))) };
-    diffRes = getDiff(mylist1, mylist2);
+    diffRes = get_diff(mylist1, mylist2);
     ASSERT_EQ(diffRes, expRes);
     expRes = { capa_period(1, bpt::ptime(d,bpt::hours(12)) , bpt::ptime(d,bpt::hours(13))) };
-    diffRes = getDiff(mylist2, mylist1);
+    diffRes = get_diff(mylist2, mylist1);
     ASSERT_EQ(diffRes, expRes);
 
     mylist1 = { capa_period(2, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(12)))
@@ -313,13 +313,13 @@ TEST(capa_period,getDiff)
     expRes = { capa_period(1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(12)))
                     , capa_period(-1, bpt::ptime(d,bpt::hours(12)) , bpt::ptime(d,bpt::hours(13)))
                     , capa_period(3, bpt::ptime(d,bpt::hours(13)) , bpt::ptime(d,bpt::hours(18))) };
-    diffRes = getDiff(mylist1, mylist2);
+    diffRes = get_diff(mylist1, mylist2);
     ASSERT_EQ(diffRes, expRes);
 
     expRes = { capa_period(-1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(12)))
                     , capa_period(1, bpt::ptime(d,bpt::hours(12)) , bpt::ptime(d,bpt::hours(13)))
                     , capa_period(-3, bpt::ptime(d,bpt::hours(13)) , bpt::ptime(d,bpt::hours(18))) };
-    diffRes = getDiff(mylist2, mylist1);
+    diffRes = get_diff(mylist2, mylist1);
     ASSERT_EQ(diffRes, expRes);
 }
 
@@ -334,23 +334,23 @@ TEST(capa_period, shortCuts)
     expRes = { capa_period(1, bpt::ptime(d,bpt::hours( 9)) , bpt::ptime(d,bpt::hours(10)))
             , capa_period(2, bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(12)))
             , capa_period(1, bpt::ptime(d,bpt::hours(12)) , bpt::ptime(d,bpt::hours(13))) };
-    ASSERT_EQ( getUnion( capa_period(1 , bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(13))), mylist )
+    ASSERT_EQ( get_union( capa_period(1 , bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(13))), mylist )
                 ,  expRes );
-    ASSERT_EQ( getUnion( mylist, capa_period(1, bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(13))) )
+    ASSERT_EQ( get_union( mylist, capa_period(1, bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(13))) )
                 , expRes );
-    ASSERT_EQ( getUnion( capa_period(1, bpt::ptime(d,bpt::hours(10)), bpt::ptime(d,bpt::hours(12))),
+    ASSERT_EQ( get_union( capa_period(1, bpt::ptime(d,bpt::hours(10)), bpt::ptime(d,bpt::hours(12))),
                 capa_period(1, bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(13))) )
                 , expRes );
 
     //Intersection
     expRes = { capa_period(1, bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(12))) };
-    ASSERT_EQ( getInter( capa_period(1, bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(13))), mylist )
+    ASSERT_EQ( get_inter( capa_period(1, bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(13))), mylist )
                 , expRes );
 
     expRes = { capa_period(1, bpt::ptime(d,bpt::hours(10)), bpt::ptime(d,bpt::hours(12))) };
-    ASSERT_EQ( getInter( mylist, capa_period(1, bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(13))) )
+    ASSERT_EQ( get_inter( mylist, capa_period(1, bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(13))) )
                 , expRes );
-    ASSERT_EQ( getInter(
+    ASSERT_EQ( get_inter(
             capa_period(1, bpt::ptime(d,bpt::hours(10)), bpt::ptime(d,bpt::hours(12))),
             capa_period(1, bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(13))) )
             , expRes );
@@ -358,12 +358,12 @@ TEST(capa_period, shortCuts)
     //Difference
     expRes = { capa_period(1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)))
             , capa_period(1,  bpt::ptime(d,bpt::hours(12)) , bpt::ptime(d,bpt::hours(13))) };
-    ASSERT_EQ( getDiff( capa_period(1, bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(13))), mylist )
+    ASSERT_EQ( get_diff( capa_period(1, bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(13))), mylist )
                 , expRes );
     expRes = { capa_period(1, bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11)) ) };
-    ASSERT_EQ( getDiff( mylist, capa_period(1, bpt::ptime(d,bpt::hours(11)), bpt::ptime(d,bpt::hours(12))) )
+    ASSERT_EQ( get_diff( mylist, capa_period(1, bpt::ptime(d,bpt::hours(11)), bpt::ptime(d,bpt::hours(12))) )
                 , expRes );
-    ASSERT_EQ( getDiff(
+    ASSERT_EQ( get_diff(
         capa_period(1, bpt::ptime(d,bpt::hours(10)), bpt::ptime(d,bpt::hours(12))),
         capa_period(1, bpt::ptime(d,bpt::hours(11)), bpt::ptime(d,bpt::hours(12))))
         , expRes) ;
@@ -381,11 +381,11 @@ TEST(capa_period, conversion_capa_period)
     //No union since useless
 
     //Intersection
-    ASSERT_EQ( getInter( myCapaList, time_period( bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(13)) ) )
+    ASSERT_EQ( get_inter( myCapaList, time_period( bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(13)) ) )
             ,  expRes );
-    ASSERT_EQ( getInter( myCapaList, mylist )
+    ASSERT_EQ( get_inter( myCapaList, mylist )
             , expRes );
-    ASSERT_EQ( getInter(
+    ASSERT_EQ( get_inter(
                 capa_period(10, bpt::ptime(d,bpt::hours(10)), bpt::ptime(d,bpt::hours(12)))
                 , time_period(bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(12))) )
             ,  expRes );
