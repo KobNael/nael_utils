@@ -1,3 +1,5 @@
+.. _safe_comp:
+
 Safe numerical comparison
 =========================
 

@@ -1,7 +1,9 @@
-/**
- * @file log.hh
- */
 #pragma once
+
+/**
+ *@file log.hh
+ *@brief log utilities
+ */
 
 #include <iostream>
 #include <utils/log/Logger.hh>
@@ -13,7 +15,31 @@ namespace io
 {
 
 /**
+ * @brief Create a singleton TeeLogger
+ * @param file path to the log file
+ * @return an access to the TeeLogger
+ * @throw if the file can note be created
+ */
+TeeLogger *CreateLogger(std::string const& file);
+/**
+ * @brief Access to the singleton TeeLogger
+ * @return an access to the TeeLogger
+ * @throw if the TeeLogger has not been created (see CreateLogger)
+ */
+TeeLogger *GetLogger();
+/**
+ * @brief Free logger memory
+ */
+void ClearLogger();
+/**
+ * @brief Set the log level
+ * @param level the log level
+ */
+void SetLogLevel(LogLevel level);
+
+/**
  * @brief Print an object in a stream
+ * @tparam T the type of object
  * @param os the ostream
  * @param obj the object
  */
@@ -24,6 +50,8 @@ std::ostream &print(std::ostream &os, T const &obj)
 }
 /**
  * @brief Print a pair of object in a stream
+ * @tparam U the first type of object in the pair
+ * @tparam V the second type of object in the pair
  * @param os the ostream
  * @param p the pair
  */
@@ -56,6 +84,7 @@ std::ostream &printRange(std::ostream &os, Range const &range)
 
 /**
  * @brief Print a range of object in a stream
+ * @tparam T the type of object
  * @param os the ostream
  * @param range the object
  */
@@ -64,26 +93,6 @@ std::ostream &print(std::ostream &os, const std::vector<T> &range)
 {
 	return printRange(os, range);
 }
-
-/**
- *@brief Create a singleton TeeLogger
- *@param file path to the log file
- *@return an access to the TeeLogger
- */
-TeeLogger * CreateLogger(std::string const& file);
-/**
- *@return an access to the TeeLogger
- */
-TeeLogger * GetLogger();
-/**
- *@brief Free logger memory
- */
-void ClearLogger();
-/**
- *@brief Set the log level
- *@param level the log level (in OFF_LVL, ERROR_LVL, WARNING_LVL, DEBUG_LVL)
- */
-void SetLogLevel(LogLevel level);
 
 }
 
@@ -121,13 +130,25 @@ void SetLogLevel(LogLevel level);
  */
 #define DBUG(log) COND_STATEMENT(log->shouldLog(io::DEBUG_LVL)) log->getLog()
 
-/** @brief Log a message in the main io::TeeLogger, provided that the log level is >= io::ERROR_LVL */
+/**
+ * @brief Log a message in the main io::TeeLogger, provided that the log level is >= io::ERROR_LVL
+ * @throw if the main io::TeeLogger has not been created
+ */
 #define ERORLOG EROR(io::GetLogger())
-/** @brief Log a message in the main io::TeeLogger, provided that the log level is >= io::WARNING_LVL */
+/**
+ * @brief Log a message in the main io::TeeLogger, provided that the log level is >= io::WARNING_LVL
+ * @throw if the main io::TeeLogger has not been created
+ */
 #define WARNLOG WARN(io::GetLogger())
-/** @brief Log a message in the main io::TeeLogger, provided that the log level is >= io::INFO_LVL */
+/**
+ * @brief Log a message in the main io::TeeLogger, provided that the log level is >= io::INFO_LVL
+ * @throw if the main io::TeeLogger has not been created
+ */
 #define INFOLOG INFO(io::GetLogger())
-/** @brief Log a message in the main io::TeeLogger, provided that the log level is >= io::DEBUG_LVL */
+/**
+ * @brief Log a message in the main io::TeeLogger, provided that the log level is >= io::DEBUG_LVL
+ * @throw if the main io::TeeLogger has not been created
+ */
 #define DBUGLOG DBUG(io::GetLogger())
 
 /**
@@ -171,24 +192,28 @@ void SetLogLevel(LogLevel level);
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::ERROR_LVL
  * @param header the message
  * @param range the range
+ * @throw if the main io::TeeLogger has not been created
  */
 #define ERORLOG_RANGE(header, range) EROR_RANGE(io::GetLogger(), header, range)
 /**
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::WARNING_LVL
  * @param header the message
  * @param range the range
+ * @throw if the main io::TeeLogger has not been created
  */
 #define WARNLOG_RANGE(header, range) WARN_RANGE(io::GetLogger(), header, range)
 /**
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::INFO_LVL
  * @param header the message
  * @param range the range
+ * @throw if the main io::TeeLogger has not been created
  */
 #define INFOLOG_RANGE(header, range) INFO_RANGE(io::GetLogger(), header, range)
 /**
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::DEBUG_LVL
  * @param header the message
  * @param range the range
+ * @throw if the main io::TeeLogger has not been created
  */
 #define DBUGLOG_RANGE(header, range) DBUG_RANGE(io::GetLogger(), header, range)
 

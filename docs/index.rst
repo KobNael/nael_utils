@@ -1,22 +1,24 @@
-.. Utils documentation master file, created by
-   sphinx-quickstart on Tue Nov  5 11:58:13 2024.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Utils documentation
 ===================
 
-This library regroup every usefull tool for c++ application.
+This library regroup some usefull tools for c++ applications :
 
-You can find some comparators for safe numeric comparison.
+   - :ref:`log_utils` : Utils for logging
+   - :ref:`model`: Utils for data model description
+   - :ref:`json_utils`: Utils for json import/export
+   - :ref:`safe_comp` : Utils for safe numeric comparison
+   - :ref:`period_utils`: Utils for period (with capacity) manipulation
+   - :ref:`thread_pool` : Tool for parallel computation
 
 
 .. toctree::
    :hidden:
 
-   doc/json
+   doc/log/log
    doc/model/model
-   doc/safecomp
+   doc/json/json
+   doc/safecomp/safecomp
    doc/period/period
+   doc/thread_pool/thread_pool
 
 

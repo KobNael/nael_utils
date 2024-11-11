@@ -1,3 +1,5 @@
+.. _period_utils:
+
 Period utilities
 ===================
 

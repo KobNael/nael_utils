@@ -12,16 +12,18 @@
 namespace io
 {
 /**
- *@enum LogLevel
- *@brief Describe the verbosity of the logger
+ * @enum LogLevel
+ * @brief Describe the verbosity of the logger
+ * @see Logger::setLogLevel
+ * @see io::SetLogLevel()
  */
 enum LogLevel
 {
-    OFF_LVL=0,
-    ERROR_LVL=1,
-    WARNING_LVL=2,
-    INFO_LVL=3,
-    DEBUG_LVL=4
+    OFF_LVL=0,      ///< No log at all
+    ERROR_LVL=1,    ///< Only Error messages
+    WARNING_LVL=2,  ///< Error and Warning messages
+    INFO_LVL=3,     ///< Error, Warning and Info messages
+    DEBUG_LVL=4     ///< Error, Warning, Info and Debug messages
 };
 
 /**

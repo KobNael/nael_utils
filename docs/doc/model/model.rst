@@ -1,3 +1,5 @@
+.. _model:
+
 Data Model Utils
 ================
 
