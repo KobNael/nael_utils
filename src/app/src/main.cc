@@ -33,7 +33,7 @@ int processArgs(po::variables_map const &vm_p)
 		bo::BoContext *bo_context = new bo::BoContext();
 		dto_handler::dto_to_bo(*dto_context, *bo_context);
 		//Test print
-		for(dto::PressDto const &p : dto_context->presses)
+		for(dto::MoldDto const &p : dto_context->molds)
 		{
 			INFOLOG << p << std::endl;
 		}

@@ -1,3 +1,6 @@
+/**
+ * @file converter.hh
+ */
 #pragma once
 
 #include <boost/describe.hpp>
@@ -15,11 +18,21 @@ namespace boost
 namespace gregorian
 {
 
+/**
+ * @brief convert a gregorian date to a json::value
+ * @param[out] jv the json::value
+ * @param d the date
+ */
 void tag_invoke( const json::value_from_tag&, json::value& jv, date const& d )
 {
     jv = { to_iso_extended_string(d) };
 }
 
+/**
+ * @brief convert json::value to a date
+ * @param jv the json::value
+ * @return the date
+ */
 date tag_invoke( const json::value_to_tag< date >&, json::value const& jv )
 {
     date d =  from_string(boost::json::value_to<std::string>(jv));
@@ -30,16 +43,32 @@ date tag_invoke( const json::value_to_tag< date >&, json::value const& jv )
 namespace posix_time
 {
 
+/**
+ * @brief convert json::value to a time_duration
+ * @param jv the json::value
+ * @return the time_duration
+ */
 time_duration tag_invoke( const json::value_to_tag< time_duration >&, json::value const& jv )
 {
     return duration_from_string(boost::json::value_to<std::string>(jv));
 }
 
+/**
+ * @brief convert json::value to a ptime
+ * @param jv the json::value
+ * @return the ptime
+ */
 ptime tag_invoke( const json::value_to_tag< ptime >&, json::value const& jv )
 {
     return time_from_string(boost::json::value_to<std::string>(jv));
 }
 
+/**
+ * @brief convert a time or duration to json value
+ * @tparam time_ao_duration the time or duration type
+ * @param[out] jv the json::value
+ * @param td the json::value
+ */
 template<typename time_ao_duration>
 void tag_invoke( const json::value_from_tag&, json::value& jv, time_ao_duration const& td )
 {
@@ -50,6 +79,13 @@ void tag_invoke( const json::value_from_tag&, json::value& jv, time_ao_duration 
 
 }//boost
 
+/**
+ * @brief Extract a type from a boost json object
+ * @tparam T the type of of object to extract
+ * @param obj the json object
+ * @param name the attribute name
+ * @param[out] value reference to the object
+ */
 template<class T> void extract( boost::json::object const & obj, char const * name, T & value )
 {
     value = boost::json::value_to<T>( obj.at( name ) );
@@ -58,6 +94,11 @@ template<class T> void extract( boost::json::object const & obj, char const * na
 namespace dto
 {
 
+/**
+ * @brief Convert a json value to an object T
+ * @tparam T the type of object
+ * @param v
+ */
 template<class T,
     class D1 = boost::describe::describe_members<T,
         boost::describe::mod_public | boost::describe::mod_protected>,

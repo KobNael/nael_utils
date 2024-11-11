@@ -1,3 +1,6 @@
+/**
+ * @file model_desc_att.hh
+ */
 #pragma once
 
 #include <boost/preprocessor.hpp>
@@ -9,6 +12,13 @@
 #include <unordered_set>
 #include <vector>
 
+/**
+ * @brief Generate a safe comparison on an attribute
+ * @param r
+ * @param data
+ * @param att name of the attribute
+ * @warning This macro should not be called directly, it is used through #MAKE_CLASS_SORT
+ */
 #define COMPARE_ATT_VARIABLE(r, data, att) \
     if( safecomp::neq( BOOST_PP_CAT(get_, BOOST_PP_TUPLE_ELEM(0, att))() BOOST_PP_COMMA() other.BOOST_PP_CAT(get_, BOOST_PP_TUPLE_ELEM(0, att))() ) ) \
     {\
@@ -22,13 +32,28 @@
         }\
     }
 
-#define COMPARE_ATT_LIST(att_list) \
-    BOOST_PP_SEQ_FOR_EACH(COMPARE_ATT_VARIABLE, , BOOST_PP_VARIADIC_SEQ_TO_SEQ(att_list))
+/**
+ * @brief Generate a safe comparison on a sequence of attributes
+ * @param att_seq
+ * @warning This macro should not be called directly, it is used through #MAKE_CLASS_SORT
+ */
+#define COMPARE_ATT_LIST(att_seq) \
+    BOOST_PP_SEQ_FOR_EACH(COMPARE_ATT_VARIABLE, , BOOST_PP_VARIADIC_SEQ_TO_SEQ(att_seq))
 
+/**
+ * @brief Generate an initialization of an attribute value
+ * @param add should we add the initialization
+ * @param val the value
+ * @warning This macro should not be called directly, it is used through #MAKE_CLASS_ATT and #MAKE_DTO_STRUCT
+ */
 #define MAKE_ATT_INIT(add, val) \
     BOOST_PP_IF(add, ={val},);
 /**
- @brief Create the declaration of an attribute described as a tuple (type, name)
+ * @brief Create the declaration of an attribute described as a tuple (type, name)
+ * @param r
+ * @param data
+ * @param att_desc the tuple
+ * @warning This macro should not be called directly, it is used through #MAKE_CLASS_ATT and #MAKE_DTO_STRUCT
  */
 #define MAKE_ATT_DECL_VARIABLE(r, data, att_desc) \
     BOOST_PP_SEQ_ELEM(0, att_desc) BOOST_PP_SEQ_ELEM(1, att_desc) \
@@ -37,54 +62,78 @@
     )
 
 /**
- @brief Create the declaration of every attribute in a sequence of attribute description
+ * @brief Create the declaration of every attribute in a sequence of attribute description
+ * @param att_seq the sequence of attributes
+ * @warning This macro should not be called directly, it is used through #MAKE_CLASS_ATT and #MAKE_DTO_STRUCT
  */
 #define MAKE_ATT_DECLARATION(att_seq) \
     BOOST_PP_SEQ_FOR_EACH(MAKE_ATT_DECL_VARIABLE, , att_seq)
 
 /**
- @brief Extract the name of an attribute described as a tuple (type, name)
- adding a separator if needed
+ * @brief Extract the name of an attribute described as a tuple (type, name) adding a separator if needed
+ * @param r
+ * @param data
+ * @param i
+ * @param att_desc the tuple
+ * @warning This macro should not be called directly, it is used through #MAKE_CLASS_ATT and #MAKE_DTO_STRUCT
  */
 #define GET_ATT_NAME_VARIABLE(r, data, i, att_desc) \
     BOOST_PP_COMMA_IF(i) BOOST_PP_SEQ_ELEM(1, att_desc)
 
 /**
- @brief List every attribute in a sequence
+ * @brief Extract every attribute names from a sequence of attribute description
+ * @param att_seq the sequence of attributes
+ * @warning This macro should not be called directly, it is used through #MAKE_DTO_STRUCT
  */
 #define GET_ATT_NAMES(att_seq) \
     BOOST_PP_SEQ_FOR_EACH_I(GET_ATT_NAME_VARIABLE, , att_seq)
 
 /**
- @brief Create the declaration of an attribute described as a tuple (type, name)
+ * @brief Create the declaration of the setter of an attribute
+ * @param r
+ * @param data
+ * @param att_desc the attribute described as sequence (type)(name)
+ * @warning This macro should not be called directly, it is used through #MAKE_CLASS_ATT
  */
 #define MAKE_ATT_SETTER_VARIABLE(r, data, att_desc) \
     void BOOST_PP_CAT(set_, BOOST_PP_SEQ_ELEM(1, att_desc))( BOOST_PP_SEQ_ELEM(0,att_desc) const & val ) \
     { BOOST_PP_SEQ_ELEM(1, att_desc) = val ;}
 /**
- @brief Create the getters for every attribute in a sequence of attribute description
+ * @brief Create the declaration of the setters for every attribute in a sequence of attribute description
+ * @param att_seq the sequence of attributes
+ * @warning This macro should not be called directly, it is used through #MAKE_CLASS_ATT
  */
 #define MAKE_ATT_SETTER(att_seq) \
     BOOST_PP_SEQ_FOR_EACH(MAKE_ATT_SETTER_VARIABLE, , att_seq)
 
 /**
- @brief Create the declaration of an attribute described as a tuple (type, name)
+ * @brief Create the declaration of the getter(s) of an attribute
+ * @param r
+ * @param is_const is the attribute const (if not a getter type& get_att() will be created)
+ * @param att_desc the attribute described as sequence (type)(name)
+ * @warning This macro should not be called directly, it is used through #MAKE_CLASS_ATT
  */
 #define MAKE_ATT_GETTER_VARIABLE(r, is_const, att_desc) \
     BOOST_PP_SEQ_ELEM(0,att_desc) BOOST_PP_IF( is_const, const , ) &\
     BOOST_PP_CAT(get_, BOOST_PP_SEQ_ELEM(1, att_desc))() BOOST_PP_IF( is_const, const, )\
     { return BOOST_PP_SEQ_ELEM(1, att_desc);}
 /**
- @brief Create the getters for every attribute in a sequence of attribute description
+ * @brief Create the declaration of the getters for every attribute in a sequence of attribute description
+ * @param is_const is the attribute const (if not a getter type& get_att() will be created)
+ * @param att_seq the sequence of attributes
+ * @warning This macro should not be called directly, it is used through #MAKE_CLASS_ATT
  */
 #define MAKE_ATT_GETTER(att_seq, is_const) \
     BOOST_PP_SEQ_FOR_EACH(MAKE_ATT_GETTER_VARIABLE, 1, att_seq) /* always const getter*/ \
     BOOST_PP_IF(is_const, ,BOOST_PP_SEQ_FOR_EACH(MAKE_ATT_GETTER_VARIABLE, 0, att_seq)) /*editable getter is non const*/
 
 /**
- @brief Generate an editable attribute and every getter/setter
- @param att_seq the sequence of attributes (type, name)
- @param is_const true if the attribute is const and not editable
+ * @brief Generate an editable attribute `std::(unordered_)map<key, value> name` and every getter/setter
+ * @param key the type of the keys
+ * @param value the type of the values
+ * @param name the name of the attribute
+ * @param ordered indicates if we should generate a std::map or a std::unordered_map
+ * @warning This macro should not be called directly, it is used through #MAKE_MAP and #MAKE_UNORDERED_MAP
  */
 #define MAKE_MAP_ATT(key, value, name, ordered) \
     private:\
@@ -93,9 +142,11 @@
         BOOST_PP_IF(ordered,std::map,std::unordered_map)<key, value> const & BOOST_PP_CAT(get_, name)() const { return name;} \
         BOOST_PP_IF(ordered,std::map,std::unordered_map)<key, value> & BOOST_PP_CAT(get_, name)() { return name;}
 /**
- @brief Generate an editable attribute and every getter/setter
- @param att_seq the sequence of attributes (type, name)
- @param is_const true if the attribute is const and not editable
+ * @brief Generate an editable attribute `std::(unordered_)set<value> name` and every getter/setter
+ * @param value the type of the values
+ * @param name the name of the attribute
+ * @param ordered indicates if we should generate a std::set or a std::unordered_set
+ * @warning This macro should not be called directly, it is used through #MAKE_SET and #MAKE_UNORDERED_SET
  */
 #define MAKE_SET_ATT(value, name, ordered) \
     private:\
@@ -105,9 +156,11 @@
         BOOST_PP_IF(ordered,std::set,std::unordered_set)<value> & BOOST_PP_CAT(get_, name)() { return name;}
 
 /**
- @brief Generate an editable attribute and every getter/setter
- @param att_seq the sequence of attributes (type, name)
- @param is_const true if the attribute is const and not editable
+ * @brief Generate every declaration and getters/setters for a sequence of attributes
+ * each attribute being a sequence (type)(name)
+ * @param att_seq the sequence of attributes
+ * @param is_const true if the attribute is const and not editable
+ * @warning This macro should not be called directly, it is used through #MAKE_CLASS_ATT
  */
 #define MAKE_CLASS_BASIC_ATT(att_seq, is_const) \
     BOOST_PP_IF( BOOST_PP_SEQ_SIZE(att_seq) \

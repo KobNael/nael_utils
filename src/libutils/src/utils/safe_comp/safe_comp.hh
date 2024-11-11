@@ -141,7 +141,7 @@ namespace safecomp
         return val_p == std::numeric_limits<T>::quiet_NaN() || tmp_l != val_p;
     }
 
-    /**\return true val_p represents infinity*/
+    /**\return true if val_p represents infinity*/
     template<typename T, typename = typename std::enable_if<std::is_floating_point<T>::value, T>::type>
     inline int isinf(T val_p) {
         volatile double tmp_l = val_p;

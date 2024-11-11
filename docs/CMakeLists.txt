@@ -1,0 +1,34 @@
+# ============================================================================
+# External requirements
+# ============================================================================
+
+find_package (Doxygen OPTIONAL_COMPONENTS dot)
+if(NOT DOXYGEN_FOUND)
+	return()
+endif()
+
+find_package (Sphinx)
+if(NOT SPHINX_FOUND)
+	return()
+endif()
+
+
+# ============================================================================
+# Targets
+# ============================================================================
+#Doxyfile
+configure_file (Doxyfile.in Doxyfile @ONLY)
+#Configure sphinx configuration file
+configure_file (conf.py.in conf.py @ONLY)
+
+#call doxygen to produce xml files
+add_custom_target (doc_dox
+	COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
+	COMMENT "Generating documentation with Doxygen" VERBATIM)
+
+#call sphinx to generate html documentation
+add_custom_target (doc
+    COMMAND ${SPHINX_EXECUTABLE} -E -c ${CMAKE_CURRENT_BINARY_DIR} -b html ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/html
+    DEPENDS doc_dox
+	COMMENT "Generating documentation with Sphinx" VERBATIM)
+

@@ -1,3 +1,6 @@
+/**
+ * @file Logger.hh
+ */
 #pragma once
 
 #include <string>
@@ -17,12 +20,12 @@ enum LogLevel
     OFF_LVL=0,
     ERROR_LVL=1,
     WARNING_LVL=2,
-    NORMAL_LVL=3,
+    INFO_LVL=3,
     DEBUG_LVL=4
 };
 
 /**
- * @class AbstractLogger
+ * @class Logger
  * @brief Interface for logger
  * @tparam ostream The type of output stream
  */
@@ -36,7 +39,7 @@ public:
      * @param file path to the log file
      * @param level initial verbosity
      */
-    Logger(std::string const& file, io::LogLevel level=NORMAL_LVL)
+    Logger(std::string const& file, io::LogLevel level=INFO_LVL)
         : _filePath(file)
         , _level(level)
         , _stream(nullptr)
@@ -76,7 +79,7 @@ protected:
     /** @brief Path to the log file */
     std::string _filePath={""};
     /** @brief Verbosity */
-    LogLevel _level={NORMAL_LVL};
+    LogLevel _level={INFO_LVL};
     /** @brief the stream */
     ostream *_stream={nullptr};
 };
@@ -95,7 +98,7 @@ public:
      * @param level initial verbosity
      * @throw if the file can not be open
      */
-    FileLogger(std::string const& file, io::LogLevel level=NORMAL_LVL);
+    FileLogger(std::string const& file, io::LogLevel level=INFO_LVL);
 
     /**
      * @brief Destructor
@@ -107,10 +110,13 @@ public:
  * @brief Definition of a tee
  */
 typedef boost::iostreams::tee_device<std::ostream, std::ostream> TeeDevice;
+/**
+ * @brief Definition of a tee stream
+ */
 typedef boost::iostreams::stream<TeeDevice> TeeStream;
 
 /**
- * @class Logger
+ * @class TeeLogger
  * @brief Log both in a file and a terminal
  */
 class TeeLogger : public Logger<TeeStream>
@@ -122,7 +128,7 @@ public:
      * @param file path to the log file
      * @param level verbosity
      */
-    TeeLogger(std::string const& file, io::LogLevel level=NORMAL_LVL);
+    TeeLogger(std::string const& file, io::LogLevel level=INFO_LVL);
 
     /**
      * @brief Destructor

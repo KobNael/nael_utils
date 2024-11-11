@@ -1,3 +1,9 @@
+/**
+ * @file period_utils.hh
+ * @brief Toolbox for manipulation of time period.
+ *
+ * Two types of time period are proposed, along with shortcuts for list of periods (@see period_type_def)
+ */
 #pragma once
 
 #include <list>
@@ -6,10 +12,22 @@
 ///////////
 // Types //
 ///////////
-/** @brief Alias for time period */
+/**
+ * \defgroup period_type_def Aliases and types
+ */
+
+/**
+ * @typedef time_period
+ * @brief Alias for time period
+ * @addtogroup period_type_def
+ */
 typedef boost::posix_time::time_period time_period;
 
-/** @struct CapaPeriod */
+/**
+ * @struct capa_period
+ * @brief Represents a capacity on a time_period
+ * @addtogroup period_type_def
+ */
 struct capa_period
 {
     /**
@@ -46,17 +64,26 @@ struct capa_period
     /** @brief equality operator */
     bool operator==(capa_period const &cp) const {return _capa==cp._capa && _period == cp._period;}
 };
+
+/**
+ * @typedef LTimePeriod
+ * @brief list of period
+ * @addtogroup period_type_def
+ */
+typedef std::list<time_period> LTimePeriod;
+/**
+ * @typedef LCapaPeriod
+ * @brief list of period with capacity
+ * @addtogroup period_type_def
+ */
+typedef std::list<capa_period> LCapaPeriod;
+
 /**
  * @brief OStream operator for capa_period
  * @param os the ostream
- * @param p the capa_period
+ * @param cp the capa_period
  */
 std::ostream &operator<<(std::ostream &os, capa_period const &cp);
-
-/** @brief list of period */
-typedef std::list<time_period> LTimePeriod;
-/** @brief list of period with capacity */
-typedef std::list<capa_period> LCapaPeriod;
 
 
 ///////////

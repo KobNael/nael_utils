@@ -1,3 +1,6 @@
+/**
+ * @file period_functor.hh
+ */
 #include <optional>
 
 namespace details

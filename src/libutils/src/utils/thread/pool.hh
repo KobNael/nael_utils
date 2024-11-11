@@ -1,3 +1,6 @@
+/**
+ * @file pool.hh
+ */
 #pragma once
 
 #include <atomic>
@@ -11,6 +14,10 @@
 
 namespace thread
 {
+/**
+ * @class Pool
+ * @brief Utility for parallel computing
+ */
 class Pool
 {
 private:
@@ -33,7 +40,10 @@ private:
 	std::atomic<bool> _shutdown = {false};
 
 public:
-	//Add a job in the queue
+	/**
+     * @brief Add a job in the queue
+     * @param job the job
+     */
 	void enqueue(job_t job)
 	{
         // Acquire lock
@@ -44,7 +54,10 @@ public:
         _cond.notify_one();
 	}
 
-    /** @brief Thread safe accessor to the next job */
+    /**
+     * @brief Thread safe accessor to the next job
+     * @return the next job if any, {} otherwise
+     */
     std::optional<job_t> dequeue()
     {
         // acquire lock
@@ -92,6 +105,10 @@ private:
 	}
 
 public:
+    /**
+     * @brief Constructor
+     * @param nworkers the number of threads
+     */
     explicit Pool(size_t nworkers=0)
     {
         if(0 == nworkers)

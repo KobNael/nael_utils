@@ -1,3 +1,6 @@
+/**
+ * @file json_handler.hh
+ */
 #pragma once
 #include <fstream>
 #include "details/converter.hh"
@@ -6,8 +9,10 @@ namespace json
 {
     /**
      * @brief Load a context from a file
+     * @tparam T the type of context
      * @param filePath path to the file
      * @param context the context to fill
+     * @pre T has been declared using #MAKE_DTO_STRUCT
      */
     template<typename T>
     void import_from_file(std::string const &filePath, T &context)
@@ -23,8 +28,10 @@ namespace json
 
      /**
      * @brief Export a context to a file
+     * @tparam T the type of context
      * @param filePath path to the file
      * @param context the context to export
+     * @pre T has been declared using #MAKE_DTO_STRUCT
      */
     template<typename T>
     void export_to_file(std::string const &filePath, T const &context)
