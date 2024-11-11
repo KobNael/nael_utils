@@ -1,6 +1,30 @@
+/** @file */
 #include <optional>
 #include <utils/period/period_functor.hh>
 
+///////////
+// Merge //
+///////////
+/**
+ * @brief check that two time_period can be merged
+ * @return true if p1 and p2 are adjacent
+ */
+bool can_merge(time_period const&tp1, time_period const &tp2);
+/**
+ * @brief check that two capa_period can be merged
+ * @return true if p1 and p2 have the same capa and adjacent periods
+ */
+bool can_merge(capa_period const&cp1, capa_period const &cp2);
+/**
+ * @return the result of the merge of two time_period
+ * @pre the periods can be merged
+ */
+time_period merge(time_period const&tp1, time_period const &tp2);
+/**
+ * @return the result of the merge of two capa_period
+ * @pre the periods can be merged
+ */
+capa_period merge(capa_period const&cp1, capa_period const &cp2);
 
 /**
  * @brief Browse a list of periods and merge the adjacent one
@@ -35,7 +59,7 @@ void merge_adjacent_periods(std::list<PeriodT> &periods)
 /**
  * @brief Check that a list of periods is valid
  * @tparam PeriodT the type of periods
- * @param period the list of periods
+ * @param periods the list of periods
  * @throw if the list is sorted or contains overlapping periods
  */
 template<typename PeriodT>
@@ -178,14 +202,14 @@ std::list<PeriodT> merge(std::list<PeriodT> const&periods1, std::list<PeriodU> c
     return res;
 }
 
-/** Compute the union of two lists of Periods */
+/* Compute the union of two lists of Periods */
 template<typename PeriodT>
 std::list<PeriodT> get_union(std::list<PeriodT> const&periods1, std::list<PeriodT> const& periods2, bool merge_adjacent)
 {
     return merge<PeriodT, PeriodT, details::MakeUnion>(periods1, periods2, merge_adjacent);
 }
 
-/** Compute the difference of two lists of Periods */
+/* Compute the difference of two lists of Periods */
 template<typename PeriodT>
 std::list<PeriodT> get_diff(std::list<PeriodT> const&periods1, std::list<PeriodT> const& periods2, bool merge_adjacent)
 {
@@ -193,7 +217,7 @@ std::list<PeriodT> get_diff(std::list<PeriodT> const&periods1, std::list<PeriodT
 }
 
 
-/** Compute the intersection of two lists of Periods */
+/* Compute the intersection of two lists of Periods */
 template<typename PeriodT, typename PeriodU>
 std::list<PeriodT> get_inter(std::list<PeriodT> const&periods1, std::list<PeriodU> const& periods2, bool merge_adjacent)
 {

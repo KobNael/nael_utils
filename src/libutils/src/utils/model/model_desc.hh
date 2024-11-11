@@ -73,7 +73,7 @@ public: \
  *     };
  * @endcode
  * @param struct_name the name of the struct
- * @param att_seqeunce the sequence of sequences describing the attribute
+ * @param att_seq the sequence of sequences describing the attribute
  * @remark these structures are serializable and streamable
  * @see  json::import_from_file() and json::export_to_file()
  * @see  details::streamable
