@@ -10,6 +10,14 @@
 #include <limits>
 #include <stdexcept>
 
+/**
+ * @namespace safecomp
+ * @brief Contains a complete list of safe numercial comparison, eg. :
+ * @code{cpp}
+ * ASSERT_TRUE( safecomp::eq(1e-6, 0.) );
+ * ASSERT_FALSE( safecomp::gt(1e-6, 0.) );
+ * @endcode
+ */
 namespace safecomp
 {
 /////////////////
