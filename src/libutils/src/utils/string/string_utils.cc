@@ -32,7 +32,12 @@ void lrtrim(std::string &s) {
 
 }
 
+namespace str
+{
+
 std::string trim(std::string s) {
     ::lrtrim(s);
     return s;
 }
+
+}//namespace str

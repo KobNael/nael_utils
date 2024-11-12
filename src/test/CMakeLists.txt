@@ -7,6 +7,7 @@ target_sources (unit_tests
 	src/lexical_sort.test.cc
 	src/periods.test.cc
 	src/simple.test.cc
+	src/string_utils.test.cc
     src/thread_pool.test.cc
 )
 
