@@ -3,6 +3,7 @@
 Safe numerical comparison
 =========================
 
-Here is the list of every available comparison.
+The library provide every function needed for numerical comparison.
+They are available in the following file.
 
-.. doxygennamespace:: safecomp
+.. doxygenfile:: safe_comp.hh

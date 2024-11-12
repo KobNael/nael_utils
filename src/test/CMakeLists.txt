@@ -4,6 +4,7 @@ include (unit_tests)
 target_sources (unit_tests
 	PRIVATE
 	src/capa_periods.test.cc
+	src/lexical_sort.test.cc
 	src/periods.test.cc
 	src/simple.test.cc
     src/thread_pool.test.cc

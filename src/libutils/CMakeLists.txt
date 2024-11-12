@@ -13,6 +13,7 @@ target_sources (libutils
 	src/utils/log/log.cc
 	src/utils/log/Logger.cc
 	src/utils/period/period_utils.cc
+	src/utils/string/string_utils.cc
 	)
 
 set_default_warnings (TARGET libutils)
