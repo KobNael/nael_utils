@@ -27,7 +27,16 @@ jobs:
       with:
         version: 1.63.0
       
-    - name: Create default profile
+    - name: Cache conan dependencies
+      id: cache-dependencies
+      uses: actions/cache@v4
+      with:
+        # conan files are stored in `~/.conan` on Linux
+        path: ~/.conan
+        key: ${{ hashFiles('**/conanfile.py') }}
+
+    - if: ${{ steps.cache-dependencies.outputs.cache-hit != 'true' }}
+      name: Create default profile
       run: conan profile new default --detect
 
     - name: Install dependencies
