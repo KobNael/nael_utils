@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "details/model_streamable.hh"
 #include "details/model_desc_print.hh"
 #include "details/model_desc_att.hh"
 #include "utils/safe_comp/safe_comp.hh"

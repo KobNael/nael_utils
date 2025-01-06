@@ -5,11 +5,15 @@
 find_package (Doxygen OPTIONAL_COMPONENTS dot)
 if(NOT DOXYGEN_FOUND)
 	return()
+else()
+	message("Doxygen found : ${DOXYGEN_EXECUTABLE}")
 endif()
 
 find_package (Sphinx)
 if(NOT SPHINX_FOUND)
 	return()
+else()
+	message("Sphinx found : ${Sphinx_EXECUTABLE}")
 endif()
 
 
@@ -28,7 +32,7 @@ add_custom_target (doc_dox
 
 #call sphinx to generate html documentation
 add_custom_target (doc
-    COMMAND ${SPHINX_EXECUTABLE} -E -c ${CMAKE_CURRENT_BINARY_DIR} -b html ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/html
+    COMMAND ${Sphinx_EXECUTABLE} -E -c ${CMAKE_CURRENT_BINARY_DIR} -b html ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/html
     DEPENDS doc_dox
 	COMMENT "Generating documentation with Sphinx" VERBATIM)
 

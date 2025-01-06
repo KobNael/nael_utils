@@ -9,7 +9,7 @@ set_target_properties (libutils
 
 target_sources (libutils
 	PRIVATE
-	src/utils/model/details/model_desc_print.cc
+	src/utils/model/details/model_streamable.cc
 	src/utils/log/log.cc
 	src/utils/log/Logger.cc
 	src/utils/period/period_utils.cc

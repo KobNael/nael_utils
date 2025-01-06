@@ -93,8 +93,8 @@ class libreflectConan(ConanFile):
 
     #def validate_build(self):
 
-    def build_requirements(self):
-        self.build_requires("cmakemodules/2.3.5@eurodecision/stable")
+    #def build_requirements(self):
+        #self.build_requires("cmakemodules/2.3.5@eurodecision/stable")
 
     #def build_id(self):
 

@@ -4,34 +4,13 @@
 
 #pragma once
 
+#include "utils/model/details/model_streamable.hh"
 #include "utils/log/log.hh"
 #include <boost/preprocessor.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/date_time/posix_time/posix_time_duration.hpp>
 #include <boost/date_time/gregorian/gregorian_types.hpp>
 #include <vector>
-
-namespace details
-{
-
-/**
- * @struct streamable
- * @brief Pure abstract structure, used as base class for struct declared using #MAKE_DTO_STRUCT
- */
-struct streamable
-{
-    /**
-     * @brief Print the structure description in a stream
-     * @param os the stream
-     */
-    virtual std::ostream &stream(std::ostream &os) const = 0;
-};
-
-
-}//details
-
-/** @brief stream operator for streamable structure */
-std::ostream &operator<<(std::ostream &os, details::streamable const &obj);
 
 /**
  * @brief Generate the instruction needed to stream an attribute

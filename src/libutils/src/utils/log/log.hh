@@ -179,7 +179,7 @@ std::ostream &print(std::ostream &os, const std::vector<T> &range)
     COND_STATEMENT(log->shouldLog(io::INFO_LVL)) \
         io.printRange(log->getLog() << header, range);
 /**
- * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::ERROR_LVL
+ * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::DEBUG_LVL
  * @param log the log
  * @param header the message
  * @param range the range

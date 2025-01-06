@@ -5,7 +5,6 @@
 #include "bo/In.hh"
 #include "dto_handler/dto_handler.hh"
 #include <utils/json/json_handler.hh>
-#include <utils/log/log.hh>
 
 namespace po = boost::program_options;
 
