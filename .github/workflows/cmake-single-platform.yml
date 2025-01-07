@@ -8,10 +8,6 @@ on:
   pull_request:
     branches: [ "dev" ]
 
-env:
-  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
-  BUILD_TYPE: Release
-
 jobs:
   build:
     # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
@@ -23,7 +19,7 @@ jobs:
       fail-fast: false
       # Wanna build in Release And Debug
       matrix:
-        build_type: [Debug]
+        build_type: [Release, Debug]
 
     steps:
     # Checkout sources
@@ -82,14 +78,17 @@ jobs:
       working-directory: ${{github.workspace}}/builds/Linux/gcc/13/x86_64/${{matrix.build_type}}/_
       run: make run_unit_tests
     # CPPCheck
-    - name: Run CppCheck
+    - if: ${{ matrix.build_type == 'Debug' }}
+      name: Run CppCheck
       working-directory: ${{github.workspace}}/builds/Linux/gcc/13/x86_64/${{matrix.build_type}}/_
       run: make run_cppcheck
     # Coverage
-    - name: Run Coverage
+    - if: ${{ matrix.build_type == 'Debug' }}
+      name: Run Coverage
       working-directory: ${{github.workspace}}/builds/Linux/gcc/13/x86_64/${{matrix.build_type}}/_
       run: make run_coverage
     # Memcheck
-    - name: Run Valgrind
+    - if: ${{ matrix.build_type == 'Debug' }}
+      name: Run Valgrind
       working-directory: ${{github.workspace}}/builds/Linux/gcc/13/x86_64/${{matrix.build_type}}/_
       run: make run_memcheck
