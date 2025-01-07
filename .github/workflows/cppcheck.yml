@@ -1,5 +1,9 @@
 name: cppcheck-action-test
-on: [push]
+on:
+  push:
+    branches: [ "dev" ]
+  pull_request:
+    branches: [ "dev" ]
 
 jobs:
   build:
@@ -18,4 +22,4 @@ jobs:
         uses: mikeal/publish-to-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH_NAME: 'dev' # your branch name goes here
+
