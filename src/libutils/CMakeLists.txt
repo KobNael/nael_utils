@@ -2,6 +2,10 @@ find_package (Boost REQUIRED)
 
 add_library(libutils)
 
+if (${PROJECT_NAME}_WITH_COVERAGE)
+	enable_coverage(TARGET libutils)
+endif()
+
 set_target_properties (libutils
 	PROPERTIES
 		OUTPUT_NAME libutils

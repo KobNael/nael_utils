@@ -70,14 +70,6 @@ if (${PROJECT_NAME}_WITH_COVERAGE)
 endif ()
 
 # ----------------------------------------------------------------------------
-# Enable clang-tidy
-# ----------------------------------------------------------------------------
-cmake_dependent_option (${PROJECT_NAME}_WITH_CLANGTIDY "enable clang-tidy" OFF "NOT ${PROJECT_NAME}_WITH_COVERAGE" OFF)
-if (${PROJECT_NAME}_WITH_CLANGTIDY)
-	include (clangtidy)
-endif ()
-
-# ----------------------------------------------------------------------------
 # Enable memcheck
 # ----------------------------------------------------------------------------
 option (${PROJECT_NAME}_WITH_VALGRIND "enable valgrind" OFF)

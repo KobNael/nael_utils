@@ -77,15 +77,6 @@ cmake_minimum_required (VERSION 3.16)
 include_guard (GLOBAL)
 
 ### ===============================================================================================
-### Deprecation
-### ===============================================================================================
-
-macro (generate_coverage_reports)
-	message (DEPRECATION "generate_coverage_reports is deprecated, please replace with generate_coverage_report")
-	generate_coverage_report (${ARGV})
-endmacro ()
-
-### ===============================================================================================
 ### Requirements
 ### ===============================================================================================
 
@@ -120,11 +111,6 @@ find_package (gcov REQUIRED)
 ### gcovr
 ### -----------------------------------------------------------------------------------------------
 find_package (gcovr REQUIRED)
-
-if (GCOVR_VERSION_STRING VERSION_EQUAL 7.0)
-	message (FATAL_ERROR "coverage : gcovr 7.0 is not supported"
-		" (issue with source files of more than 10k line)")
-endif ()
 
 ### -----------------------------------------------------------------------------------------------
 ### lcov
@@ -166,7 +152,6 @@ mark_as_advanced (COVERAGE_CFLAGS)
 if (gcovr_FOUND)
 	list (APPEND GCOVR_CMD
 		--gcov-executable "${GCOV_EXECUTABLE}"
-		--exclude ".*/src/.*\\.gendm\\..*"
 		--exclude ".*/src/.*\\.test\\..*"
 		--exclude ".*/tests/src/.*"
 		--exclude ".*/unit_tests/src/.*"
@@ -228,7 +213,7 @@ if (lcov_FOUND)
 		--quiet
 		--capture
 		--no-external
-		--exclude "*/src/*.gendm.*"
+		--ignore-errors unused
 		--exclude "*/src/*.test.*"
 		--exclude "*/tests/src/*"
 		--exclude "*/unit_tests/src/*"
