@@ -94,7 +94,8 @@ jobs:
       run: make run_memcheck
 
     # SonarQube Analysis
-    - name: SonarQube Scan
+    - if: ${{ matrix.build_type == 'Debug' }}
+      name: SonarQube Scan
       uses: SonarSource/sonarqube-scan-action@v4
       env:
         SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }} # Put the name of your token here
