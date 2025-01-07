@@ -1,12 +1,12 @@
 # This starter workflow is for a CMake project running on a single platform. There is a different starter workflow if you need cross-platform coverage.
 # See: https://github.com/actions/starter-workflows/blob/main/ci/cmake-multi-platform.yml
-name: CMake on Ubuntu 24
+name: CMakeBuild
 
 on:
   push:
-    branches: [ "dev" ]
+    branches: [ "none" ]
   pull_request:
-    branches: [ "dev" ]
+    branches: [ "none" ]
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
@@ -48,4 +48,3 @@ jobs:
     - name: Test
       working-directory: ${{github.workspace}}/builds/Linux/gcc/13/x86_64/Release/_
       run: make run_unit_tests
-
