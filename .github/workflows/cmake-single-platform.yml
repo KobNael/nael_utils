@@ -19,7 +19,7 @@ jobs:
       fail-fast: false
       # Wanna build in Release And Debug
       matrix:
-        build_type: [Release, Debug]
+        build_type: [Debug, Release]
 
     steps:
     # Checkout sources
@@ -42,37 +42,32 @@ jobs:
       uses: actions/cache@v4
       with:
         # conan files are stored in `~/.conan` on Linux
-        path: ~/.conan
+        path: ~/.conan2
         key: ${{ matrix.build_type}}-${{ hashFiles('**/conanfile.py') }}
 
     # If no cache found, generate profile
     - if: ${{ steps.cache-dependencies.outputs.cache-hit != 'true' }}
       name: Create default profile
-      run: conan profile new default --detect
+      run: conan profile detect
 
-    # Install dependencies
+    # Build
     - if: ${{ matrix.build_type == 'Release' }}
       name: Install dependencies
       run: >
-        conan install .
+        conan build .
         -s build_type=${{matrix.build_type}}
-        --install-folder=${{github.workspace}}/build
         --build=missing
 
     - if: ${{ matrix.build_type == 'Debug' }}
       name: Install dependencies
       run: >
-        conan install .
+        conan build .
         -s build_type=${{matrix.build_type}}
-        --install-folder=${{github.workspace}}/build
         --build=missing
         -o coverage=ON
         -o cppcheck=ON
         -o valgrind=ON
 
-    # Build
-    - name: Build
-      run: conan build . --install-folder=${{github.workspace}}/build
     # UnitTests
     - name: Run UnitTests
       working-directory: ${{github.workspace}}/builds/Linux/gcc/13/x86_64/${{matrix.build_type}}/_
