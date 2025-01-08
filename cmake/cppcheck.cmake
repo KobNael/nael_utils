@@ -2,7 +2,7 @@
 cppcheck
 --------
 
-This module defines functions to help use the cppcheck tool. 
+This module defines functions to help use the cppcheck tool.
 :command:`enable_cppcheck` enables parsing of the project source files.
 :command:`run_cppcheck` triggers analysis and generates result file.
 
@@ -16,9 +16,9 @@ This module defines functions to help use the cppcheck tool.
 
 .. command:: run_cppcheck
 
-  Automatically call cppcheck to parse the project source files and generate 
+  Automatically call cppcheck to parse the project source files and generate
   result file.
-  The result file is created in ``${CMAKE_BINARY_DIR}/cppcheck-reports``, 
+  The result file is created in ``${CMAKE_BINARY_DIR}/cppcheck-reports``,
   the actual file name is ``cppcheck-results.xml``.
 
 Usage example:
@@ -29,7 +29,7 @@ Usage example:
 
 	 include(cppcheck)
 	 enable_cppcheck()
-    
+
 	 add_library(FooLib FooLib.cc)
     add_executable(FooExe FooExe.cc)
     add_executable(FooTest FooTest.cc)
