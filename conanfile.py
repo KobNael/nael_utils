@@ -12,15 +12,21 @@ from inspect import getsourcefile
 
 class libreflectConan(ConanFile):
     # package reference
-    name = "boost_desc_test"
+    name = "nael_utils"
 
     # metadata
     # binary model
     package_type = "library"
     settings = "os", "compiler", "build_type", "arch"
     options = {
+            "coverage": ["ON","OFF"],
+            "cppcheck": ["ON","OFF"],
+            "valgrind": ["ON","OFF"]
         }
     default_options = {
+            "coverage": "OFF",
+            "cppcheck": "OFF",
+            "valgrind": "OFF"
         }
 
     # folders and layout
@@ -113,6 +119,10 @@ class libreflectConan(ConanFile):
 
         tc = CMakeToolchain(self)
         tc.user_presets_path = False
+        name = self._get_infos()[0]
+        tc.variables[name+"_WITH_COVERAGE"] = self.options.coverage
+        tc.variables[name+"_WITH_CPPCHECK"] = self.options.cppcheck
+        tc.variables[name+"_WITH_VALGRIND"] = self.options.valgrind
         tc.generate()
 
         deps = CMakeDeps(self)

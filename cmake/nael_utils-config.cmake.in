@@ -1,0 +1,18 @@
+@PACKAGE_INIT@
+
+include (CMakeFindDependencyMacro)
+
+# ---------------------------------------------------------------------------
+# Dependencies
+# ---------------------------------------------------------------------------
+
+find_dependency (Boost @NAELUTILS_BOOST_VERSION@)
+
+# ---------------------------------------------------------------------------
+# Targets
+# ---------------------------------------------------------------------------
+if (NOT TARGET nael_utils::nael_utils)
+	include ("${CMAKE_CURRENT_LIST_DIR}/nael_utils-targets.cmake")
+endif ()
+
+list (PREPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/")

@@ -36,3 +36,9 @@ add_custom_target (doc
     DEPENDS doc_dox
 	COMMENT "Generating documentation with Sphinx" VERBATIM)
 
+# ============================================================================
+# Install configuration
+# ============================================================================
+install (DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html/
+	DESTINATION share/doc)
+

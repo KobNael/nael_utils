@@ -28,6 +28,10 @@ source_suffix = ['.rst', '.md']
 
 html_theme = 'sphinx_rtd_theme'
 
+html_theme_options = {
+    'prev_next_buttons_location': 'top'
+}
+
 # Breathe configuration
 breathe_projects = {
     "utils" : ( "@CMAKE_CURRENT_BINARY_DIR@/xml" )
