@@ -69,6 +69,8 @@ find_package (GTest REQUIRED)
 
 include (default_warnings)
 
+enable_testing()
+
 ### ===============================================================================================
 ### Unit tests executable
 ### ===============================================================================================
@@ -108,4 +110,6 @@ add_custom_command (OUTPUT ${unit_tests_reports_path}/unit_tests-results.xml.wit
 	WORKING_DIRECTORY ${unit_tests_reports_path}
 	VERBATIM
 	COMMAND_EXPAND_LISTS)
+
+add_test(NAME unit_tests_ctest COMMAND $<TARGET_FILE:unit_tests>)
 

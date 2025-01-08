@@ -12,18 +12,24 @@ from inspect import getsourcefile
 
 class libreflectConan(ConanFile):
     # package reference
-    name = "nael_utils"
+    author = "Aurélien Questel / questela@gmail.com"
+    url = "https://github.com/KobNael/nael_utils"
+    description = "C++ Toolbox"
 
     # metadata
     # binary model
     package_type = "library"
     settings = "os", "compiler", "build_type", "arch"
     options = {
+            "shared": [True, False],
+            "fPIC": [True, False],
             "coverage": ["ON","OFF"],
             "cppcheck": ["ON","OFF"],
             "valgrind": ["ON","OFF"]
         }
     default_options = {
+            "shared": False,
+            "fPIC": True,
             "coverage": "OFF",
             "cppcheck": "OFF",
             "valgrind": "OFF"
@@ -46,21 +52,24 @@ class libreflectConan(ConanFile):
 
     #def init(self):
 
-    #def set_name(self):
+    def set_name(self):
+        self.name = self._get_infos()[0]
 
     def set_version(self):
         self.version = self._get_infos()[1]
 
     def export(self):
         git = Git(self, self.recipe_folder)
-        scm_url, scm_commit = git.get_url_and_commit()
-        update_conandata(self, {"sources": {"commit": scm_commit, "url": scm_url}})
+        # save the url and commit in conandata.yml
+        git.coordinates_to_conandata()
 
     #def export_sources(self):
 
     # init is called again when doing some conan create.
 
-    #def config_options(self):
+    def config_options(self):
+        if self.settings.os == "Windows":
+            del self.options.fPIC
 
     #def configure(self):
 
@@ -88,14 +97,14 @@ class libreflectConan(ConanFile):
         self.cpp.build.builddirs = [os.path.join("install", f"{self.name}-{self.version}", cmake_config_path)]
 
     def requirements(self):
-        self.requires("boost/1.84.0", transitive_headers=True)
-        self.requires("gtest/1.12.1", transitive_headers=True)
+        self.requires("boost/1.86.0", transitive_headers=True)
+        self.requires("gtest/1.15.0", transitive_headers=True)
 
     def package_id(self):
         self.info.clear()
 
     def validate(self):
-        check_min_cppstd(self, "14")
+        check_min_cppstd(self, "17")
 
     #def validate_build(self):
 
@@ -105,10 +114,9 @@ class libreflectConan(ConanFile):
     #def build_id(self):
 
     def source(self):
+        # we recover the saved url and commit from conandata.yml and use them to get sources
         git = Git(self)
-        sources = self.conan_data["sources"]
-        git.clone(url=sources["url"], target=".")
-        git.checkout(commit=sources["commit"])
+        git.checkout_from_conandata_coordinates()
 
     def generate(self):
         be = VirtualBuildEnv(self)
@@ -119,10 +127,9 @@ class libreflectConan(ConanFile):
 
         tc = CMakeToolchain(self)
         tc.user_presets_path = False
-        name = self._get_infos()[0]
-        tc.variables[name+"_WITH_COVERAGE"] = self.options.coverage
-        tc.variables[name+"_WITH_CPPCHECK"] = self.options.cppcheck
-        tc.variables[name+"_WITH_VALGRIND"] = self.options.valgrind
+        tc.variables[self.name+"_WITH_COVERAGE"] = self.options.coverage
+        tc.variables[self.name+"_WITH_CPPCHECK"] = self.options.cppcheck
+        tc.variables[self.name+"_WITH_VALGRIND"] = self.options.valgrind
         tc.generate()
 
         deps = CMakeDeps(self)
@@ -132,7 +139,7 @@ class libreflectConan(ConanFile):
         cmake = CMake(self)
         cmake.configure()
         cmake.build()
-        #cmake.test(target="run_unit_tests")
+        cmake.test(target="run_unit_tests")
 
     def package(self):
         cmake = CMake(self)
