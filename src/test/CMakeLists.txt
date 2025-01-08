@@ -13,7 +13,7 @@ target_sources (unit_tests
 
 target_link_libraries (unit_tests
 	PRIVATE
-		libutils
+		nael_utils
 		GTest::gtest_main
 	)
 

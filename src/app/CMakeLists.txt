@@ -1,4 +1,4 @@
-find_package (Boost REQUIRED COMPONENTS program_options)
+find_package (Boost ${NAEL_UTILS_BOOST_VERSION} REQUIRED COMPONENTS program_options)
 
 add_executable (boost_desc)
 
@@ -23,7 +23,7 @@ target_include_directories (boost_desc
 
 target_link_libraries (boost_desc
 	PRIVATE
-		libutils
+		nael_utils
 		Boost::boost
 		Boost::json
 		Boost::program_options

@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <utils/string/string_utils.hh>
+#include <nael_utils/string/string_utils.hh>
 
 
 TEST(string_utils, trim)

@@ -12,7 +12,7 @@ from inspect import getsourcefile
 
 class libreflectConan(ConanFile):
     # package reference
-    name = "boost_desc_test"
+    name = "nael_utils"
 
     # metadata
     # binary model

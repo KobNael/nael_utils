@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "utils/model/details/model_streamable.hh"
-#include "utils/log/log.hh"
+#include "nael_utils/model/details/model_streamable.hh"
+#include "nael_utils/log/log.hh"
 #include <boost/preprocessor.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/date_time/posix_time/posix_time_duration.hpp>
