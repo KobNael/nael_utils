@@ -34,9 +34,9 @@ TEST(model_desc, basics)
 TEST(model_desc, print)
 {
     model_test::BasicAttDto basic_obj = model_test::makeBasicAttDto();
-    std::stringstream ss_l, ssref_l;
-    ss_l << basic_obj;
-    ssref_l << "BasicAttDto{"
+    std::ostringstream oss, oss_ref;
+    oss << basic_obj;
+    oss_ref << "BasicAttDto{"
         << "bool_att=0, unsigned_att=1, int_att=2, long_att=3, double_att=4.02"
         << ", enum_att=1, string_att=id, time_duration_att=01:02:03"
         << ", date_att=" << bg::day_clock::local_day()
@@ -44,5 +44,5 @@ TEST(model_desc, print)
         << ", vec_obj_att=[IdDto{id_att=o1},IdDto{id_att=o2}]"
         << ", vec_enum_att=[2,1,0]"
         << "}";
-    ASSERT_EQ( ss_l.str(), ssref_l.str() );
+    ASSERT_EQ( oss.str(), oss_ref.str() );
 }

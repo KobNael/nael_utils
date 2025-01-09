@@ -17,10 +17,10 @@ TEST(capa_period, basics)
     ASSERT_EQ(p1, p2);
 
     //Stream
-    std::stringstream ss_l, ssref_l;
-    ss_l << p1;
-    ssref_l << "(" << p1._period << "/1)";
-    ASSERT_EQ(ss_l.str(), ssref_l.str());
+    std::ostringstream oss, oss_ref;
+    oss << p1;
+    oss_ref << "(" << p1._period << "/1)";
+    ASSERT_EQ(oss.str(), oss_ref.str());
 
     //Invalid Merge
 #ifndef NDEBUG

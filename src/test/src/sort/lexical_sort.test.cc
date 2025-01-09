@@ -4,7 +4,7 @@
 
 struct DataToSort
 {
-    DataToSort(int a_p, int b_p, std::string c_p) : a(a_p), b(b_p), c(c_p) {}
+    DataToSort(int val_a, int val_b, std::string val_c) : a(val_a), b(val_b), c(val_c) {}
     int a = 0;
     int b = 0;
     std::string c = "";
@@ -17,56 +17,56 @@ struct DataToSort
     }
 };
 
-std::ostream &operator<<(std::ostream &os_p, DataToSort const &data_p)
+std::ostream &operator<<(std::ostream &os, DataToSort const &data)
 {
-    return os_p<<"[a="<<data_p.a<<", b="<<data_p.b<<", c="<<data_p.c<<"]";
+    return os<<"[a="<<data.a<<", b="<<data.b<<", c="<<data.c<<"]";
 }
 
 struct CompA : LexicalComparator<DataToSort>
 {
-    bool is_better(DataToSort const &lhs_p, DataToSort const &rhs_p) const
+    bool is_better(DataToSort const &lhs, DataToSort const &rhs) const
     {
-        return lhs_p.a < rhs_p.a;
+        return lhs.a < rhs.a;
     }
-    bool is_equivalent(DataToSort const &lhs_p, DataToSort const &rhs_p) const
+    bool is_equivalent(DataToSort const &lhs, DataToSort const &rhs) const
     {
-        return lhs_p.a == rhs_p.a;
+        return lhs.a == rhs.a;
     }
 };
 
 struct CompATolerance5 : LexicalComparator<DataToSort>
 {
-    bool is_better(DataToSort const &lhs_p, DataToSort const &rhs_p) const
+    bool is_better(DataToSort const &lhs, DataToSort const &rhs) const
     {
-        return lhs_p.a < rhs_p.a;
+        return lhs.a < rhs.a;
     }
-    bool is_equivalent(DataToSort const &lhs_p, DataToSort const &rhs_p) const
+    bool is_equivalent(DataToSort const &lhs, DataToSort const &rhs) const
     {
-        return std::abs(lhs_p.a - rhs_p.a) < 5;
+        return std::abs(lhs.a - rhs.a) < 5;
     }
 };
 
 struct CompB : LexicalComparator<DataToSort>
 {
-    bool is_better(DataToSort const &lhs_p, DataToSort const &rhs_p) const
+    bool is_better(DataToSort const &lhs, DataToSort const &rhs) const
     {
-        return lhs_p.b < rhs_p.b;
+        return lhs.b < rhs.b;
     }
-    bool is_equivalent(DataToSort const &lhs_p, DataToSort const &rhs_p) const
+    bool is_equivalent(DataToSort const &lhs, DataToSort const &rhs) const
     {
-        return lhs_p.b == rhs_p.b;
+        return lhs.b == rhs.b;
     }
 };
 
 struct CompC : LexicalComparator<DataToSort>
 {
-    bool is_better(DataToSort const &lhs_p, DataToSort const &rhs_p) const
+    bool is_better(DataToSort const &lhs, DataToSort const &rhs) const
     {
-        return lhs_p.c.compare(rhs_p.c) < 0;
+        return lhs.c.compare(rhs.c) < 0;
     }
-    bool is_equivalent(DataToSort const &lhs_p, DataToSort const &rhs_p) const
+    bool is_equivalent(DataToSort const &lhs, DataToSort const &rhs) const
     {
-        return lhs_p.c == rhs_p.c;
+        return lhs.c == rhs.c;
     }
 };
 
@@ -88,7 +88,7 @@ TEST(lexical_sort_test, order_1)
 
     lexical_sort(comp.begin(), comp.end(), data.begin(), data.end());
 
-    std::vector<DataToSort> expected_l {
+    std::vector<DataToSort> expected {
         {1, 2, "abc"},
         {1, 2, "bca"},
         {2, 2, "abc"},
@@ -97,7 +97,7 @@ TEST(lexical_sort_test, order_1)
         {3, 2, "bca"},
     };
 
-    EXPECT_EQ(expected_l, data);
+    EXPECT_EQ(expected, data);
 }
 
 TEST(lexical_sort_test, order_2)
@@ -118,7 +118,7 @@ TEST(lexical_sort_test, order_2)
 
     lexical_sort(comp.begin(), comp.end(), data.begin(), data.end());
 
-    std::vector<DataToSort> expected_l {
+    std::vector<DataToSort> expected {
         {1, 2, "abc"},
         {2, 2, "abc"},
         {3, 2, "abc"},
@@ -127,7 +127,7 @@ TEST(lexical_sort_test, order_2)
         {3, 2, "bca"},
     };
 
-    EXPECT_EQ(expected_l, data);
+    EXPECT_EQ(expected, data);
 }
 
 TEST(lexical_sort_test, order_3)
@@ -148,7 +148,7 @@ TEST(lexical_sort_test, order_3)
 
     lexical_sort(comp.begin(), comp.end(), data.begin(), data.end());
 
-    std::vector<DataToSort> expected_l {
+    std::vector<DataToSort> expected {
         {1, 2, "abc"},
         {2, 2, "abc"},
         {3, 2, "abc"},
@@ -157,12 +157,12 @@ TEST(lexical_sort_test, order_3)
         {3, 2, "bca"},
     };
 
-    EXPECT_EQ(expected_l, data);
+    EXPECT_EQ(expected, data);
 }
 
 TEST(lexical_sort_test, order_3_ptr)
 {
-    std::vector<DataToSort> data_l {
+    std::vector<DataToSort> data {
         {3, 2, "abc"},
         {2, 2, "abc"},
         {1, 2, "abc"},
@@ -171,15 +171,15 @@ TEST(lexical_sort_test, order_3_ptr)
         {1, 2, "bca"},
     };
 
-    std::vector< LexicalComparator<DataToSort>* > comp_l {
+    std::vector< LexicalComparator<DataToSort>* > comp {
         new CompB(),
         new CompC(),
         new CompA(),
     };
 
-    lexical_sort(comp_l.begin(), comp_l.end(), data_l.begin(), data_l.end());
+    lexical_sort(comp.begin(), comp.end(), data.begin(), data.end());
 
-    std::vector<DataToSort> expected_l {
+    std::vector<DataToSort> expected {
         {1, 2, "abc"},
         {2, 2, "abc"},
         {3, 2, "abc"},
@@ -188,11 +188,11 @@ TEST(lexical_sort_test, order_3_ptr)
         {3, 2, "bca"},
     };
 
-    EXPECT_EQ(expected_l, data_l);
+    EXPECT_EQ(expected, data);
 
-    for (auto &&ptr_l : comp_l)
+    for (auto &&ptr : comp)
     {
-        delete ptr_l;
+        delete ptr;
     }
 }
 
@@ -215,7 +215,7 @@ TEST(lexical_sort_test, tolerance)
 
     lexical_sort(comp.begin(), comp.end(), data.begin(), data.end());
 
-    std::vector<DataToSort> expected_l {
+    std::vector<DataToSort> expected {
         {2, 2, "bca"},
         {6, 2, "bca"},
         {7, 2, "bca"},
@@ -224,7 +224,7 @@ TEST(lexical_sort_test, tolerance)
         {13, 2, "abc"},
     };
 
-    EXPECT_EQ(expected_l, data);
+    EXPECT_EQ(expected, data);
 }
 
 TEST(lexical_sort_test, tolerance_2criterion)
@@ -256,7 +256,7 @@ TEST(lexical_sort_test, tolerance_2criterion)
     /// un groupe d'équivalence est défini tel que toutes les valeurs sont égales entre elles selon l'opérateur de comparaison
     /// Au sein de chaque groupe d'équivalence on tri ensuite dans l'ordre alphabétique.
     /// Ce qui donne la solution suivante :
-    std::vector<DataToSort> expected_l {
+    std::vector<DataToSort> expected {
         {6, 2, "abc"},
         {2, 2, "bca"},
         {10, 2, "abc"},
@@ -265,5 +265,5 @@ TEST(lexical_sort_test, tolerance_2criterion)
         {13, 2, "abc"},
     };
 
-    EXPECT_EQ(expected_l, data);
+    EXPECT_EQ(expected, data);
 }

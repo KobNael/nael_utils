@@ -145,15 +145,15 @@ namespace safecomp
     /**\return true if val_p is not a number */
     template<typename T, typename = typename std::enable_if<std::is_floating_point<T>::value, T>::type>
     inline bool isnan(T val_p) {
-        volatile double tmp_l = val_p;
-        return val_p == std::numeric_limits<T>::quiet_NaN() || tmp_l != val_p;
+        volatile double tmp = val_p;
+        return val_p == std::numeric_limits<T>::quiet_NaN() || tmp != val_p;
     }
 
     /**\return true if val_p represents infinity*/
     template<typename T, typename = typename std::enable_if<std::is_floating_point<T>::value, T>::type>
     inline int isinf(T val_p) {
-        volatile double tmp_l = val_p;
-        if ((tmp_l == val_p) && ((tmp_l - val_p) != 0.0))
+        volatile double tmp = val_p;
+        if ((tmp == val_p) && ((tmp - val_p) != 0.0))
             return (val_p < 0.0 ? -1 : 1);
         else return 0;
     }

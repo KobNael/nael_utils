@@ -8,25 +8,25 @@
 
 namespace po = boost::program_options;
 
-int exitAndReturn(int retCode_p){
+int exitAndReturn(int retCode){
 	io::ClearLogger();
 	//Return
-	return retCode_p;
+	return retCode;
 }
 
-int processArgs(po::variables_map const &vm_p)
+int processArgs(po::variables_map const &vm)
 {
-	if( vm_p.count("debug") )
+	if( vm.count("debug") )
 	{
 		io::SetLogLevel(io::DEBUG_LVL);
 	}
 	//input
-	if( vm_p.count("input-file") )
+	if( vm.count("input-file") )
 	{
 		//Import dto
 	    dto::DtoContext *dto_context = new dto::DtoContext();
-		INFOLOG << "Import " << vm_p["input-file"].as< std::string >() << std::endl;
-		json::import_from_file(vm_p["input-file"].as< std::string >(), *dto_context);
+		INFOLOG << "Import " << vm["input-file"].as< std::string >() << std::endl;
+		json::import_from_file(vm["input-file"].as< std::string >(), *dto_context);
 		DBUGLOG << "Got " << *dto_context << std::endl;
 		//convert dto to bo
 		bo::BoContext *bo_context = new bo::BoContext();
@@ -37,9 +37,9 @@ int processArgs(po::variables_map const &vm_p)
 			INFOLOG << p << std::endl;
 		}
 		//export dto to file
-		if( vm_p.count("output-file") )
+		if( vm.count("output-file") )
 		{
-			json::export_to_file(vm_p["output-file"].as< std::string >(), *dto_context);
+			json::export_to_file(vm["output-file"].as< std::string >(), *dto_context);
 		}
 		delete dto_context;
 		delete bo_context;
