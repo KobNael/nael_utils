@@ -3,12 +3,23 @@ include (unit_tests)
 
 target_sources (unit_tests
 	PRIVATE
-	src/capa_periods.test.cc
-	src/lexical_sort.test.cc
-	src/periods.test.cc
-	src/simple.test.cc
-	src/string_utils.test.cc
-    src/thread_pool.test.cc
+	# json utils
+		#todo
+	# log utils
+		#todo
+	# model utils
+		#todo
+	# period utils
+	src/period/capa_periods.test.cc
+	src/period/periods.test.cc
+	# safe_comp utils
+		#todo
+	# sort utils
+	src/sort/lexical_sort.test.cc
+	# string utils
+	src/string/string_utils.test.cc
+	# thread utils
+    src/thread/thread_pool.test.cc
 )
 
 target_link_libraries (unit_tests

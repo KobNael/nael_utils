@@ -7,10 +7,31 @@
 namespace bg = boost::gregorian;
 namespace bpt = boost::posix_time;
 
+TEST(capa_period, basics)
+{
+    bg::date d = bg::day_clock::local_day();
+
+    //Constructor
+    capa_period p1(1l,  bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)) ),
+        p2(1, time_period(bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10))) );
+    ASSERT_EQ(p1, p2);
+
+    //Stream
+    std::stringstream ss_l, ssref_l;
+    ss_l << p1;
+    ssref_l << "(" << p1._period << "/1)";
+    ASSERT_EQ(ss_l.str(), ssref_l.str());
+
+    //Invalid Merge
+#ifndef NDEBUG
+    ASSERT_FALSE( can_merge(p1, p2 ) ) << "Periods can not be merged";
+    ASSERT_DEATH( merge(p1, p2 ), ".*Assertion `can_merge\\(cp1, cp2\\)' failed.*" );
+#endif
+}
+
 TEST(capa_period, get_inter)
 {
-    bg::date d = bg::day_clock::local_day();;
-
+    bg::date d = bg::day_clock::local_day();
     //Declarations
     LCapaPeriod mylist1, mylist2, interRes, expRes;
 
@@ -92,7 +113,7 @@ TEST(capa_period, get_inter)
 
 TEST(capa_period,get_union)
 {
-    bg::date d = bg::day_clock::local_day();;
+    bg::date d = bg::day_clock::local_day();
 
     //Declarations
     LCapaPeriod mylist1, mylist2, unionRes, expRes;
@@ -210,7 +231,7 @@ TEST(capa_period,get_union)
 
 TEST(capa_period,get_diff)
 {
-    bg::date d = bg::day_clock::local_day();;
+    bg::date d = bg::day_clock::local_day();
 
     //Declarations
     LCapaPeriod mylist1, mylist2, diffRes, expRes;
@@ -325,7 +346,7 @@ TEST(capa_period,get_diff)
 
 TEST(capa_period, shortCuts)
 {
-    bg::date d = bg::day_clock::local_day();;
+    bg::date d = bg::day_clock::local_day();
 
     LCapaPeriod mylist { capa_period(1, bpt::ptime(d,bpt::hours(10)), bpt::ptime(d,bpt::hours(12))) };
     LCapaPeriod expRes;
@@ -372,7 +393,7 @@ TEST(capa_period, shortCuts)
 
 TEST(capa_period, conversion_capa_period)
 {
-    bg::date d = bg::day_clock::local_day();;
+    bg::date d = bg::day_clock::local_day();
 
     LCapaPeriod myCapaList { capa_period(10, bpt::ptime(d,bpt::hours(10)), bpt::ptime(d,bpt::hours(12)) ) };
     LTimePeriod mylist { time_period( bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(13)) ) };
