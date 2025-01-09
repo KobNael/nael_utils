@@ -90,6 +90,7 @@ public: \
             STREAM_ATT_VALUES(att_seq)\
             return os << "}"; \
         }\
+        bool operator==(struct_name const&) const = default;\
     };\
     BOOST_DESCRIBE_STRUCT(struct_name, (), (GET_ATT_NAMES(att_seq)))
 

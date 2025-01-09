@@ -37,4 +37,11 @@ namespace model_test
         ((std::vector<IdDto>)(vec_obj_att))
         ((std::vector<EnumDto>)(vec_enum_att))
     )
+    //Small Context
+    MAKE_DTO_STRUCT(
+        BasicContextDto,
+        ((bool)(bool_att))
+        ((std::vector<IdDto>)(vec_id_obj))
+        ((std::vector<BasicAttDto>)(vec_basic_obj))
+    )
 } //namespace model_test

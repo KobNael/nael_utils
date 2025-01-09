@@ -31,4 +31,11 @@ namespace model_test
         basic_obj.vec_enum_att.push_back(VAL_1);
         return basic_obj;
     }
+    IdDto makeIdDto(std::string const &id_p)
+    {
+        IdDto obj;
+        obj.id_att = id_p;
+        return obj;
+    }
+
 } //namespace model_test
