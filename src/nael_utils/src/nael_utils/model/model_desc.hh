@@ -94,6 +94,24 @@ public: \
     BOOST_DESCRIBE_STRUCT(struct_name, (), (GET_ATT_NAMES(att_seq)))
 
 /**
+ * @brief allow the declaration of an enum
+ * @code{cpp}
+ *  MAKE_DTO_ENUM(
+ *      //Name
+ *      EnumDto,
+ *      //Values
+ *      VAL_1,
+ *      VAL_2,
+ *      VAL_3
+ *  )
+ * @endcode
+ * @remark it is just an alias for BOOST_DEFINE_ENUM
+ * @remark these structures are serializable and streamable
+ * @see  json::import_from_file() and json::export_to_file()
+ */
+#define MAKE_DTO_ENUM BOOST_DEFINE_ENUM
+
+/**
  * @brief Generate an editable attribute std::map<key, value> name along with its getters
  * @code{cpp}
  *     MAKE_MAP(std::string, int, values)

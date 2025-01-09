@@ -86,7 +86,7 @@ MAKE_DTO_STRUCT(
 )
 
 //List of known parameters
-BOOST_DEFINE_ENUM( ParamaterNameDto,
+MAKE_DTO_ENUM( ParamaterNameDto,
     //Horizon definition
     SCHEDULE_DATE, SCHEDULE_STARTING_TIME, SCHEDULE_DURATION,
     //Pre process configuration
