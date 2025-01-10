@@ -11,14 +11,20 @@ namespace model_test
         //Name
         EnumDto,
         //Values
-        VAL_1,
-        VAL_2,
-        VAL_3
+        PARAM_1,
+        PARAM_2,
+        PARAM_3
     )
     //EmptyStruct
     MAKE_DTO_STRUCT(
         IdDto,
         ((std::string)(id_att))
+    )
+    //Param
+    MAKE_DTO_STRUCT(
+        ParamDto,
+        ((EnumDto)(param_att))
+        ((std::string)(val_att))
     )
     //Struct with basic attributes
     MAKE_DTO_STRUCT(
@@ -43,5 +49,6 @@ namespace model_test
         ((bool)(bool_att))
         ((std::vector<IdDto>)(vec_id_obj))
         ((std::vector<BasicAttDto>)(vec_basic_obj))
+        ((std::vector<ParamDto>)(vec_param_obj))
     )
 } //namespace model_test

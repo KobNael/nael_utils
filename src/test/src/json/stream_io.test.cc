@@ -5,21 +5,65 @@
 
 #include <nael_utils/json/json_handler.hh>
 
-TEST(stream_io, export_import)
-{
-    model_test::BasicContextDto context;
-    context.bool_att=false;
-    //Push some simple object
-    context.vec_id_obj.push_back( model_test::makeIdDto("idA") );
-    context.vec_id_obj.push_back( model_test::makeIdDto("idB") );
-    //Push some complex objects
-    context.vec_basic_obj.push_back( model_test::makeBasicAttDto("obj1") );
-    context.vec_basic_obj.push_back( model_test::makeBasicAttDto("obj2") );
-    context.vec_basic_obj.push_back( model_test::makeBasicAttDto("obj3") );
+/**
+ * Class test for filesystem helpers
+ */
+class stream_io: public ::testing::Test {
+protected:
+    //SetUp (fill a basic context)
+	virtual void SetUp()
+    {
+        _context = new model_test::BasicContextDto();
+        //Fill the context
+        _context->bool_att=false;
+        //Push some simple object
+        _context->vec_id_obj.push_back( model_test::makeIdDto("idA") );
+        _context->vec_id_obj.push_back( model_test::makeIdDto("idB") );
+        //Push some complex objects
+        _context->vec_basic_obj.push_back( model_test::makeBasicAttDto("obj1") );
+        _context->vec_basic_obj.push_back( model_test::makeBasicAttDto("obj2") );
+        _context->vec_basic_obj.push_back( model_test::makeBasicAttDto("obj3") );
+        //Push some param value
+        _context->vec_param_obj.push_back( model_test::makeParamDto( model_test::PARAM_2, "val_PARAM_2") );
+        _context->vec_param_obj.push_back( model_test::makeParamDto( model_test::PARAM_1, "val_PARAM_1") );
+        _context->vec_param_obj.push_back( model_test::makeParamDto( model_test::PARAM_3, "val_PARAM_3") );
+    }
 
+    //TearDown (do nothing)
+	virtual void TearDown()
+    {}
+
+    //Method of comparison
+    void compare_contexts(model_test::BasicContextDto &c1, model_test::BasicContextDto &c2)
+    {
+        //They should be identical to the reference
+        ASSERT_EQ(*_context, c1);
+        ASSERT_EQ(*_context, c2);
+        //Check vector elements
+        std::vector<std::string> new_ids, ref_ids{"idA", "idB"};
+        std::transform(
+            c1.vec_id_obj.begin(), c1.vec_id_obj.end(),
+            std::back_inserter(new_ids),
+            [](auto&& obj) { return obj.id_att; });
+        ASSERT_EQ(new_ids, ref_ids);
+
+        //Modify the new contexts
+        c1.vec_basic_obj.push_back( model_test::makeBasicAttDto("new") );
+        c2.bool_att=true;
+        //They should be different now
+        ASSERT_NE(*_context, c1);
+        ASSERT_NE(*_context, c2);
+    }
+
+    //Reference context
+    model_test::BasicContextDto *_context;
+};
+
+TEST_F(stream_io, export_import)
+{
     //Export
     std::ostringstream oss;
-    json::export_to_stream(oss, context);
+    json::export_to_stream(oss, *_context);
 
     //Reimport in a new contexts
     model_test::BasicContextDto new_context, new_context2;
@@ -28,42 +72,20 @@ TEST(stream_io, export_import)
     std::istringstream iss2(oss.str());
     json::import_from_stream(iss2, new_context2);
 
-    //They should be identical
-    ASSERT_EQ(context, new_context);
-    ASSERT_EQ(context, new_context2);
-    //Modify the new contexts
-    new_context.vec_basic_obj.push_back( model_test::makeBasicAttDto("new") );
-    new_context2.bool_att=true;
-    //They should be different now
-    ASSERT_NE(context, new_context);
-    ASSERT_NE(context, new_context2);
+    //Test
+    compare_contexts(new_context, new_context2);
 }
 
-TEST(stream_io, export_import_file)
+TEST_F(stream_io, export_import_file)
 {
-    model_test::BasicContextDto context;
-    context.bool_att=false;
-    //Push some simple object
-    context.vec_id_obj.push_back( model_test::makeIdDto("idA") );
-    context.vec_id_obj.push_back( model_test::makeIdDto("idB") );
-    //Push some complex objects
-    context.vec_basic_obj.push_back( model_test::makeBasicAttDto("obj1") );
-    context.vec_basic_obj.push_back( model_test::makeBasicAttDto("obj2") );
-    context.vec_basic_obj.push_back( model_test::makeBasicAttDto("obj3") );
-
     //Export
-    json::export_to_file("export.json", context);
+    json::export_to_file("export.json", *_context);
+
     //Reimport in a new contexts
     model_test::BasicContextDto new_context, new_context2;
     json::import_from_file("export.json", new_context);
     json::import_from_file("export.json", new_context2);
-    //They should be identical
-    ASSERT_EQ(context, new_context);
-    ASSERT_EQ(context, new_context2);
-    //Modify the new contexts
-    new_context.vec_basic_obj.push_back( model_test::makeBasicAttDto("new") );
-    new_context2.bool_att=true;
-    //They should be different now
-    ASSERT_NE(context, new_context);
-    ASSERT_NE(context, new_context2);
+
+    //Test
+    compare_contexts(new_context, new_context2);
 }

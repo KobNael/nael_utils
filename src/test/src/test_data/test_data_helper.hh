@@ -1,21 +1,29 @@
 #pragma once
+
+#include "test_data_model.hh"
+
 #include <string>
 
 namespace model_test
 {
-    struct BasicAttDto;
-    struct IdDto;
 
     /**
      * @brief Create and return a BasicAttDto object
-     * @param id_p the value of the string attribute
+     * @param id the value of the string attribute
      */
-    BasicAttDto makeBasicAttDto(std::string const &id_p="id");
+    BasicAttDto makeBasicAttDto(std::string const &id="id");
 
     /**
      * @brief Create and return an IdDto object
-     * @param id_p the value of the string attribute
+     * @param id the value of the string attribute
      */
-    IdDto makeIdDto(std::string const &id_p="id");
+    IdDto makeIdDto(std::string const &id="id");
+
+    /**
+     * @brief Create and return an ParamDto object
+     * @param param the enum value corresponding to the parameter
+     * @param val the value
+     */
+    ParamDto makeParamDto(EnumDto param, std::string const &val);
 
 } //namespace model_test
