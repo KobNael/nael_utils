@@ -2,8 +2,9 @@
  * @file json_handler.hh
  */
 #pragma once
+
+#include <nael_utils/json/details/converter.hh>
 #include <fstream>
-#include "details/converter.hh"
 
 namespace json
 {

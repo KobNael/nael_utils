@@ -2,10 +2,10 @@
 
 #pragma once
 
-#include "details/model_streamable.hh"
-#include "details/model_desc_print.hh"
-#include "details/model_desc_att.hh"
-#include "nael_utils/safe_comp/safe_comp.hh"
+#include <nael_utils/model/details/model_streamable.hh>
+#include <nael_utils/model/details/model_desc_print.hh>
+#include <nael_utils/model/details/model_desc_att.hh>
+#include <nael_utils/safe_comp/safe_comp.hh>
 
 #include <boost/describe.hpp>
 

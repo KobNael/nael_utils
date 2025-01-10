@@ -1,9 +1,7 @@
 /**
  * @file log.cc
  */
-#include "nael_utils/log/log.hh"
-#include "nael_utils/log/Logger.hh"
-
+#include <nael_utils/log/log.hh>
 
 namespace io
 {
