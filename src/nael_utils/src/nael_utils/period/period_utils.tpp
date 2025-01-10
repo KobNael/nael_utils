@@ -203,17 +203,17 @@ std::list<PeriodT> merge(std::list<PeriodT> const&periods1, std::list<PeriodU> c
 }
 
 /* Compute the union of two lists of Periods */
-template<typename PeriodT>
-std::list<PeriodT> get_union(std::list<PeriodT> const&periods1, std::list<PeriodT> const& periods2, bool merge_adjacent)
+template<typename PeriodT, typename PeriodU>
+std::list<PeriodT> get_union(std::list<PeriodT> const&periods1, std::list<PeriodU> const& periods2, bool merge_adjacent)
 {
-    return merge<PeriodT, PeriodT, details::MakeUnion>(periods1, periods2, merge_adjacent);
+    return merge<PeriodT, PeriodU, details::MakeUnion>(periods1, periods2, merge_adjacent);
 }
 
 /* Compute the difference of two lists of Periods */
-template<typename PeriodT>
-std::list<PeriodT> get_diff(std::list<PeriodT> const&periods1, std::list<PeriodT> const& periods2, bool merge_adjacent)
+template<typename PeriodT, typename PeriodU>
+std::list<PeriodT> get_diff(std::list<PeriodT> const&periods1, std::list<PeriodU> const& periods2, bool merge_adjacent)
 {
-    return merge<PeriodT, PeriodT, details::MakeDiff>(periods1, periods2, merge_adjacent);
+    return merge<PeriodT, PeriodU, details::MakeDiff>(periods1, periods2, merge_adjacent);
 }
 
 
