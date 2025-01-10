@@ -104,7 +104,7 @@ class libreflectConan(ConanFile):
         self.info.clear()
 
     def validate(self):
-        check_min_cppstd(self, "17")
+        check_min_cppstd(self, "20")
 
     #def validate_build(self):
 
