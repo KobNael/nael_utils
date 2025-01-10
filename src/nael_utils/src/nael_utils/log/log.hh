@@ -1,15 +1,17 @@
-#pragma once
-
 /**
  *@file log.hh
  *@brief log utilities
  */
 
-#include <iostream>
+#pragma once
+
 #include <nael_utils/log/Logger.hh>
+
+#include <iostream>
+#include <vector>
+
 #include <boost/range/has_range_iterator.hpp>
 #include <boost/type_traits/has_left_shift.hpp>
-#include <vector>
 
 namespace io
 {

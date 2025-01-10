@@ -9,7 +9,7 @@ target_sources (unit_tests
     # json utils
     src/json/stream_io.test.cc
     # log utils
-        #todo
+    src/log/log_utils.test.cc
     # model utils
     src/model/model_desc.test.cc
     # period utils
