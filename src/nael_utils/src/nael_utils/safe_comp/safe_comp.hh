@@ -62,7 +62,7 @@ namespace safecomp
     template<typename T, typename = typename std::enable_if<!std::is_floating_point<T>::value, T>::type>
     inline bool neq(T lhs_p, T rhs_p)
     {
-        return !eq(lhs_p, rhs_p);
+        return !eq<T>(lhs_p, rhs_p);
     }
 
 ///////////////////
@@ -125,21 +125,21 @@ namespace safecomp
     template<typename T, typename = typename std::enable_if<std::is_floating_point<T>::value, T>::type>
     inline bool isneg(T val_p, T epsilon_p=1e-6)
     {
-        return lt(val_p, 0, epsilon_p);
+        return lt<T>(val_p, 0., epsilon_p);
     }
 
     /**\return lhs_p > \f$ \epsilon\f$ */
     template<typename T, typename = typename std::enable_if<std::is_floating_point<T>::value, T>::type>
     inline bool ispos(T val_p, T epsilon_p=1e-6)
     {
-        return gt(val_p, 0, epsilon_p);
+        return gt<T>(val_p, 0., epsilon_p);
     }
 
     /**\return is the difference between lhs_p and the closest integer \f$\leq \epsilon\f$ */
     template<typename T, typename = typename std::enable_if<std::is_floating_point<T>::value, T>::type>
     inline bool isint(T val_p, T epsilon_p=1e-6)
     {
-        return eq(round(val_p), val_p, epsilon_p);
+        return eq<T>(round(val_p), val_p, epsilon_p);
     }
 
     /**\return true if val_p is not a number */

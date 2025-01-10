@@ -16,7 +16,7 @@ target_sources (unit_tests
     src/period/capa_periods.test.cc
     src/period/periods.test.cc
     # safe_comp utils
-        #todo
+    src/safe_comp/safe_comp.test.cc
     # sort utils
     src/sort/lexical_sort.test.cc
     # string utils
