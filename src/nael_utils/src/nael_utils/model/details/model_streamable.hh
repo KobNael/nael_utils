@@ -19,6 +19,11 @@ struct streamable
      * @param os the stream
      */
     virtual std::ostream &stream(std::ostream &os) const = 0;
+
+    /**
+     * @brief Default Comparison operator
+     */
+    bool operator==(streamable const&) const = default;
 };
 
 

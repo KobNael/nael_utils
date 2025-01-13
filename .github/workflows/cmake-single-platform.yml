@@ -52,16 +52,18 @@ jobs:
 
     # Build
     - if: ${{ matrix.build_type == 'Release' }}
-      name: Install dependencies
+      name: Build
       run: >
         conan build .
+        -s compiler.cppstd=gnu20
         -s build_type=${{matrix.build_type}}
         --build=missing
 
     - if: ${{ matrix.build_type == 'Debug' }}
-      name: Install dependencies
+      name: Build
       run: >
         conan build .
+        -s compiler.cppstd=gnu20
         -s build_type=${{matrix.build_type}}
         --build=missing
         -o coverage=ON

@@ -2,10 +2,10 @@
 
 #pragma once
 
-#include "details/model_streamable.hh"
-#include "details/model_desc_print.hh"
-#include "details/model_desc_att.hh"
-#include "nael_utils/safe_comp/safe_comp.hh"
+#include <nael_utils/model/details/model_streamable.hh>
+#include <nael_utils/model/details/model_desc_print.hh>
+#include <nael_utils/model/details/model_desc_att.hh>
+#include <nael_utils/safe_comp/safe_comp.hh>
 
 #include <boost/describe.hpp>
 
@@ -90,8 +90,27 @@ public: \
             STREAM_ATT_VALUES(att_seq)\
             return os << "}"; \
         }\
+        bool operator==(struct_name const&) const = default;\
     };\
     BOOST_DESCRIBE_STRUCT(struct_name, (), (GET_ATT_NAMES(att_seq)))
+
+/**
+ * @brief allow the declaration of an enum
+ * @code{cpp}
+ *  MAKE_DTO_ENUM(
+ *      //Name
+ *      EnumDto,
+ *      //Values
+ *      VAL_1,
+ *      VAL_2,
+ *      VAL_3
+ *  )
+ * @endcode
+ * @remark it is just an alias for BOOST_DEFINE_ENUM
+ * @remark these structures are serializable and streamable
+ * @see  json::import_from_file() and json::export_to_file()
+ */
+#define MAKE_DTO_ENUM BOOST_DEFINE_ENUM
 
 /**
  * @brief Generate an editable attribute std::map<key, value> name along with its getters

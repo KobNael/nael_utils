@@ -7,10 +7,42 @@
 namespace bg = boost::gregorian;
 namespace bpt = boost::posix_time;
 
+TEST(capa_period, basics)
+{
+    bg::date d = bg::day_clock::local_day();
+
+    //Constructor
+    capa_period p1(1l,  bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)) ),
+        p2(1, time_period(bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10))) );
+    ASSERT_EQ(p1, p2);
+
+    //Stream
+    std::ostringstream oss, oss_ref;
+    oss << p1;
+    oss_ref << "(" << p1._period << "/1)";
+    ASSERT_EQ(oss.str(), oss_ref.str());
+
+    //Invalid Merge
+#ifndef NDEBUG
+    ASSERT_FALSE( can_merge(p1, p2 ) ) << "Periods can not be merged";
+    ASSERT_DEATH( merge(p1, p2 ), ".*Assertion `can_merge\\(cp1, cp2\\)' failed.*" );
+#endif
+
+    time_period p(bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)));
+    capa_period cp1(1l, p);
+    ASSERT_EQ(cp1._period, p);
+    ASSERT_EQ(cp1._capa, 1l);
+    ASSERT_EQ(cp1.begin(), p.begin());
+    ASSERT_EQ(cp1.end(), p.end());
+
+    //bool intersect(capa_period const &cp) const { return _period.intersects(cp._period); }
+    //bool contains(boost::posix_time::ptime const &t) const { return _period.contains(t); }
+
+}
+
 TEST(capa_period, get_inter)
 {
-    bg::date d = bg::day_clock::local_day();;
-
+    bg::date d = bg::day_clock::local_day();
     //Declarations
     LCapaPeriod mylist1, mylist2, interRes, expRes;
 
@@ -88,11 +120,22 @@ TEST(capa_period, get_inter)
     ASSERT_EQ(interRes, expRes);
     interRes = get_inter(mylist1, mylist2);
     ASSERT_EQ(interRes, expRes);
+
+    //null sum
+    mylist1 = { capa_period(2, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10))) };
+    mylist2 = { capa_period(0, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::time_duration(9,30,0)))
+            , capa_period(-2, bpt::ptime(d,bpt::time_duration(9,30,0)) , bpt::ptime(d,bpt::hours(10))) };
+
+    expRes = { capa_period(-2, bpt::ptime(d,bpt::time_duration(9,30,0)) , bpt::ptime(d,bpt::hours(10))) };
+    interRes = get_inter(mylist2, mylist1, false);
+    ASSERT_EQ(interRes, expRes);
+    interRes = get_inter(mylist1, mylist2, false);
+    ASSERT_EQ(interRes, expRes);
 }
 
-TEST(capa_period,get_union)
+TEST(capa_period, get_union)
 {
-    bg::date d = bg::day_clock::local_day();;
+    bg::date d = bg::day_clock::local_day();
 
     //Declarations
     LCapaPeriod mylist1, mylist2, unionRes, expRes;
@@ -206,11 +249,23 @@ TEST(capa_period,get_union)
                     , capa_period(1, bpt::ptime(d,bpt::hours(12)) , bpt::ptime(d,bpt::hours(15))) };
     ASSERT_EQ(get_union(mylist1, mylist2, true), expRes);
     ASSERT_EQ(get_union(mylist2, mylist1, true), expRes);
+
+    //null sum
+    mylist1 = { capa_period(2, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10))) };
+    mylist2 = { capa_period(-1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::time_duration(9,30,0)))
+            , capa_period(-2, bpt::ptime(d,bpt::time_duration(9,30,0)) , bpt::ptime(d,bpt::hours(10))) };
+
+    expRes = { capa_period(1, bpt::ptime(d,bpt::hours( 9)) , bpt::ptime(d,bpt::time_duration(9,30,0))) };
+    unionRes = get_union(mylist2, mylist1, false);
+    ASSERT_EQ(unionRes, expRes);
+    unionRes = get_union(mylist1, mylist2, false);
+    ASSERT_EQ(unionRes, expRes);
+
 }
 
-TEST(capa_period,get_diff)
+TEST(capa_period, get_diff)
 {
-    bg::date d = bg::day_clock::local_day();;
+    bg::date d = bg::day_clock::local_day();
 
     //Declarations
     LCapaPeriod mylist1, mylist2, diffRes, expRes;
@@ -325,7 +380,7 @@ TEST(capa_period,get_diff)
 
 TEST(capa_period, shortCuts)
 {
-    bg::date d = bg::day_clock::local_day();;
+    bg::date d = bg::day_clock::local_day();
 
     LCapaPeriod mylist { capa_period(1, bpt::ptime(d,bpt::hours(10)), bpt::ptime(d,bpt::hours(12))) };
     LCapaPeriod expRes;
@@ -370,24 +425,86 @@ TEST(capa_period, shortCuts)
 
 }
 
-TEST(capa_period, conversion_capa_period)
+TEST(capa_period, conversion)
 {
-    bg::date d = bg::day_clock::local_day();;
+    bg::date d = bg::day_clock::local_day();
 
+    //----------------
+    // Period => Capa
+    //----------------
     LCapaPeriod myCapaList { capa_period(10, bpt::ptime(d,bpt::hours(10)), bpt::ptime(d,bpt::hours(12)) ) };
-    LTimePeriod mylist { time_period( bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(13)) ) };
-    LCapaPeriod expRes { capa_period(10, bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(12))) };
-
-    //No union since useless
+    LTimePeriod mylist {
+        time_period( bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(11)) )
+        , time_period( bpt::ptime(d,bpt::hours(13)), bpt::ptime(d,bpt::hours(14)) ) };
+    LCapaPeriod expCapaRes { capa_period(10, bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(12))) };
+    //No union since it make non sense
 
     //Intersection
     ASSERT_EQ( get_inter( myCapaList, time_period( bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(13)) ) )
-            ,  expRes );
-    ASSERT_EQ( get_inter( myCapaList, mylist )
-            , expRes );
+            ,  expCapaRes );
     ASSERT_EQ( get_inter(
                 capa_period(10, bpt::ptime(d,bpt::hours(10)), bpt::ptime(d,bpt::hours(12)))
                 , time_period(bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(12))) )
+            ,  expCapaRes );
+    expCapaRes = { capa_period(10, bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11))) };
+    ASSERT_EQ( get_inter( myCapaList, mylist )
+            , expCapaRes );
+
+    //Difference
+    ASSERT_EQ( get_diff( myCapaList, time_period( bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(13)) ) )
+            , (LCapaPeriod) {} );
+    expCapaRes = { capa_period(10, bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
+    ASSERT_EQ( get_diff( myCapaList, mylist )
+            , expCapaRes );
+    ASSERT_EQ( get_diff(
+                capa_period(10, bpt::ptime(d,bpt::hours(10)), bpt::ptime(d,bpt::hours(12)))
+                , time_period(bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(12))) )
+            , (LCapaPeriod) {} );
+
+    //----------------
+    // Capa => Period
+    //----------------
+    mylist = { time_period(bpt::ptime(d,bpt::hours(10)), bpt::ptime(d,bpt::hours(12)) ) };
+    myCapaList = {
+        capa_period(10, bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(11)) )
+        , capa_period(10, bpt::ptime(d,bpt::hours(13)), bpt::ptime(d,bpt::hours(14)) ) };
+    LTimePeriod expRes { time_period(bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(13))) };
+    //Union
+    ASSERT_EQ( get_union( mylist, capa_period(10, bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(13)) ) )
             ,  expRes );
+    expRes = { time_period(bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(12))) };
+    ASSERT_EQ( get_union(
+                time_period(bpt::ptime(d,bpt::hours(10)), bpt::ptime(d,bpt::hours(12)))
+                , capa_period(10, bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(12))) )
+            ,  expRes );
+    expRes = {
+        time_period(bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(12)))
+        ,time_period(bpt::ptime(d,bpt::hours(13)) , bpt::ptime(d,bpt::hours(14))) };
+    ASSERT_EQ( get_union( mylist, myCapaList )
+            , expRes );
+
+    //Intersection
+    expRes = { time_period(bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(12))) };
+    ASSERT_EQ( get_inter( mylist, capa_period(10, bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(13)) ) )
+            ,  expRes );
+    ASSERT_EQ( get_inter(
+                time_period(bpt::ptime(d,bpt::hours(10)), bpt::ptime(d,bpt::hours(12)))
+                , capa_period(10, bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(12))) )
+            ,  expRes );
+    expRes = { time_period(bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11))) };
+    ASSERT_EQ( get_inter( mylist, myCapaList )
+            , expRes );
+
+    //Difference
+    ASSERT_EQ( get_diff( mylist, capa_period(10, bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(13)) ) )
+            , (LTimePeriod) {} );
+    expRes = { time_period(bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
+    ASSERT_EQ( get_diff( mylist, myCapaList )
+            , expRes );
+    ASSERT_EQ( get_diff(
+                time_period(bpt::ptime(d,bpt::hours(10)), bpt::ptime(d,bpt::hours(12)))
+                , capa_period(10, bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(12))) )
+            , (LTimePeriod) {} );
 
 }
+

@@ -36,7 +36,7 @@ bool can_merge(capa_period const&cp1, capa_period const &cp2)
  * @brief merge two time periods
  * @param tp1 the first period
  * @param tp2 the second period
- * @pre the periods can be merged
+ * @pre the periods can be merged, ie. are adjacent
  * @return the result of the merge
  */
 time_period merge(time_period const&tp1, time_period const &tp2)
@@ -49,7 +49,7 @@ time_period merge(time_period const&tp1, time_period const &tp2)
  * @brief merge two capa_period
  * @param cp1 the first period
  * @param cp2 the second period
- * @pre the periods can be merged
+ * @pre the periods can be merged, ie. are adjacent and have the same capa
  * @return the result of the merge
  */
 capa_period merge(capa_period const&cp1, capa_period const &cp2)

@@ -2,6 +2,7 @@
  * @file period_functor.hh
  */
 #include <optional>
+#include <nael_utils/period/period_typedef.hh>
 
 namespace details
 {
@@ -15,32 +16,25 @@ struct MakeUnion
      * @brief Compute the union between two optional periods on a given period
      * @param p1 the first period
      * @param p2 the second period
-     * @param period the time_period
+     * @param period the time_period to consider
+     * @return the resulting time_period
      */
-    time_period operator()(std::optional<time_period> const&p1, std::optional<time_period> const&p2, time_period const &period) const
-    {
-        (void)p1;
-        (void)p2;
-        assert(p1 || p2);
-        //if p1 or p2, return the period
-        return period;
-    }
+    time_period operator()(std::optional<time_period> const&p1, std::optional<time_period> const&p2, time_period const &period) const;
     /**
      * @brief Compute the union between two optional capa_periods on a given period
      * @param p1 the first capa_period
      * @param p2 the second capa_period
-     * @param period the time_period
+     * @param period the time_period to consider
      */
-    std::optional<capa_period> operator()(std::optional<capa_period> const&p1, std::optional<capa_period> const&p2, time_period const &period) const
-    {
-        //compute the capacity
-        long capa = ((p1)?p1->_capa:0)+((p2)?p2->_capa:0);
-        if(0 != capa)
-        {
-            return capa_period(capa, period);
-        }
-        return {};
-    }
+    std::optional<capa_period> operator()(std::optional<capa_period> const&p1, std::optional<capa_period> const&p2, time_period const &period) const;
+    /**
+     * @brief Compute the union between an optional time_period and an optional capa_period on a given period
+     * @param p1 the time_period
+     * @param p2 the capa_period
+     * @param period the time_period to consider
+     * @return the resulting time_period
+     */
+    std::optional<time_period> operator()(std::optional<time_period> const&p1, std::optional<capa_period> const&p2, time_period const &period) const;
 };
 
 /**
@@ -53,37 +47,34 @@ struct MakeDiff
      * @brief Compute the difference between two optional periods on a given period
      * @param p1 the first period
      * @param p2 the second period
-     * @param period the time_period
+     * @param period the time_period to consider
+     * @return the resulting time_period
      */
-    std::optional<time_period> operator()(std::optional<time_period> const&p1, std::optional<time_period> const&p2, time_period const &period) const
-    {
-        //if !p1 or both periods return nothing
-        if(!p1 || p2)
-        {
-            return {};
-        }
-        //if only p1 return the full period
-        else
-        {
-            return period;
-        }
-    }
+    std::optional<time_period> operator()(std::optional<time_period> const&p1, std::optional<time_period> const&p2, time_period const &period) const;
     /**
      * @brief Compute the difference between two optional capa_periods on a given period
      * @param p1 the first capa_period
      * @param p2 the second capa_period
-     * @param period the time_period
+     * @param period the time_period to consider
+     * @return the resulting capa_period
      */
-    std::optional<capa_period> operator()(std::optional<capa_period> const&p1, std::optional<capa_period> const&p2, time_period const &period) const
-    {
-        //compute the remaining capacity
-        long capa = ((p1)?p1->_capa:0)-((p2)?p2->_capa:0);
-        if(0 != capa)
-        {
-            return capa_period(capa, period);
-        }
-        return {};
-    }
+    std::optional<capa_period> operator()(std::optional<capa_period> const&p1, std::optional<capa_period> const&p2, time_period const &period) const;
+    /**
+     * @brief Compute the difference between an optional time_period and an optional capa_period on a given period
+     * @param p1 the time_period
+     * @param p2 the capa_period
+     * @param period the time_period to consider
+     * @return the resulting time_period
+     */
+    std::optional<time_period> operator()(std::optional<time_period> const&p1, std::optional<capa_period> const&p2, time_period const &period) const;
+    /**
+     * @brief Compute the difference between an optional capa_period and an optional time_period on a given period
+     * @param p1 the first period
+     * @param p2 the second period
+     * @param period the time_period to consider
+     * @return the resulting capa_period
+     */
+    std::optional<capa_period> operator()(std::optional<capa_period> const&p1, std::optional<time_period> const&p2, time_period const &period) const;
 };
 
 /**
@@ -96,85 +87,34 @@ struct MakeInter
      * @brief Compute the intersection between two optional periods on a given period
      * @param p1 the first period
      * @param p2 the second period
-     * @param period the time_period
+     * @param period the time_period to consider
+     * @return the resulting time_period
      */
-    std::optional<time_period>
-    operator()(std::optional<time_period> const&p1, std::optional<time_period> const&p2, time_period const &period) const
-    {
-        //if only p1 or p2, return nothing
-        if(!p1 || !p2)
-        {
-            return {};
-        }
-        //if both, check that tey are the same and return
-        else
-        {
-            return period;
-        }
-    }
+    std::optional<time_period> operator()(std::optional<time_period> const&p1, std::optional<time_period> const&p2, time_period const &period) const;
     /**
      * @brief Compute the intersection between two optional capa_periods on a given period
      * @param p1 the first capa_period
      * @param p2 the second capa_period
-     * @param period the time_period
+     * @param period the time_period to consider
+     * @return the resulting capa_period
      */
-    std::optional<capa_period> operator()(std::optional<capa_period> const&p1, std::optional<capa_period> const&p2, time_period const &period) const
-    {
-        //if only p1 or p2, return nothing
-        if(!p1 || !p2)
-        {
-            return {};
-        }
-        else
-        {
-            //return the period with the min capa
-            long capa( std::min((*p1)._capa, (*p2)._capa) );
-            if(0 != capa)
-            {
-                return capa_period(capa, period);
-            }
-            return {};
-        }
-    }
+    std::optional<capa_period> operator()(std::optional<capa_period> const&p1, std::optional<capa_period> const&p2, time_period const &period) const;
     /**
-     * @brief Compute the intersection between two optional periods on a given period
+     * @brief Compute the intersection between an optional time_period and an optional capa_period on a given period
+     * @param p1 the time_period
+     * @param p2 the capa_period
+     * @param period the time_period to consider
+     * @return the resulting time_period
+     */
+    std::optional<time_period> operator()(std::optional<time_period> const&p1, std::optional<capa_period> const&p2, time_period const &period) const;
+    /**
+     * @brief Compute the intersection between an optional capa_period and an optional time_period on a given period
      * @param p1 the first period
      * @param p2 the second period
-     * @param period the time_period
+     * @param period the time_period to consider
+     * @return the resulting capa_period
      */
-    std::optional<time_period>
-    operator()(std::optional<time_period> const&p1, std::optional<capa_period> const&p2, time_period const &period) const
-    {
-        //if only p1 or p2, return nothing
-        if(!p1 || !p2)
-        {
-            return {};
-        }
-        //if both, check that tey are the same and return
-        else
-        {
-            return period;
-        }
-    }
-    /**
-     * @brief Compute the intersection between two optional capa_periods on a given period
-     * @param p1 the first capa_period
-     * @param p2 the second capa_period
-     * @param period the time_period
-     */
-    std::optional<capa_period> operator()(std::optional<capa_period> const&p1, std::optional<time_period> const&p2, time_period const &period) const
-    {
-        //if only p1 or p2, return nothing
-        if(!p1 || !p2)
-        {
-            return {};
-        }
-        else
-        {
-            //return the period with same capa
-            return capa_period((*p1)._capa, period);
-        }
-    }
+    std::optional<capa_period> operator()(std::optional<capa_period> const&p1, std::optional<time_period> const&p2, time_period const &period) const;
 };
 
 }//namespace details

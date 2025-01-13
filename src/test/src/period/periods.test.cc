@@ -7,16 +7,31 @@
 namespace bg=boost::gregorian;
 namespace bpt=boost::posix_time;
 
+#ifndef NDEBUG
+TEST(periods, basics)
+{
+    bg::date d = bg::day_clock::local_day();
+
+    //Constructor
+    time_period p1(bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)) ),
+        p2( time_period(bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10))) );
+    ASSERT_EQ(p1, p2);
+    //Invalid Merge
+    ASSERT_FALSE( can_merge(p1, p2 ) ) << "Periods can not be merged";
+    ASSERT_DEATH( merge(p1, p2 ), ".*Assertion `can_merge\\(tp1, tp2\\)' failed.*" );
+}
+#endif
+
 TEST(periods, order)
 {
-    bg::date d = bg::day_clock::local_day();;
+    bg::date d = bg::day_clock::local_day();
     ASSERT_TRUE(bpt::ptime(d, bpt::hours(9)) < bpt::not_a_date_time);
     ASSERT_TRUE(bpt::not_a_date_time > bpt::ptime(d, bpt::hours(9)) );
 }
 
 TEST(periods, get_inter)
 {
-    bg::date d = bg::day_clock::local_day();;
+    bg::date d = bg::day_clock::local_day();
 
     //Declarations
     LTimePeriod mylist1, mylist2, interRes, expRes;
@@ -109,7 +124,7 @@ TEST(periods, get_inter)
 
 TEST(periods, get_union)
 {
-    bg::date d = bg::day_clock::local_day();;
+    bg::date d = bg::day_clock::local_day();
 
     //Declarations
     LTimePeriod mylist1, mylist2, unionRes, expRes;
@@ -220,7 +235,7 @@ TEST(periods, get_union)
 
 TEST(periods, get_diff)
 {
-    bg::date d = bg::day_clock::local_day();;
+    bg::date d = bg::day_clock::local_day();
 
     //Declarations
     LTimePeriod mylist1, mylist2, diffRes, expRes;
@@ -316,7 +331,7 @@ TEST(periods, get_diff)
 
 TEST(periods, shortCuts)
 {
-    bg::date d = bg::day_clock::local_day();;
+    bg::date d = bg::day_clock::local_day();
 
     LTimePeriod mylist { time_period( bpt::ptime(d, bpt::hours(10)), bpt::ptime(d, bpt::hours(12)) ) };
     LTimePeriod expRes { time_period( bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(13)) ) };
