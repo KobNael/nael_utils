@@ -79,8 +79,7 @@ class libreflectConan(ConanFile):
         compiler_version = str(self.settings.compiler.version)
         arch = str(self.settings.arch)
         build_type = str(self.settings.build_type)
-        solvers = "_"
-        return os.path.join("builds", system, compiler, compiler_version, arch, build_type, solvers)
+        return os.path.join("builds", system, compiler, compiler_version, arch, build_type)
 
     def layout(self):
         build_dir = self._get_build_dir()
