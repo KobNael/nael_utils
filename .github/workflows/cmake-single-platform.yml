@@ -36,33 +36,19 @@ jobs:
       with:
         version: 2.11.0
 
-    # Get c++ tools
+    # Build
     - name: Cmake build
       uses: KobNael/nael_cpp_action/cmake_build@draft
       with:
         build_type: ${{matrix.build_type}}
 
-    # UnitTests
-    - name: Run UnitTests
-      working-directory: ${{github.workspace}}/builds/Linux/gcc/13/x86_64/${{matrix.build_type}}
-      run: make run_unit_tests
-    # CPPCheck
-    - if: ${{ matrix.build_type == 'Debug' }}
-      name: Run CppCheck
-      working-directory: ${{github.workspace}}/builds/Linux/gcc/13/x86_64/${{matrix.build_type}}
-      run: make run_cppcheck
-    # Coverage
-    - if: ${{ matrix.build_type == 'Debug' }}
-      name: Run Coverage
-      working-directory: ${{github.workspace}}/builds/Linux/gcc/13/x86_64/${{matrix.build_type}}
-      run: make run_coverage
-    # Memcheck
-    - if: ${{ matrix.build_type == 'Debug' }}
-      name: Run Valgrind
-      working-directory: ${{github.workspace}}/builds/Linux/gcc/13/x86_64/${{matrix.build_type}}
-      run: make run_memcheck
+    # Test
+    - name: Code analysis
+      uses: KobNael/nael_cpp_action/tests_cpp@draft
+      with:
+        build_type: ${{matrix.build_type}}
 
-    # SonarQube Analysis
+    # SonarQube Analysis and publish
     - if: ${{ matrix.build_type == 'Debug' }}
       name: SonarQube Scan
       uses: SonarSource/sonarqube-scan-action@v4
