@@ -43,15 +43,35 @@ jobs:
       uses: KobNael/nael_cpp_action/tests_cpp@draft
       with:
         build_type: ${{matrix.build_type}}
+
     # SonarQube Analysis and publish
-    - if: ${{ matrix.build_type == 'Debug' }}
-      name: SonarQube Scan
-      uses: SonarSource/sonarqube-scan-action@v4
-      env:
-        SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }} # Put the name of your token here
-        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }} # SonarQube URL is stored in a GitHub secret
+#    - if: ${{ matrix.build_type == 'Debug' }}
+#      name: SonarQube Scan
+#      uses: SonarSource/sonarqube-scan-action@v4
+#      env:
+#        SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }} # Put the name of your token here
+#        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }} # SonarQube URL is stored in a GitHub secret
+#      with:
+#        # if you are using using sonarqube 10.5 or earlier, replace sonar.cfamily.compile-commands with sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}"
+#        # as build-wrapper does not generate a compile_commands.json file before sonarqube 10.6
+#        args: >
+#          --define sonar.cfamily.compile-commands="${{github.workspace}}/builds/Linux/gcc/13/x86_64/${{matrix.build_type}}/compile_commands.json"
+
+# List of actions
+  sonar:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download Release reports
+      uses: actions/download-artifact@v4
       with:
-        # if you are using using sonarqube 10.5 or earlier, replace sonar.cfamily.compile-commands with sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}"
-        # as build-wrapper does not generate a compile_commands.json file before sonarqube 10.6
-        args: >
-          --define sonar.cfamily.compile-commands="${{github.workspace}}/builds/Linux/gcc/13/x86_64/${{matrix.build_type}}/compile_commands.json"
+        name: sonar-results-Release
+        path: Release
+    - name: Download Debug reports
+      uses: actions/download-artifact@v4
+      with:
+        name: sonar-results-Debug
+        path: Debug
+    - name: Display content
+      run: ls Debug/ Release/
+
