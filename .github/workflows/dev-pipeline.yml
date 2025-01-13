@@ -1,5 +1,5 @@
 # Workflow for C++ project
-name: test-cmake-build
+name: dev-pipeline
 # Only for dev
 on:
   push:
