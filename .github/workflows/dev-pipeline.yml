@@ -1,53 +1,45 @@
-# This starter workflow is for a CMake project running on a single platform. There is a different starter workflow if you need cross-platform coverage.
-# See: https://github.com/actions/starter-workflows/blob/main/ci/cmake-multi-platform.yml
+# Workflow for C++ project
 name: test-cmake-build
-
+# Only for dev
 on:
   push:
     branches: [ "dev" ]
   pull_request:
     branches: [ "dev" ]
-
+# List of actions
 jobs:
   build:
-    # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
-    # You can convert this to a matrix build if you need cross-platform coverage.
-    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+    # Just linux for now
     runs-on: ubuntu-latest
     strategy:
       # Set fail-fast to false to ensure that feedback is delivered for all matrix combinations. Consider changing this to true when your workflow is stable.
       fail-fast: false
-      # Wanna build in Release And Debug
+      # Release And Debug
       matrix:
         build_type: [Debug, Release]
-
+    # Steps
     steps:
     # Checkout sources
     - name: checkout
       uses: actions/checkout@v4
-
     # Get c++ tools
     - name: Get C++ Tools
       uses: KobNael/nael_cpp_action/setup_cpp@draft
-
     # Install conan
     - name: Get Conan
       uses: turtlebrowser/get-conan@main
       with:
         version: 2.11.0
-
     # Build
     - name: Cmake build
       uses: KobNael/nael_cpp_action/cmake_build@draft
       with:
         build_type: ${{matrix.build_type}}
-
     # Test
     - name: Code analysis
       uses: KobNael/nael_cpp_action/tests_cpp@draft
       with:
         build_type: ${{matrix.build_type}}
-
     # SonarQube Analysis and publish
     - if: ${{ matrix.build_type == 'Debug' }}
       name: SonarQube Scan
