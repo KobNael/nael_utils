@@ -1,0 +1,101 @@
+# This starter workflow is for a CMake project running on a single platform. There is a different starter workflow if you need cross-platform coverage.
+# See: https://github.com/actions/starter-workflows/blob/main/ci/cmake-multi-platform.yml
+name: CMakeBuild
+
+on:
+  push:
+    branches: [ "dev" ]
+  pull_request:
+    branches: [ "dev" ]
+
+jobs:
+  build:
+    # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
+    # You can convert this to a matrix build if you need cross-platform coverage.
+    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+    runs-on: ubuntu-latest
+    strategy:
+      # Set fail-fast to false to ensure that feedback is delivered for all matrix combinations. Consider changing this to true when your workflow is stable.
+      fail-fast: false
+      # Wanna build in Release And Debug
+      matrix:
+        build_type: [Debug, Release]
+
+    steps:
+
+    # Get c++ tools
+    - name: Get C++ Tools
+      run: sudo apt-get install -y gcc gcovr lcov libncurses5-dev cppcheck valgrind
+
+    # Install conan
+    - name: Get Conan
+      uses: turtlebrowser/get-conan@main
+      with:
+        version: 2.11.0
+
+    # Cach conan local repository
+    - name: Cache conan dependencies
+      id: cache-dependencies
+      uses: actions/cache@v4
+      with:
+        # conan files are stored in `~/.conan` on Linux
+        path: ~/.conan2
+        key: ${{ matrix.build_type}}-${{ hashFiles('**/conanfile.py') }}
+
+    # If no cache found, generate profile
+    - if: ${{ steps.cache-dependencies.outputs.cache-hit != 'true' }}
+      name: Create default profile
+      run: conan profile detect
+
+    # Build
+    - if: ${{ matrix.build_type == 'Release' }}
+      name: Build
+      run: >
+        conan build .
+        -s compiler.cppstd=gnu20
+        -s build_type=${{matrix.build_type}}
+        --build=missing
+
+    - if: ${{ matrix.build_type == 'Debug' }}
+      name: Build
+      run: >
+        conan build .
+        -s compiler.cppstd=gnu20
+        -s build_type=${{matrix.build_type}}
+        --build=missing
+        -o coverage=ON
+        -o cppcheck=ON
+        -o valgrind=ON
+
+    # UnitTests
+    - name: Run UnitTests
+      working-directory: ${{github.workspace}}/builds/Linux/gcc/13/x86_64/${{matrix.build_type}}
+      run: make run_unit_tests
+    # CPPCheck
+    - if: ${{ matrix.build_type == 'Debug' }}
+      name: Run CppCheck
+      working-directory: ${{github.workspace}}/builds/Linux/gcc/13/x86_64/${{matrix.build_type}}
+      run: make run_cppcheck
+    # Coverage
+    - if: ${{ matrix.build_type == 'Debug' }}
+      name: Run Coverage
+      working-directory: ${{github.workspace}}/builds/Linux/gcc/13/x86_64/${{matrix.build_type}}
+      run: make run_coverage
+    # Memcheck
+    - if: ${{ matrix.build_type == 'Debug' }}
+      name: Run Valgrind
+      working-directory: ${{github.workspace}}/builds/Linux/gcc/13/x86_64/${{matrix.build_type}}
+      run: make run_memcheck
+
+    # SonarQube Analysis
+    - if: ${{ matrix.build_type == 'Debug' }}
+      name: SonarQube Scan
+      uses: SonarSource/sonarqube-scan-action@v4
+      env:
+        SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }} # Put the name of your token here
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }} # SonarQube URL is stored in a GitHub secret
+      with:
+        # if you are using using sonarqube 10.5 or earlier, replace sonar.cfamily.compile-commands with sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}"
+        # as build-wrapper does not generate a compile_commands.json file before sonarqube 10.6
+        args: >
+          --define sonar.cfamily.compile-commands="${{github.workspace}}/builds/Linux/gcc/13/x86_64/${{matrix.build_type}}/compile_commands.json"
