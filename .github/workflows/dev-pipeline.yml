@@ -66,12 +66,23 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: sonar-results-Release
-        path: Release
+        path: ./compilation-databases/Release/
     - name: Download Debug reports
       uses: actions/download-artifact@v4
       with:
         name: sonar-results-Debug
-        path: Debug
+        path: ./compilation-databases/Debug/
     - name: Display content
-      run: ls Debug/ Release/
+      run: |
+        ls .
+        ls ./compilation-databases/
+        ls ./compilation-databases/Debug/
+        ls ./compilation-databases/Release/
+    # SonarQube Analysis
+    - name: SonarQube Scan
+      uses: SonarSource/sonarqube-scan-action@v4
+      env:
+        SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }} # Put the name of your token here
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }} # SonarQube URL is stored in a GitHub secret
+
 
