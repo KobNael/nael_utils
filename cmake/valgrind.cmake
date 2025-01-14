@@ -106,7 +106,7 @@ function (enable_memcheck)
 		message (FATAL_ERROR "unparsed arguments : ${_UNPARSED_ARGUMENTS}")
 	endif ()
 
-	set (valgrind_reports_path ${CMAKE_SOURCE_DIR}/compilation-databases/${CMAKE_BUILD_TYPE}/valgrind-reports)
+	set (valgrind_reports_path ${data_base_path}/valgrind-reports)
 	file (MAKE_DIRECTORY "${valgrind_reports_path}")
 
 	add_custom_target (run_memcheck_${_TARGET}

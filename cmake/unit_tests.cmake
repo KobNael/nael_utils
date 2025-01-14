@@ -92,7 +92,7 @@ target_link_libraries (unit_tests
 ### Automation
 ### ===============================================================================================
 
-set (unit_tests_reports_path ${CMAKE_SOURCE_DIR}/compilation-databases/${CMAKE_BUILD_TYPE}/tests-reports)
+set (unit_tests_reports_path ${data_base_path}/tests-reports)
 file (MAKE_DIRECTORY ${unit_tests_reports_path})
 
 add_custom_target (run_unit_tests
