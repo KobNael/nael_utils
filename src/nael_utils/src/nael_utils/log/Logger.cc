@@ -40,19 +40,14 @@ namespace
 //FileLogger constructor
 FileLogger::FileLogger(std::string const& file, io::LogLevel level)
  : Logger<std::ofstream>(file, level)
+ , _internal_stream()
 {
-    this->_stream = new std::ofstream();
-    open_stream(file, *this->_stream);
+    open_stream(file, _internal_stream);
+    this->_stream = &_internal_stream;
 }
 //FileLogger destructor
 FileLogger::~FileLogger()
-{
-	if(nullptr != this->_stream)
-	{
-		close_stream(*this->_stream);
-		delete this->_stream;
-	}
-}
+{}
 
 //TeeLogger constructor
 TeeLogger::TeeLogger(std::string const& file, io::LogLevel level)

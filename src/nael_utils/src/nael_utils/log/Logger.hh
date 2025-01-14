@@ -106,6 +106,8 @@ public:
      * @brief Destructor
      */
     ~FileLogger();
+private:
+    std::ofstream _internal_stream;
 };
 
 /**
