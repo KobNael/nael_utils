@@ -22,11 +22,6 @@ jobs:
     # Get c++ tools
     - name: Get C++ Tools
       uses: KobNael/nael_cpp_action/setup_cpp@draft
-    # Install conan
-    - name: Get Conan
-      uses: turtlebrowser/get-conan@main
-      with:
-        version: 2.11.0
     # Release Build
     - name: Release conan build
       uses: KobNael/nael_cpp_action/cmake_build@draft
