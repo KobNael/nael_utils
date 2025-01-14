@@ -40,7 +40,6 @@ namespace
 //FileLogger constructor
 FileLogger::FileLogger(std::string const& file, io::LogLevel level)
  : Logger<std::ofstream>(file, level)
- , _internal_stream()
 {
     open_stream(file, _internal_stream);
     this->_stream = &_internal_stream;
