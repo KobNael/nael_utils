@@ -21,25 +21,27 @@ jobs:
          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
     # Get c++ tools
     - name: Get C++ Tools
-      uses: KobNael/nael_cpp_action/setup_cpp@draft
+      uses: KobNael/nael_cpp_action/setup_cpp@release/1.0.0
+      with:
+        key: ${{ hashFiles('./conanfile.py') }}-${{ hashFiles('./CMakeLists.txt') }}
     # Release Build
     - name: Release conan build
-      uses: KobNael/nael_cpp_action/cmake_build@draft
+      uses: KobNael/nael_cpp_action/cmake_build@release/1.0.0
       with:
         build_type: Release
     # Test
     - name: Release analysis
-      uses: KobNael/nael_cpp_action/tests_cpp@draft
+      uses: KobNael/nael_cpp_action/tests_cpp@release/1.0.0
       with:
         build_type: Release
     # Debug Build
     - name: Debug conan build
-      uses: KobNael/nael_cpp_action/cmake_build@draft
+      uses: KobNael/nael_cpp_action/cmake_build@release/1.0.0
       with:
         build_type: Debug
     # Test
     - name: Debug analysis
-      uses: KobNael/nael_cpp_action/tests_cpp@draft
+      uses: KobNael/nael_cpp_action/tests_cpp@release/1.0.0
       with:
         build_type: Debug
     # Sonar analysis
