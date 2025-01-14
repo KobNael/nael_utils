@@ -43,12 +43,12 @@ jobs:
       with:
         build_type: Debug
     # Sonar analysis
-#    - name: Sonar analysis
-#      uses: SonarSource/sonarqube-scan-action@v4
-#      env:
-#          SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }} # Put the name of your token here
-#          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }} # SonarQube URL is stored in a GitHub secret
-#      with:
-#          # Consult https://docs.sonarsource.com/sonarqube-server/latest/analyzing-source-code/scanners/sonarscanner/ for more information and options
-#          args: --debug
+    - name: Sonar analysis
+      uses: SonarSource/sonarqube-scan-action@v4
+      env:
+          SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }} # Put the name of your token here
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }} # SonarQube URL is stored in a GitHub secret
+      with:
+          # Consult https://docs.sonarsource.com/sonarqube-server/latest/analyzing-source-code/scanners/sonarscanner/ for more information and options
+          args: --debug
 
