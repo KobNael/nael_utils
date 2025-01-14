@@ -41,7 +41,8 @@ namespace
 FileLogger::FileLogger(std::string const& file, io::LogLevel level)
  : Logger<std::ofstream>(file, level)
 {
-	open_stream(file, *this->_stream);
+    this->_stream = new std::ofstream();
+    open_stream(file, *this->_stream);
 }
 //FileLogger destructor
 FileLogger::~FileLogger()

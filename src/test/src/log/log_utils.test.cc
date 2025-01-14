@@ -4,41 +4,8 @@
 
 #define LOG_NAME "test_logger.log"
 
-/**
- * Singleton get or create
- */
-TEST(log_utils_singleton, singleton_access)
-{
-    //No log by default
-    ASSERT_THROW(io::GetLogger(), std::runtime_error);
-    //Create it
-    io::CreateLogger(LOG_NAME);
-    ASSERT_NO_THROW(io::GetLogger());
-    //Free it
-    io::ClearLogger();
-    ASSERT_THROW(io::GetLogger(), std::runtime_error);
-}
-
-
-/**
- * Logger usage
- * @remark directly on the Tee Logger
- * since it uses the file logger
- */
-class log_utils: public ::testing::Test {
-protected:
-    //SetUp (fill a basic context)
-	virtual void SetUp()
-    {
-        io::CreateLogger(LOG_NAME);
-    }
-
-    //TearDown (do nothing)
-	virtual void TearDown()
-    {
-        io::ClearLogger();
-    }
-
+//Tools for tests
+namespace{
     //Parse the log file
     std::string get_log_content()
     {
@@ -70,9 +37,180 @@ protected:
         }
         ASSERT_EQ(nb, ref);
    }
+} //namespace
+
+/**
+ * Singleton get or create
+ */
+TEST(tee_logger_singleton, singleton_access)
+{
+    //No log by default
+    ASSERT_THROW(io::GetLogger(), std::runtime_error);
+    //Create it
+    io::CreateLogger(LOG_NAME);
+    ASSERT_NO_THROW(io::GetLogger());
+    //Free it
+    io::ClearLogger();
+    ASSERT_THROW(io::GetLogger(), std::runtime_error);
+}
+
+
+/**
+ * FileLogger usage
+ */
+class file_logger: public ::testing::Test {
+protected:
+    //SetUp (init logger)
+    virtual void SetUp()
+    {
+        _file_logger = new io::FileLogger(LOG_NAME);
+    }
+
+    //TearDown (clear logger)
+    virtual void TearDown()
+    {
+        delete _file_logger;
+        _file_logger = nullptr;
+    }
+
+    //Access to logger
+    io::FileLogger *get_log()
+    {
+        return _file_logger;
+    }
+
+private:
+    io::FileLogger *_file_logger = {nullptr};
 };
 
-TEST_F(log_utils, off_level)
+TEST_F(file_logger, off_level)
+{
+    //set log level
+    get_log()->setLogLevel(io::OFF_LVL);
+    //Send the content
+    EROR(get_log()) << "ERORLOG_print" << std::endl;
+    WARN(get_log()) << "WARNLOG_print" << std::endl;
+    INFO(get_log()) << "INFOLOG_print" << std::endl;
+    DBUG(get_log()) << "DBUGLOG_print" << std::endl;
+    //get log file content
+    std::string log_content = get_log_content();
+    //Test file
+    check_nb_line("ERORLOG_print", log_content, 0);
+    check_nb_line("WARNLOG_print", log_content, 0);
+    check_nb_line("INFOLOG_print", log_content, 0);
+    check_nb_line("DBUGLOG_print", log_content, 0);
+    check_nb_line("_print", log_content, 0);
+}
+
+TEST_F(file_logger, error_lvl)
+{
+    //set log level
+    get_log()->setLogLevel(io::ERROR_LVL);
+    //Send the content
+    EROR(get_log()) << "ERORLOG_print" << std::endl;
+    WARN(get_log()) << "WARNLOG_print" << std::endl;
+    INFO(get_log()) << "INFOLOG_print" << std::endl;
+    DBUG(get_log()) << "DBUGLOG_print" << std::endl;
+    //get log file content
+    std::string log_content = get_log_content();
+    //Test file
+    check_nb_line("ERORLOG_print", log_content, 1);
+    check_nb_line("WARNLOG_print", log_content, 0);
+    check_nb_line("INFOLOG_print", log_content, 0);
+    check_nb_line("DBUGLOG_print", log_content, 0);
+    check_nb_line("_print", log_content, 1);
+}
+TEST_F(file_logger, warning_lvl)
+{
+    //set log level
+    get_log()->setLogLevel(io::WARNING_LVL);
+    //Send the content
+    EROR(get_log()) << "ERORLOG_print" << std::endl;
+    WARN(get_log()) << "WARNLOG_print" << std::endl;
+    INFO(get_log()) << "INFOLOG_print" << std::endl;
+    DBUG(get_log()) << "DBUGLOG_print" << std::endl;
+    //get log file content
+    std::string log_content = get_log_content();
+    //Test file
+    check_nb_line("ERORLOG_print", log_content, 1);
+    check_nb_line("WARNLOG_print", log_content, 1);
+    check_nb_line("INFOLOG_print", log_content, 0);
+    check_nb_line("DBUGLOG_print", log_content, 0);
+    check_nb_line("_print", log_content, 2);
+}
+TEST_F(file_logger, info_lvl)
+{
+    //set log level
+    get_log()->setLogLevel(io::INFO_LVL);
+    //Send the content
+    EROR(get_log()) << "ERORLOG_print" << std::endl;
+    WARN(get_log()) << "WARNLOG_print" << std::endl;
+    INFO(get_log()) << "INFOLOG_print" << std::endl;
+    DBUG(get_log()) << "DBUGLOG_print" << std::endl;
+    //get log file content
+    std::string log_content = get_log_content();
+    //Test file
+    check_nb_line("ERORLOG_print", log_content, 1);
+    check_nb_line("WARNLOG_print", log_content, 1);
+    check_nb_line("INFOLOG_print", log_content, 1);
+    check_nb_line("DBUGLOG_print", log_content, 0);
+    check_nb_line("_print", log_content, 3);
+}
+TEST_F(file_logger, debug_lvl)
+{
+    //set log level
+    get_log()->setLogLevel(io::DEBUG_LVL);
+    //Send the content
+    EROR(get_log()) << "ERORLOG_print" << std::endl;
+    WARN(get_log()) << "WARNLOG_print" << std::endl;
+    INFO(get_log()) << "INFOLOG_print" << std::endl;
+    DBUG(get_log()) << "DBUGLOG_print" << std::endl;
+    //get log file content
+    std::string log_content = get_log_content();
+    //Test file
+    check_nb_line("ERORLOG_print", log_content, 1);
+    check_nb_line("WARNLOG_print", log_content, 1);
+    check_nb_line("INFOLOG_print", log_content, 1);
+    check_nb_line("DBUGLOG_print", log_content, 1);
+    check_nb_line("_print", log_content, 4);
+}
+TEST_F(file_logger, default_level)
+{
+    //do not set log level
+    //Send the content
+    EROR(get_log()) << "ERORLOG_print" << std::endl;
+    WARN(get_log()) << "WARNLOG_print" << std::endl;
+    INFO(get_log()) << "INFOLOG_print" << std::endl;
+    DBUG(get_log()) << "DBUGLOG_print" << std::endl;
+    //get log file content
+    std::string log_content = get_log_content();
+    //Test file
+    check_nb_line("ERORLOG_print", log_content, 1);
+    check_nb_line("WARNLOG_print", log_content, 1);
+    check_nb_line("INFOLOG_print", log_content, 1);
+    check_nb_line("DBUGLOG_print", log_content, 0);
+    check_nb_line("_print", log_content, 3);
+}
+
+/**
+ * TeeLogger usage
+ */
+class tee_logger: public ::testing::Test {
+protected:
+    //SetUp (init logger)
+    virtual void SetUp()
+    {
+        io::CreateLogger(LOG_NAME);
+    }
+
+    //TearDown (clear logger)
+    virtual void TearDown()
+    {
+        io::ClearLogger();
+    }
+};
+
+TEST_F(tee_logger, off_level)
 {
     //Start capturing cout
     testing::internal::CaptureStdout();
@@ -101,7 +239,7 @@ TEST_F(log_utils, off_level)
     check_nb_line("_print", log_content, 0);
 }
 
-TEST_F(log_utils, error_lvl)
+TEST_F(tee_logger, error_lvl)
 {
     //Start capturing cout
     testing::internal::CaptureStdout();
@@ -129,7 +267,7 @@ TEST_F(log_utils, error_lvl)
     check_nb_line("DBUGLOG_print", cout_content, 0);
     check_nb_line("_print", log_content, 1);
 }
-TEST_F(log_utils, warning_lvl)
+TEST_F(tee_logger, warning_lvl)
 {
     //Start capturing cout
     testing::internal::CaptureStdout();
@@ -157,7 +295,7 @@ TEST_F(log_utils, warning_lvl)
     check_nb_line("DBUGLOG_print", cout_content, 0);
     check_nb_line("_print", log_content, 2);
 }
-TEST_F(log_utils, info_lvl)
+TEST_F(tee_logger, info_lvl)
 {
     //Start capturing cout
     testing::internal::CaptureStdout();
@@ -185,7 +323,7 @@ TEST_F(log_utils, info_lvl)
     check_nb_line("DBUGLOG_print", cout_content, 0);
     check_nb_line("_print", log_content, 3);
 }
-TEST_F(log_utils, debug_lvl)
+TEST_F(tee_logger, debug_lvl)
 {
     //Start capturing cout
     testing::internal::CaptureStdout();
@@ -213,7 +351,7 @@ TEST_F(log_utils, debug_lvl)
     check_nb_line("DBUGLOG_print", cout_content, 1);
     check_nb_line("_print", log_content, 4);
 }
-TEST_F(log_utils, default_level)
+TEST_F(tee_logger, default_level)
 {
     //Start capturing cout
     testing::internal::CaptureStdout();
