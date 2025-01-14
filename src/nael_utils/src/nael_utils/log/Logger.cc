@@ -40,9 +40,10 @@ namespace
 //FileLogger constructor
 FileLogger::FileLogger(std::string const& file, io::LogLevel level)
  : Logger<std::ofstream>(file, level)
+ , _internal_stream(std::make_unique<std::ofstream>())
 {
-    open_stream(file, _internal_stream);
-    this->_stream = &_internal_stream;
+    open_stream(file, *_internal_stream);
+    this->_stream = _internal_stream.get();
 }
 //FileLogger destructor
 FileLogger::~FileLogger()
@@ -53,8 +54,9 @@ TeeLogger::TeeLogger(std::string const& file, io::LogLevel level)
  : Logger<TeeStream>(file, level)
 {
 	open_stream(file, _fstream);
-	_teeDevice = new TeeDevice(std::cout, _fstream);
-	this->_stream = new TeeStream(*_teeDevice);
+	_teeDevice = std::make_unique<TeeDevice>(std::cout, _fstream);
+    _teeStream = std::make_unique<TeeStream>(*_teeDevice);
+	this->_stream = _teeStream.get();
 }
 //TeeLogger destructor
 TeeLogger::~TeeLogger()
@@ -62,13 +64,13 @@ TeeLogger::~TeeLogger()
 	close_stream(_fstream);
 	if(nullptr != this->_stream)
 	{
-		this->_stream->flush();
-		this->_stream->close();
-		delete this->_stream;
-	}
-	if(nullptr != _teeDevice)
-	{
-		delete _teeDevice;
+        try
+        {
+            this->_stream->flush();
+            this->_stream->close();
+        }
+        catch( ... )
+        {}
 	}
 }
 

@@ -83,7 +83,7 @@ protected:
     /** @brief Verbosity */
     LogLevel _level={INFO_LVL};
     /** @brief the stream */
-    ostream *_stream={nullptr};
+    ostream *_stream;
 };
 
 
@@ -107,7 +107,7 @@ public:
      */
     ~FileLogger();
 private:
-    std::ofstream _internal_stream;
+    std::unique_ptr<std::ofstream> _internal_stream;
 };
 
 /**
@@ -143,7 +143,9 @@ private:
     /** @brief ostream to file */
     std::ofstream _fstream;
     /** @brief TeeDevice to both console and file */
-    TeeDevice* _teeDevice={nullptr};
+    std::unique_ptr<TeeDevice> _teeDevice;
+    /** @brief TeeDevice to both console and file */
+    std::unique_ptr<TeeStream> _teeStream;
 };
 
 }
