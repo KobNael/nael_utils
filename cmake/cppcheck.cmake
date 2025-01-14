@@ -61,7 +61,7 @@ endif ()
 ### ===============================================================================================
 
 function (enable_cppcheck)
-	set (cppcheck_reports_path "${CMAKE_BINARY_DIR}/cppcheck-reports")
+	set (cppcheck_reports_path ${data_base_path}/cppcheck-reports)
 	file (MAKE_DIRECTORY "${cppcheck_reports_path}")
 
 	# note that ignore option (-i) is useless when using project mode (--project)
@@ -84,7 +84,7 @@ function (enable_cppcheck)
 	list (JOIN args " " args_string)
 
 	add_custom_target (run_cppcheck
-		COMMAND cppcheck::cppcheck --project=${CMAKE_BINARY_DIR}/compile_commands.json ${args} 2> cppcheck-results.xml
+		COMMAND cppcheck::cppcheck --project=${data_base_path}/compile_commands.json ${args} 2> cppcheck-results.xml
 		WORKING_DIRECTORY "${cppcheck_reports_path}"
 		COMMENT "Running cppcheck static analysis"
 		VERBATIM

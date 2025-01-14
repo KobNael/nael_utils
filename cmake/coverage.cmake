@@ -121,7 +121,7 @@ find_package (lcov 1.14)
 ### Automation
 ### ===============================================================================================
 
-set (coverage_reports_path "${PROJECT_BINARY_DIR}/coverage-reports")
+set (coverage_reports_path "${data_base_path}/coverage-reports")
 
 ### -----------------------------------------------------------------------------------------------
 ### coverage compiler and linker flags
@@ -181,7 +181,7 @@ if (gcovr_FOUND)
 		list (APPEND GCOVR_CMD
 			--exclude-throw-branches
 			--html --html-details "${coverage_reports_path}/gcovr/index.html"
-			--sonarqube "${coverage_reports_path}/sonarqube.xml"
+			--sonarqube "${data_base_path}/../sonarqube.xml"
 			#[[ end of list ]])
 	endif ()
 
