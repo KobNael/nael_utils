@@ -181,7 +181,7 @@ if (gcovr_FOUND)
 		list (APPEND GCOVR_CMD
 			--exclude-throw-branches
 			--html --html-details "${coverage_reports_path}/gcovr/index.html"
-			--sonarqube "${coverage_reports_path}/sonarqube.xml"
+			--sonarqube "sonarqube.xml"
 			#[[ end of list ]])
 	endif ()
 
