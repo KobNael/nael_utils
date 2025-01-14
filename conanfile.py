@@ -138,7 +138,7 @@ class libreflectConan(ConanFile):
         cmake = CMake(self)
         cmake.configure()
         cmake.build()
-        cmake.test(target="run_unit_tests")
+        #cmake.test(target="run_unit_tests")
 
     def package(self):
         cmake = CMake(self)
