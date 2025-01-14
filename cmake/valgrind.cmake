@@ -116,7 +116,7 @@ function (enable_memcheck)
 			--fair-sched=try
 			${_MEMCHECK_ARGS}
 			$<TARGET_FILE:${_TARGET}> ${_TARGET_ARGS}
-		WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/valgrind-reports
+		WORKING_DIRECTORY ${valgrind_reports_path}
 		COMMENT "Running valgrind memcheck memory management problem detection (${_TARGET})")
 	if (NOT _EXCLUDE_FROM_ALL)
 		add_dependencies (run_memcheck run_memcheck_${_TARGET})
