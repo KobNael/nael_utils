@@ -28,22 +28,22 @@ jobs:
       with:
         version: 2.11.0
     # Release Build
-    - name: Cmake build
+    - name: Release conan build
       uses: KobNael/nael_cpp_action/cmake_build@draft
       with:
         build_type: Release
     # Test
-    - name: Code analysis
+    - name: Release analysis
       uses: KobNael/nael_cpp_action/tests_cpp@draft
       with:
         build_type: Release
     # Debug Build
-    - name: Cmake build
+    - name: Debug conan build
       uses: KobNael/nael_cpp_action/cmake_build@draft
       with:
         build_type: Debug
     # Test
-    - name: Code analysis
+    - name: Debug analysis
       uses: KobNael/nael_cpp_action/tests_cpp@draft
       with:
         build_type: Debug
