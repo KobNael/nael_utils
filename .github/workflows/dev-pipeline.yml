@@ -21,27 +21,27 @@ jobs:
          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
     # Get c++ tools
     - name: Get C++ Tools
-      uses: KobNael/nael_cpp_action/setup_cpp@release/1.0.0
+      uses: KobNael/nael_cpp_action/setup_cpp@v1
       with:
         key: ${{ hashFiles('./conanfile.py') }}-${{ hashFiles('./CMakeLists.txt') }}
     # Release Build
     - name: Release conan build
-      uses: KobNael/nael_cpp_action/cmake_build@release/1.0.0
+      uses: KobNael/nael_cpp_action/cmake_build@v1
       with:
         build_type: Release
     # Test
     - name: Release analysis
-      uses: KobNael/nael_cpp_action/tests_cpp@release/1.0.0
+      uses: KobNael/nael_cpp_action/tests_cpp@v1
       with:
         build_type: Release
     # Debug Build
     - name: Debug conan build
-      uses: KobNael/nael_cpp_action/cmake_build@release/1.0.0
+      uses: KobNael/nael_cpp_action/cmake_build@v1
       with:
         build_type: Debug
     # Test
     - name: Debug analysis
-      uses: KobNael/nael_cpp_action/tests_cpp@release/1.0.0
+      uses: KobNael/nael_cpp_action/tests_cpp@v1
       with:
         build_type: Debug
     # Sonar analysis
@@ -50,7 +50,7 @@ jobs:
       env:
           SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }} # Put the name of your token here
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }} # SonarQube URL is stored in a GitHub secret
-      with:
-          # Consult https://docs.sonarsource.com/sonarqube-server/latest/analyzing-source-code/scanners/sonarscanner/ for more information and options
-          args: --debug
+#      with:
+#          # Consult https://docs.sonarsource.com/sonarqube-server/latest/analyzing-source-code/scanners/sonarscanner/ for more information and options
+#          args: --debug
 
