@@ -28,17 +28,17 @@ include (GNUInstallDirs)
 # ----------------------------------------------------------------------------
 
 # additional cmake modules
-include(FetchContent)
-FetchContent_Declare(
-    nael_cmake_modules
-    GIT_REPOSITORY git@github.com:KobNael/nael_cmake_modules.git
-    GIT_TAG init
-    GIT_SHALLOW ON
-    SOURCE_SUBDIR cmake
-    )
-FetchContent_MakeAvailable(nael_cmake_modules)
+#include(FetchContent)
+#FetchContent_Declare(
+#    nael_cmake_modules
+#    GIT_REPOSITORY git@github.com:KobNael/nael_cmake_modules.git
+#    GIT_TAG init
+#    GIT_SHALLOW ON
+#    SOURCE_SUBDIR cmake
+#    )
+#FetchContent_MakeAvailable(nael_cmake_modules)
 
-list (PREPEND CMAKE_MODULE_PATH ${nael_cmake_modules_SOURCE_DIR}/cmake)
+list (PREPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules/cmake)
 list (PREPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 # library behaviour
