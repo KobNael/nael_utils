@@ -27,8 +27,8 @@ include (GNUInstallDirs)
 # External requirements setup
 # ----------------------------------------------------------------------------
 
-# additional cmake modules
-list (PREPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+list (PREPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules/cmake)
+list (PREPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 # library behaviour
 set (CMAKE_FIND_PACKAGE_SORT_ORDER NATURAL)
@@ -38,6 +38,7 @@ set (CMAKE_FIND_PACKAGE_PREFER_CONFIG ON)
 # dependencies version
 set (NAELUTILS_BOOST_VERSION 1.84)
 set (NAELUTILS_GTEST_VERSION )
+
 # ============================================================================
 # Compiler configurations
 # ============================================================================

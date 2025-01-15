@@ -1,5 +1,6 @@
 # Workflow for C++ project
 name: dev-pipeline
+
 # Only for dev
 on:
   push:
@@ -7,54 +8,10 @@ on:
   pull_request:
     branches: [ "dev", "main" ]
     types: [opened, synchronize, reopened]
+
 # List of actions
 jobs:
+  # Call pipeline
   cpp_pipeline:
-    # Just linux for now
-    runs-on: ubuntu-latest
-    # Steps
-    steps:
-    # Checkout sources
-    - name: checkout
-      uses: actions/checkout@v4
-      with:
-         fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-    # Get c++ tools
-    - name: Get C++ Tools
-      uses: KobNael/nael_cpp_action/setup_cpp@v1
-      with:
-        key: ${{ hashFiles('./conanfile.py') }}-${{ hashFiles('./CMakeLists.txt') }}
-    # Release Build
-    - name: Release conan build
-      uses: KobNael/nael_cpp_action/cmake_build@v1
-      with:
-        build_type: Release
-    # Test
-    - name: Release analysis
-      uses: KobNael/nael_cpp_action/tests_cpp@v1
-      with:
-        build_type: Release
-    # Debug Build
-    - name: Debug conan build
-      uses: KobNael/nael_cpp_action/cmake_build@v1
-      with:
-        build_type: Debug
-    # Test
-    - name: Debug analysis
-      uses: KobNael/nael_cpp_action/tests_cpp@v1
-      with:
-        build_type: Debug
-    # Sonar analysis
-    - name: Sonar analysis
-      uses: SonarSource/sonarqube-scan-action@v4
-      env:
-          SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }} # Put the name of your token here
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }} # SonarQube URL is stored in a GitHub secret
-    # Sonar Quality Gate
-    - name: SonarQube quality gate check
-      uses: SonarSource/sonarqube-quality-gate-action@v1
-      timeout-minutes: 5
-      env:
-        SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }} # Put the name of your token here
-        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }} # SonarQube URL is stored in a GitHub secret
-
+    uses: KobNael/nael_cpp_action/.github/workflows/cpp-workflow.yml@dev
+    secrets: inherit
