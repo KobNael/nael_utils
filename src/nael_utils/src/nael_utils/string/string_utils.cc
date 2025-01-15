@@ -7,7 +7,8 @@ namespace
 {
 
 // trim from start (in place)
-void ltrim(std::string &s) {
+void ltrim(std::string &s)
+{
     std::string_view view(s);
     view.remove_prefix(
         std::distance(
@@ -21,7 +22,8 @@ void ltrim(std::string &s) {
 }
 
 // trim from end (in place)
-void rtrim(std::string &s) {
+void rtrim(std::string &s)
+{
     std::string_view view(s);
     view.remove_suffix(
         std::distance(
@@ -35,7 +37,8 @@ void rtrim(std::string &s) {
 }
 
 // trim from both ends (in place)
-void lrtrim(std::string &s) {
+void lrtrim(std::string &s)
+{
     ltrim(s);
     rtrim(s);
 }
@@ -45,7 +48,8 @@ void lrtrim(std::string &s) {
 namespace str
 {
 
-std::string trim(std::string s) {
+std::string trim(std::string s)
+{
     ::lrtrim(s);
     return s;
 }

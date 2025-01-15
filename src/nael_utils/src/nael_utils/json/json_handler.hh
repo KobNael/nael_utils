@@ -33,7 +33,8 @@ namespace json
     void import_from_file(std::string const &filePath, T &context)
     {
         std::ifstream istream(filePath, std::ios::in);
-        if (!istream.is_open() || istream.eof()) {
+        if (!istream.is_open() || istream.eof())
+        {
             throw;
         }
         import_from_stream(istream, context);
