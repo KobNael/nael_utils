@@ -31,7 +31,10 @@ protected:
 
     //TearDown (do nothing)
 	virtual void TearDown()
-    {}
+    {
+        delete _context;
+        _context = nullptr;
+    }
 
     //Method of comparison
     void compare_contexts(model_test::BasicContextDto &c1, model_test::BasicContextDto &c2)

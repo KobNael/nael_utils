@@ -24,11 +24,16 @@ struct streamable
      * @brief Default Comparison operator
      */
     bool operator==(streamable const&) const = default;
+
+private:
+    /** @brief OStream operator for streamable structure */
+    friend std::ostream &operator<<(std::ostream &os, streamable const &obj)
+    {
+        return obj.stream(os);
+    }
 };
 
 
 }//details
 
-/** @brief stream operator for streamable structure */
-std::ostream &operator<<(std::ostream &os, details::streamable const &obj);
 

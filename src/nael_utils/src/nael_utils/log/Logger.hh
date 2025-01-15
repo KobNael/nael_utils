@@ -50,8 +50,7 @@ public:
     /**
      * @brief Destruct
      */
-    virtual ~Logger()
-    {};
+    virtual ~Logger() = default;
 
     /**
      * @brief set the verbosity
@@ -64,7 +63,7 @@ public:
     /**
      * @return true if the verbosity is greater than leve
      */
-    bool shouldLog(io::LogLevel level)
+    bool shouldLog(io::LogLevel level) const
     {
         return _level >= level;
     }
@@ -77,7 +76,15 @@ public:
         return *_stream;
     };
 
-protected:
+    /**
+     * @brief set the stream
+     */
+    void setLog(ostream& stream)
+    {
+        _stream = &stream;
+    }
+
+private:
     /** @brief Path to the log file */
     std::string _filePath={""};
     /** @brief Verbosity */
@@ -106,16 +113,18 @@ public:
      * @brief Destructor
      */
     ~FileLogger();
+private:
+    std::unique_ptr<std::ofstream> _internal_stream = std::make_unique<std::ofstream>();
 };
 
 /**
  * @brief Definition of a tee
  */
-typedef boost::iostreams::tee_device<std::ostream, std::ostream> TeeDevice;
+using TeeDevice = boost::iostreams::tee_device<std::ostream, std::ostream>;
 /**
  * @brief Definition of a tee stream
  */
-typedef boost::iostreams::stream<TeeDevice> TeeStream;
+using TeeStream= boost::iostreams::stream<TeeDevice>;
 
 /**
  * @class TeeLogger
@@ -141,7 +150,9 @@ private:
     /** @brief ostream to file */
     std::ofstream _fstream;
     /** @brief TeeDevice to both console and file */
-    TeeDevice* _teeDevice={nullptr};
+    std::unique_ptr<TeeDevice> _teeDevice;
+    /** @brief TeeDevice to both console and file */
+    std::unique_ptr<TeeStream> _teeStream;
 };
 
 }

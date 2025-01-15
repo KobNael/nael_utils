@@ -22,7 +22,7 @@ struct LexicalComparator
     /**
      * @brief Destructor
      */
-    virtual ~LexicalComparator() {}
+    virtual ~LexicalComparator() = default;
     /**
      * @brief Strict comparison
      * @param lhs left hand side

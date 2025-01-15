@@ -30,7 +30,6 @@ set_target_properties (nael_utils
 
 target_sources (nael_utils
 	PRIVATE
-	src/nael_utils/model/details/model_streamable.cc
 	src/nael_utils/log/log.cc
 	src/nael_utils/log/Logger.cc
 	src/nael_utils/period/period_functor.cc

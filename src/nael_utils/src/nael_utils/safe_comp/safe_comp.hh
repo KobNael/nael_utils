@@ -70,7 +70,10 @@ namespace safecomp
 ///////////////////
     /**\return the closest integer value of p */
     template<typename T, typename = typename std::enable_if<std::is_floating_point<T>::value, T>::type>
-    inline T round(T val_p) {return floor(val_p + 0.5);}
+    inline T round(T val_p)
+    {
+        return floor(val_p + 0.5);
+    }
 
     /**\return lhs_p is < rhs_p -\f$\epsilon\f$ */
     template<typename T, typename = typename std::enable_if<std::is_floating_point<T>::value, T>::type>
@@ -144,14 +147,16 @@ namespace safecomp
 
     /**\return true if val_p is not a number */
     template<typename T, typename = typename std::enable_if<std::is_floating_point<T>::value, T>::type>
-    inline bool isnan(T val_p) {
+    inline bool isnan(T val_p)
+    {
         volatile double tmp = val_p;
         return val_p == std::numeric_limits<T>::quiet_NaN() || tmp != val_p;
     }
 
     /**\return true if val_p represents infinity*/
     template<typename T, typename = typename std::enable_if<std::is_floating_point<T>::value, T>::type>
-    inline int isinf(T val_p) {
+    inline int isinf(T val_p)
+    {
         volatile double tmp = val_p;
         if ((tmp == val_p) && ((tmp - val_p) != 0.0))
             return (val_p < 0.0 ? -1 : 1);
