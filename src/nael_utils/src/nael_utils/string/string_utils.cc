@@ -1,10 +1,7 @@
 #include <nael_utils/string/string_utils.hh>
 
-#include <algorithm>
-#include <functional>
-#include <cctype>
-#include <locale>
 #include <string_view>
+#include <ranges>
 
 namespace
 {
@@ -15,11 +12,11 @@ void ltrim(std::string &s) {
     view.remove_prefix(
         std::distance(
             view.cbegin(),
-            std::find_if(view.cbegin(), view.cend(),
-            [](char c)
+            std::ranges::find_if(view, [](char c)
             {
                 return !std::isspace(c);
-            })));
+            })
+        ) );
     s = view;
 }
 
@@ -29,11 +26,11 @@ void rtrim(std::string &s) {
     view.remove_suffix(
         std::distance(
             view.crbegin(),
-            std::find_if(view.crbegin(), view.crend(),
-            [](char c)
+            std::ranges::find_if(view | std::views::reverse, [](char c)
             {
                 return !std::isspace(c);
-            })));
+            })
+        ) );
     s = view;
 }
 

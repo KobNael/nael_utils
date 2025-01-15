@@ -27,7 +27,10 @@ struct streamable
 
 private:
     /** @brief OStream operator for streamable structure */
-    friend std::ostream &operator<<(std::ostream &os, streamable const &obj);
+    friend std::ostream &operator<<(std::ostream &os, streamable const &obj)
+    {
+        return obj.stream(os);
+    }
 };
 
 
