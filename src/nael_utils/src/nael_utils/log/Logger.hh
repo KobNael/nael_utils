@@ -112,7 +112,7 @@ public:
     /**
      * @brief Destructor
      */
-    ~FileLogger();
+    ~FileLogger() = default;
 private:
     std::unique_ptr<std::ofstream> _internal_stream = std::make_unique<std::ofstream>();
 };
@@ -144,7 +144,7 @@ public:
     /**
      * @brief Destructor
      */
-    ~TeeLogger();
+    ~TeeLogger() = default;
 
 private:
     /** @brief ostream to file */

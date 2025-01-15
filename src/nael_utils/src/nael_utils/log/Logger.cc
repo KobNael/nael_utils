@@ -33,9 +33,6 @@ FileLogger::FileLogger(std::string const& file, io::LogLevel level)
     open_stream(file, *_internal_stream);
     this->setLog( *_internal_stream );
 }
-//FileLogger destructor
-FileLogger::~FileLogger()
-{}
 
 //TeeLogger constructor
 TeeLogger::TeeLogger(std::string const& file, io::LogLevel level)
@@ -46,8 +43,5 @@ TeeLogger::TeeLogger(std::string const& file, io::LogLevel level)
     _teeStream = std::make_unique<TeeStream>(*_teeDevice);
     this->setLog( *_teeStream );
 }
-//TeeLogger destructor
-TeeLogger::~TeeLogger()
-{}
 
 } //namespace io
