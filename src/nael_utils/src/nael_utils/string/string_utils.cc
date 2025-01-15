@@ -4,24 +4,37 @@
 #include <functional>
 #include <cctype>
 #include <locale>
+#include <string_view>
 
 namespace
 {
 
-//test if a char is a space
-bool char_isspace(char c) {
-    return std::isspace(static_cast<unsigned char>(c));
-}
 // trim from start (in place)
 void ltrim(std::string &s) {
-    s.erase(s.begin(), std::find_if(s.begin(), s.end(),
-            std::not1(std::ptr_fun(char_isspace))));
+    std::string_view view(s);
+    view.remove_prefix(
+        std::distance(
+            view.cbegin(),
+            std::find_if(view.cbegin(), view.cend(),
+            [](char c)
+            {
+                return !std::isspace(c);
+            })));
+    s = view;
 }
 
 // trim from end (in place)
 void rtrim(std::string &s) {
-    s.erase(std::find_if(s.rbegin(), s.rend(),
-            std::not1(std::ptr_fun(char_isspace))).base(), s.end());
+    std::string_view view(s);
+    view.remove_suffix(
+        std::distance(
+            view.crbegin(),
+            std::find_if(view.crbegin(), view.crend(),
+            [](char c)
+            {
+                return !std::isspace(c);
+            })));
+    s = view;
 }
 
 // trim from both ends (in place)

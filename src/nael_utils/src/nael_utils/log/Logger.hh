@@ -63,7 +63,7 @@ public:
     /**
      * @return true if the verbosity is greater than leve
      */
-    bool shouldLog(io::LogLevel level)
+    bool shouldLog(io::LogLevel level) const
     {
         return _level >= level;
     }

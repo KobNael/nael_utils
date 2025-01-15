@@ -79,6 +79,12 @@ struct capa_period
     time_period _period;
     /** @brief equality operator */
     bool operator==(capa_period const &cp) const {return _capa==cp._capa && _period == cp._period;}
+    /**
+     * @brief OStream operator for capa_period
+     * @param os the ostream
+     * @param cp the capa_period
+     */
+    friend std::ostream &operator<<(std::ostream &os, capa_period const &cp);
 };
 
 /**
@@ -93,11 +99,3 @@ using LTimePeriod = std::list<time_period>;
  * @addtogroup period_type_def
  */
 using LCapaPeriod = std::list<capa_period>;
-
-/**
- * @brief OStream operator for capa_period
- * @param os the ostream
- * @param cp the capa_period
- */
-std::ostream &operator<<(std::ostream &os, capa_period const &cp);
-
