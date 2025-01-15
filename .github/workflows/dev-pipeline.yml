@@ -10,4 +10,4 @@ on:
 # List of actions
 jobs:
   cpp_pipeline:
-    uses: KobNael/nael_cpp_action/workflow/cpp-workflow.yml@reusable
+    uses: KobNael/nael_cpp_action/.github/workflows/cpp-workflow.yml@reusable
