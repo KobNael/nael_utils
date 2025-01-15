@@ -37,7 +37,7 @@
  * @brief Alias for time period
  * @addtogroup period_type_def
  */
-typedef boost::posix_time::time_period time_period;
+using time_period = boost::posix_time::time_period;
 
 /**
  * @struct capa_period
@@ -86,13 +86,13 @@ struct capa_period
  * @brief list of period
  * @addtogroup period_type_def
  */
-typedef std::list<time_period> LTimePeriod;
+using LTimePeriod = std::list<time_period>;
 /**
  * @typedef LCapaPeriod
  * @brief list of period with capacity
  * @addtogroup period_type_def
  */
-typedef std::list<capa_period> LCapaPeriod;
+using LCapaPeriod = std::list<capa_period>;
 
 /**
  * @brief OStream operator for capa_period

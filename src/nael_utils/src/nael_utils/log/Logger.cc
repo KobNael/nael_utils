@@ -24,26 +24,14 @@ namespace
 			throw std::runtime_error("Invalid name of log file") ;
 		}
 	}
-	/**
-	 * @brief Close a stream
-	 */
-	void close_stream(std::ofstream &stream)
-	{
-		if( stream.is_open() )
-		{
-			stream.flush();
-			stream.close();
-		}
-	}
 }//namespace
 
 //FileLogger constructor
 FileLogger::FileLogger(std::string const& file, io::LogLevel level)
  : Logger<std::ofstream>(file, level)
- , _internal_stream(std::make_unique<std::ofstream>())
 {
     open_stream(file, *_internal_stream);
-    this->_stream = _internal_stream.get();
+    this->setLog( *_internal_stream );
 }
 //FileLogger destructor
 FileLogger::~FileLogger()
@@ -56,22 +44,10 @@ TeeLogger::TeeLogger(std::string const& file, io::LogLevel level)
 	open_stream(file, _fstream);
 	_teeDevice = std::make_unique<TeeDevice>(std::cout, _fstream);
     _teeStream = std::make_unique<TeeStream>(*_teeDevice);
-	this->_stream = _teeStream.get();
+    this->setLog( *_teeStream );
 }
 //TeeLogger destructor
 TeeLogger::~TeeLogger()
-{
-	close_stream(_fstream);
-	if(nullptr != this->_stream)
-	{
-        try
-        {
-            this->_stream->flush();
-            this->_stream->close();
-        }
-        catch( ... )
-        {}
-	}
-}
+{}
 
 } //namespace io
