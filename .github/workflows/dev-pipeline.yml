@@ -13,5 +13,5 @@ on:
 jobs:
   # Call pipeline
   cpp_pipeline:
-    uses: KobNael/nael_cpp_action/.github/workflows/cpp-workflow.yml@reusable
+    uses: KobNael/nael_cpp_action/.github/workflows/cpp-workflow.yml@dev
     secrets: inherit
