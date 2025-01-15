@@ -1,3 +1,4 @@
 [submodule "cmake-modules"]
 	path = cmake-modules
 	url = git@github.com:KobNael/nael_cmake_modules.git
+	branch = init
