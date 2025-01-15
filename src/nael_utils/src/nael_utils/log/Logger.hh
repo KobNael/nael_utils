@@ -120,8 +120,7 @@ private:
 /**
  * @brief Definition of a tee
  */
-//using TeeDevice = boost::iostreams::tee_device<std::ostream, std::ostream>;
-typedef boost::iostreams::tee_device<std::ostream, std::ostream> TeeDevice;
+using TeeDevice = boost::iostreams::tee_device<std::ostream, std::ostream>;
 /**
  * @brief Definition of a tee stream
  */
