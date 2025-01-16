@@ -6,6 +6,8 @@ target_sources (unit_tests
     #--------
     # utils
     #--------
+    # dedicated exception
+    src/exception/dedicated_exception.test.cc
     # json utils
     src/json/stream_io.test.cc
     # log utils
