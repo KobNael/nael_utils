@@ -1,4 +1,3 @@
 #include "exception.hh"
 
-NaelException::~NaelException()
-{}
+NaelException::~NaelException() = default;

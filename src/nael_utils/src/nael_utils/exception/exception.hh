@@ -12,12 +12,12 @@ public:
     explicit NaelException(const std::string& message)
         : _message(message) {}
 
-    virtual const char* what() const noexcept override
+    const char* what() const noexcept override
     {
         return _message.c_str();
     }
 
-    virtual ~NaelException() = 0;
+    ~NaelException() override = 0 ;
 
 private:
     std::string _message;
