@@ -4,6 +4,7 @@ Utils documentation
 This library regroup some usefull tools for c++ applications :
 
    - :ref:`log_utils` : Utils for logging
+   - :ref:`exception` : Tool for dedicated exception
    - :ref:`model`: Utils for data model description
    - :ref:`json_utils`: Utils for json import/export
    - :ref:`string_utils`: Utils for string manipulation
@@ -17,6 +18,7 @@ This library regroup some usefull tools for c++ applications :
    :hidden:
 
    doc/log/log
+   doc/exception/exception
    doc/model/model
    doc/json/json
    doc/string/string_utils

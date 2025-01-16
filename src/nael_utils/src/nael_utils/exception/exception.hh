@@ -24,8 +24,19 @@ private:
 };
 
 /**
- * @class ConsistencyException
- * @brief Pure virtual class to create dedicated exceptions
+ * @brief Create a new type of exception
+ * @param class_name the name of the class
+ *
+ * @code{cpp}
+ * namespace test
+ * {
+ *     MAKE_EXCEPTION(base)
+ *     void throw_base()
+ *     {
+ *         throw test::base("dedicated error");
+ *     }
+ * }
+ * @endcode
  */
 #define MAKE_EXCEPTION(class_name) \
 class class_name : public NaelException \
