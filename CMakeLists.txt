@@ -48,15 +48,17 @@ set (CMAKE_CXX_STANDARD 20)
 set (CMAKE_CXX_STANDARD_REQUIRED ON)
 set (CMAKE_CXX_EXTENSIONS OFF)
 
-set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set (data_base_path ${CMAKE_SOURCE_DIR}/compilation-databases/${CMAKE_BUILD_TYPE})
-file (MAKE_DIRECTORY "${data_base_path}")
-add_custom_target(
-    copy-compile-commands ALL
-    ${CMAKE_COMMAND} -E copy_if_different
-        ${CMAKE_BINARY_DIR}/compile_commands.json
-        ${data_base_path}/
-    )
+if( NOT ${PROJECT_NAME}_AS_SUBMODULE )
+    set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
+    set (data_base_path ${CMAKE_SOURCE_DIR}/compilation-databases/${CMAKE_BUILD_TYPE})
+    file (MAKE_DIRECTORY "${data_base_path}")
+    add_custom_target(
+        copy-compile-commands ALL
+        ${CMAKE_COMMAND} -E copy_if_different
+            ${CMAKE_BINARY_DIR}/compile_commands.json
+            ${data_base_path}/
+        )
+endif()
 # ----------------------------------------------------------------------------
 # Default compilation flags
 # ----------------------------------------------------------------------------
