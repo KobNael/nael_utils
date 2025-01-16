@@ -12,6 +12,8 @@ project (nael_utils
 	VERSION 0.0.0
 	LANGUAGES CXX)
 
+option (${PROJECT_NAME}_AS_SUBMODULE "enable cppcheck" ON)
+
 # ============================================================================
 # External requirements
 # ============================================================================
@@ -27,17 +29,13 @@ include (GNUInstallDirs)
 # External requirements setup
 # ----------------------------------------------------------------------------
 
-list (PREPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules/cmake)
+list (PREPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules)
 list (PREPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 # library behaviour
 set (CMAKE_FIND_PACKAGE_SORT_ORDER NATURAL)
 set (CMAKE_FIND_PACKAGE_SORT_DIRECTION DEC)
 set (CMAKE_FIND_PACKAGE_PREFER_CONFIG ON)
-
-# dependencies version
-set (NAELUTILS_BOOST_VERSION 1.84)
-set (NAELUTILS_GTEST_VERSION )
 
 # ============================================================================
 # Compiler configurations
@@ -71,7 +69,7 @@ SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -save-temps=obj")
 # ----------------------------------------------------------------------------
 
 option (${PROJECT_NAME}_WITH_CPPCHECK "enable cppcheck" OFF)
-if (${PROJECT_NAME}_WITH_CPPCHECK)
+if (NOT ${PROJECT_NAME}_AS_SUBMODULE AND ${PROJECT_NAME}_WITH_CPPCHECK)
 	include (cppcheck)
 	enable_cppcheck()
 endif ()
@@ -80,7 +78,7 @@ endif ()
 # Coverage build type definition
 # ----------------------------------------------------------------------------
 option (${PROJECT_NAME}_WITH_COVERAGE "enable coverage" OFF)
-if (${PROJECT_NAME}_WITH_COVERAGE)
+if (NOT ${PROJECT_NAME}_AS_SUBMODULE AND ${PROJECT_NAME}_WITH_COVERAGE)
 	include (coverage)
 endif ()
 
@@ -88,7 +86,7 @@ endif ()
 # Enable memcheck
 # ----------------------------------------------------------------------------
 option (${PROJECT_NAME}_WITH_VALGRIND "enable valgrind" OFF)
-if (${PROJECT_NAME}_WITH_VALGRIND)
+if (NOT ${PROJECT_NAME}_AS_SUBMODULE AND ${PROJECT_NAME}_WITH_VALGRIND)
 	include (valgrind)
 endif ()
 

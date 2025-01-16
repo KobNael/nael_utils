@@ -43,11 +43,11 @@ target_include_directories (unit_tests
 # ----------------------------------------------------------------------------
 # run_unit_tests
 # ----------------------------------------------------------------------------
-if (${PROJECT_NAME}_WITH_COVERAGE)
+if (NOT ${PROJECT_NAME}_AS_SUBMODULE AND ${PROJECT_NAME}_WITH_COVERAGE)
     generate_coverage_report (TARGET run_unit_tests)
 endif ()
 
-if (${PROJECT_NAME}_WITH_VALGRIND)
+if (NOT ${PROJECT_NAME}_AS_SUBMODULE AND ${PROJECT_NAME}_WITH_VALGRIND)
     enable_memcheck (TARGET unit_tests)
 endif ()
 

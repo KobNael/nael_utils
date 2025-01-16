@@ -129,6 +129,7 @@ class libreflectConan(ConanFile):
         tc.variables[self.name+"_WITH_COVERAGE"] = self.options.coverage
         tc.variables[self.name+"_WITH_CPPCHECK"] = self.options.cppcheck
         tc.variables[self.name+"_WITH_VALGRIND"] = self.options.valgrind
+        tc.variables[self.name+"_AS_SUBMODULE"] = "OFF"
         tc.generate()
 
         deps = CMakeDeps(self)
