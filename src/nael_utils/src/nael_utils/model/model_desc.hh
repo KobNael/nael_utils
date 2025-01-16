@@ -83,16 +83,16 @@ public: \
     struct struct_name : public details::streamable\
     {\
         virtual ~struct_name(){} \
-        MAKE_ATT_DECLARATION(att_seq) \
+        MAKE_ATT_DECLARATION(0, att_seq) \
         std::ostream& stream(std::ostream& os) const override\
         {\
             os << BOOST_PP_STRINGIZE(struct_name) << "{";\
-            STREAM_ATT_VALUES(att_seq)\
+            STREAM_DTO_ATT_VALUES(att_seq)\
             return os << "}"; \
         }\
         bool operator==(struct_name const&) const = default;\
     };\
-    BOOST_DESCRIBE_STRUCT(struct_name, (), (GET_ATT_NAMES(att_seq)))
+    BOOST_DESCRIBE_STRUCT(struct_name, (), (GET_DTO_ATT_NAMES(att_seq)))
 
 /**
  * @brief allow the declaration of an enum
@@ -113,22 +113,22 @@ public: \
 #define MAKE_DTO_ENUM BOOST_DEFINE_ENUM
 
 /**
- * @brief Generate an editable attribute std::map<key, value> name along with its getters
+ * @brief Generate an editable attribute std::map<key, value> _name along with its getters
  * @code{cpp}
  *     MAKE_MAP(std::string, int, values)
  * @endcode
  *  expands to
  * @code{cpp}
  *    private:
- *     std::map<std::string, int> values;
+ *     std::map<std::string, int> _values;
  *    public:
  *     std::map<std::string, int> &get_values()
  *     {
- *       return values;
+ *       return _values;
  *     }
  *     std::map<std::string, int> const &get_values() const
  *     {
- *       return values;
+ *       return _values;
  *     }
  * @endcode
  * @param key the type of keys
@@ -137,7 +137,7 @@ public: \
  */
 #define MAKE_MAP(key, value, name) MAKE_MAP_ATT(key, value, name, 0)
 /**
- * @brief Generate an editable attribute std::unordered_map<key, value> name along with its getters
+ * @brief Generate an editable attribute std::unordered_map<key, value> _name along with its getters
  * @code{cpp}
  *     MAKE_UNORDERED_MAP(std::string, int, values)
  * @endcode
@@ -148,11 +148,11 @@ public: \
  *    public:
  *     std::unordered_map<std::string, int> &get_values()
  *     {
- *       return values;
+ *       return _values;
  *     }
  *     std::unordered_map<std::string, int> const &get_values() const
  *     {
- *       return values;
+ *       return _values;
  *     }
  * @endcode
  * @param key the type of keys
@@ -162,22 +162,22 @@ public: \
 #define MAKE_UNORDERED_MAP(key, value, name) MAKE_MAP_ATT(key, value, name, 1)
 
 /**
- * @brief Generate an editable attribute std::set<value> name along with its getters
+ * @brief Generate an editable attribute std::set<value> _name along with its getters
  * @code{cpp}
  *     MAKE_SET(int, values)
  * @endcode
  *  expands to
  * @code{cpp}
  *    private:
- *     std::set<int> values;
+ *     std::set<int> _values;
  *    public:
  *     std::set<int> &get_values()
  *     {
- *       return values;
+ *       return _values;
  *     }
  *     std::set<int> const &get_values() const
  *     {
- *       return values;
+ *       return _values;
  *     }
  * @endcode
  * @param value the type of values
@@ -185,28 +185,73 @@ public: \
  */
 #define MAKE_SET(value, name) MAKE_SET_ATT(value, name, 0)
 /**
- * @brief Generate an editable attribute std::unordered_set<value> name along with its getters
+ * @brief Generate an editable attribute std::unordered_set<value> _name along with its getters
  * @code{cpp}
  *     MAKE_UNORDERED_SET(int, values)
  * @endcode
  *  expands to
  * @code{cpp}
  *    private:
- *     std::unordered_set<int> values;
+ *     std::unordered_set<int> _values;
  *    public:
  *     std::unordered_set<int> &get_values()
  *     {
- *       return values;
+ *       return _values;
  *     }
  *     std::unordered_set<int> const &get_values() const
  *     {
- *       return values;
+ *       return _values;
  *     }
  * @endcode
  * @param value the type of values
  * @param name the name of the attribute
  */
 #define MAKE_UNORDERED_SET(value, name) MAKE_SET_ATT(value, name, 1)
+
+/**
+ * @brief Generate an editable attribute type & _name along with its getters
+ * @code{cpp}
+ *     MAKE_CLASS_REF_ATT(type, obj)
+ * @endcode
+ *  expands to
+ * @code{cpp}
+ *    private:
+ *     type &_obj;
+ *    public:
+ *     type &get_obj()
+ *     {
+ *       return _obj;
+ *     }
+ *     type const &get_obj() const
+ *     {
+ *       return _obj;
+ *     }
+ * @endcode
+ * @param type the class name
+ * @param name the name of the attribute
+ */
+#define MAKE_CLASS_REF_ATT(type, name) MAKE_BASIC_CLASS_REF_ATT(type, name, 0)
+
+/**
+ * @brief Generate a read only attribute type const & _name along with its getters
+ * @code{cpp}
+ *     MAKE_CLASS_CONSTREF_ATT(type, obj)
+ * @endcode
+ *  expands to
+ * @code{cpp}
+ *    private:
+ *     type const &_obj;
+ *    public:
+ *     type const &get_obj() const
+ *     {
+ *       return _obj;
+ *     }
+ * @endcode
+ * @param type the class name
+ * @param name the name of the attribute
+ */
+#define MAKE_CLASS_CONSTREF_ATT(type, name) MAKE_BASIC_CLASS_REF_ATT(type, name, 1)
+
 
 /**
  * @brief Generate every set / get for basic attributes
@@ -222,21 +267,21 @@ public: \
  *   expands to
  * @code{cpp}
  *   private:
- *       std::string id;
+ *       std::string _id;
  *   public:
- *       std::string const &get_id() const { return id; }
+ *       std::string const &get_id() const { return _id; }
  *   private:
- *       unsigned x;
+ *       unsigned _x;
  *   public:
- *       void set_x(unsigned p) { x = p; }
- *       unsigned &get_x() { return x; }
- *       unsigned get_x() const { return x; }
+ *       void set_x(unsigned p) { _x = p; }
+ *       unsigned &get_x() { return _x; }
+ *       unsigned get_x() const { return _x; }
  *   private:
- *       unsigned pos;
+ *       unsigned _pos;
  *   public:
- *       void set_pos(unsigned p) { pos = p; }
- *       unsigned &get_pos() { return pos; }
- *       unsigned get_pos() const { return pos; }
+ *       void set_pos(unsigned p) { _pos = p; }
+ *       unsigned &get_pos() { return _pos; }
+ *       unsigned get_pos() const { return _pos; }
  * @endcode
  * @param const_att_seq sequence of non editable attributes
  * @param editable_att_seq sequence of editable attributes

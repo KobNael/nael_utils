@@ -12,6 +12,8 @@ project (nael_utils
 	VERSION 0.0.0
 	LANGUAGES CXX)
 
+option (${PROJECT_NAME}_AS_SUBMODULE "enable cppcheck" ON)
+
 # ============================================================================
 # External requirements
 # ============================================================================
@@ -27,17 +29,13 @@ include (GNUInstallDirs)
 # External requirements setup
 # ----------------------------------------------------------------------------
 
-list (PREPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules/cmake)
+list (PREPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules)
 list (PREPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 # library behaviour
 set (CMAKE_FIND_PACKAGE_SORT_ORDER NATURAL)
 set (CMAKE_FIND_PACKAGE_SORT_DIRECTION DEC)
 set (CMAKE_FIND_PACKAGE_PREFER_CONFIG ON)
-
-# dependencies version
-set (NAELUTILS_BOOST_VERSION 1.84)
-set (NAELUTILS_GTEST_VERSION )
 
 # ============================================================================
 # Compiler configurations
@@ -50,15 +48,17 @@ set (CMAKE_CXX_STANDARD 20)
 set (CMAKE_CXX_STANDARD_REQUIRED ON)
 set (CMAKE_CXX_EXTENSIONS OFF)
 
-set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set (data_base_path ${CMAKE_SOURCE_DIR}/compilation-databases/${CMAKE_BUILD_TYPE})
-file (MAKE_DIRECTORY "${data_base_path}")
-add_custom_target(
-    copy-compile-commands ALL
-    ${CMAKE_COMMAND} -E copy_if_different
-        ${CMAKE_BINARY_DIR}/compile_commands.json
-        ${data_base_path}/
-    )
+if( NOT ${PROJECT_NAME}_AS_SUBMODULE )
+    set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
+    set (data_base_path ${CMAKE_SOURCE_DIR}/compilation-databases/${CMAKE_BUILD_TYPE})
+    file (MAKE_DIRECTORY "${data_base_path}")
+    add_custom_target(
+        copy-compile-commands ALL
+        ${CMAKE_COMMAND} -E copy_if_different
+            ${CMAKE_BINARY_DIR}/compile_commands.json
+            ${data_base_path}/
+        )
+endif()
 # ----------------------------------------------------------------------------
 # Default compilation flags
 # ----------------------------------------------------------------------------
@@ -71,7 +71,7 @@ SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -save-temps=obj")
 # ----------------------------------------------------------------------------
 
 option (${PROJECT_NAME}_WITH_CPPCHECK "enable cppcheck" OFF)
-if (${PROJECT_NAME}_WITH_CPPCHECK)
+if (NOT ${PROJECT_NAME}_AS_SUBMODULE AND ${PROJECT_NAME}_WITH_CPPCHECK)
 	include (cppcheck)
 	enable_cppcheck()
 endif ()
@@ -80,7 +80,7 @@ endif ()
 # Coverage build type definition
 # ----------------------------------------------------------------------------
 option (${PROJECT_NAME}_WITH_COVERAGE "enable coverage" OFF)
-if (${PROJECT_NAME}_WITH_COVERAGE)
+if (NOT ${PROJECT_NAME}_AS_SUBMODULE AND ${PROJECT_NAME}_WITH_COVERAGE)
 	include (coverage)
 endif ()
 
@@ -88,14 +88,13 @@ endif ()
 # Enable memcheck
 # ----------------------------------------------------------------------------
 option (${PROJECT_NAME}_WITH_VALGRIND "enable valgrind" OFF)
-if (${PROJECT_NAME}_WITH_VALGRIND)
+if (NOT ${PROJECT_NAME}_AS_SUBMODULE AND ${PROJECT_NAME}_WITH_VALGRIND)
 	include (valgrind)
 endif ()
 
 # ============================================================================
 # Installation
 # ============================================================================
-
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 	set (CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/install/${PROJECT_NAME}-${PROJECT_VERSION}" CACHE PATH "${PROJECT_NAME} default install path" FORCE)
 endif ()

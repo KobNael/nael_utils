@@ -17,7 +17,7 @@
  * @brief Generate the instruction needed to stream an attribute
  * @warning This macro should not be called directly, it is used through #MAKE_DTO_STRUCT
  */
-#define STREAM_ATT_VALUE_VARIABLE(r, data, i, att_desc) \
+#define STREAM_DTO_ATT_VALUE_VARIABLE(r, data, i, att_desc) \
 	io::print( os << BOOST_PP_IF(i, ", " <<,) BOOST_PP_STRINGIZE( BOOST_PP_SEQ_ELEM(1, att_desc) ) << "=" BOOST_PP_COMMA() \
     BOOST_PP_SEQ_ELEM(1, att_desc) );
 
@@ -26,6 +26,6 @@
  * @param att_seq the sequence
  * @warning This macro should not be called directly, it is used through #MAKE_DTO_STRUCT
  */
-#define STREAM_ATT_VALUES(att_seq) \
-    BOOST_PP_SEQ_FOR_EACH_I(STREAM_ATT_VALUE_VARIABLE, , att_seq)
+#define STREAM_DTO_ATT_VALUES(att_seq) \
+    BOOST_PP_SEQ_FOR_EACH_I(STREAM_DTO_ATT_VALUE_VARIABLE, , att_seq)
 

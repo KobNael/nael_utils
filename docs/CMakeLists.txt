@@ -31,7 +31,7 @@ add_custom_target (doc_dox
 	COMMENT "Generating documentation with Doxygen" VERBATIM)
 
 #call sphinx to generate html documentation
-add_custom_target (doc ALL
+add_custom_target (doc
     COMMAND ${Sphinx_EXECUTABLE} -E -c ${CMAKE_CURRENT_BINARY_DIR} -b html ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/html
     DEPENDS doc_dox
 	COMMENT "Generating documentation with Sphinx" VERBATIM)
@@ -40,5 +40,6 @@ add_custom_target (doc ALL
 # Install configuration
 # ============================================================================
 install (DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html/
-	DESTINATION share/doc)
+	DESTINATION share/doc
+    OPTIONAL )
 

@@ -5,13 +5,13 @@
 # ----------------------------------------------------------------------------
 # Boost
 # ----------------------------------------------------------------------------
-find_package (Boost ${NAEL_UTILS_BOOST_VERSION} REQUIRED)
+find_package (Boost REQUIRED)
 
 # ============================================================================
 # Targets configuration
 # ============================================================================
 
-configure_file (${CMAKE_SOURCE_DIR}/cmake-modules/cmake/nael_version.hh.in ${CMAKE_CURRENT_BINARY_DIR}/nael_utils_version.hh)
+configure_file (${CMAKE_SOURCE_DIR}/cmake-modules/nael_version.hh.in ${CMAKE_CURRENT_BINARY_DIR}/nael_utils_version.hh)
 
 # ----------------------------------------------------------------------------
 # library configuration
@@ -19,7 +19,7 @@ configure_file (${CMAKE_SOURCE_DIR}/cmake-modules/cmake/nael_version.hh.in ${CMA
 
 add_library(nael_utils)
 
-if (${PROJECT_NAME}_WITH_COVERAGE)
+if (NOT ${PROJECT_NAME}_AS_SUBMODULE AND ${PROJECT_NAME}_WITH_COVERAGE)
 	enable_coverage(TARGET nael_utils)
 endif()
 
@@ -30,6 +30,7 @@ set_target_properties (nael_utils
 
 target_sources (nael_utils
 	PRIVATE
+	src/nael_utils/exception/exception.cc
 	src/nael_utils/log/log.cc
 	src/nael_utils/log/Logger.cc
 	src/nael_utils/period/period_functor.cc
