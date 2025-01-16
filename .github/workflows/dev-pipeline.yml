@@ -1,0 +1,17 @@
+# Workflow for C++ project
+name: dev-pipeline
+
+# Only for dev
+on:
+  push:
+    branches: [ "dev", "main" ]
+  pull_request:
+    branches: [ "dev", "main" ]
+    types: [opened, synchronize, reopened]
+
+# List of actions
+jobs:
+  # Call pipeline
+  cpp_pipeline:
+    uses: KobNael/nael_cpp_action/.github/workflows/cpp-workflow.yml@dev
+    secrets: inherit
