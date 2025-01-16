@@ -140,7 +140,7 @@
     BOOST_PP_IF(is_const, ,BOOST_PP_SEQ_FOR_EACH(MAKE_ATT_GETTER_VARIABLE, 0, att_seq)) /*editable getter is non const*/
 
 /**
- * @brief Generate an editable attribute `std::(unordered_)map<key, value> name` and every getter/setter
+ * @brief Generate an editable attribute `std::(unordered_)map<key, value> _name` and every getter/setter
  * @param key the type of the keys
  * @param value the type of the values
  * @param name the name of the attribute
@@ -154,7 +154,7 @@
         BOOST_PP_IF(ordered,std::map,std::unordered_map)<key, value> const & BOOST_PP_CAT(get_, name)() const { return BOOST_PP_CAT(_, name);} \
         BOOST_PP_IF(ordered,std::map,std::unordered_map)<key, value> & BOOST_PP_CAT(get_, name)() { return BOOST_PP_CAT(_, name);}
 /**
- * @brief Generate an editable attribute `std::(unordered_)set<value> name` and every getter/setter
+ * @brief Generate an editable attribute `std::(unordered_)set<value> _name` and every getter/setter
  * @param value the type of the values
  * @param name the name of the attribute
  * @param ordered indicates if we should generate a std::set or a std::unordered_set
@@ -166,6 +166,23 @@
     public:\
         BOOST_PP_IF(ordered,std::set,std::unordered_set)<value> const & BOOST_PP_CAT(get_, name)() const { return BOOST_PP_CAT(_, name);} \
         BOOST_PP_IF(ordered,std::set,std::unordered_set)<value> & BOOST_PP_CAT(get_, name)() { return BOOST_PP_CAT(_, name);}
+
+/**
+ * @brief Generate an editable attribute `type  &_name` and every getter/setter
+ * @param type the class name
+ * @param name the name of the attribute
+ * @param is_const is the reference const
+ * @warning This macro should not be called directly, it is used through #MAKE_CLASS_REF_ATT and #MAKE_CLASS_CONSTREF_ATT
+ */
+#define MAKE_BASIC_CLASS_REF_ATT(type, name, is_const) \
+    private:\
+        type BOOST_PP_IF(is_const, const ,) BOOST_PP_CAT(& _, name); \
+    public:\
+        type const& BOOST_PP_CAT(get_, name)() const { return BOOST_PP_CAT(_, name);} \
+        BOOST_PP_IF(is_const, , \
+            type & BOOST_PP_CAT(get_, name)() { return BOOST_PP_CAT(_, name);} \
+        )
+
 
 /**
  * @brief Generate every declaration and getters/setters for a sequence of attributes

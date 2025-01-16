@@ -113,7 +113,7 @@ public: \
 #define MAKE_DTO_ENUM BOOST_DEFINE_ENUM
 
 /**
- * @brief Generate an editable attribute std::map<key, value> name along with its getters
+ * @brief Generate an editable attribute std::map<key, value> _name along with its getters
  * @code{cpp}
  *     MAKE_MAP(std::string, int, values)
  * @endcode
@@ -137,7 +137,7 @@ public: \
  */
 #define MAKE_MAP(key, value, name) MAKE_MAP_ATT(key, value, name, 0)
 /**
- * @brief Generate an editable attribute std::unordered_map<key, value> name along with its getters
+ * @brief Generate an editable attribute std::unordered_map<key, value> _name along with its getters
  * @code{cpp}
  *     MAKE_UNORDERED_MAP(std::string, int, values)
  * @endcode
@@ -162,7 +162,7 @@ public: \
 #define MAKE_UNORDERED_MAP(key, value, name) MAKE_MAP_ATT(key, value, name, 1)
 
 /**
- * @brief Generate an editable attribute std::set<value> name along with its getters
+ * @brief Generate an editable attribute std::set<value> _name along with its getters
  * @code{cpp}
  *     MAKE_SET(int, values)
  * @endcode
@@ -185,7 +185,7 @@ public: \
  */
 #define MAKE_SET(value, name) MAKE_SET_ATT(value, name, 0)
 /**
- * @brief Generate an editable attribute std::unordered_set<value> name along with its getters
+ * @brief Generate an editable attribute std::unordered_set<value> _name along with its getters
  * @code{cpp}
  *     MAKE_UNORDERED_SET(int, values)
  * @endcode
@@ -207,6 +207,51 @@ public: \
  * @param name the name of the attribute
  */
 #define MAKE_UNORDERED_SET(value, name) MAKE_SET_ATT(value, name, 1)
+
+/**
+ * @brief Generate an editable attribute type & _name along with its getters
+ * @code{cpp}
+ *     MAKE_CLASS_REF_ATT(type, obj)
+ * @endcode
+ *  expands to
+ * @code{cpp}
+ *    private:
+ *     type &_obj;
+ *    public:
+ *     type &get_obj()
+ *     {
+ *       return _obj;
+ *     }
+ *     type const &get_obj() const
+ *     {
+ *       return _obj;
+ *     }
+ * @endcode
+ * @param type the class name
+ * @param name the name of the attribute
+ */
+#define MAKE_CLASS_REF_ATT(type, name) MAKE_BASIC_CLASS_REF_ATT(type, name, 0)
+
+/**
+ * @brief Generate a read only attribute type const & _name along with its getters
+ * @code{cpp}
+ *     MAKE_CLASS_CONSTREF_ATT(type, obj)
+ * @endcode
+ *  expands to
+ * @code{cpp}
+ *    private:
+ *     type const &_obj;
+ *    public:
+ *     type const &get_obj() const
+ *     {
+ *       return _obj;
+ *     }
+ * @endcode
+ * @param type the class name
+ * @param name the name of the attribute
+ */
+#define MAKE_CLASS_CONSTREF_ATT(type, name) MAKE_BASIC_CLASS_REF_ATT(type, name, 1)
+
 
 /**
  * @brief Generate every set / get for basic attributes
