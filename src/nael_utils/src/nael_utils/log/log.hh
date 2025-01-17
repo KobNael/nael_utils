@@ -79,7 +79,7 @@ std::ostream &printRange(std::ostream &os, Range const &range)
     bool first{true};
     for(auto obj : range)
     {
-        print(os << ((first)?"":","), obj);
+        print(os << (first?"":","), obj);
         first = false;
     }
     return os << "]";

@@ -44,7 +44,6 @@ public:
     Logger(std::string const& file, LogLevel level=io::LogLevel::INFO)
         : _filePath(file)
         , _level(level)
-        , _stream(nullptr)
     {}
 
     /**
@@ -112,7 +111,7 @@ public:
     /**
      * @brief Destructor
      */
-    ~FileLogger() = default;
+    virtual ~FileLogger() override = default;
 private:
     std::unique_ptr<std::ofstream> _internal_stream = std::make_unique<std::ofstream>();
 };
@@ -144,7 +143,7 @@ public:
     /**
      * @brief Destructor
      */
-    ~TeeLogger() = default;
+    virtual ~TeeLogger() override = default;
 
 private:
     /** @brief ostream to file */

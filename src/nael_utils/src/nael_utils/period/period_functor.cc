@@ -24,8 +24,7 @@ time_period MakeUnion::operator()(std::optional<time_period> const&p1, std::opti
 std::optional<capa_period> MakeUnion::operator()(std::optional<capa_period> const&p1, std::optional<capa_period> const&p2, time_period const &period) const
 {
     //compute the capacity
-    long capa = ((p1)?p1->_capa:0)+((p2)?p2->_capa:0);
-    if(0 != capa)
+    if(long capa( (p1?p1->_capa:0)+(p2?p2->_capa:0) ); 0 != capa)
     {
         return capa_period(capa, period);
     }
@@ -34,7 +33,7 @@ std::optional<capa_period> MakeUnion::operator()(std::optional<capa_period> cons
 // Compute the union between an optional time_period and an optional capa_period on a given period
 std::optional<time_period> MakeUnion::operator()(std::optional<time_period> const&p1, std::optional<capa_period> const&p2, time_period const &period) const
 {
-    return operator()(p1, (p2)?p2->_period:std::optional<time_period>({}), period);
+    return operator()(p1, p2?p2->_period:std::optional<time_period>({}), period);
 }
 //------------------
 // struct MakeDiff
@@ -57,8 +56,7 @@ std::optional<time_period> MakeDiff::operator()(std::optional<time_period> const
 std::optional<capa_period> MakeDiff::operator()(std::optional<capa_period> const&p1, std::optional<capa_period> const&p2, time_period const &period) const
 {
     //compute the remaining capacity
-    long capa = ((p1)?p1->_capa:0)-((p2)?p2->_capa:0);
-    if(0 != capa)
+    if(long capa( (p1?p1->_capa:0)-(p2?p2->_capa:0) ); 0 != capa)
     {
         return capa_period(capa, period);
     }
@@ -67,14 +65,14 @@ std::optional<capa_period> MakeDiff::operator()(std::optional<capa_period> const
 // Compute the difference between an optional time_period and an optional capa_period on a given period
 std::optional<time_period> MakeDiff::operator()(std::optional<time_period> const&p1, std::optional<capa_period> const&p2, time_period const &period) const
 {
-    return operator()(p1, (p2)?p2->_period:std::optional<time_period>({}), period);
+    return operator()(p1, p2?p2->_period:std::optional<time_period>({}), period);
 }
 // Compute the difference between an optional capa_period and an optional time_period on a given period
 std::optional<capa_period> MakeDiff::operator()(std::optional<capa_period> const&p1, std::optional<time_period> const&p2, time_period const &period) const
 {
     //get the capacity of p1
-    long capa = ((p1)?p1->_capa:0);
-    return operator()(p1, (p2)?capa_period(capa, *p2):std::optional<capa_period>({}), period);
+    long capa ( (p1?p1->_capa:0) );
+    return operator()(p1, p2?capa_period(capa, *p2):std::optional<capa_period>({}), period);
 }
 
 
@@ -105,9 +103,7 @@ std::optional<capa_period> MakeInter::operator()(std::optional<capa_period> cons
     }
     else
     {
-        //return the period with the min capa
-        long capa( std::min((*p1)._capa, (*p2)._capa) );
-        if(0 != capa)
+        if(long capa( std::min((*p1)._capa, (*p2)._capa) ); 0 != capa)
         {
             return capa_period(capa, period);
         }
