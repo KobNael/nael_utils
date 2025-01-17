@@ -7,9 +7,9 @@
 namespace bg=boost::gregorian;
 namespace bpt=boost::posix_time;
 
-#ifndef NDEBUG
 TEST(periods, basics)
 {
+    GTEST_FLAG_SET(death_test_style, "threadsafe");
     bg::date d = bg::day_clock::local_day();
 
     //Constructor
@@ -18,9 +18,8 @@ TEST(periods, basics)
     ASSERT_EQ(p1, p2);
     //Invalid Merge
     ASSERT_FALSE( can_merge(p1, p2 ) ) << "Periods can not be merged";
-    ASSERT_DEATH( merge(p1, p2 ), ".*Assertion `can_merge\\(tp1, tp2\\)' failed.*" );
+    ASSERT_DEBUG_DEATH( merge(p1, p2 ), ".*Assertion `can_merge\\(tp1, tp2\\)' failed.*" );
 }
-#endif
 
 TEST(periods, order)
 {

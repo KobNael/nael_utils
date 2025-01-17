@@ -11,7 +11,7 @@
 #include <iostream>
 #include <unordered_map>
 #include <vector>
-
+#include <functional>
 #include <boost/range/has_range_iterator.hpp>
 #include <boost/type_traits/has_left_shift.hpp>
 
@@ -30,30 +30,30 @@ public:
      * @param name name of the logger
      * @return A reference to the logger
      */
-    static TeeLogger &GetLogger(std::string const &name="");
+    static TeeLogger &GetLogger(std::string_view name="");
     /**
      * @brief Clear a looger
      * @param name name of the logger
      */
-    static void ClearLogger(std::string const &name="");
+    static void ClearLogger(std::string_view name="");
     /**
      * @brief Set the loglevel of a TeeLogger
      * @param name name of the logger
      * @param level the log level
      */
-    static void SetLogLevel(LogLevel level, std::string const &name="");
+    static void SetLogLevel(LogLevel level, std::string_view name="");
     /**
      * @brief Set the default name
      * @param name name of the logger
      */
-    static void SetDefaultName(std::string const &name)
+    static void SetDefaultName(std::string_view name)
     {
         _logfile_name = name;
     }
 
 private:
     /** @brief static storage of the logger */
-    static std::unordered_map<std::string, TeeLogger> _loggers;
+    static std::unordered_map<std::string, TeeLogger, std::hash<std::string_view>, std::equal_to<>> _loggers;
     /** @brief default log file name */
     static std::string _logfile_name;
 };

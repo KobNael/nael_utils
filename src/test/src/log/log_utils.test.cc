@@ -206,13 +206,14 @@ TEST_F(file_logger, default_level)
  */
 class tee_logger: public ::testing::Test {
 protected:
-    virtual void SetUp()
+    void SetUp() override
     {
         io::LoggerManager::SetDefaultName(LOG_NAME);
         _cout.str("");
+        _cout.clear();
         std::cout.rdbuf(_cout.rdbuf());
     }
-    virtual void TearDown()
+    void TearDown() override
     {
         io::LoggerManager::ClearLogger();
     }
