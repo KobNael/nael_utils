@@ -111,7 +111,7 @@ public:
     /**
      * @brief Destructor
      */
-    virtual ~FileLogger() override = default;
+    ~FileLogger() override = default;
 private:
     std::unique_ptr<std::ofstream> _internal_stream = std::make_unique<std::ofstream>();
 };
@@ -143,7 +143,7 @@ public:
     /**
      * @brief Destructor
      */
-    virtual ~TeeLogger() override = default;
+    ~TeeLogger() override = default;
 
 private:
     /** @brief ostream to file */

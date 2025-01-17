@@ -24,6 +24,7 @@ TEST(capa_period, basics)
 
     //Invalid Merge
 #ifndef NDEBUG
+    GTEST_FLAG_SET(death_test_style, "threadsafe");
     ASSERT_FALSE( can_merge(p1, p2 ) ) << "Periods can not be merged";
     ASSERT_DEATH( merge(p1, p2 ), ".*Assertion `can_merge\\(cp1, cp2\\)' failed.*" );
 #endif

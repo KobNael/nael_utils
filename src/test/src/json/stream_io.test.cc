@@ -13,35 +13,31 @@ protected:
     //SetUp (fill a basic context)
 	virtual void SetUp()
     {
-        _context = new model_test::BasicContextDto();
         //Fill the context
-        _context->bool_att=false;
+        _context.bool_att=false;
         //Push some simple object
-        _context->vec_id_obj.push_back( model_test::makeIdDto("idA") );
-        _context->vec_id_obj.push_back( model_test::makeIdDto("idB") );
+        _context.vec_id_obj.push_back( model_test::makeIdDto("idA") );
+        _context.vec_id_obj.push_back( model_test::makeIdDto("idB") );
         //Push some complex objects
-        _context->vec_basic_obj.push_back( model_test::makeBasicAttDto("obj1") );
-        _context->vec_basic_obj.push_back( model_test::makeBasicAttDto("obj2") );
-        _context->vec_basic_obj.push_back( model_test::makeBasicAttDto("obj3") );
+        _context.vec_basic_obj.push_back( model_test::makeBasicAttDto("obj1") );
+        _context.vec_basic_obj.push_back( model_test::makeBasicAttDto("obj2") );
+        _context.vec_basic_obj.push_back( model_test::makeBasicAttDto("obj3") );
         //Push some param value
-        _context->vec_param_obj.push_back( model_test::makeParamDto( model_test::PARAM_2, "val_PARAM_2") );
-        _context->vec_param_obj.push_back( model_test::makeParamDto( model_test::PARAM_1, "val_PARAM_1") );
-        _context->vec_param_obj.push_back( model_test::makeParamDto( model_test::PARAM_3, "val_PARAM_3") );
+        _context.vec_param_obj.push_back( model_test::makeParamDto( model_test::PARAM_2, "val_PARAM_2") );
+        _context.vec_param_obj.push_back( model_test::makeParamDto( model_test::PARAM_1, "val_PARAM_1") );
+        _context.vec_param_obj.push_back( model_test::makeParamDto( model_test::PARAM_3, "val_PARAM_3") );
     }
 
     //TearDown (do nothing)
 	virtual void TearDown()
-    {
-        delete _context;
-        _context = nullptr;
-    }
+    {}
 
     //Method of comparison
     void compare_contexts(model_test::BasicContextDto &c1, model_test::BasicContextDto &c2)
     {
         //They should be identical to the reference
-        ASSERT_EQ(*_context, c1);
-        ASSERT_EQ(*_context, c2);
+        ASSERT_EQ(_context, c1);
+        ASSERT_EQ(_context, c2);
         //Check vector elements
         std::vector<std::string> new_ids, ref_ids{"idA", "idB"};
         std::transform(
@@ -54,19 +50,20 @@ protected:
         c1.vec_basic_obj.push_back( model_test::makeBasicAttDto("new") );
         c2.bool_att=true;
         //They should be different now
-        ASSERT_NE(*_context, c1);
-        ASSERT_NE(*_context, c2);
+        ASSERT_NE(_context, c1);
+        ASSERT_NE(_context, c2);
     }
 
     //Reference context
-    model_test::BasicContextDto *_context;
+    model_test::BasicContextDto _context;
 };
 
 TEST_F(stream_io, export_import)
 {
+    EXPECT_EQ(_context.vec_id_obj.size(), 2u);
     //Export
     std::ostringstream oss;
-    json::export_to_stream(oss, *_context);
+    json::export_to_stream(oss, _context);
 
     //Reimport in a new contexts
     model_test::BasicContextDto new_context, new_context2;
@@ -81,8 +78,9 @@ TEST_F(stream_io, export_import)
 
 TEST_F(stream_io, export_import_file)
 {
+    EXPECT_EQ(_context.vec_id_obj.size(), 2u);
     //Export
-    json::export_to_file("export.json", *_context);
+    json::export_to_file("export.json", _context);
 
     //Reimport in a new contexts
     model_test::BasicContextDto new_context, new_context2;
