@@ -60,6 +60,14 @@ public:
     }
 
     /**
+     * @brief set the verbosity
+     */
+    LogLevel getLogLevel() const
+    {
+        return _level;
+    }
+
+    /**
      * @return true if the verbosity is greater than leve
      */
     bool shouldLog(LogLevel level) const

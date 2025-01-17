@@ -2,7 +2,8 @@
 
 #include <nael_utils/log/log.hh>
 
-#define LOG_NAME "test_logger.log"
+#define LOG_NAME "test_logger"
+#define LOGFILE_NAME "test_logger.log"
 
 //Tools for tests
 namespace{
@@ -11,7 +12,7 @@ namespace{
     {
         std::ostringstream log_content;
         // Parse line by line log file
-        std::ifstream log(LOG_NAME);
+        std::ifstream log(LOGFILE_NAME);
         if (!log.is_open())
         {
             throw std::runtime_error( "Failed to open log file" );
@@ -27,7 +28,7 @@ namespace{
     }
 
     //check string content
-    void check_nb_line(std::string pattern, std::string content, unsigned ref)
+    bool check_nb_line(std::string pattern, std::string content, unsigned ref)
     {
         unsigned nb = 0;
         std::string::size_type pos = 0;
@@ -35,58 +36,66 @@ namespace{
                 ++ nb;
                 pos += pattern.length();
         }
-        ASSERT_EQ(nb, ref);
+        return nb == ref;
    }
 } //namespace
 
 /**
- * Singleton get or create
+ * LogLevel order
  */
-TEST(tee_logger_singleton, singleton_access)
-{
-    //No log by default
-    ASSERT_THROW(io::GetLogger(), io::access_error);
-    //Create it
-    io::CreateLogger(LOG_NAME);
-    ASSERT_NO_THROW(io::GetLogger());
-    //Free it
-    io::ClearLogger();
-    ASSERT_THROW(io::GetLogger(), io::access_error);
-}
 
+TEST(log_level, ordering)
+{
+    ASSERT_TRUE(io::LogLevel::OFF >= io::LogLevel::OFF);
+    ASSERT_TRUE(io::LogLevel::OFF < io::LogLevel::ERROR);
+    ASSERT_TRUE(io::LogLevel::OFF < io::LogLevel::WARNING);
+    ASSERT_TRUE(io::LogLevel::OFF < io::LogLevel::INFO);
+    ASSERT_TRUE(io::LogLevel::OFF < io::LogLevel::DEBUG);
+
+    ASSERT_TRUE(io::LogLevel::ERROR >= io::LogLevel::OFF);
+    ASSERT_TRUE(io::LogLevel::ERROR >= io::LogLevel::ERROR);
+    ASSERT_TRUE(io::LogLevel::ERROR < io::LogLevel::WARNING);
+    ASSERT_TRUE(io::LogLevel::ERROR < io::LogLevel::INFO);
+    ASSERT_TRUE(io::LogLevel::ERROR < io::LogLevel::DEBUG);
+
+    ASSERT_TRUE(io::LogLevel::WARNING >= io::LogLevel::OFF);
+    ASSERT_TRUE(io::LogLevel::WARNING >= io::LogLevel::ERROR);
+    ASSERT_TRUE(io::LogLevel::WARNING >= io::LogLevel::WARNING);
+    ASSERT_TRUE(io::LogLevel::WARNING < io::LogLevel::INFO);
+    ASSERT_TRUE(io::LogLevel::WARNING < io::LogLevel::DEBUG);
+
+    ASSERT_TRUE(io::LogLevel::INFO >= io::LogLevel::OFF);
+    ASSERT_TRUE(io::LogLevel::INFO >= io::LogLevel::ERROR);
+    ASSERT_TRUE(io::LogLevel::INFO >= io::LogLevel::WARNING);
+    ASSERT_TRUE(io::LogLevel::INFO >= io::LogLevel::INFO);
+    ASSERT_TRUE(io::LogLevel::INFO < io::LogLevel::DEBUG);
+
+    ASSERT_TRUE(io::LogLevel::DEBUG >= io::LogLevel::OFF);
+    ASSERT_TRUE(io::LogLevel::DEBUG >= io::LogLevel::ERROR);
+    ASSERT_TRUE(io::LogLevel::DEBUG >= io::LogLevel::WARNING);
+    ASSERT_TRUE(io::LogLevel::DEBUG >= io::LogLevel::INFO);
+    ASSERT_TRUE(io::LogLevel::DEBUG >= io::LogLevel::DEBUG);
+}
 
 /**
  * FileLogger usage
  */
 class file_logger: public ::testing::Test {
 protected:
-    //SetUp (init logger)
-    virtual void SetUp()
-    {
-        _file_logger = new io::FileLogger(LOG_NAME);
-    }
-
-    //TearDown (clear logger)
-    virtual void TearDown()
-    {
-        delete _file_logger;
-        _file_logger = nullptr;
-    }
-
     //Access to logger
-    io::FileLogger *get_log()
+    io::FileLogger &get_log()
     {
         return _file_logger;
     }
 
 private:
-    io::FileLogger *_file_logger = {nullptr};
+    io::FileLogger _file_logger = {LOGFILE_NAME};
 };
 
 TEST_F(file_logger, off_level)
 {
     //set log level
-    get_log()->setLogLevel(io::LogLevel::OFF);
+    get_log().setLogLevel(io::LogLevel::OFF);
     //Send the content
     EROR(get_log()) << "ERORLOG_print" << std::endl;
     WARN(get_log()) << "WARNLOG_print" << std::endl;
@@ -95,17 +104,17 @@ TEST_F(file_logger, off_level)
     //get log file content
     std::string log_content = get_log_content();
     //Test file
-    check_nb_line("ERORLOG_print", log_content, 0);
-    check_nb_line("WARNLOG_print", log_content, 0);
-    check_nb_line("INFOLOG_print", log_content, 0);
-    check_nb_line("DBUGLOG_print", log_content, 0);
-    check_nb_line("_print", log_content, 0);
+    EXPECT_TRUE(check_nb_line("ERORLOG_print", log_content, 0));
+    EXPECT_TRUE(check_nb_line("WARNLOG_print", log_content, 0));
+    EXPECT_TRUE(check_nb_line("INFOLOG_print", log_content, 0));
+    EXPECT_TRUE(check_nb_line("DBUGLOG_print", log_content, 0));
+    EXPECT_TRUE(check_nb_line("_print", log_content, 0));
 }
 
 TEST_F(file_logger, error_lvl)
 {
     //set log level
-    get_log()->setLogLevel(io::LogLevel::ERROR);
+    get_log().setLogLevel(io::LogLevel::ERROR);
     //Send the content
     EROR(get_log()) << "ERORLOG_print" << std::endl;
     WARN(get_log()) << "WARNLOG_print" << std::endl;
@@ -114,16 +123,16 @@ TEST_F(file_logger, error_lvl)
     //get log file content
     std::string log_content = get_log_content();
     //Test file
-    check_nb_line("ERORLOG_print", log_content, 1);
-    check_nb_line("WARNLOG_print", log_content, 0);
-    check_nb_line("INFOLOG_print", log_content, 0);
-    check_nb_line("DBUGLOG_print", log_content, 0);
-    check_nb_line("_print", log_content, 1);
+    EXPECT_TRUE(check_nb_line("ERORLOG_print", log_content, 1));
+    EXPECT_TRUE(check_nb_line("WARNLOG_print", log_content, 0));
+    EXPECT_TRUE(check_nb_line("INFOLOG_print", log_content, 0));
+    EXPECT_TRUE(check_nb_line("DBUGLOG_print", log_content, 0));
+    EXPECT_TRUE(check_nb_line("_print", log_content, 1));
 }
 TEST_F(file_logger, warning_lvl)
 {
     //set log level
-    get_log()->setLogLevel(io::LogLevel::WARNING);
+    get_log().setLogLevel(io::LogLevel::WARNING);
     //Send the content
     EROR(get_log()) << "ERORLOG_print" << std::endl;
     WARN(get_log()) << "WARNLOG_print" << std::endl;
@@ -132,16 +141,16 @@ TEST_F(file_logger, warning_lvl)
     //get log file content
     std::string log_content = get_log_content();
     //Test file
-    check_nb_line("ERORLOG_print", log_content, 1);
-    check_nb_line("WARNLOG_print", log_content, 1);
-    check_nb_line("INFOLOG_print", log_content, 0);
-    check_nb_line("DBUGLOG_print", log_content, 0);
-    check_nb_line("_print", log_content, 2);
+    EXPECT_TRUE(check_nb_line("ERORLOG_print", log_content, 1));
+    EXPECT_TRUE(check_nb_line("WARNLOG_print", log_content, 1));
+    EXPECT_TRUE(check_nb_line("INFOLOG_print", log_content, 0));
+    EXPECT_TRUE(check_nb_line("DBUGLOG_print", log_content, 0));
+    EXPECT_TRUE(check_nb_line("_print", log_content, 2));
 }
 TEST_F(file_logger, info_lvl)
 {
     //set log level
-    get_log()->setLogLevel(io::LogLevel::INFO);
+    get_log().setLogLevel(io::LogLevel::INFO);
     //Send the content
     EROR(get_log()) << "ERORLOG_print" << std::endl;
     WARN(get_log()) << "WARNLOG_print" << std::endl;
@@ -150,16 +159,16 @@ TEST_F(file_logger, info_lvl)
     //get log file content
     std::string log_content = get_log_content();
     //Test file
-    check_nb_line("ERORLOG_print", log_content, 1);
-    check_nb_line("WARNLOG_print", log_content, 1);
-    check_nb_line("INFOLOG_print", log_content, 1);
-    check_nb_line("DBUGLOG_print", log_content, 0);
-    check_nb_line("_print", log_content, 3);
+    EXPECT_TRUE(check_nb_line("ERORLOG_print", log_content, 1));
+    EXPECT_TRUE(check_nb_line("WARNLOG_print", log_content, 1));
+    EXPECT_TRUE(check_nb_line("INFOLOG_print", log_content, 1));
+    EXPECT_TRUE(check_nb_line("DBUGLOG_print", log_content, 0));
+    EXPECT_TRUE(check_nb_line("_print", log_content, 3));
 }
 TEST_F(file_logger, debug_lvl)
 {
     //set log level
-    get_log()->setLogLevel(io::LogLevel::DEBUG);
+    get_log().setLogLevel(io::LogLevel::DEBUG);
     //Send the content
     EROR(get_log()) << "ERORLOG_print" << std::endl;
     WARN(get_log()) << "WARNLOG_print" << std::endl;
@@ -168,11 +177,11 @@ TEST_F(file_logger, debug_lvl)
     //get log file content
     std::string log_content = get_log_content();
     //Test file
-    check_nb_line("ERORLOG_print", log_content, 1);
-    check_nb_line("WARNLOG_print", log_content, 1);
-    check_nb_line("INFOLOG_print", log_content, 1);
-    check_nb_line("DBUGLOG_print", log_content, 1);
-    check_nb_line("_print", log_content, 4);
+    EXPECT_TRUE(check_nb_line("ERORLOG_print", log_content, 1));
+    EXPECT_TRUE(check_nb_line("WARNLOG_print", log_content, 1));
+    EXPECT_TRUE(check_nb_line("INFOLOG_print", log_content, 1));
+    EXPECT_TRUE(check_nb_line("DBUGLOG_print", log_content, 1));
+    EXPECT_TRUE(check_nb_line("_print", log_content, 4));
 }
 TEST_F(file_logger, default_level)
 {
@@ -185,11 +194,11 @@ TEST_F(file_logger, default_level)
     //get log file content
     std::string log_content = get_log_content();
     //Test file
-    check_nb_line("ERORLOG_print", log_content, 1);
-    check_nb_line("WARNLOG_print", log_content, 1);
-    check_nb_line("INFOLOG_print", log_content, 1);
-    check_nb_line("DBUGLOG_print", log_content, 0);
-    check_nb_line("_print", log_content, 3);
+    EXPECT_TRUE(check_nb_line("ERORLOG_print", log_content, 1));
+    EXPECT_TRUE(check_nb_line("WARNLOG_print", log_content, 1));
+    EXPECT_TRUE(check_nb_line("INFOLOG_print", log_content, 1));
+    EXPECT_TRUE(check_nb_line("DBUGLOG_print", log_content, 0));
+    EXPECT_TRUE(check_nb_line("_print", log_content, 3));
 }
 
 /**
@@ -197,164 +206,157 @@ TEST_F(file_logger, default_level)
  */
 class tee_logger: public ::testing::Test {
 protected:
-    //SetUp (init logger)
     virtual void SetUp()
     {
-        io::CreateLogger(LOG_NAME);
+        io::LoggerManager::SetDefaultName(LOG_NAME);
+        _cout.str("");
+        std::cout.rdbuf(_cout.rdbuf());
     }
-
-    //TearDown (clear logger)
     virtual void TearDown()
     {
-        io::ClearLogger();
+        io::LoggerManager::ClearLogger();
     }
+    std::string get_cout()
+    {
+        return _cout.str();
+    }
+private:
+    std::stringstream _cout;
 };
 
 TEST_F(tee_logger, off_level)
 {
-    //Start capturing cout
-    testing::internal::CaptureStdout();
     //set log level
-    io::SetLogLevel(io::LogLevel::OFF);
+    io::LoggerManager::SetLogLevel(io::LogLevel::OFF);
     //Send the content
     ERORLOG << "ERORLOG_print" << std::endl;
     WARNLOG << "WARNLOG_print" << std::endl;
     INFOLOG << "INFOLOG_print" << std::endl;
     DBUGLOG << "DBUGLOG_print" << std::endl;
     //stops capturing stdout and returns the captured string
-    std::string cout_content = testing::internal::GetCapturedStdout();
+    std::string cout_content = get_cout();
     //get log file content
     std::string log_content = get_log_content();
     //Test file
-    check_nb_line("ERORLOG_print", log_content, 0);
-    check_nb_line("WARNLOG_print", log_content, 0);
-    check_nb_line("INFOLOG_print", log_content, 0);
-    check_nb_line("DBUGLOG_print", log_content, 0);
-    check_nb_line("_print", log_content, 0);
+    EXPECT_TRUE(check_nb_line("ERORLOG_print", log_content, 0));
+    EXPECT_TRUE(check_nb_line("WARNLOG_print", log_content, 0));
+    EXPECT_TRUE(check_nb_line("INFOLOG_print", log_content, 0));
+    EXPECT_TRUE(check_nb_line("DBUGLOG_print", log_content, 0));
+    EXPECT_TRUE(check_nb_line("_print", log_content, 0));
     //Test console
-    check_nb_line("ERORLOG_print", cout_content, 0);
-    check_nb_line("WARNLOG_print", cout_content, 0);
-    check_nb_line("INFOLOG_print", cout_content, 0);
-    check_nb_line("DBUGLOG_print", cout_content, 0);
-    check_nb_line("_print", log_content, 0);
+    EXPECT_TRUE(check_nb_line("ERORLOG_print", cout_content, 0));
+    EXPECT_TRUE(check_nb_line("WARNLOG_print", cout_content, 0));
+    EXPECT_TRUE(check_nb_line("INFOLOG_print", cout_content, 0));
+    EXPECT_TRUE(check_nb_line("DBUGLOG_print", cout_content, 0));
+    EXPECT_TRUE(check_nb_line("_print", cout_content, 0));
 }
 
 TEST_F(tee_logger, error_lvl)
 {
-    //Start capturing cout
-    testing::internal::CaptureStdout();
     //set log level
-    io::SetLogLevel(io::LogLevel::ERROR);
+    io::LoggerManager::SetLogLevel(io::LogLevel::ERROR);
     //Send the content
     ERORLOG << "ERORLOG_print" << std::endl;
     WARNLOG << "WARNLOG_print" << std::endl;
     INFOLOG << "INFOLOG_print" << std::endl;
     DBUGLOG << "DBUGLOG_print" << std::endl;
     //stops capturing stdout and returns the captured string
-    std::string cout_content = testing::internal::GetCapturedStdout();
+    std::string cout_content = get_cout();
     //get log file content
     std::string log_content = get_log_content();
     //Test file
-    check_nb_line("ERORLOG_print", log_content, 1);
-    check_nb_line("WARNLOG_print", log_content, 0);
-    check_nb_line("INFOLOG_print", log_content, 0);
-    check_nb_line("DBUGLOG_print", log_content, 0);
-    check_nb_line("_print", log_content, 1);
+    EXPECT_TRUE(check_nb_line("ERORLOG_print", log_content, 1));
+    EXPECT_TRUE(check_nb_line("WARNLOG_print", log_content, 0));
+    EXPECT_TRUE(check_nb_line("INFOLOG_print", log_content, 0));
+    EXPECT_TRUE(check_nb_line("DBUGLOG_print", log_content, 0));
+    EXPECT_TRUE(check_nb_line("_print", log_content, 1));
     //Test console
-    check_nb_line("ERORLOG_print", cout_content, 1);
-    check_nb_line("WARNLOG_print", cout_content, 0);
-    check_nb_line("INFOLOG_print", cout_content, 0);
-    check_nb_line("DBUGLOG_print", cout_content, 0);
-    check_nb_line("_print", log_content, 1);
+    EXPECT_TRUE(check_nb_line("ERORLOG_print", cout_content, 1));
+    EXPECT_TRUE(check_nb_line("WARNLOG_print", cout_content, 0));
+    EXPECT_TRUE(check_nb_line("INFOLOG_print", cout_content, 0));
+    EXPECT_TRUE(check_nb_line("DBUGLOG_print", cout_content, 0));
+    EXPECT_TRUE(check_nb_line("_print", cout_content, 1));
 }
 TEST_F(tee_logger, warning_lvl)
 {
-    //Start capturing cout
-    testing::internal::CaptureStdout();
     //set log level
-    io::SetLogLevel(io::LogLevel::WARNING);
+    io::LoggerManager::SetLogLevel(io::LogLevel::WARNING);
     //Send the content
     ERORLOG << "ERORLOG_print" << std::endl;
     WARNLOG << "WARNLOG_print" << std::endl;
     INFOLOG << "INFOLOG_print" << std::endl;
     DBUGLOG << "DBUGLOG_print" << std::endl;
     //stops capturing stdout and returns the captured string
-    std::string cout_content = testing::internal::GetCapturedStdout();
+    std::string cout_content = get_cout();
     //get log file content
     std::string log_content = get_log_content();
     //Test file
-    check_nb_line("ERORLOG_print", log_content, 1);
-    check_nb_line("WARNLOG_print", log_content, 1);
-    check_nb_line("INFOLOG_print", log_content, 0);
-    check_nb_line("DBUGLOG_print", log_content, 0);
-    check_nb_line("_print", log_content, 2);
+    EXPECT_TRUE(check_nb_line("ERORLOG_print", log_content, 1));
+    EXPECT_TRUE(check_nb_line("WARNLOG_print", log_content, 1));
+    EXPECT_TRUE(check_nb_line("INFOLOG_print", log_content, 0));
+    EXPECT_TRUE(check_nb_line("DBUGLOG_print", log_content, 0));
+    EXPECT_TRUE(check_nb_line("_print", log_content, 2));
     //Test console
-    check_nb_line("ERORLOG_print", cout_content, 1);
-    check_nb_line("WARNLOG_print", cout_content, 1);
-    check_nb_line("INFOLOG_print", cout_content, 0);
-    check_nb_line("DBUGLOG_print", cout_content, 0);
-    check_nb_line("_print", log_content, 2);
+    EXPECT_TRUE(check_nb_line("ERORLOG_print", cout_content, 1));
+    EXPECT_TRUE(check_nb_line("WARNLOG_print", cout_content, 1));
+    EXPECT_TRUE(check_nb_line("INFOLOG_print", cout_content, 0));
+    EXPECT_TRUE(check_nb_line("DBUGLOG_print", cout_content, 0));
+    EXPECT_TRUE(check_nb_line("_print", cout_content, 2));
 }
 TEST_F(tee_logger, info_lvl)
 {
-    //Start capturing cout
-    testing::internal::CaptureStdout();
     //set log level
-    io::SetLogLevel(io::LogLevel::INFO);
+    io::LoggerManager::SetLogLevel(io::LogLevel::INFO);
     //Send the content
     ERORLOG << "ERORLOG_print" << std::endl;
     WARNLOG << "WARNLOG_print" << std::endl;
     INFOLOG << "INFOLOG_print" << std::endl;
     DBUGLOG << "DBUGLOG_print" << std::endl;
     //stops capturing stdout and returns the captured string
-    std::string cout_content = testing::internal::GetCapturedStdout();
+    std::string cout_content = get_cout();
     //get log file content
     std::string log_content = get_log_content();
     //Test file
-    check_nb_line("ERORLOG_print", log_content, 1);
-    check_nb_line("WARNLOG_print", log_content, 1);
-    check_nb_line("INFOLOG_print", log_content, 1);
-    check_nb_line("DBUGLOG_print", log_content, 0);
-    check_nb_line("_print", log_content, 3);
+    EXPECT_TRUE(check_nb_line("ERORLOG_print", log_content, 1));
+    EXPECT_TRUE(check_nb_line("WARNLOG_print", log_content, 1));
+    EXPECT_TRUE(check_nb_line("INFOLOG_print", log_content, 1));
+    EXPECT_TRUE(check_nb_line("DBUGLOG_print", log_content, 0));
+    EXPECT_TRUE(check_nb_line("_print", log_content, 3));
     //Test console
-    check_nb_line("ERORLOG_print", cout_content, 1);
-    check_nb_line("WARNLOG_print", cout_content, 1);
-    check_nb_line("INFOLOG_print", cout_content, 1);
-    check_nb_line("DBUGLOG_print", cout_content, 0);
-    check_nb_line("_print", log_content, 3);
+    EXPECT_TRUE(check_nb_line("ERORLOG_print", cout_content, 1));
+    EXPECT_TRUE(check_nb_line("WARNLOG_print", cout_content, 1));
+    EXPECT_TRUE(check_nb_line("INFOLOG_print", cout_content, 1));
+    EXPECT_TRUE(check_nb_line("DBUGLOG_print", cout_content, 0));
+    EXPECT_TRUE(check_nb_line("_print", cout_content, 3));
 }
 TEST_F(tee_logger, debug_lvl)
 {
-    //Start capturing cout
-    testing::internal::CaptureStdout();
     //set log level
-    io::SetLogLevel(io::LogLevel::DEBUG);
+    io::LoggerManager::SetLogLevel(io::LogLevel::DEBUG);
     //Send the content
     ERORLOG << "ERORLOG_print" << std::endl;
     WARNLOG << "WARNLOG_print" << std::endl;
     INFOLOG << "INFOLOG_print" << std::endl;
     DBUGLOG << "DBUGLOG_print" << std::endl;
     //stops capturing stdout and returns the captured string
-    std::string cout_content = testing::internal::GetCapturedStdout();
+    std::string cout_content =  get_cout();
     //get log file content
     std::string log_content = get_log_content();
     //Test file
-    check_nb_line("ERORLOG_print", log_content, 1);
-    check_nb_line("WARNLOG_print", log_content, 1);
-    check_nb_line("INFOLOG_print", log_content, 1);
-    check_nb_line("DBUGLOG_print", log_content, 1);
-    check_nb_line("_print", log_content, 4);
+    EXPECT_TRUE(check_nb_line("ERORLOG_print", log_content, 1));
+    EXPECT_TRUE(check_nb_line("WARNLOG_print", log_content, 1));
+    EXPECT_TRUE(check_nb_line("INFOLOG_print", log_content, 1));
+    EXPECT_TRUE(check_nb_line("DBUGLOG_print", log_content, 1));
+    EXPECT_TRUE(check_nb_line("_print", log_content, 4));
     //Test console
-    check_nb_line("ERORLOG_print", cout_content, 1);
-    check_nb_line("WARNLOG_print", cout_content, 1);
-    check_nb_line("INFOLOG_print", cout_content, 1);
-    check_nb_line("DBUGLOG_print", cout_content, 1);
-    check_nb_line("_print", log_content, 4);
+    EXPECT_TRUE(check_nb_line("ERORLOG_print", cout_content, 1));
+    EXPECT_TRUE(check_nb_line("WARNLOG_print", cout_content, 1));
+    EXPECT_TRUE(check_nb_line("INFOLOG_print", cout_content, 1));
+    EXPECT_TRUE(check_nb_line("DBUGLOG_print", cout_content, 1));
+    EXPECT_TRUE(check_nb_line("_print", cout_content, 4));
 }
 TEST_F(tee_logger, default_level)
 {
-    //Start capturing cout
-    testing::internal::CaptureStdout();
     //do not set log level
     //Send the content
     ERORLOG << "ERORLOG_print" << std::endl;
@@ -362,19 +364,19 @@ TEST_F(tee_logger, default_level)
     INFOLOG << "INFOLOG_print" << std::endl;
     DBUGLOG << "DBUGLOG_print" << std::endl;
     //stops capturing stdout and returns the captured string
-    std::string cout_content = testing::internal::GetCapturedStdout();
+    std::string cout_content = get_cout();
     //get log file content
     std::string log_content = get_log_content();
     //Test file
-    check_nb_line("ERORLOG_print", log_content, 1);
-    check_nb_line("WARNLOG_print", log_content, 1);
-    check_nb_line("INFOLOG_print", log_content, 1);
-    check_nb_line("DBUGLOG_print", log_content, 0);
-    check_nb_line("_print", log_content, 3);
+    EXPECT_TRUE(check_nb_line("ERORLOG_print", log_content, 1));
+    EXPECT_TRUE(check_nb_line("WARNLOG_print", log_content, 1));
+    EXPECT_TRUE(check_nb_line("INFOLOG_print", log_content, 1));
+    EXPECT_TRUE(check_nb_line("DBUGLOG_print", log_content, 0));
+    EXPECT_TRUE(check_nb_line("_print", log_content, 3));
     //Test console
-    check_nb_line("ERORLOG_print", cout_content, 1);
-    check_nb_line("WARNLOG_print", cout_content, 1);
-    check_nb_line("INFOLOG_print", cout_content, 1);
-    check_nb_line("DBUGLOG_print", cout_content, 0);
-    check_nb_line("_print", log_content, 3);
+    EXPECT_TRUE(check_nb_line("ERORLOG_print", cout_content, 1));
+    EXPECT_TRUE(check_nb_line("WARNLOG_print", cout_content, 1));
+    EXPECT_TRUE(check_nb_line("INFOLOG_print", cout_content, 1));
+    EXPECT_TRUE(check_nb_line("DBUGLOG_print", cout_content, 0));
+    EXPECT_TRUE(check_nb_line("_print", cout_content, 3));
 }
