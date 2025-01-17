@@ -1,16 +1,6 @@
 #include <nael_utils/period/period_utils.hh>
 
 /**
- * @brief OStream operator for capa_period
- * @param os the ostream
- * @param cp the capa_period
- */
-std::ostream &operator<<(std::ostream &os, capa_period const &cp)
-{
-    return os << "(" << cp._period << "/" << cp._capa << ")";
-}
-
-/**
  * @brief check that two time_period can be merged
  * @param tp1 the first period
  * @param tp2 the second period

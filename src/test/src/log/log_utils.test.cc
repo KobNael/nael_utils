@@ -45,13 +45,13 @@ namespace{
 TEST(tee_logger_singleton, singleton_access)
 {
     //No log by default
-    ASSERT_THROW(io::GetLogger(), std::runtime_error);
+    ASSERT_THROW(io::GetLogger(), io::access_error);
     //Create it
     io::CreateLogger(LOG_NAME);
     ASSERT_NO_THROW(io::GetLogger());
     //Free it
     io::ClearLogger();
-    ASSERT_THROW(io::GetLogger(), std::runtime_error);
+    ASSERT_THROW(io::GetLogger(), io::access_error);
 }
 
 
@@ -86,7 +86,7 @@ private:
 TEST_F(file_logger, off_level)
 {
     //set log level
-    get_log()->setLogLevel(io::OFF_LVL);
+    get_log()->setLogLevel(io::LogLevel::OFF);
     //Send the content
     EROR(get_log()) << "ERORLOG_print" << std::endl;
     WARN(get_log()) << "WARNLOG_print" << std::endl;
@@ -105,7 +105,7 @@ TEST_F(file_logger, off_level)
 TEST_F(file_logger, error_lvl)
 {
     //set log level
-    get_log()->setLogLevel(io::ERROR_LVL);
+    get_log()->setLogLevel(io::LogLevel::ERROR);
     //Send the content
     EROR(get_log()) << "ERORLOG_print" << std::endl;
     WARN(get_log()) << "WARNLOG_print" << std::endl;
@@ -123,7 +123,7 @@ TEST_F(file_logger, error_lvl)
 TEST_F(file_logger, warning_lvl)
 {
     //set log level
-    get_log()->setLogLevel(io::WARNING_LVL);
+    get_log()->setLogLevel(io::LogLevel::WARNING);
     //Send the content
     EROR(get_log()) << "ERORLOG_print" << std::endl;
     WARN(get_log()) << "WARNLOG_print" << std::endl;
@@ -141,7 +141,7 @@ TEST_F(file_logger, warning_lvl)
 TEST_F(file_logger, info_lvl)
 {
     //set log level
-    get_log()->setLogLevel(io::INFO_LVL);
+    get_log()->setLogLevel(io::LogLevel::INFO);
     //Send the content
     EROR(get_log()) << "ERORLOG_print" << std::endl;
     WARN(get_log()) << "WARNLOG_print" << std::endl;
@@ -159,7 +159,7 @@ TEST_F(file_logger, info_lvl)
 TEST_F(file_logger, debug_lvl)
 {
     //set log level
-    get_log()->setLogLevel(io::DEBUG_LVL);
+    get_log()->setLogLevel(io::LogLevel::DEBUG);
     //Send the content
     EROR(get_log()) << "ERORLOG_print" << std::endl;
     WARN(get_log()) << "WARNLOG_print" << std::endl;
@@ -215,7 +215,7 @@ TEST_F(tee_logger, off_level)
     //Start capturing cout
     testing::internal::CaptureStdout();
     //set log level
-    io::SetLogLevel(io::OFF_LVL);
+    io::SetLogLevel(io::LogLevel::OFF);
     //Send the content
     ERORLOG << "ERORLOG_print" << std::endl;
     WARNLOG << "WARNLOG_print" << std::endl;
@@ -244,7 +244,7 @@ TEST_F(tee_logger, error_lvl)
     //Start capturing cout
     testing::internal::CaptureStdout();
     //set log level
-    io::SetLogLevel(io::ERROR_LVL);
+    io::SetLogLevel(io::LogLevel::ERROR);
     //Send the content
     ERORLOG << "ERORLOG_print" << std::endl;
     WARNLOG << "WARNLOG_print" << std::endl;
@@ -272,7 +272,7 @@ TEST_F(tee_logger, warning_lvl)
     //Start capturing cout
     testing::internal::CaptureStdout();
     //set log level
-    io::SetLogLevel(io::WARNING_LVL);
+    io::SetLogLevel(io::LogLevel::WARNING);
     //Send the content
     ERORLOG << "ERORLOG_print" << std::endl;
     WARNLOG << "WARNLOG_print" << std::endl;
@@ -300,7 +300,7 @@ TEST_F(tee_logger, info_lvl)
     //Start capturing cout
     testing::internal::CaptureStdout();
     //set log level
-    io::SetLogLevel(io::INFO_LVL);
+    io::SetLogLevel(io::LogLevel::INFO);
     //Send the content
     ERORLOG << "ERORLOG_print" << std::endl;
     WARNLOG << "WARNLOG_print" << std::endl;
@@ -328,7 +328,7 @@ TEST_F(tee_logger, debug_lvl)
     //Start capturing cout
     testing::internal::CaptureStdout();
     //set log level
-    io::SetLogLevel(io::DEBUG_LVL);
+    io::SetLogLevel(io::LogLevel::DEBUG);
     //Send the content
     ERORLOG << "ERORLOG_print" << std::endl;
     WARNLOG << "WARNLOG_print" << std::endl;
