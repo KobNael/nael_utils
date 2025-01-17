@@ -17,13 +17,13 @@ namespace io
  * @see Logger::setLogLevel
  * @see io::SetLogLevel()
  */
-enum LogLevel
+enum class LogLevel
 {
-    OFF_LVL=0,      ///< No log at all
-    ERROR_LVL=1,    ///< Only Error messages
-    WARNING_LVL=2,  ///< Error and Warning messages
-    INFO_LVL=3,     ///< Error, Warning and Info messages
-    DEBUG_LVL=4     ///< Error, Warning, Info and Debug messages
+    OFF=0,      ///< No log at all
+    ERROR=1,    ///< Only Error messages
+    WARNING=2,  ///< Error and Warning messages
+    INFO=3,     ///< Error, Warning and Info messages
+    DEBUG=4     ///< Error, Warning, Info and Debug messages
 };
 
 /**
@@ -41,7 +41,7 @@ public:
      * @param file path to the log file
      * @param level initial verbosity
      */
-    Logger(std::string const& file, io::LogLevel level=INFO_LVL)
+    Logger(std::string const& file, LogLevel level=io::LogLevel::INFO)
         : _filePath(file)
         , _level(level)
         , _stream(nullptr)
@@ -55,7 +55,7 @@ public:
     /**
      * @brief set the verbosity
      */
-    void setLogLevel(io::LogLevel level)
+    void setLogLevel(LogLevel level)
     {
         _level = level;
     }
@@ -63,7 +63,7 @@ public:
     /**
      * @return true if the verbosity is greater than leve
      */
-    bool shouldLog(io::LogLevel level) const
+    bool shouldLog(LogLevel level) const
     {
         return _level >= level;
     }
@@ -88,7 +88,7 @@ private:
     /** @brief Path to the log file */
     std::string _filePath={""};
     /** @brief Verbosity */
-    LogLevel _level={INFO_LVL};
+    LogLevel _level={LogLevel::INFO};
     /** @brief the stream */
     ostream *_stream={nullptr};
 };
@@ -107,7 +107,7 @@ public:
      * @param level initial verbosity
      * @throw if the file can not be open
      */
-    FileLogger(std::string const& file, io::LogLevel level=INFO_LVL);
+    FileLogger(std::string const& file, LogLevel level=LogLevel::INFO);
 
     /**
      * @brief Destructor
@@ -139,7 +139,7 @@ public:
      * @param file path to the log file
      * @param level verbosity
      */
-    TeeLogger(std::string const& file, io::LogLevel level=INFO_LVL);
+    TeeLogger(std::string const& file, LogLevel level=LogLevel::INFO);
 
     /**
      * @brief Destructor
