@@ -23,7 +23,7 @@ TeeLogger * GetLogger()
 {
     if(nullptr == _TeeLogger)
     {
-        throw std::runtime_error("Accessing Logger before creation");
+        throw io::access_error("Accessing Logger before creation");
     }
     return _TeeLogger;
 }

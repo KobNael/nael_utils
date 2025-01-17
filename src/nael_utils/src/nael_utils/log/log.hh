@@ -6,6 +6,7 @@
 #pragma once
 
 #include <nael_utils/log/Logger.hh>
+#include <nael_utils/exception/io_exception.hh>
 
 #include <iostream>
 #include <vector>

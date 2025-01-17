@@ -2,6 +2,7 @@
  * @file Logger.cc
  */
 #include <nael_utils/log/Logger.hh>
+#include <nael_utils/exception/io_exception.hh>
 
 namespace io
 {
@@ -16,12 +17,12 @@ namespace
 		if( file != ""){
 			stream.open(file.c_str() , std::ios::out);
 			if( stream.fail() ){
-				throw std::runtime_error("Could not create log file " + file);
+				throw io::access_error("Could not create log file " + file);
 			}else{
 				stream.imbue(std::locale(std::locale::classic()));
 			}
 		}else{
-			throw std::runtime_error("Invalid name of log file") ;
+			throw io::access_error("Invalid name of log file") ;
 		}
 	}
 }//namespace

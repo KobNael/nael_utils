@@ -45,13 +45,13 @@ namespace{
 TEST(tee_logger_singleton, singleton_access)
 {
     //No log by default
-    ASSERT_THROW(io::GetLogger(), std::runtime_error);
+    ASSERT_THROW(io::GetLogger(), io::access_error);
     //Create it
     io::CreateLogger(LOG_NAME);
     ASSERT_NO_THROW(io::GetLogger());
     //Free it
     io::ClearLogger();
-    ASSERT_THROW(io::GetLogger(), std::runtime_error);
+    ASSERT_THROW(io::GetLogger(), io::access_error);
 }
 
 
