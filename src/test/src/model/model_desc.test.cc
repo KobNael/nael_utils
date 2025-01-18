@@ -38,8 +38,10 @@ TEST(model_desc, print)
     oss << basic_obj;
     oss_ref << "BasicAttDto{"
         << "bool_att=0, unsigned_att=1, int_att=2, long_att=3, double_att=4.02"
-        << ", enum_att=1, string_att=id, time_duration_att=01:02:03"
+        << ", enum_att=1, string_att=id"
+        << ", time_duration_att=01:02:03"
         << ", date_att=" << bg::day_clock::local_day()
+        << ", ptime_att=" << bg::day_clock::local_day() << " 10:00:00"
         << ", vec_unsigned_att=[10]"
         << ", vec_obj_att=[IdDto{id_att=o1},IdDto{id_att=o2}]"
         << ", vec_enum_att=[2,1,0]"

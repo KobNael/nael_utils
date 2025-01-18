@@ -17,7 +17,7 @@ namespace model_test
         basic_obj.enum_att = dto::PARAM_2;
         basic_obj.time_duration_att = bpt::time_duration(1,2,3);
         basic_obj.date_att = bg::day_clock::local_day();
-        basic_obj.date_att = bg::day_clock::local_day();
+        basic_obj.ptime_att = bpt::ptime(bg::day_clock::local_day(), bpt::hours(10));
         //vector of simple values
         basic_obj.vec_unsigned_att.push_back(10u);
         //vector of objects

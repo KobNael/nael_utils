@@ -45,6 +45,7 @@ namespace dto
         ((std::string)(string_att))
         ((bpt::time_duration)(time_duration_att))
         ((bg::date)(date_att))
+        ((bpt::ptime)(ptime_att))
         ((std::vector<unsigned>)(vec_unsigned_att))
         ((std::vector<IdDto>)(vec_obj_att))
         ((std::vector<EnumDto>)(vec_enum_att))

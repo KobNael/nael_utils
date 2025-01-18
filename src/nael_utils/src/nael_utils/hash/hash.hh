@@ -1,6 +1,10 @@
+/**
+ * @file hash.hh
+ */
 #pragma once
 
 /**
+ * @struct string_hash
  * @brief heterogenous lookup for string
  * @see https://www.cppstories.com/2021/heterogeneous-access-cpp20/#how-to-enable-it-for-unordered-containers
  */
