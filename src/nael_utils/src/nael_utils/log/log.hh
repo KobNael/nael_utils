@@ -28,18 +28,18 @@ class LoggerManager
 public:
     /**
      * @brief Get or create a TeeLogger
-     * @param name name of the logger
+     * @param name name of the logger, empty string for default name
      * @return A reference to the logger
      */
     static TeeLogger &GetLogger(std::string_view name="");
     /**
      * @brief Clear a looger
-     * @param name name of the logger
+     * @param name name of the logger, empty string for default name
      */
     static void ClearLogger(std::string_view name="");
     /**
      * @brief Set the loglevel of a TeeLogger
-     * @param name name of the logger
+     * @param name name of the logger, empty string for default name
      * @param level the log level
      */
     static void SetLogLevel(LogLevel level, std::string_view name="");
