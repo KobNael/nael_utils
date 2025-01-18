@@ -2,6 +2,7 @@
 
 namespace model_test
 {
+    using namespace dto;
     //helper
     BasicAttDto makeBasicAttDto(std::string const &id_p)
     {
@@ -13,10 +14,10 @@ namespace model_test
         basic_obj.int_att = 2;
         basic_obj.long_att = 3l;
         basic_obj.double_att = 4.02;
-        basic_obj.enum_att = model_test::PARAM_2;
+        basic_obj.enum_att = dto::PARAM_2;
         basic_obj.time_duration_att = bpt::time_duration(1,2,3);
         basic_obj.date_att = bg::day_clock::local_day();
-        basic_obj.date_att = bg::day_clock::local_day();
+        basic_obj.ptime_att = bpt::ptime(bg::day_clock::local_day(), bpt::hours(10));
         //vector of simple values
         basic_obj.vec_unsigned_att.push_back(10u);
         //vector of objects
@@ -25,9 +26,9 @@ namespace model_test
         basic_obj.vec_obj_att.push_back(IdDto());
         basic_obj.vec_obj_att.back().id_att="o2";
         //vector of enums
-        basic_obj.vec_enum_att.push_back(PARAM_3);
-        basic_obj.vec_enum_att.push_back(PARAM_2);
-        basic_obj.vec_enum_att.push_back(PARAM_1);
+        basic_obj.vec_enum_att.push_back(dto::PARAM_3);
+        basic_obj.vec_enum_att.push_back(dto::PARAM_2);
+        basic_obj.vec_enum_att.push_back(dto::PARAM_1);
         return basic_obj;
     }
     IdDto makeIdDto(std::string const &id_p)
