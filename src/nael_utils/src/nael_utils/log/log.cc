@@ -6,40 +6,26 @@
 namespace io
 {
 
-// Singleton
-static TeeLogger *_TeeLogger={nullptr};
+std::unordered_map<std::string, TeeLogger, string_hash, std::equal_to<>> LoggerManager::_loggers;
+std::string LoggerManager::_logfile_name = std::string("default");
 
-// Create a singleton TeeLogger
-TeeLogger * CreateLogger(std::string const& file)
+TeeLogger &LoggerManager::GetLogger(std::string_view name)
 {
-    if(nullptr == _TeeLogger)
-    {
-        _TeeLogger = new TeeLogger(file);
-    }
-    return _TeeLogger;
+    std::string act_name{(name.empty()?_logfile_name:name)};
+    _loggers.try_emplace(act_name, act_name + ".log");
+    return _loggers.at(act_name);
 }
-//return an access to the TeeLogger
-TeeLogger * GetLogger()
+
+void LoggerManager::ClearLogger(std::string_view name)
 {
-    if(nullptr == _TeeLogger)
-    {
-        throw std::runtime_error("Accessing Logger before creation");
-    }
-    return _TeeLogger;
+    std::string act_name{(name.empty()?_logfile_name:name)};
+    _loggers.erase(act_name);
 }
-// Free logger memory
-void ClearLogger()
+
+void LoggerManager::SetLogLevel(LogLevel level, std::string_view name)
 {
-    if(nullptr != _TeeLogger)
-    {
-        delete _TeeLogger;
-        _TeeLogger=nullptr;
-    }
-}
-// Set the log level
-void SetLogLevel(LogLevel level)
-{
-    GetLogger()->setLogLevel(level);
+    std::string act_name{(name.empty()?_logfile_name:name)};
+    GetLogger(act_name).setLogLevel(level);
 }
 
 }

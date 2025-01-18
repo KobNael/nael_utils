@@ -135,31 +135,7 @@ public: \
  * @param value the type of values
  * @param name the name of the attribute
  */
-#define MAKE_MAP(key, value, name) MAKE_MAP_ATT(key, value, name, 0)
-/**
- * @brief Generate an editable attribute std::unordered_map<key, value> _name along with its getters
- * @code{cpp}
- *     MAKE_UNORDERED_MAP(std::string, int, values)
- * @endcode
- *  expands to
- * @code{cpp}
- *    private:
- *     std::unordered_map<std::string, int> values;
- *    public:
- *     std::unordered_map<std::string, int> &get_values()
- *     {
- *       return _values;
- *     }
- *     std::unordered_map<std::string, int> const &get_values() const
- *     {
- *       return _values;
- *     }
- * @endcode
- * @param key the type of keys
- * @param value the type of values
- * @param name the name of the attribute
- */
-#define MAKE_UNORDERED_MAP(key, value, name) MAKE_MAP_ATT(key, value, name, 1)
+#define MAKE_MAP(key, value, name) MAKE_MAP_ATT(key, value, name)
 
 /**
  * @brief Generate an editable attribute std::set<value> _name along with its getters
@@ -183,30 +159,32 @@ public: \
  * @param value the type of values
  * @param name the name of the attribute
  */
-#define MAKE_SET(value, name) MAKE_SET_ATT(value, name, 0)
+#define MAKE_SET(value, name) MAKE_SET_ATT(value, name)
+
 /**
- * @brief Generate an editable attribute std::unordered_set<value> _name along with its getters
+ * @brief Generate an editable attribute std::unordered_map<std::string, value> _name along with its getters
  * @code{cpp}
- *     MAKE_UNORDERED_SET(int, values)
+ *     MAKE_STRHASH_MAP(int, values)
  * @endcode
  *  expands to
  * @code{cpp}
  *    private:
- *     std::unordered_set<int> _values;
+ *     std::unordered_map<std::string, int, string_hash, std::equal_to<>>;
  *    public:
- *     std::unordered_set<int> &get_values()
+ *     std::unordered_map<std::string, int, string_hash, std::equal_to<>> &get_values()
  *     {
  *       return _values;
  *     }
- *     std::unordered_set<int> const &get_values() const
+ *     std::unordered_map<std::string, int, string_hash, std::equal_to<>> const &get_values() const
  *     {
  *       return _values;
  *     }
  * @endcode
  * @param value the type of values
  * @param name the name of the attribute
+ * @see string_hash
  */
-#define MAKE_UNORDERED_SET(value, name) MAKE_SET_ATT(value, name, 1)
+#define MAKE_STRHASH_MAP(value, name) MAKE_STRHASH_MAP_ATT(value, name)
 
 /**
  * @brief Generate an editable attribute type & _name along with its getters

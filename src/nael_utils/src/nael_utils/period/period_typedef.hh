@@ -78,13 +78,17 @@ struct capa_period
     /** @brief the time_period */
     time_period _period;
     /** @brief equality operator */
-    bool operator==(capa_period const &cp) const {return _capa==cp._capa && _period == cp._period;}
+    bool operator==(capa_period const &cp) const = default;
+private:
     /**
      * @brief OStream operator for capa_period
      * @param os the ostream
      * @param cp the capa_period
      */
-    friend std::ostream &operator<<(std::ostream &os, capa_period const &cp);
+    friend std::ostream &operator<<(std::ostream &os, capa_period const &cp)
+    {
+        return os << "(" << cp._period << "/" << cp._capa << ")";
+    }
 };
 
 /**
