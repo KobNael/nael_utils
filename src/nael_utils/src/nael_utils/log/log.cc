@@ -6,7 +6,7 @@
 namespace io
 {
 
-std::unordered_map<std::string, TeeLogger, std::hash<std::string_view>, std::equal_to<>> LoggerManager::_loggers;
+std::unordered_map<std::string, TeeLogger, string_hash, std::equal_to<>> LoggerManager::_loggers;
 std::string LoggerManager::_logfile_name = std::string("default");
 
 TeeLogger &LoggerManager::GetLogger(std::string_view name)

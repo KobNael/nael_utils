@@ -7,6 +7,7 @@
 
 #include <nael_utils/log/Logger.hh>
 #include <nael_utils/exception/io_exception.hh>
+#include <nael_utils/hash/hash.hh>
 
 #include <iostream>
 #include <unordered_map>
@@ -53,7 +54,7 @@ public:
 
 private:
     /** @brief static storage of the logger */
-    static std::unordered_map<std::string, TeeLogger, std::hash<std::string_view>, std::equal_to<>> _loggers;
+    static std::unordered_map<std::string, TeeLogger, string_hash, std::equal_to<>> _loggers;
     /** @brief default log file name */
     static std::string _logfile_name;
 };
