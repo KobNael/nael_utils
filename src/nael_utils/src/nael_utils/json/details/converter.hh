@@ -23,21 +23,14 @@ namespace gregorian
  * @param[out] jv the json::value
  * @param d the date
  */
-void tag_invoke( const json::value_from_tag&, json::value& jv, date const& d )
-{
-    jv = { to_iso_extended_string(d) };
-}
+void tag_invoke( const json::value_from_tag&, json::value& jv, date const& d );
 
 /**
  * @brief convert json::value to a date
  * @param jv the json::value
  * @return the date
  */
-date tag_invoke( const json::value_to_tag< date >&, json::value const& jv )
-{
-    date d =  from_string(boost::json::value_to<std::string>(jv));
-    return d;
-}
+date tag_invoke( const json::value_to_tag< date >&, json::value const& jv );
 
 }//gregorian
 namespace posix_time
@@ -48,20 +41,14 @@ namespace posix_time
  * @param jv the json::value
  * @return the time_duration
  */
-time_duration tag_invoke( const json::value_to_tag< time_duration >&, json::value const& jv )
-{
-    return duration_from_string(boost::json::value_to<std::string>(jv));
-}
+time_duration tag_invoke( const json::value_to_tag< time_duration >&, json::value const& jv );
 
 /**
  * @brief convert json::value to a ptime
  * @param jv the json::value
  * @return the ptime
  */
-ptime tag_invoke( const json::value_to_tag< ptime >&, json::value const& jv )
-{
-    return time_from_string(boost::json::value_to<std::string>(jv));
-}
+ptime tag_invoke( const json::value_to_tag< ptime >&, json::value const& jv );
 
 /**
  * @brief convert a time or duration to json value

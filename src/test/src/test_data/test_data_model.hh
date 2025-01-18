@@ -4,7 +4,13 @@
 namespace bg = boost::gregorian;
 namespace bpt = boost::posix_time;
 
+//----------------------------------
+// Small but quite exhaustive dto
+//----------------------------------
 namespace model_test
+{
+
+namespace dto
 {
     //Enum
     MAKE_DTO_ENUM(
@@ -51,4 +57,84 @@ namespace model_test
         ((std::vector<BasicAttDto>)(vec_basic_obj))
         ((std::vector<ParamDto>)(vec_param_obj))
     )
+
+} //namespace dto
+
+
+//----------------------------------
+// Small bo with corresponding dto
+//----------------------------------
+namespace bo
+{
+
+class FirstClass
+{
+
+public:
+    FirstClass(std::string const &id, unsigned value);
+
+//Basic attributes
+    MAKE_CLASS_ATT(
+        ( ( std::string)(id) ),
+        ( ( unsigned)(value)(0) )
+    )
+};
+
+class SecondClass
+{
+public:
+    SecondClass(std::string const &id, double value, FirstClass &first);
+
+private:
+    SecondClass();
+//Basic attributes
+    MAKE_CLASS_ATT(
+        ( (std::string)(id) ),
+        ( (double)(value)(0.) )
+    )
+    MAKE_CLASS_REF_ATT(FirstClass, first)
+    MAKE_CLASS_CONSTREF_ATT(FirstClass, const_first)
+};
+
+/**
+ * @brief Dedicated exception for consistency
+ */
+MAKE_EXCEPTION(consistency)
+
+class BoContext
+{
+public:
+    virtual ~BoContext() = default;
+
+    FirstClass &addFirstClass(std::string const &id, unsigned value);
+    SecondClass &addSecondClass(std::string const &id, std::string const &first_id, double value);
+
+//Attributes
+    MAKE_STRHASH_MAP(FirstClass, firsts)
+    MAKE_MAP(std::string, SecondClass, seconds)
+};
+
+} //namespace bo
+
+namespace dto
+{
+    MAKE_DTO_STRUCT(
+        FirstClassDto,
+        ((std::string)(id)) // identifier
+        ((unsigned)(value)) // identifier
+    )
+    MAKE_DTO_STRUCT(
+        SecondClassDto,
+        ((std::string)(id)) // identifier
+        ((std::string)(first_id)) // identifier
+        ((double)(value)) // identifier
+    )
+    //Full context
+    MAKE_DTO_STRUCT(
+        DtoContext,
+        ((std::vector<FirstClassDto>)(first_collec))
+        ((std::vector<SecondClassDto>)(second_collec))
+    )
+} //namespace dto
+
 } //namespace model_test

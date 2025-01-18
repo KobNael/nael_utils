@@ -23,9 +23,9 @@ protected:
         _context.vec_basic_obj.push_back( model_test::makeBasicAttDto("obj2") );
         _context.vec_basic_obj.push_back( model_test::makeBasicAttDto("obj3") );
         //Push some param value
-        _context.vec_param_obj.push_back( model_test::makeParamDto( model_test::PARAM_2, "val_PARAM_2") );
-        _context.vec_param_obj.push_back( model_test::makeParamDto( model_test::PARAM_1, "val_PARAM_1") );
-        _context.vec_param_obj.push_back( model_test::makeParamDto( model_test::PARAM_3, "val_PARAM_3") );
+        _context.vec_param_obj.push_back( model_test::makeParamDto( model_test::dto::PARAM_2, "val_PARAM_2") );
+        _context.vec_param_obj.push_back( model_test::makeParamDto( model_test::dto::PARAM_1, "val_PARAM_1") );
+        _context.vec_param_obj.push_back( model_test::makeParamDto( model_test::dto::PARAM_3, "val_PARAM_3") );
     }
 
     //TearDown (do nothing)
@@ -33,7 +33,7 @@ protected:
     {}
 
     //Method of comparison
-    void compare_contexts(model_test::BasicContextDto &c1, model_test::BasicContextDto &c2)
+    void compare_contexts(model_test::dto::BasicContextDto &c1, model_test::dto::BasicContextDto &c2)
     {
         //They should be identical to the reference
         ASSERT_EQ(_context, c1);
@@ -55,7 +55,7 @@ protected:
     }
 
     //Reference context
-    model_test::BasicContextDto _context;
+    model_test::dto::BasicContextDto _context;
 };
 
 TEST_F(stream_io, export_import)
@@ -66,7 +66,7 @@ TEST_F(stream_io, export_import)
     json::export_to_stream(oss, _context);
 
     //Reimport in a new contexts
-    model_test::BasicContextDto new_context, new_context2;
+    model_test::dto::BasicContextDto new_context, new_context2;
     std::istringstream iss1(oss.str());
     json::import_from_stream(iss1, new_context);
     std::istringstream iss2(oss.str());
@@ -83,7 +83,7 @@ TEST_F(stream_io, export_import_file)
     json::export_to_file("export.json", _context);
 
     //Reimport in a new contexts
-    model_test::BasicContextDto new_context, new_context2;
+    model_test::dto::BasicContextDto new_context, new_context2;
     json::import_from_file("export.json", new_context);
     json::import_from_file("export.json", new_context2);
 

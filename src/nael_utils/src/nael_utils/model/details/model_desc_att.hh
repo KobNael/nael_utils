@@ -11,6 +11,8 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
+#include <nael_utils/hash/hash.hh>
+
 
 /**
  * @brief Extract the name of an attribute described as a tuple (type, name) adding a separator if needed
@@ -144,7 +146,7 @@
  * @param key the type of the keys
  * @param value the type of the values
  * @param name the name of the attribute
- * @warning This macro should not be called directly, it is used through #MAKE_MAP and #MAKE_UNORDERED_MAP
+ * @warning This macro should not be called directly, it is used through #MAKE_MAP
  */
 #define MAKE_MAP_ATT(key, value, name) \
     private:\
@@ -156,7 +158,7 @@
  * @brief Generate an editable attribute `std::set<value> _name` and every getter/setter
  * @param value the type of the values
  * @param name the name of the attribute
- * @warning This macro should not be called directly, it is used through #MAKE_SET and #MAKE_UNORDERED_SET
+ * @warning This macro should not be called directly, it is used through #MAKE_SET
  */
 #define MAKE_SET_ATT(value, name) \
     private:\
@@ -165,6 +167,18 @@
         std::set<value> const & BOOST_PP_CAT(get_, name)() const { return BOOST_PP_CAT(_, name);} \
         std::set<value> & BOOST_PP_CAT(get_, name)() { return BOOST_PP_CAT(_, name);}
 
+/**
+ * @brief Generate an editable attribute `std::unordered_map<std::string, value> _name` and every getter/setter
+ * @param value the type of the values
+ * @param name the name of the attribute
+ * @warning This macro should not be called directly, it is used through #MAKE_STRHASH_MAP
+ */
+#define MAKE_STRHASH_MAP_ATT(value, name) \
+    private:\
+        std::unordered_map<std::string, value, string_hash, std::equal_to<>> BOOST_PP_CAT(_, name); \
+    public:\
+        std::unordered_map<std::string, value, string_hash, std::equal_to<>> const & BOOST_PP_CAT(get_, name)() const { return BOOST_PP_CAT(_, name);} \
+        std::unordered_map<std::string, value, string_hash, std::equal_to<>> & BOOST_PP_CAT(get_, name)() { return BOOST_PP_CAT(_, name);}
 /**
  * @brief Generate an editable attribute `type  &_name` and every getter/setter
  * @param type the class name

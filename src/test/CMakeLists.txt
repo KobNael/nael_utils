@@ -14,6 +14,7 @@ target_sources (unit_tests
     src/log/log_utils.test.cc
     # model utils
     src/model/model_desc.test.cc
+    src/model/dto_to_bo.test.cc
     # period utils
     src/period/capa_periods.test.cc
     src/period/periods.test.cc
@@ -29,6 +30,7 @@ target_sources (unit_tests
     # helper for tests
     #--------
     src/test_data/test_data_helper.cc
+    src/test_data/test_data_model.cc
     )
 
 target_link_libraries (unit_tests

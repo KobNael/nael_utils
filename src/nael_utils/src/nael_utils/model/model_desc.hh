@@ -161,6 +161,30 @@ public: \
  */
 #define MAKE_SET(value, name) MAKE_SET_ATT(value, name)
 
+/**
+ * @brief Generate an editable attribute std::unordered_map<std::string, value> _name along with its getters
+ * @code{cpp}
+ *     MAKE_STRHASH_MAP(int, values)
+ * @endcode
+ *  expands to
+ * @code{cpp}
+ *    private:
+ *     std::unordered_map<std::string, int, string_hash, std::equal_to<>>;
+ *    public:
+ *     std::unordered_map<std::string, int, string_hash, std::equal_to<>> &get_values()
+ *     {
+ *       return _values;
+ *     }
+ *     std::unordered_map<std::string, int, string_hash, std::equal_to<>> const &get_values() const
+ *     {
+ *       return _values;
+ *     }
+ * @endcode
+ * @param value the type of values
+ * @param name the name of the attribute
+ * @see string_hash
+ */
+#define MAKE_STRHASH_MAP(value, name) MAKE_STRHASH_MAP_ATT(value, name)
 
 /**
  * @brief Generate an editable attribute type & _name along with its getters
