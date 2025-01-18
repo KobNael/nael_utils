@@ -23,11 +23,9 @@ TEST(capa_period, basics)
     ASSERT_EQ(oss.str(), oss_ref.str());
 
     //Invalid Merge
-#ifndef NDEBUG
     GTEST_FLAG_SET(death_test_style, "threadsafe");
     ASSERT_FALSE( can_merge(p1, p2 ) ) << "Periods can not be merged";
-    ASSERT_DEATH( merge(p1, p2 ), ".*Assertion `can_merge\\(cp1, cp2\\)' failed.*" );
-#endif
+    ASSERT_DEBUG_DEATH( merge(p1, p2 ), ".*Assertion `can_merge\\(cp1, cp2\\)' failed.*" );
 
     time_period p(bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)));
     capa_period cp1(1l, p);
