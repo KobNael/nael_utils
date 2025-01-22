@@ -48,3 +48,15 @@ public: \
     ~class_name() = default;\
 };\
 
+namespace bo
+{
+/**
+ * @brief Dedicated exception for consistency
+ */
+MAKE_EXCEPTION(consistency)
+}
+/**
+ * @brief Dedicated exception for consistency
+ */
+MAKE_EXCEPTION(fatal_error)
+
