@@ -6,7 +6,7 @@
 #pragma once
 
 #include <nael_utils/log/Logger.hh>
-#include <nael_utils/exception/io_exception.hh>
+#include <nael_utils/exception/exception.hh>
 #include <nael_utils/hash/hash.hh>
 
 #include <iostream>

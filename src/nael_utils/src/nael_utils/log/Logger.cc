@@ -2,7 +2,7 @@
  * @file Logger.cc
  */
 #include <nael_utils/log/Logger.hh>
-#include <nael_utils/exception/io_exception.hh>
+#include <nael_utils/exception/exception.hh>
 
 namespace io
 {

@@ -27,6 +27,7 @@ private:
  * @brief Create a new type of exception
  * @param class_name the name of the class
  *
+ * Example:
  * @code{cpp}
  * namespace test
  * {
@@ -50,10 +51,18 @@ public: \
 
 namespace bo
 {
-/**
- * @brief Dedicated exception for consistency
- */
-MAKE_EXCEPTION(consistency)
+    /**
+     * @brief Dedicated exception for consistency
+     */
+    MAKE_EXCEPTION(consistency)
+}
+namespace io
+{
+    /**
+     * @class access_error
+     * @brief Exception for file access error
+     */
+    MAKE_EXCEPTION(access_error)
 }
 /**
  * @brief Dedicated exception for irrecoverable error
