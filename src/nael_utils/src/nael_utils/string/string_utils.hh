@@ -5,10 +5,35 @@
 
 #pragma once
 
+#include <nael_utils/exception/exception.hh>
+#include <boost/lexical_cast.hpp>
 #include <string>
 
 namespace str
 {
+
+    /**
+     * @brief Dedicated exception for cast error from (resp. to) string
+     */
+    MAKE_EXCEPTION(bad_lexical_cast)
+
+    /**
+     * @brief Read a value from a string (using boost::lexical_cast)
+     * @return the value
+     * @throw bad_lexical_cast if the value can not be parsed
+     */
+    template<typename T>
+    T get_val_from_str(const std::string &str_val)
+    {
+        try{
+            T val_l = boost::lexical_cast<T>( str_val );
+            return val_l;
+        }
+        catch ( const boost::bad_lexical_cast& ) {
+            throw bad_lexical_cast( "Cannot parse value : " + str_val);
+        }
+    }
+
     /**
      * @brief Trim a string from both ends
      * @param s The string to trim
