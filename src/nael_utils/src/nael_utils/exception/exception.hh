@@ -56,7 +56,7 @@ namespace bo
 MAKE_EXCEPTION(consistency)
 }
 /**
- * @brief Dedicated exception for consistency
+ * @brief Dedicated exception for irrecoverable error
  */
 MAKE_EXCEPTION(fatal_error)
 
