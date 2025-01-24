@@ -9,6 +9,8 @@
 
 #include <boost/describe.hpp>
 
+namespace bpt = boost::posix_time;
+namespace bg = boost::gregorian;
 
 /**
  * @brief Create an operator< based on a list of attributes.<br/>

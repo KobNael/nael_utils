@@ -77,7 +77,10 @@
  * @warning This macro should not be called directly, it is used through #MAKE_CLASS_ATT and #MAKE_DTO_STRUCT
  */
 #define MAKE_DTO_ATT_DECL_VARIABLE(r, data, att_desc) \
-    BOOST_PP_SEQ_ELEM(0, att_desc) BOOST_PP_SEQ_ELEM(1, att_desc);
+    BOOST_PP_SEQ_ELEM(0, att_desc) BOOST_PP_SEQ_ELEM(1, att_desc) \
+    MAKE_ATT_INIT(BOOST_PP_EQUAL(BOOST_PP_SEQ_SIZE(att_desc), 3),\
+        BOOST_PP_IF(BOOST_PP_EQUAL(BOOST_PP_SEQ_SIZE(att_desc), 3),BOOST_PP_SEQ_ELEM,BOOST_PP_TUPLE_EAT(2))(2, att_desc) \
+    )
 
 /**
  * @brief Create the declaration of an attribute described as a tuple (type, name)

@@ -75,7 +75,11 @@ void tag_invoke( const json::value_from_tag&, json::value& jv, time_ao_duration 
  */
 template<class T> void extract( boost::json::object const & obj, char const * name, T & value )
 {
-    value = boost::json::value_to<T>( obj.at( name ) );
+    boost::json::value const *obj_val = obj.if_contains( name );
+    if(nullptr != obj_val)
+    {
+        value = boost::json::value_to<T>( *obj_val );
+    }
 }
 
 namespace dto
