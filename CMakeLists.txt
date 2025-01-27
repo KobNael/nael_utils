@@ -12,7 +12,7 @@ project (nael_utils
 	VERSION 1.1.0
 	LANGUAGES CXX)
 
-option (${PROJECT_NAME}_AS_SUBMODULE "enable cppcheck" ON)
+option (${PROJECT_NAME}_AS_SUBMODULE "treat as submodule" ON)
 
 # ============================================================================
 # External requirements
