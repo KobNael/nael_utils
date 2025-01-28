@@ -49,13 +49,6 @@ public: \
     ~class_name() = default;\
 };\
 
-namespace bo
-{
-    /**
-     * @brief Dedicated exception for consistency
-     */
-    MAKE_EXCEPTION(consistency)
-}
 namespace io
 {
     /**
@@ -63,6 +56,20 @@ namespace io
      * @brief Exception for file access error
      */
     MAKE_EXCEPTION(access_error)
+}
+namespace bo
+{
+    /**
+     * @brief Dedicated exception for consistency in input data
+     */
+    MAKE_EXCEPTION(consistency)
+}
+namespace opt
+{
+    /**
+     * @brief Dedicated exception for consistency during optimization
+     */
+    MAKE_EXCEPTION(consistency)
 }
 /**
  * @brief Dedicated exception for irrecoverable error

@@ -187,7 +187,7 @@ std::ostream &print(std::ostream &os, const std::vector<T> &range)
  */
 #define EROR_RANGE(log, header, range) \
     COND_STATEMENT(log.shouldLog(io::LogLevel::ERROR)) \
-        io.printRange(log.getLog() << header, range);
+        io::printRange(log.getLog() << header, range)
 /**
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::WARNING
  * @param log the log
@@ -196,7 +196,7 @@ std::ostream &print(std::ostream &os, const std::vector<T> &range)
  */
 #define WARN_RANGE(log, header, range) \
     COND_STATEMENT(log.shouldLog(io::LogLevel::WARNING)) \
-        io.printRange(log.getLog() << header, range);
+        io::printRange(log.getLog() << header, range)
 /**
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::INFO
  * @param log the log
@@ -205,7 +205,7 @@ std::ostream &print(std::ostream &os, const std::vector<T> &range)
  */
 #define INFO_RANGE(log, header, range) \
     COND_STATEMENT(log.shouldLog(io::LogLevel::INFO)) \
-        io.printRange(log.getLog() << header, range);
+        io::printRange(log.getLog() << header, range)
 /**
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::DEBUG
  * @param log the log
@@ -214,7 +214,7 @@ std::ostream &print(std::ostream &os, const std::vector<T> &range)
  */
 #define DBUG_RANGE(log, header, range) \
     COND_STATEMENT(log.shouldLog(io::LogLevel::DEBUG)) \
-        io.printRange(log.getLog() << header, range);
+        io::printRange(log.getLog() << header, range)
 
 /**
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::ERROR
