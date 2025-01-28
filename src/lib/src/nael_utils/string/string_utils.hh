@@ -7,7 +7,10 @@
 
 #include <nael_utils/exception/exception.hh>
 #include <boost/lexical_cast.hpp>
+#include <boost/date_time/gregorian/gregorian_types.hpp>
 #include <string>
+
+namespace bg = boost::gregorian;
 
 namespace str
 {
@@ -33,6 +36,14 @@ namespace str
             throw bad_lexical_cast( "Cannot parse value : " + str_val);
         }
     }
+
+    /**
+     * @brief Read a value from a string (using boost::lexical_cast)
+     * @return the value
+     * @throw bad_lexical_cast if the value can not be parsed
+     */
+    template<>
+    bg::date get_val_from_str<bg::date>(const std::string &str_val);
 
     /**
      * @brief Trim a string from both ends

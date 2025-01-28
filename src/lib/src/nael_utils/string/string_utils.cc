@@ -1,5 +1,6 @@
 #include <nael_utils/string/string_utils.hh>
 
+#include <boost/date_time/gregorian/gregorian.hpp>
 #include <string_view>
 #include <ranges>
 
@@ -52,6 +53,12 @@ std::string trim(std::string s)
 {
     ::lrtrim(s);
     return s;
+}
+
+template<>
+bg::date get_val_from_str<bg::date>(const std::string &str_val)
+{
+    return bg::from_string(str_val);
 }
 
 }//namespace str
