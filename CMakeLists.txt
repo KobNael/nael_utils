@@ -134,4 +134,6 @@ add_subdirectory (src)
 # Documentation
 # ============================================================================
 
-add_subdirectory (docs)
+if( NOT ${PROJECT_NAME}_AS_SUBMODULE )
+    add_subdirectory (docs)
+endif()
