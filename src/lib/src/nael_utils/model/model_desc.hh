@@ -13,6 +13,7 @@ namespace bpt = boost::posix_time;
 namespace bg = boost::gregorian;
 
 #define N_SEC_IN_DAY 86400
+#define N_SEC_IN_HOUR 3600
 
 /**
  * @brief Create an operator< based on a list of attributes.<br/>
