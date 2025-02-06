@@ -26,6 +26,7 @@ namespace io
 class LoggerManager
 {
 public:
+//TeeLoggers
     /**
      * @brief Get or create a TeeLogger
      * @param name name of the logger, empty string for default name
@@ -33,7 +34,7 @@ public:
      */
     static TeeLogger &GetLogger(std::string_view name="");
     /**
-     * @brief Clear a looger
+     * @brief Clear a logger
      * @param name name of the logger, empty string for default name
      */
     static void ClearLogger(std::string_view name="");
@@ -53,10 +54,34 @@ public:
     }
 
 private:
-    /** @brief static storage of the logger */
-    static std::unordered_map<std::string, TeeLogger, string_hash, std::equal_to<>> _loggers;
+    /** @brief static storage of the tee logger */
+    static std::unordered_map<std::string, TeeLogger, string_hash, std::equal_to<>> _tee_loggers;
     /** @brief default log file name */
     static std::string _logfile_name;
+
+//FileLoggers
+public:
+    /**
+     * @brief Get or create a FileLogger
+     * @param name name of the logger
+     * @return A reference to the logger
+     */
+    static FileLogger &GetFileLogger(std::string_view name);
+    /**
+     * @brief Clear a FileLogger
+     * @param name name of the logger
+     */
+    static void ClearFileLogger(std::string_view name);
+    /**
+     * @brief Set the loglevel of a FileLogger
+     * @param name name of the logger
+     * @param level the log level
+     */
+    static void SetFileLogLevel(LogLevel level, std::string_view name);
+
+private:
+    /** @brief static storage of the file logger */
+    static std::unordered_map<std::string, FileLogger, string_hash, std::equal_to<>> _file_loggers;
 };
 
 /**

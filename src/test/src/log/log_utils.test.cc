@@ -85,11 +85,12 @@ protected:
     //Access to logger
     io::FileLogger &get_log()
     {
-        return _file_logger;
+        return io::LoggerManager::GetFileLogger(LOG_NAME);
     }
-
-private:
-    io::FileLogger _file_logger = {LOGFILE_NAME};
+    void TearDown() override
+    {
+        io::LoggerManager::ClearFileLogger(LOG_NAME);
+    }
 };
 
 TEST_F(file_logger, off_level)

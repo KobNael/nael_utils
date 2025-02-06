@@ -8,7 +8,7 @@ Here you can find some tools for logging purpose :
     - Two loggers are available :
         - A basic :ref:`log_file`
         - :ref:`tee_logger`, allowing to simultaneously print in the terminal and in a file
-    - A :ref:`tee_logger_manager` is also provided
+    - A :ref:`logger_manager` is also provided
     - :ref:`macros` to log while taking the verbosity into account
 
 ------------------
@@ -51,12 +51,12 @@ TeeLogger
     :members:
 
 
-.. _tee_logger_manager:
+.. _logger_manager:
 
-TeeLogger Manager
+Logger Manager
 ^^^^^^^^^^^^^^^^^^^^^
 
-One can create, access and set the verbosity an instance of :ref:`tee_logger` using the following class :
+One can create, access and set the verbosity an instance of :ref:`tee_logger` or :ref:`log_file` using the following class :
 
 .. doxygenclass:: io::LoggerManager
     :members:

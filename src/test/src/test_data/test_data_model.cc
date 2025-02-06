@@ -23,7 +23,7 @@ FirstClass &BoContext::addFirstClass(std::string const &id, unsigned value)
     auto [iter, inserted] = _firsts.try_emplace(id, id, value);
     if(!inserted)
     {
-        throw opt::consistency("An item with the same id already exists");
+        throw consistency("An item with the same id already exists");
     }
     return iter->second;
 }
