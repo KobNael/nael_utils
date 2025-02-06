@@ -7,13 +7,14 @@ namespace io
 {
 
 std::unordered_map<std::string, TeeLogger, string_hash, std::equal_to<>> LoggerManager::_tee_loggers;
+LogLevel LoggerManager::_log_level = LogLevel::INFO;
 std::string LoggerManager::_logfile_name = std::string("default");
 
 
 TeeLogger &LoggerManager::GetLogger(std::string_view name)
 {
     std::string act_name{(name.empty()?_logfile_name:name)};
-    _tee_loggers.try_emplace(act_name, act_name + ".log");
+    _tee_loggers.try_emplace(act_name, act_name + ".log", LoggerManager::_log_level);
     return _tee_loggers.at(act_name);
 }
 
@@ -34,7 +35,7 @@ std::unordered_map<std::string, FileLogger, string_hash, std::equal_to<>> Logger
 
 FileLogger &LoggerManager::GetFileLogger(std::string_view name)
 {
-    _file_loggers.try_emplace(std::string(name), std::string(name) + ".log");
+    _file_loggers.try_emplace(std::string(name), std::string(name) + ".log", LoggerManager::_log_level);
     return _file_loggers.at(std::string(name));
 }
 

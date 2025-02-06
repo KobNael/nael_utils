@@ -45,6 +45,14 @@ public:
      */
     static void SetLogLevel(LogLevel level, std::string_view name="");
     /**
+     * @brief Set the default verbosity
+     * @param level the verbosity
+     */
+    static void SetDefaultLogLevel(LogLevel level)
+    {
+        _log_level = level;
+    }
+    /**
      * @brief Set the default name
      * @param name name of the logger
      */
@@ -58,6 +66,8 @@ private:
     static std::unordered_map<std::string, TeeLogger, string_hash, std::equal_to<>> _tee_loggers;
     /** @brief default log file name */
     static std::string _logfile_name;
+    /** @brief default log level */
+    static LogLevel _log_level;
 
 //FileLoggers
 public:
@@ -100,6 +110,17 @@ template<typename T>
 std::ostream &print(std::ostream &os, T const &obj)
 {
     return os << obj;
+}
+/**
+ * @brief Print an object in a stream
+ * @tparam T the type of object
+ * @param os the ostream
+ * @param obj the object
+ */
+template<typename T>
+std::ostream &print(std::ostream &os, std::reference_wrapper<T> const &obj)
+{
+    return print(os, obj.get());
 }
 /**
  * @brief Print a pair of object in a stream
@@ -275,3 +296,9 @@ std::ostream &print(std::ostream &os, const std::vector<T> &range)
  * @param val the value
  */
 #define PRINT_PERCENTAGE(val) std::fixed << std::setprecision(2) << val << "%" << std::setprecision(-1)
+
+/**
+ * @brief print an enum value created with MAKE_DTO_ENUM as a string
+ * @param val the value
+ */
+#define PRINT_ENUM(val) boost::describe::enum_to_string(val, "unkown")
