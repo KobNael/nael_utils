@@ -8,7 +8,7 @@
  * @brief Toolbox for manipulation of time period.   
  * Two types of time period are proposed, along with shortcuts for list of periods:
  * - #time_period : shortcut for boost::posix_time::time_period
- * - capa_period : #time_period with capacity (long)
+ * - capa_period : #time_period with capacity (long long)
  *
  * On can then compute the union, the intersection or the difference between list of periods:
  *  - Union : compute the some of the capacity
@@ -51,7 +51,7 @@ struct capa_period
      * @param capa the capacity
      * @param period the time_period
      */
-    capa_period(long capa, time_period const &period)
+    capa_period(long long capa, time_period const &period)
         : _capa(capa)
         , _period(period)
     {}
@@ -61,7 +61,7 @@ struct capa_period
      * @param start the starting date time
      * @param end the ending date time
      */
-    capa_period(long capa, boost::posix_time::ptime const &start, boost::posix_time::ptime const &end)
+    capa_period(long long capa, boost::posix_time::ptime const &start, boost::posix_time::ptime const &end)
         : _capa(capa)
         , _period(time_period(start, end))
     {}
@@ -76,7 +76,7 @@ struct capa_period
     /** @return true if the time_period contains a ptime */
     bool contains(boost::posix_time::ptime const &t) const { return _period.contains(t); }
     /** @brief the capacity */
-    long _capa;
+    long long _capa;
     /** @brief the time_period */
     time_period _period;
     /** @brief equality operator */
