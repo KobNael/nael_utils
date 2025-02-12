@@ -199,6 +199,11 @@ std::ostream &print(std::ostream &os, const std::vector<T> &range)
  */
 #define INFO(log) COND_STATEMENT(log.shouldLog(io::LogLevel::INFO)) log.getLog()
 /**
+ * @brief Log a message in a stream, provided that the log level is >= io::LogLevel::EXTENDED
+ * @param log the log
+ */
+#define EXTD(log) COND_STATEMENT(log.shouldLog(io::LogLevel::EXTENDED)) log.getLog()
+/**
  * @brief Log a message in a stream, provided that the log level is >= io::LogLevel::DEBUG
  * @param log the log
  */
@@ -219,6 +224,11 @@ std::ostream &print(std::ostream &os, const std::vector<T> &range)
  * @throw if the main io::TeeLogger has not been created
  */
 #define INFOLOG INFO(io::LoggerManager::GetLogger())
+/**
+ * @brief Log a message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::EXTENDED
+ * @throw if the main io::TeeLogger has not been created
+ */
+#define EXTDLOG EXTD(io::LoggerManager::GetLogger())
 /**
  * @brief Log a message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::DEBUG
  * @throw if the main io::TeeLogger has not been created
@@ -253,6 +263,15 @@ std::ostream &print(std::ostream &os, const std::vector<T> &range)
     COND_STATEMENT(log.shouldLog(io::LogLevel::INFO)) \
         io::printRange(log.getLog() << header, range)
 /**
+ * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::EXTENDED
+ * @param log the log
+ * @param header the message
+ * @param range the range
+ */
+#define EXTD_RANGE(log, header, range) \
+    COND_STATEMENT(log.shouldLog(io::LogLevel::EXTENDED)) \
+        io::printRange(log.getLog() << header, range)
+/**
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::DEBUG
  * @param log the log
  * @param header the message
@@ -283,6 +302,13 @@ std::ostream &print(std::ostream &os, const std::vector<T> &range)
  * @throw if the main io::TeeLogger has not been created
  */
 #define INFOLOG_RANGE(header, range) INFO_RANGE(io::LoggerManager::GetLogger(), header, range)
+/**
+ * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::EXTENDED
+ * @param header the message
+ * @param range the range
+ * @throw if the main io::TeeLogger has not been created
+ */
+#define EXTDLOG_RANGE(header, range) EXTD_RANGE(io::LoggerManager::GetLogger(), header, range)
 /**
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::DEBUG
  * @param header the message

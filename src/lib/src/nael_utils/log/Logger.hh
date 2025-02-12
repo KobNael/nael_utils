@@ -8,6 +8,7 @@
 #include <fstream>
 #include <boost/iostreams/tee.hpp>
 #include <boost/iostreams/stream.hpp>
+#include <boost/describe.hpp>
 
 namespace io
 {
@@ -17,14 +18,15 @@ namespace io
  * @see Logger::setLogLevel
  * @see io::SetLogLevel()
  */
-enum class LogLevel
-{
-    OFF=0,      ///< No log at all
-    ERROR=1,    ///< Only Error messages
-    WARNING=2,  ///< Error and Warning messages
-    INFO=3,     ///< Error, Warning and Info messages
-    DEBUG=4     ///< Error, Warning, Info and Debug messages
-};
+BOOST_DEFINE_ENUM(
+    LogLevel,
+    OFF,      ///< No log at all
+    ERROR,    ///< Only Error messages
+    WARNING,  ///< Error and Warning messages
+    INFO,     ///< Error, Warning and Info messages
+    EXTENDED, ///< Error, Warning, Info and Extended messages
+    DEBUG     ///< Error, Warning, Info and Debug messages
+);
 
 /**
  * @class Logger
