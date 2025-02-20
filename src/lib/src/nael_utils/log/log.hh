@@ -19,156 +19,156 @@
 namespace io
 {
 
-/**
- * @class LoggerManager
- * @brief Store and give access to TeeLoggers
- */
-class LoggerManager
-{
-public:
-//TeeLoggers
     /**
-     * @brief Get or create a TeeLogger
-     * @param name name of the logger, empty string for default name
-     * @return A reference to the logger
+     * @class LoggerManager
+     * @brief Store and give access to TeeLoggers
      */
-    static TeeLogger &GetLogger(std::string_view name="");
+    class LoggerManager
+    {
+        public:
+        //TeeLoggers
+            /**
+             * @brief Get or create a TeeLogger
+             * @param name name of the logger, empty string for default name
+             * @return A reference to the logger
+             */
+            static TeeLogger &GetLogger(std::string_view name="");
+            /**
+             * @brief Clear a logger
+             * @param name name of the logger, empty string for default name
+             */
+            static void ClearLogger(std::string_view name="");
+            /**
+             * @brief Set the loglevel of a TeeLogger
+             * @param name name of the logger, empty string for default name
+             * @param level the log level
+             */
+            static void SetLogLevel(LogLevel level, std::string_view name="");
+            /**
+             * @brief Set the default verbosity
+             * @param level the verbosity
+             */
+            static void SetDefaultLogLevel(LogLevel level)
+            {
+                _log_level = level;
+            }
+            /**
+             * @brief Set the default name
+             * @param name name of the logger
+             */
+            static void SetDefaultName(std::string_view name)
+            {
+                _logfile_name = name;
+            }
+
+        private:
+            /** @brief static storage of the tee logger */
+            static std::unordered_map<std::string, TeeLogger, string_hash, std::equal_to<>> _tee_loggers;
+            /** @brief default log file name */
+            static std::string _logfile_name;
+            /** @brief default log level */
+            static LogLevel _log_level;
+
+        //FileLoggers
+        public:
+            /**
+             * @brief Get or create a FileLogger
+             * @param name name of the logger
+             * @return A reference to the logger
+             */
+            static FileLogger &GetFileLogger(std::string_view name);
+            /**
+             * @brief Clear a FileLogger
+             * @param name name of the logger
+             */
+            static void ClearFileLogger(std::string_view name);
+            /**
+             * @brief Set the loglevel of a FileLogger
+             * @param name name of the logger
+             * @param level the log level
+             */
+            static void SetFileLogLevel(LogLevel level, std::string_view name);
+
+        private:
+            /** @brief static storage of the file logger */
+            static std::unordered_map<std::string, FileLogger, string_hash, std::equal_to<>> _file_loggers;
+    };
+
     /**
-     * @brief Clear a logger
-     * @param name name of the logger, empty string for default name
-     */
-    static void ClearLogger(std::string_view name="");
-    /**
-     * @brief Set the loglevel of a TeeLogger
-     * @param name name of the logger, empty string for default name
+     * @brief Set the log level
      * @param level the log level
      */
-    static void SetLogLevel(LogLevel level, std::string_view name="");
+    void SetLogLevel(LogLevel level);
+
     /**
-     * @brief Set the default verbosity
-     * @param level the verbosity
+     * @brief Print an object in a stream
+     * @tparam T the type of object
+     * @param os the ostream
+     * @param obj the object
      */
-    static void SetDefaultLogLevel(LogLevel level)
+    template<typename T>
+    std::ostream &print(std::ostream &os, T const &obj)
     {
-        _log_level = level;
+        return os << obj;
     }
     /**
-     * @brief Set the default name
-     * @param name name of the logger
+     * @brief Print an object in a stream
+     * @tparam T the type of object
+     * @param os the ostream
+     * @param obj the object
      */
-    static void SetDefaultName(std::string_view name)
+    template<typename T>
+    std::ostream &print(std::ostream &os, std::reference_wrapper<T> const &obj)
     {
-        _logfile_name = name;
+        return print(os, obj.get());
+    }
+    /**
+     * @brief Print a pair of object in a stream
+     * @tparam U the first type of object in the pair
+     * @tparam V the second type of object in the pair
+     * @param os the ostream
+     * @param p the pair
+     */
+    template <typename U, typename V>
+    std::ostream &print(std::ostream &os, const std::pair<U,V> &p)
+    {
+        os << "(";
+        print(os, p.first) << ", ";
+        return print(os, p.second) << ")";
     }
 
-private:
-    /** @brief static storage of the tee logger */
-    static std::unordered_map<std::string, TeeLogger, string_hash, std::equal_to<>> _tee_loggers;
-    /** @brief default log file name */
-    static std::string _logfile_name;
-    /** @brief default log level */
-    static LogLevel _log_level;
-
-//FileLoggers
-public:
     /**
-     * @brief Get or create a FileLogger
-     * @param name name of the logger
-     * @return A reference to the logger
+     * @brief Print every object of a range in a stream
+     * @tparam Range the type of range
+     * @param os the ostream
+     * @param range the range of object
      */
-    static FileLogger &GetFileLogger(std::string_view name);
-    /**
-     * @brief Clear a FileLogger
-     * @param name name of the logger
-     */
-    static void ClearFileLogger(std::string_view name);
-    /**
-     * @brief Set the loglevel of a FileLogger
-     * @param name name of the logger
-     * @param level the log level
-     */
-    static void SetFileLogLevel(LogLevel level, std::string_view name);
-
-private:
-    /** @brief static storage of the file logger */
-    static std::unordered_map<std::string, FileLogger, string_hash, std::equal_to<>> _file_loggers;
-};
-
-/**
- * @brief Set the log level
- * @param level the log level
- */
-void SetLogLevel(LogLevel level);
-
-/**
- * @brief Print an object in a stream
- * @tparam T the type of object
- * @param os the ostream
- * @param obj the object
- */
-template<typename T>
-std::ostream &print(std::ostream &os, T const &obj)
-{
-    return os << obj;
-}
-/**
- * @brief Print an object in a stream
- * @tparam T the type of object
- * @param os the ostream
- * @param obj the object
- */
-template<typename T>
-std::ostream &print(std::ostream &os, std::reference_wrapper<T> const &obj)
-{
-    return print(os, obj.get());
-}
-/**
- * @brief Print a pair of object in a stream
- * @tparam U the first type of object in the pair
- * @tparam V the second type of object in the pair
- * @param os the ostream
- * @param p the pair
- */
-template <typename U, typename V>
-std::ostream &print(std::ostream &os, const std::pair<U,V> &p)
-{
-	os << "(";
-	print(os, p.first) << ", ";
-	return print(os, p.second) << ")";
-}
-
-/**
- * @brief Print every object of a range in a stream
- * @tparam Range the type of range
- * @param os the ostream
- * @param range the range of object
- */
-template<typename Range>
-std::ostream &printRange(std::ostream &os, Range const &range)
-{
-    os << "[";
-    bool first{true};
-    for(auto obj : range)
+    template<typename Range>
+    std::ostream &printRange(std::ostream &os, Range const &range)
     {
-        print(os << (first?"":","), obj);
-        first = false;
+        os << "[";
+        bool first{true};
+        for(auto obj : range)
+        {
+            print(os << (first?"":","), obj);
+            first = false;
+        }
+        return os << "]";
     }
-    return os << "]";
-}
 
-/**
- * @brief Print a range of object in a stream
- * @tparam T the type of object
- * @param os the ostream
- * @param range the object
- */
-template <typename T>
-std::ostream &print(std::ostream &os, const std::vector<T> &range)
-{
-	return printRange(os, range);
-}
+    /**
+     * @brief Print a range of object in a stream
+     * @tparam T the type of object
+     * @param os the ostream
+     * @param range the object
+     */
+    template <typename T>
+    std::ostream &print(std::ostream &os, const std::vector<T> &range)
+    {
+        return printRange(os, range);
+    }
 
-}
+} //namespace io
 
 /**
  * @brief Execute the following instruction provided that a condition is satified

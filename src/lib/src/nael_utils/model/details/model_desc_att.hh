@@ -213,4 +213,3 @@
         public: MAKE_ATT_GETTER(att_seq, is_const) \
         BOOST_PP_IF(is_const, , public: MAKE_ATT_SETTER(att_seq)) \
     , )
-

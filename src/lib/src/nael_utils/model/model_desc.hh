@@ -278,4 +278,3 @@ public: \
 #define MAKE_CLASS_ATT( const_att_seq, editable_att_seq ) \
     MAKE_CLASS_BASIC_ATT( const_att_seq, 1 ) \
     MAKE_CLASS_BASIC_ATT( editable_att_seq, 0 )
-

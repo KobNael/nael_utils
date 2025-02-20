@@ -46,53 +46,54 @@ using time_period = boost::posix_time::time_period;
  */
 struct capa_period
 {
-    /**
-     * @brief constructor
-     * @param capa the capacity
-     * @param period the time_period
-     */
-    capa_period(long long capa, time_period const &period)
-        : _capa(capa)
-        , _period(period)
-    {}
-    /**
-     * @brief constructor
-     * @param capa the capacity
-     * @param start the starting date time
-     * @param end the ending date time
-     */
-    capa_period(long long capa, boost::posix_time::ptime const &start, boost::posix_time::ptime const &end)
-        : _capa(capa)
-        , _period(time_period(start, end))
-    {}
-    /** @return the begin of the period */
-    boost::posix_time::ptime begin() const { return _period.begin(); }
-    /** @return the end of the period */
-    boost::posix_time::ptime end() const { return _period.end(); }
-    /** @return the period duration */
-    boost::posix_time::time_duration length() const { return _period.length(); }
-    /** @brief Add duration to both begin and end. */
-    void shift(boost::posix_time::time_duration const &d) { return _period.shift(d); }
-    /** @return true if the time_period intersects another time_period */
-    bool intersect(capa_period const &cp) const { return _period.intersects(cp._period); }
-    /** @return true if the time_period contains a ptime */
-    bool contains(boost::posix_time::ptime const &t) const { return _period.contains(t); }
-    /** @brief the capacity */
-    long long _capa;
-    /** @brief the time_period */
-    time_period _period;
-    /** @brief equality operator */
-    bool operator==(capa_period const &cp) const = default;
-private:
-    /**
-     * @brief OStream operator for capa_period
-     * @param os the ostream
-     * @param cp the capa_period
-     */
-    friend std::ostream &operator<<(std::ostream &os, capa_period const &cp)
-    {
-        return os << "(" << cp._period << "/" << cp._capa << ")";
-    }
+    public:
+        /**
+         * @brief constructor
+         * @param capa the capacity
+         * @param period the time_period
+         */
+        capa_period(long long capa, time_period const &period)
+            : _capa(capa)
+            , _period(period)
+        {}
+        /**
+         * @brief constructor
+         * @param capa the capacity
+         * @param start the starting date time
+         * @param end the ending date time
+         */
+        capa_period(long long capa, boost::posix_time::ptime const &start, boost::posix_time::ptime const &end)
+            : _capa(capa)
+            , _period(time_period(start, end))
+        {}
+        /** @return the begin of the period */
+        boost::posix_time::ptime begin() const { return _period.begin(); }
+        /** @return the end of the period */
+        boost::posix_time::ptime end() const { return _period.end(); }
+        /** @return the period duration */
+        boost::posix_time::time_duration length() const { return _period.length(); }
+        /** @brief Add duration to both begin and end. */
+        void shift(boost::posix_time::time_duration const &d) { return _period.shift(d); }
+        /** @return true if the time_period intersects another time_period */
+        bool intersect(capa_period const &cp) const { return _period.intersects(cp._period); }
+        /** @return true if the time_period contains a ptime */
+        bool contains(boost::posix_time::ptime const &t) const { return _period.contains(t); }
+        /** @brief the capacity */
+        long long _capa;
+        /** @brief the time_period */
+        time_period _period;
+        /** @brief equality operator */
+        bool operator==(capa_period const &cp) const = default;
+    private:
+        /**
+         * @brief OStream operator for capa_period
+         * @param os the ostream
+         * @param cp the capa_period
+         */
+        friend std::ostream &operator<<(std::ostream &os, capa_period const &cp)
+        {
+            return os << "(" << cp._period << "/" << cp._capa << ")";
+        }
 };
 
 /**

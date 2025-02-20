@@ -223,4 +223,3 @@ std::list<PeriodT> get_inter(std::list<PeriodT> const&periods1, std::list<Period
 {
     return merge<PeriodT, PeriodU, details::MakeInter>(periods1, periods2, merge_adjacent);
 }
-
