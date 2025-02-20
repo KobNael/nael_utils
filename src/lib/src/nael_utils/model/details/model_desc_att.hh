@@ -191,11 +191,11 @@
  */
 #define MAKE_BASIC_CLASS_REF_ATT(type, name, is_const) \
     private:\
-        type BOOST_PP_IF(is_const, const ,) BOOST_PP_CAT(& _, name); \
+    std::reference_wrapper<type BOOST_PP_IF(is_const, const ,)> BOOST_PP_CAT( _, name); \
     public:\
-        type const& BOOST_PP_CAT(get_, name)() const { return BOOST_PP_CAT(_, name);} \
+        type const& BOOST_PP_CAT(get_, name)() const { return BOOST_PP_CAT(_, name).get();} \
         BOOST_PP_IF(is_const, , \
-            type & BOOST_PP_CAT(get_, name)() { return BOOST_PP_CAT(_, name);} \
+            type & BOOST_PP_CAT(get_, name)() { return BOOST_PP_CAT(_, name.get());} \
         )
 
 
