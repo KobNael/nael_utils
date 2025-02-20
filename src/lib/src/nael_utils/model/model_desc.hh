@@ -12,7 +12,13 @@
 namespace bpt = boost::posix_time;
 namespace bg = boost::gregorian;
 
+/**
+ * @brief Constant equals to the number of seconds in a day
+ */
 #define N_SEC_IN_DAY 86400
+/**
+ * @brief Constant equals to the number of seconds in an hour
+ */
 #define N_SEC_IN_HOUR 3600
 
 /**
