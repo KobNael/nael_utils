@@ -34,6 +34,14 @@ namespace io
         open_stream(file, *_internal_stream);
         this->setLog( *_internal_stream );
     }
+    FileLogger::~FileLogger()
+    {
+        if( _internal_stream->is_open() )
+        {
+            _internal_stream->flush();
+            _internal_stream->close();
+        }
+    }
 
     //TeeLogger constructor
     TeeLogger::TeeLogger(std::string const& file, io::LogLevel level)
@@ -44,5 +52,14 @@ namespace io
         _teeStream = std::make_unique<TeeStream>(*_teeDevice);
         this->setLog( *_teeStream );
     }
+    TeeLogger::~TeeLogger()
+    {
+        if( _fstream.is_open() )
+        {
+            _fstream.flush();
+            _fstream.close();
+        }
+    }
+
 
 } //namespace io

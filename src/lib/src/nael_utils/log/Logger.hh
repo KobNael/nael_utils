@@ -92,9 +92,10 @@ namespace io
                 _stream = &stream;
             }
 
-        private:
+        protected:
             /** @brief Path to the log file */
             std::string _filePath={""};
+        private:
             /** @brief Verbosity */
             LogLevel _level={LogLevel::INFO};
             /** @brief the stream */
@@ -119,7 +120,7 @@ namespace io
             /**
              * @brief Destructor
              */
-            ~FileLogger() override = default;
+            ~FileLogger() override;
         private:
             std::unique_ptr<std::ofstream> _internal_stream = std::make_unique<std::ofstream>();
     };
@@ -150,7 +151,7 @@ namespace io
             /**
              * @brief Destructor
              */
-            ~TeeLogger() override = default;
+            ~TeeLogger() override;
 
         private:
             /** @brief ostream to file */
