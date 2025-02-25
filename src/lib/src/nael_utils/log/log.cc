@@ -14,8 +14,8 @@ namespace io
     TeeLogger &LoggerManager::GetLogger(std::string_view name)
     {
         std::string act_name{(name.empty()?_logfile_name:name)};
-        _tee_loggers.try_emplace(act_name, act_name + ".log", LoggerManager::_log_level);
-        return _tee_loggers.at(act_name);
+        auto [iter, inserted] = _tee_loggers.try_emplace(act_name, act_name + ".log", LoggerManager::_log_level);
+        return iter->second;
     }
 
     void LoggerManager::ClearLogger(std::string_view name)
@@ -35,8 +35,8 @@ namespace io
 
     FileLogger &LoggerManager::GetFileLogger(std::string_view name)
     {
-        _file_loggers.try_emplace(std::string(name), std::string(name) + ".log", LoggerManager::_log_level);
-        return _file_loggers.at(std::string(name));
+        auto [iter, inserted] = _file_loggers.try_emplace(std::string(name), std::string(name) + ".log", LoggerManager::_log_level);
+        return iter->second;
     }
 
     void LoggerManager::ClearFileLogger(std::string_view name)

@@ -87,7 +87,7 @@ void check_vector(std::list<PeriodT> const&periods)
 template<typename PeriodT>
 void opt_insert(std::optional<PeriodT> p, std::list<PeriodT> &list)
 {
-    if(p)
+    if(p && p->length().total_seconds() > 0)
     {
         list.push_back(*p);
     }
