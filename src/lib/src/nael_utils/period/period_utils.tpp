@@ -146,25 +146,25 @@ std::list<PeriodT> merge(std::list<PeriodT> const&periods1, std::list<PeriodU> c
         else
         {
             //Get the intersection, taking curtime into account
-            bpt::ptime begin = std::max(curtime, std::max( it1->begin(), it2->begin() ) )
-                    , end = std::min( it1->end(), it2->end() );
+            bpt::ptime begin_inter = std::max( it1->begin(), it2->begin() )
+                    , end_inter = std::min( it1->end(), it2->end() );
             //first part if any
-            if(curtime < begin)
+            if(curtime < begin_inter)
             {
-                if(it1->begin() < begin)
+                if(it1->begin() < begin_inter)
                 {
-                    opt_insert<PeriodT>(func(*it1, (std::optional<PeriodU>){}, time_period(curtime, begin)), res);
+                    opt_insert<PeriodT>(func(*it1, (std::optional<PeriodU>){}, time_period(std::max(curtime, it1->begin()), begin_inter)), res);
                 }
-                if(it2->begin() < begin)
+                if(it2->begin() < begin_inter)
                 {
-                    opt_insert<PeriodT>(func((std::optional<PeriodT>){}, *it2, time_period(curtime, begin)), res);
+                    opt_insert<PeriodT>(func((std::optional<PeriodT>){}, *it2, time_period(std::max(curtime, it2->begin()), begin_inter)), res);
                 }
-                curtime = begin;
+                curtime = begin_inter;
             }
             //intersection
-            opt_insert<PeriodT>(func(*it1, *it2, time_period(begin, end)), res);
+            opt_insert<PeriodT>(func(*it1, *it2, time_period(begin_inter, end_inter)), res);
             //update curtime
-            curtime = end;
+            curtime = end_inter;
             //increase iterator accordingly
             if(curtime >= it1->end())
             {

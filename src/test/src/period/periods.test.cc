@@ -326,6 +326,26 @@ TEST(periods, get_diff)
     expRes = { time_period( bpt::ptime(d, bpt::hours(12)) , bpt::ptime(d, bpt::hours(13)) ) };
     diffRes = get_diff(mylist2, mylist1);
     ASSERT_EQ(diffRes, expRes);
+
+}
+TEST(periods, bug)
+{
+    bg::date d = bg::day_clock::local_day();
+    LTimePeriod mylist1 = { time_period( bpt::ptime(d, bpt::hours(3)) , bpt::ptime(d, bpt::hours(22)) )
+        , time_period( bpt::ptime(d + bg::date_duration(1), bpt::hours(4)) , bpt::ptime(d + bg::date_duration(10), bpt::hours(23)) ) };
+    LTimePeriod mylist2 = { time_period( bpt::ptime(d + bg::date_duration(1), bpt::hours(12)) , bpt::ptime(d + bg::date_duration(1), bpt::hours(13)) ) };
+    LTimePeriod expRes =  { time_period( bpt::ptime(d, bpt::hours(3)) , bpt::ptime(d, bpt::hours(22)) )
+        , time_period( bpt::ptime(d + bg::date_duration(1), bpt::hours(4)) , bpt::ptime(d + bg::date_duration(1), bpt::hours(12)) )
+        , time_period( bpt::ptime(d + bg::date_duration(1), bpt::hours(13)) , bpt::ptime(d + bg::date_duration(10), bpt::hours(23)) )};
+    LTimePeriod diffRes = get_diff(mylist1, mylist2);
+    ASSERT_EQ(diffRes, expRes);
+    ASSERT_EQ(get_diff(mylist2, mylist1), LTimePeriod());
+
+    ASSERT_EQ(get_union(mylist1, mylist2), mylist1);
+    ASSERT_EQ(get_union(mylist2, mylist1), mylist1);
+
+    ASSERT_EQ(get_inter(mylist1, mylist2), mylist2);
+    ASSERT_EQ(get_inter(mylist2, mylist1), mylist2);
 }
 
 TEST(periods, shortCuts)
