@@ -131,14 +131,14 @@ std::list<PeriodT> merge(std::list<PeriodT> const&periods1, std::list<PeriodU> c
             if(it1->end() <= it2->begin())
             {
                 curtime = std::max(curtime, it1->begin());
-                opt_insert<PeriodT>(func(*it1, (std::optional<PeriodU>){}, time_period(curtime, it1->end())), res);
+                opt_insert<PeriodT>(func(*it1, (std::optional<PeriodU>)std::nullopt, time_period(curtime, it1->end())), res);
                 curtime = it1->end();
                 ++it1;
             }
             else
             {
                 curtime = std::max(curtime, it2->begin());
-                opt_insert<PeriodT>(func((std::optional<PeriodT>){}, *it2, time_period(curtime, it2->end())), res);
+                opt_insert<PeriodT>(func((std::optional<PeriodT>)std::nullopt, *it2, time_period(curtime, it2->end())), res);
                 curtime = it2->end();
                 ++it2;
             }
@@ -153,11 +153,11 @@ std::list<PeriodT> merge(std::list<PeriodT> const&periods1, std::list<PeriodU> c
             {
                 if(it1->begin() < begin)
                 {
-                    opt_insert<PeriodT>(func(*it1, (std::optional<PeriodU>){}, time_period(curtime, begin)), res);
+                    opt_insert<PeriodT>(func(*it1, (std::optional<PeriodU>)std::nullopt, time_period(curtime, begin)), res);
                 }
                 if(it2->begin() < begin)
                 {
-                    opt_insert<PeriodT>(func((std::optional<PeriodT>){}, *it2, time_period(curtime, begin)), res);
+                    opt_insert<PeriodT>(func((std::optional<PeriodT>)std::nullopt, *it2, time_period(curtime, begin)), res);
                 }
                 curtime = begin;
             }
@@ -183,13 +183,13 @@ std::list<PeriodT> merge(std::list<PeriodT> const&periods1, std::list<PeriodU> c
         : curtime;
     while(it1 != periods1.end())
     {
-        opt_insert<PeriodT>(func(*it1, (std::optional<PeriodU>){}, time_period(std::max(curtime, it1->begin()), it1->end())), res);
+        opt_insert<PeriodT>(func(*it1, (std::optional<PeriodU>)std::nullopt, time_period(std::max(curtime, it1->begin()), it1->end())), res);
         curtime = it1->end();
         ++it1;
     }
     while(it2 != periods2.end())
     {
-        opt_insert<PeriodT>(func((std::optional<PeriodT>){}, *it2, time_period(std::max(curtime, it2->begin()), it2->end())), res);
+        opt_insert<PeriodT>(func((std::optional<PeriodT>)std::nullopt, *it2, time_period(std::max(curtime, it2->begin()), it2->end())), res);
         curtime = it2->end();
         ++it2;
     }

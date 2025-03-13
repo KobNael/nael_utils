@@ -5,6 +5,9 @@
 
 #include <nael_utils/json/json_handler.hh>
 
+#include <chrono>
+#include <thread>
+
 /**
  * Class test for filesystem helpers
  */
@@ -80,9 +83,14 @@ TEST_F(stream_io, export_import_file)
 {
     EXPECT_EQ(_context.vec_id_obj.size(), 2u);
     //Export
+    std::cerr << "export" << std::endl;
     json::export_to_file("export.json", _context);
+    std::cerr << "ok" << std::endl;
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
     //Reimport in a new contexts
+    std::cerr << "reimport" << std::endl;
     model_test::dto::BasicContextDto new_context, new_context2;
     json::import_from_file("export.json", new_context);
     json::import_from_file("export.json", new_context2);
