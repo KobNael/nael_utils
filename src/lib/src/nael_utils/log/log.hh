@@ -100,6 +100,12 @@ namespace io
      */
     void SetLogLevel(LogLevel level);
 
+    /*
+     * Forward declare of printRange.
+     */
+    template<typename Range>
+    std::ostream &printRange(std::ostream &os, Range const &range);
+
     /**
      * @brief Print an object in a stream
      * @tparam T the type of object
@@ -111,6 +117,19 @@ namespace io
     {
         return os << obj;
     }
+
+    /**
+     * @brief Print a range of object in a stream
+     * @tparam T the type of object
+     * @param os the ostream
+     * @param range the object
+     */
+    template <typename T>
+    std::ostream &print(std::ostream &os, const std::vector<T> &range)
+    {
+        return printRange(os, range);
+    }
+
     /**
      * @brief Print an object in a stream
      * @tparam T the type of object
@@ -154,18 +173,6 @@ namespace io
             first = false;
         }
         return os << "]";
-    }
-
-    /**
-     * @brief Print a range of object in a stream
-     * @tparam T the type of object
-     * @param os the ostream
-     * @param range the object
-     */
-    template <typename T>
-    std::ostream &print(std::ostream &os, const std::vector<T> &range)
-    {
-        return printRange(os, range);
     }
 
 } //namespace io
