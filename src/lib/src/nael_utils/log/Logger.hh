@@ -14,7 +14,7 @@ namespace io
 {
     /**
      * @enum LogLevel
-     * @brief Describe the verbosity of the logger
+     * @brief Describes the verbosity of the logger
      * @see Logger::setLogLevel
      * @see io::SetLogLevel()
      */
