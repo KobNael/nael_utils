@@ -19,110 +19,163 @@
 namespace io
 {
 
-/**
- * @class LoggerManager
- * @brief Store and give access to TeeLoggers
- */
-class LoggerManager
-{
-public:
     /**
-     * @brief Get or create a TeeLogger
-     * @param name name of the logger, empty string for default name
-     * @return A reference to the logger
+     * @class LoggerManager
+     * @brief Store and give access to TeeLoggers
      */
-    static TeeLogger &GetLogger(std::string_view name="");
+    class LoggerManager
+    {
+        public:
+        //TeeLoggers
+            /**
+             * @brief Get or create a TeeLogger
+             * @param name name of the logger, empty string for default name
+             * @return A reference to the logger
+             */
+            static TeeLogger &GetLogger(std::string_view name="");
+            /**
+             * @brief Clear a logger
+             * @param name name of the logger, empty string for default name
+             */
+            static void ClearLogger(std::string_view name="");
+            /**
+             * @brief Set the loglevel of a TeeLogger
+             * @param name name of the logger, empty string for default name
+             * @param level the log level
+             */
+            static void SetLogLevel(LogLevel level, std::string_view name="");
+            /**
+             * @brief Set the default verbosity
+             * @param level the verbosity
+             */
+            static void SetDefaultLogLevel(LogLevel level)
+            {
+                _log_level = level;
+            }
+            /**
+             * @brief Set the default name
+             * @param name name of the logger
+             */
+            static void SetDefaultName(std::string_view name)
+            {
+                _logfile_name = name;
+            }
+
+        private:
+            /** @brief static storage of the tee logger */
+            static std::unordered_map<std::string, TeeLogger, string_hash, std::equal_to<>> _tee_loggers;
+            /** @brief default log file name */
+            static std::string _logfile_name;
+            /** @brief default log level */
+            static LogLevel _log_level;
+
+        //FileLoggers
+        public:
+            /**
+             * @brief Get or create a FileLogger
+             * @param name name of the logger
+             * @return A reference to the logger
+             */
+            static FileLogger &GetFileLogger(std::string_view name);
+            /**
+             * @brief Clear a FileLogger
+             * @param name name of the logger
+             */
+            static void ClearFileLogger(std::string_view name);
+            /**
+             * @brief Set the loglevel of a FileLogger
+             * @param name name of the logger
+             * @param level the log level
+             */
+            static void SetFileLogLevel(LogLevel level, std::string_view name);
+
+        private:
+            /** @brief static storage of the file logger */
+            static std::unordered_map<std::string, FileLogger, string_hash, std::equal_to<>> _file_loggers;
+    };
+
     /**
-     * @brief Clear a looger
-     * @param name name of the logger, empty string for default name
-     */
-    static void ClearLogger(std::string_view name="");
-    /**
-     * @brief Set the loglevel of a TeeLogger
-     * @param name name of the logger, empty string for default name
+     * @brief Set the log level
      * @param level the log level
      */
-    static void SetLogLevel(LogLevel level, std::string_view name="");
-    /**
-     * @brief Set the default name
-     * @param name name of the logger
+    void SetLogLevel(LogLevel level);
+
+    /*
+     * Forward declare of printRange.
      */
-    static void SetDefaultName(std::string_view name)
+    template<typename Range>
+    std::ostream &printRange(std::ostream &os, Range const &range);
+
+    /**
+     * @brief Print an object in a stream
+     * @tparam T the type of object
+     * @param os the ostream
+     * @param obj the object
+     */
+    template<typename T>
+    std::ostream &print(std::ostream &os, T const &obj)
     {
-        _logfile_name = name;
+        return os << obj;
     }
 
-private:
-    /** @brief static storage of the logger */
-    static std::unordered_map<std::string, TeeLogger, string_hash, std::equal_to<>> _loggers;
-    /** @brief default log file name */
-    static std::string _logfile_name;
-};
-
-/**
- * @brief Set the log level
- * @param level the log level
- */
-void SetLogLevel(LogLevel level);
-
-/**
- * @brief Print an object in a stream
- * @tparam T the type of object
- * @param os the ostream
- * @param obj the object
- */
-template<typename T>
-std::ostream &print(std::ostream &os, T const &obj)
-{
-    return os << obj;
-}
-/**
- * @brief Print a pair of object in a stream
- * @tparam U the first type of object in the pair
- * @tparam V the second type of object in the pair
- * @param os the ostream
- * @param p the pair
- */
-template <typename U, typename V>
-std::ostream &print(std::ostream &os, const std::pair<U,V> &p)
-{
-	os << "(";
-	print(os, p.first) << ", ";
-	return print(os, p.second) << ")";
-}
-
-/**
- * @brief Print every object of a range in a stream
- * @tparam Range the type of range
- * @param os the ostream
- * @param range the range of object
- */
-template<typename Range>
-std::ostream &printRange(std::ostream &os, Range const &range)
-{
-    os << "[";
-    bool first{true};
-    for(auto obj : range)
+    /**
+     * @brief Print a range of object in a stream
+     * @tparam T the type of object
+     * @param os the ostream
+     * @param range the object
+     */
+    template <typename T>
+    std::ostream &print(std::ostream &os, const std::vector<T> &range)
     {
-        print(os << (first?"":","), obj);
-        first = false;
+        return printRange(os, range);
     }
-    return os << "]";
-}
 
-/**
- * @brief Print a range of object in a stream
- * @tparam T the type of object
- * @param os the ostream
- * @param range the object
- */
-template <typename T>
-std::ostream &print(std::ostream &os, const std::vector<T> &range)
-{
-	return printRange(os, range);
-}
+    /**
+     * @brief Print an object in a stream
+     * @tparam T the type of object
+     * @param os the ostream
+     * @param obj the object
+     */
+    template<typename T>
+    std::ostream &print(std::ostream &os, std::reference_wrapper<T> const &obj)
+    {
+        return print(os, obj.get());
+    }
+    /**
+     * @brief Print a pair of object in a stream
+     * @tparam U the first type of object in the pair
+     * @tparam V the second type of object in the pair
+     * @param os the ostream
+     * @param p the pair
+     */
+    template <typename U, typename V>
+    std::ostream &print(std::ostream &os, const std::pair<U,V> &p)
+    {
+        os << "(";
+        print(os, p.first) << ", ";
+        return print(os, p.second) << ")";
+    }
 
-}
+    /**
+     * @brief Print every object of a range in a stream
+     * @tparam Range the type of range
+     * @param os the ostream
+     * @param range the range of object
+     */
+    template<typename Range>
+    std::ostream &printRange(std::ostream &os, Range const &range)
+    {
+        os << "[";
+        bool first{true};
+        for(auto obj : range)
+        {
+            print(os << (first?"":","), obj);
+            first = false;
+        }
+        return os << "]";
+    }
+
+} //namespace io
 
 /**
  * @brief Execute the following instruction provided that a condition is satified
@@ -153,6 +206,11 @@ std::ostream &print(std::ostream &os, const std::vector<T> &range)
  */
 #define INFO(log) COND_STATEMENT(log.shouldLog(io::LogLevel::INFO)) log.getLog()
 /**
+ * @brief Log a message in a stream, provided that the log level is >= io::LogLevel::EXTENDED
+ * @param log the log
+ */
+#define EXTD(log) COND_STATEMENT(log.shouldLog(io::LogLevel::EXTENDED)) log.getLog()
+/**
  * @brief Log a message in a stream, provided that the log level is >= io::LogLevel::DEBUG
  * @param log the log
  */
@@ -174,6 +232,11 @@ std::ostream &print(std::ostream &os, const std::vector<T> &range)
  */
 #define INFOLOG INFO(io::LoggerManager::GetLogger())
 /**
+ * @brief Log a message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::EXTENDED
+ * @throw if the main io::TeeLogger has not been created
+ */
+#define EXTDLOG EXTD(io::LoggerManager::GetLogger())
+/**
  * @brief Log a message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::DEBUG
  * @throw if the main io::TeeLogger has not been created
  */
@@ -187,7 +250,7 @@ std::ostream &print(std::ostream &os, const std::vector<T> &range)
  */
 #define EROR_RANGE(log, header, range) \
     COND_STATEMENT(log.shouldLog(io::LogLevel::ERROR)) \
-        io.printRange(log.getLog() << header, range);
+        io::printRange(log.getLog() << header, range)
 /**
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::WARNING
  * @param log the log
@@ -196,7 +259,7 @@ std::ostream &print(std::ostream &os, const std::vector<T> &range)
  */
 #define WARN_RANGE(log, header, range) \
     COND_STATEMENT(log.shouldLog(io::LogLevel::WARNING)) \
-        io.printRange(log.getLog() << header, range);
+        io::printRange(log.getLog() << header, range)
 /**
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::INFO
  * @param log the log
@@ -205,7 +268,16 @@ std::ostream &print(std::ostream &os, const std::vector<T> &range)
  */
 #define INFO_RANGE(log, header, range) \
     COND_STATEMENT(log.shouldLog(io::LogLevel::INFO)) \
-        io.printRange(log.getLog() << header, range);
+        io::printRange(log.getLog() << header, range)
+/**
+ * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::EXTENDED
+ * @param log the log
+ * @param header the message
+ * @param range the range
+ */
+#define EXTD_RANGE(log, header, range) \
+    COND_STATEMENT(log.shouldLog(io::LogLevel::EXTENDED)) \
+        io::printRange(log.getLog() << header, range)
 /**
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::DEBUG
  * @param log the log
@@ -214,7 +286,7 @@ std::ostream &print(std::ostream &os, const std::vector<T> &range)
  */
 #define DBUG_RANGE(log, header, range) \
     COND_STATEMENT(log.shouldLog(io::LogLevel::DEBUG)) \
-        io.printRange(log.getLog() << header, range);
+        io::printRange(log.getLog() << header, range)
 
 /**
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::ERROR
@@ -238,6 +310,13 @@ std::ostream &print(std::ostream &os, const std::vector<T> &range)
  */
 #define INFOLOG_RANGE(header, range) INFO_RANGE(io::LoggerManager::GetLogger(), header, range)
 /**
+ * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::EXTENDED
+ * @param header the message
+ * @param range the range
+ * @throw if the main io::TeeLogger has not been created
+ */
+#define EXTDLOG_RANGE(header, range) EXTD_RANGE(io::LoggerManager::GetLogger(), header, range)
+/**
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::DEBUG
  * @param header the message
  * @param range the range
@@ -250,3 +329,9 @@ std::ostream &print(std::ostream &os, const std::vector<T> &range)
  * @param val the value
  */
 #define PRINT_PERCENTAGE(val) std::fixed << std::setprecision(2) << val << "%" << std::setprecision(-1)
+
+/**
+ * @brief print an enum value created with MAKE_DTO_ENUM as a string
+ * @param val the value
+ */
+#define PRINT_ENUM(val) boost::describe::enum_to_string(val, "unkown")

@@ -8,32 +8,30 @@
 namespace details
 {
 
-/**
- * @struct streamable
- * @brief Pure abstract structure, used as base class for struct declared using #MAKE_DTO_STRUCT
- */
-struct streamable
-{
     /**
-     * @brief Print the structure description in a stream
-     * @param os the stream
+     * @struct streamable
+     * @brief Pure abstract structure, used as base class for struct declared using #MAKE_DTO_STRUCT
      */
-    virtual std::ostream &stream(std::ostream &os) const = 0;
-
-    /**
-     * @brief Default Comparison operator
-     */
-    bool operator==(streamable const&) const = default;
-
-private:
-    /** @brief OStream operator for streamable structure */
-    friend std::ostream &operator<<(std::ostream &os, streamable const &obj)
+    struct streamable
     {
-        return obj.stream(os);
-    }
-};
+        public:
+            /**
+             * @brief Print the structure description in a stream
+             * @param os the stream
+             */
+            virtual std::ostream &stream(std::ostream &os) const = 0;
 
+            /**
+             * @brief Default Comparison operator
+             */
+            bool operator==(streamable const&) const = default;
+
+        private:
+            /** @brief OStream operator for streamable structure */
+            friend std::ostream &operator<<(std::ostream &os, streamable const &obj)
+            {
+                return obj.stream(os);
+            }
+    };
 
 }//details
-
-

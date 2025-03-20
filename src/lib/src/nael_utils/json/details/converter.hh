@@ -15,54 +15,51 @@
 namespace boost
 {
 
-namespace gregorian
-{
+    namespace gregorian
+    {
+        /**
+         * @brief convert a gregorian date to a json::value
+         * @param[out] jv the json::value
+         * @param d the date
+         */
+        void tag_invoke( const json::value_from_tag&, json::value& jv, date const& d );
 
-/**
- * @brief convert a gregorian date to a json::value
- * @param[out] jv the json::value
- * @param d the date
- */
-void tag_invoke( const json::value_from_tag&, json::value& jv, date const& d );
+        /**
+         * @brief convert json::value to a date
+         * @param jv the json::value
+         * @return the date
+         */
+        date tag_invoke( const json::value_to_tag< date >&, json::value const& jv );
+    }//gregorian
 
-/**
- * @brief convert json::value to a date
- * @param jv the json::value
- * @return the date
- */
-date tag_invoke( const json::value_to_tag< date >&, json::value const& jv );
+    namespace posix_time
+    {
+        /**
+         * @brief convert json::value to a time_duration
+         * @param jv the json::value
+         * @return the time_duration
+         */
+        time_duration tag_invoke( const json::value_to_tag< time_duration >&, json::value const& jv );
 
-}//gregorian
-namespace posix_time
-{
+        /**
+         * @brief convert json::value to a ptime
+         * @param jv the json::value
+         * @return the ptime
+         */
+        ptime tag_invoke( const json::value_to_tag< ptime >&, json::value const& jv );
 
-/**
- * @brief convert json::value to a time_duration
- * @param jv the json::value
- * @return the time_duration
- */
-time_duration tag_invoke( const json::value_to_tag< time_duration >&, json::value const& jv );
-
-/**
- * @brief convert json::value to a ptime
- * @param jv the json::value
- * @return the ptime
- */
-ptime tag_invoke( const json::value_to_tag< ptime >&, json::value const& jv );
-
-/**
- * @brief convert a time or duration to json value
- * @tparam time_ao_duration the time or duration type
- * @param[out] jv the json::value
- * @param td the json::value
- */
-template<typename time_ao_duration>
-void tag_invoke( const json::value_from_tag&, json::value& jv, time_ao_duration const& td )
-{
-    jv = { to_simple_string(td) };
-}
-
-}//posix_time
+        /**
+         * @brief convert a time or duration to json value
+         * @tparam time_ao_duration the time or duration type
+         * @param[out] jv the json::value
+         * @param td the json::value
+         */
+        template<typename time_ao_duration>
+        void tag_invoke( const json::value_from_tag&, json::value& jv, time_ao_duration const& td )
+        {
+            jv = { to_simple_string(td) };
+        }
+    }//posix_time
 
 }//boost
 
@@ -85,30 +82,30 @@ template<class T> void extract( boost::json::object const & obj, char const * na
 namespace dto
 {
 
-/**
- * @brief Convert a json value to an object T
- * @tparam T the type of object
- * @param v
- */
-template<class T,
-    class D1 = boost::describe::describe_members<T,
-        boost::describe::mod_public | boost::describe::mod_protected>,
-    class D2 = boost::describe::describe_members<T, boost::describe::mod_private>,
-    class En = std::enable_if_t<boost::mp11::mp_empty<D2>::value && !std::is_union<T>::value> >
+    /**
+     * @brief Convert a json value to an object T
+     * @tparam T the type of object
+     * @param v
+     */
+    template<class T,
+        class D1 = boost::describe::describe_members<T,
+            boost::describe::mod_public | boost::describe::mod_protected>,
+        class D2 = boost::describe::describe_members<T, boost::describe::mod_private>,
+        class En = std::enable_if_t<boost::mp11::mp_empty<D2>::value && !std::is_union<T>::value> >
 
     T tag_invoke( boost::json::value_to_tag<T> const&, boost::json::value const& v )
-{
-    auto const& obj = v.as_object();
+    {
+        auto const& obj = v.as_object();
 
-    T t{};
+        T t{};
 
-    boost::mp11::mp_for_each<D1>([&](auto D){
+        boost::mp11::mp_for_each<D1>([&](auto D){
 
-        extract( obj, D.name, t.*D.pointer );
+            extract( obj, D.name, t.*D.pointer );
 
-    });
+        });
 
-    return t;
-}
+        return t;
+    }
 
-}
+} //namespace dto

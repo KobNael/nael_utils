@@ -29,7 +29,9 @@ include (GNUInstallDirs)
 # External requirements setup
 # ----------------------------------------------------------------------------
 
-list (PREPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules)
+if( NOT ${PROJECT_NAME}_AS_SUBMODULE )
+    list (PREPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules)
+endif()
 list (PREPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 # library behaviour
@@ -132,4 +134,6 @@ add_subdirectory (src)
 # Documentation
 # ============================================================================
 
-add_subdirectory (docs)
+if( NOT ${PROJECT_NAME}_AS_SUBMODULE )
+    add_subdirectory (docs)
+endif()

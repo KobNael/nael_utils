@@ -12,7 +12,14 @@
 namespace bpt = boost::posix_time;
 namespace bg = boost::gregorian;
 
+/**
+ * @brief Constant equals to the number of seconds in a day
+ */
 #define N_SEC_IN_DAY 86400
+/**
+ * @brief Constant equals to the number of seconds in an hour
+ */
+#define N_SEC_IN_HOUR 3600
 
 /**
  * @brief Create an operator< based on a list of attributes.<br/>
@@ -271,4 +278,3 @@ public: \
 #define MAKE_CLASS_ATT( const_att_seq, editable_att_seq ) \
     MAKE_CLASS_BASIC_ATT( const_att_seq, 1 ) \
     MAKE_CLASS_BASIC_ATT( editable_att_seq, 0 )
-
