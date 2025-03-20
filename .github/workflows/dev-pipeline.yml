@@ -13,10 +13,12 @@ on:
 jobs:
   # Call pipeline
   cpp_pipeline:
-    uses: KobNael/nael_cpp_action/.github/workflows/cpp-workflow.yml@dev
+    uses: KobNael/nael_cpp_action/.github/workflows/cpp-workflow.yml@v1
     with:
-    #  CHECK_QUALITY_GATE: false
-      RUN_SONAR: false
+      WITH_COVERAGE: true
+      RUN_SONAR: true
+      CHECK_QUALITY_GATE: true
+      UPLOAD_ARTIFACT: false
     secrets:
       GH_PAT: "${{ secrets.GH_PAT }}"
       SONAR_TOKEN: "${{ secrets.SONAR_TOKEN }}"
