@@ -451,14 +451,14 @@ TEST(capa_period, conversion)
 
     //Difference
     ASSERT_EQ( get_diff( myCapaList, time_period( bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(13)) ) )
-            , (LCapaPeriod) {} );
+            , LCapaPeriod() );
     expCapaRes = { capa_period(10, bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
     ASSERT_EQ( get_diff( myCapaList, mylist )
             , expCapaRes );
     ASSERT_EQ( get_diff(
                 capa_period(10, bpt::ptime(d,bpt::hours(10)), bpt::ptime(d,bpt::hours(12)))
                 , time_period(bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(12))) )
-            , (LCapaPeriod) {} );
+            , LCapaPeriod() );
 
     //----------------
     // Capa => Period
@@ -496,14 +496,14 @@ TEST(capa_period, conversion)
 
     //Difference
     ASSERT_EQ( get_diff( mylist, capa_period(10, bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(13)) ) )
-            , (LTimePeriod) {} );
+            , LTimePeriod() );
     expRes = { time_period(bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
     ASSERT_EQ( get_diff( mylist, myCapaList )
             , expRes );
     ASSERT_EQ( get_diff(
                 time_period(bpt::ptime(d,bpt::hours(10)), bpt::ptime(d,bpt::hours(12)))
                 , capa_period(10, bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(12))) )
-            , (LTimePeriod) {} );
+            , LTimePeriod() );
 
 }
 
