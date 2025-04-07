@@ -101,10 +101,10 @@ namespace io
     void SetLogLevel(LogLevel level);
 
     /*
-     * Forward declare of printRange.
+     * Forward declare of print_range.
      */
     template<typename Range>
-    std::ostream &printRange(std::ostream &os, Range const &range);
+    std::ostream &print_range(std::ostream &os, Range const &range);
 
     /**
      * @brief Print an object in a stream
@@ -127,7 +127,7 @@ namespace io
     template <typename T>
     std::ostream &print(std::ostream &os, const std::vector<T> &range)
     {
-        return printRange(os, range);
+        return print_range(os, range);
     }
 
     /**
@@ -163,7 +163,7 @@ namespace io
      * @param range the range of object
      */
     template<typename Range>
-    std::ostream &printRange(std::ostream &os, Range const &range)
+    std::ostream &print_range(std::ostream &os, Range const &range)
     {
         os << "[";
         bool first{true};
@@ -250,7 +250,7 @@ namespace io
  */
 #define EROR_RANGE(log, header, range) \
     COND_STATEMENT(log.shouldLog(io::LogLevel::ERROR)) \
-        io::printRange(log.getLog() << header, range)
+        io::print_range(log.getLog() << header, range)
 /**
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::WARNING
  * @param log the log
@@ -259,7 +259,7 @@ namespace io
  */
 #define WARN_RANGE(log, header, range) \
     COND_STATEMENT(log.shouldLog(io::LogLevel::WARNING)) \
-        io::printRange(log.getLog() << header, range)
+        io::print_range(log.getLog() << header, range)
 /**
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::INFO
  * @param log the log
@@ -268,7 +268,7 @@ namespace io
  */
 #define INFO_RANGE(log, header, range) \
     COND_STATEMENT(log.shouldLog(io::LogLevel::INFO)) \
-        io::printRange(log.getLog() << header, range)
+        io::print_range(log.getLog() << header, range)
 /**
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::EXTENDED
  * @param log the log
@@ -277,7 +277,7 @@ namespace io
  */
 #define EXTD_RANGE(log, header, range) \
     COND_STATEMENT(log.shouldLog(io::LogLevel::EXTENDED)) \
-        io::printRange(log.getLog() << header, range)
+        io::print_range(log.getLog() << header, range)
 /**
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::DEBUG
  * @param log the log
@@ -286,7 +286,7 @@ namespace io
  */
 #define DBUG_RANGE(log, header, range) \
     COND_STATEMENT(log.shouldLog(io::LogLevel::DEBUG)) \
-        io::printRange(log.getLog() << header, range)
+        io::print_range(log.getLog() << header, range)
 
 /**
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::ERROR
