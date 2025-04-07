@@ -1,6 +1,7 @@
 /** @file */
 #include <optional>
 #include <nael_utils/period/period_functor.hh>
+#include <numeric>
 
 ///////////
 // Merge //
@@ -222,4 +223,16 @@ template<typename PeriodT, typename PeriodU>
 std::list<PeriodT> get_inter(std::list<PeriodT> const&periods1, std::list<PeriodU> const& periods2, bool merge_adjacent)
 {
     return merge<PeriodT, PeriodU, details::MakeInter>(periods1, periods2, merge_adjacent);
+}
+
+/* Compute the cumulative duration of a list of periods */
+template<typename PeriodT>
+boost::posix_time::time_duration get_total_duration(std::list<PeriodT> const &periods)
+{
+    return std::accumulate(
+            periods.begin(), periods.end(), boost::posix_time::time_duration(0,0,0),
+            [](boost::posix_time::time_duration duration, PeriodT const& period)
+            {
+                return duration + period.length();
+            } );
 }

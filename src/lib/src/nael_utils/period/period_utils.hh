@@ -212,5 +212,15 @@ std::list<PeriodT> get_inter(PeriodT const &period1, PeriodU const& period2, boo
     return get_inter(std::list<PeriodT>(1,period1), std::list<PeriodU>(1, period2), merge_adjacent);
 }
 
+/**
+ * @brief Compute the cumulative duration of a list of periods
+ * @tparam PeriodT the type of periods
+ * @param periods the periods of production
+ * @return the cumulative duration
+ */
+template<typename PeriodT>
+boost::posix_time::time_duration get_total_duration(std::list<PeriodT> const &periods);
+
+
 //Implementation
 #include <nael_utils/period/period_utils.tpp>
