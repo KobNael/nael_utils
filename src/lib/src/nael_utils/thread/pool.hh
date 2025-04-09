@@ -125,7 +125,7 @@ namespace thread
                     try{
                         (*j)();
                     }catch(const std::exception &e){
-                        //TODO
+                        //@todo
                     }
                 }
             }
