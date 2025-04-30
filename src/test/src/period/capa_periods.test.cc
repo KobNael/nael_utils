@@ -523,3 +523,34 @@ TEST(capa_periods, conversion)
 
 }
 
+TEST(capa_periods, get_eligible_periods)
+{
+    bg::date d = bg::day_clock::local_day();
+    LCapaPeriod mylist = {
+          capa_period(10, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)))
+        , capa_period(20, bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11)))
+        , capa_period(30, bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
+
+    LTimePeriod expRes = {
+        time_period(bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)))
+        , time_period(bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11)))
+        , time_period(bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
+
+    EXPECT_EQ( get_eligible_periods(mylist, 1), expRes );
+    EXPECT_EQ( get_eligible_periods(mylist, 10), expRes );
+
+    expRes = {
+        time_period(bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11)))
+        , time_period(bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
+    EXPECT_EQ( get_eligible_periods(mylist, 11), expRes );
+    EXPECT_EQ( get_eligible_periods(mylist, 19), expRes );
+    EXPECT_EQ( get_eligible_periods(mylist, 20), expRes );
+
+    expRes = { time_period(bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
+    EXPECT_EQ( get_eligible_periods(mylist, 21), expRes );
+    EXPECT_EQ( get_eligible_periods(mylist, 29), expRes );
+    EXPECT_EQ( get_eligible_periods(mylist, 30), expRes );
+
+    EXPECT_EQ( get_eligible_periods(mylist, 31), LTimePeriod() );
+    EXPECT_EQ( get_eligible_periods(mylist, 99), LTimePeriod() );
+}

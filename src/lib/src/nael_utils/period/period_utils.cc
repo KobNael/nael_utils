@@ -1,4 +1,5 @@
 #include <nael_utils/period/period_utils.hh>
+#include <algorithm>
 
 /**
  * @brief check that two time_period can be merged
@@ -46,4 +47,20 @@ capa_period merge(capa_period const&cp1, capa_period const &cp2)
 {
     assert(can_merge(cp1, cp2));
     return capa_period(cp1._capa, cp1._period.span( cp2._period ));
+}
+
+// Collect the capa_period with enough capacity and return them as time_period
+LTimePeriod get_eligible_periods(LCapaPeriod const &periods, unsigned min)
+{
+    LTimePeriod result;
+    std::for_each(
+        periods.cbegin(), periods.cend(),
+        [min, &result](capa_period const &cp)
+        {
+            if(cp._capa >= min)
+            {
+                result.push_back(cp._period);
+            }
+        });
+    return result;
 }

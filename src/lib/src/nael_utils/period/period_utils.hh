@@ -221,6 +221,13 @@ std::list<PeriodT> get_inter(PeriodT const &period1, PeriodU const& period2, boo
 template<typename PeriodT>
 boost::posix_time::time_duration get_total_duration(std::list<PeriodT> const &periods);
 
+/**
+ * @brief Collect the capa_period with enough capacity and return them as time_period
+ * @param periods the list of capa_periods
+ * @param min the minimal capacity
+ * @return the corresponding time_periods
+ */
+LTimePeriod get_eligible_periods(LCapaPeriod const &periods, unsigned min);
 
 //Implementation
 #include <nael_utils/period/period_utils.tpp>
