@@ -73,7 +73,7 @@ struct capa_period
         /** @return the period duration */
         boost::posix_time::time_duration length() const { return _period.length(); }
         /** @brief Add duration to both begin and end. */
-        void shift(boost::posix_time::time_duration const &d) { return _period.shift(d); }
+        void shift(boost::posix_time::time_duration const &d) { _period.shift(d); }
         /** @return true if the time_period intersects another time_period */
         bool intersect(capa_period const &cp) const { return _period.intersects(cp._period); }
         /** @return true if the time_period contains a ptime */
