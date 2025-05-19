@@ -43,8 +43,7 @@ protected:
         ASSERT_EQ(_context, c2);
         //Check vector elements
         std::vector<std::string> new_ids, ref_ids{"idA", "idB"};
-        std::transform(
-            c1.vec_id_obj.begin(), c1.vec_id_obj.end(),
+        std::ranges::transform(c1.vec_id_obj,
             std::back_inserter(new_ids),
             [](auto&& obj) { return obj.id_att; });
         ASSERT_EQ(new_ids, ref_ids);
