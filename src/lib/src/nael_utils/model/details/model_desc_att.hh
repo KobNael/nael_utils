@@ -196,6 +196,9 @@
         type const& BOOST_PP_CAT(get_, name)() const { return BOOST_PP_CAT(_, name).get();} \
         BOOST_PP_IF(is_const, , \
             type & BOOST_PP_CAT(get_, name)() { return BOOST_PP_CAT(_, name.get());} \
+        ) \
+        BOOST_PP_IF(is_const, , \
+            void BOOST_PP_CAT(set_, name)(type &obj ) { BOOST_PP_CAT(_, name) = std::ref(obj);} \
         )
 
 
