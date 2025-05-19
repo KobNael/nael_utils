@@ -49,4 +49,16 @@ namespace io
         GetFileLogger(name).setLogLevel(level);
     }
 
+    void LoggerManager::ClearAllLoggers()
+    {
+        for(auto const &[name, log] : _tee_loggers)
+        {
+            ClearLogger(name);
+        }
+        for(auto const &[name, log] : _file_loggers)
+        {
+            ClearFileLogger(name);
+        }
+    }
+
 }
