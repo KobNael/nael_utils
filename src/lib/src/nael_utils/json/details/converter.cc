@@ -23,7 +23,7 @@ namespace boost
          */
         date tag_invoke( const json::value_to_tag< date >&, json::value const& jv )
         {
-            date d =  from_string(boost::json::value_to<std::string>(jv));
+            date d =  date_from_iso_string(boost::json::value_to<std::string>(jv));
             return d;
         }
     }//gregorian
@@ -47,7 +47,7 @@ namespace boost
          */
         ptime tag_invoke( const json::value_to_tag< ptime >&, json::value const& jv )
         {
-            return time_from_string(boost::json::value_to<std::string>(jv));
+            return from_iso_extended_string(boost::json::value_to<std::string>(jv));
         }
     }//posix_time
 

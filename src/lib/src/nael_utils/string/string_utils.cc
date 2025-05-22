@@ -1,6 +1,8 @@
 #include <nael_utils/string/string_utils.hh>
 
-#include <boost/date_time/gregorian/gregorian.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/date_time/posix_time/posix_time_duration.hpp>
+#include <boost/date_time/gregorian/gregorian_types.hpp>
 #include <string_view>
 #include <ranges>
 
@@ -58,7 +60,13 @@ namespace str
     template<>
     bg::date get_val_from_str<bg::date>(const std::string &str_val)
     {
-        return bg::from_string(str_val);
+        return bg::date_from_iso_string(str_val);
+    }
+
+    template<>
+    bpt::ptime get_val_from_str<bpt::ptime>(const std::string &str_val)
+    {
+        return bpt::from_iso_extended_string(str_val);
     }
 
 }//namespace str

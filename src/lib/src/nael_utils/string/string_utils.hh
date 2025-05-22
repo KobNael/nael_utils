@@ -8,9 +8,11 @@
 #include <nael_utils/exception/exception.hh>
 #include <boost/lexical_cast.hpp>
 #include <boost/date_time/gregorian/gregorian_types.hpp>
+#include <boost/date_time/posix_time/posix_time_types.hpp>
 #include <string>
 
 namespace bg = boost::gregorian;
+namespace bpt = boost::posix_time;
 
 namespace str
 {
@@ -44,6 +46,13 @@ namespace str
      */
     template<>
     bg::date get_val_from_str<bg::date>(const std::string &str_val);
+    /**
+     * @brief Read a value from a string (using boost::lexical_cast)
+     * @return the value
+     * @throw bad_lexical_cast if the value can not be parsed
+     */
+    template<>
+    bpt::ptime get_val_from_str<bpt::ptime>(const std::string &str_val);
 
     /**
      * @brief Trim a string from both ends
