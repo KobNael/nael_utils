@@ -35,6 +35,12 @@ namespace boost
     namespace posix_time
     {
         /**
+         * @brief convert a time_duration to json value
+         * @param[out] jv the json::value
+         * @param td the time_duration
+         */
+        void tag_invoke( const json::value_from_tag&, json::value& jv, time_duration const& td );
+        /**
          * @brief convert json::value to a time_duration
          * @param jv the json::value
          * @return the time_duration
@@ -42,23 +48,18 @@ namespace boost
         time_duration tag_invoke( const json::value_to_tag< time_duration >&, json::value const& jv );
 
         /**
+         * @brief convert a ptime to json value
+         * @param[out] jv the json::value
+         * @param pt the ptime
+         */
+        void tag_invoke( const json::value_from_tag&, json::value& jv, ptime const& pt );
+        /**
          * @brief convert json::value to a ptime
          * @param jv the json::value
          * @return the ptime
          */
         ptime tag_invoke( const json::value_to_tag< ptime >&, json::value const& jv );
 
-        /**
-         * @brief convert a time or duration to json value
-         * @tparam time_ao_duration the time or duration type
-         * @param[out] jv the json::value
-         * @param td the json::value
-         */
-        template<typename time_ao_duration>
-        void tag_invoke( const json::value_from_tag&, json::value& jv, time_ao_duration const& td )
-        {
-            jv = { to_simple_string(td) };
-        }
     }//posix_time
 
 }//boost
