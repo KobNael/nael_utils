@@ -186,23 +186,6 @@ TEST_F(file_logger, debug_lvl)
     EXPECT_TRUE(check_nb_line("DBUGLOG_print", log_content, 1));
     EXPECT_TRUE(check_nb_line("_print", log_content, 4));
 }
-TEST_F(file_logger, default_level)
-{
-    //do not set log level
-    //Send the content
-    EROR(get_logger()) << "ERORLOG_print" << std::endl;
-    WARN(get_logger()) << "WARNLOG_print" << std::endl;
-    INFO(get_logger()) << "INFOLOG_print" << std::endl;
-    DBUG(get_logger()) << "DBUGLOG_print" << std::endl;
-    //get log file content
-    std::string log_content = get_log_content();
-    //Test file
-    EXPECT_TRUE(check_nb_line("ERORLOG_print", log_content, 1));
-    EXPECT_TRUE(check_nb_line("WARNLOG_print", log_content, 1));
-    EXPECT_TRUE(check_nb_line("INFOLOG_print", log_content, 1));
-    EXPECT_TRUE(check_nb_line("DBUGLOG_print", log_content, 0));
-    EXPECT_TRUE(check_nb_line("_print", log_content, 3));
-}
 
 /**
  * TeeLogger usage
@@ -402,32 +385,4 @@ TEST_F(tee_logger, debug_lvl)
     EXPECT_TRUE(check_nb_line("EXTDLOG_print", cout_content, 1));
     EXPECT_TRUE(check_nb_line("DBUGLOG_print", cout_content, 1));
     EXPECT_TRUE(check_nb_line("_print", cout_content, 5));
-}
-TEST_F(tee_logger, default_level)
-{
-    //do not set log level
-    //Send the content
-    ERORLOG << "ERORLOG_print" << std::endl;
-    WARNLOG << "WARNLOG_print" << std::endl;
-    INFOLOG << "INFOLOG_print" << std::endl;
-    EXTDLOG << "EXTDLOG_print" << std::endl;
-    DBUGLOG << "DBUGLOG_print" << std::endl;
-    //stops capturing stdout and returns the captured string
-    std::string cout_content = get_cout();
-    //get log file content
-    std::string log_content = get_log_content();
-    //Test file
-    EXPECT_TRUE(check_nb_line("ERORLOG_print", log_content, 1));
-    EXPECT_TRUE(check_nb_line("WARNLOG_print", log_content, 1));
-    EXPECT_TRUE(check_nb_line("INFOLOG_print", log_content, 1));
-    EXPECT_TRUE(check_nb_line("EXTDLOG_print", log_content, 0));
-    EXPECT_TRUE(check_nb_line("DBUGLOG_print", log_content, 0));
-    EXPECT_TRUE(check_nb_line("_print", log_content, 3));
-    //Test console
-    EXPECT_TRUE(check_nb_line("ERORLOG_print", cout_content, 1));
-    EXPECT_TRUE(check_nb_line("WARNLOG_print", cout_content, 1));
-    EXPECT_TRUE(check_nb_line("INFOLOG_print", cout_content, 1));
-    EXPECT_TRUE(check_nb_line("EXTDLOG_print", cout_content, 0));
-    EXPECT_TRUE(check_nb_line("DBUGLOG_print", cout_content, 0));
-    EXPECT_TRUE(check_nb_line("_print", cout_content, 3));
 }
