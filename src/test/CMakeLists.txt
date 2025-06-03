@@ -5,6 +5,7 @@ find_package (Boost REQUIRED)
 
 target_sources (unit_tests
     PRIVATE
+    src/Utils_TestEnvironment.cc
     #--------
     # utils
     #--------

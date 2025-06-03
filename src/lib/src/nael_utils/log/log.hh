@@ -94,7 +94,7 @@ namespace io
             /**
              * @brief Clear every logger (file or tee)
              */
-            void ClearAllLoggers();
+            static void ClearAllLoggers();
         private:
             /** @brief static storage of the file logger */
             static std::unordered_map<std::string, FileLogger, string_hash, std::equal_to<>> _file_loggers;
