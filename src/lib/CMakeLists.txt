@@ -11,7 +11,7 @@ find_package (Boost REQUIRED)
 # Targets configuration
 # ============================================================================
 
-configure_file (${CMAKE_SOURCE_DIR}/cmake-modules/nael_version.hh.in ${CMAKE_CURRENT_BINARY_DIR}/nael_utils_version.hh)
+configure_file (${nael_utils_SOURCE_DIR}/cmake-modules/nael_version.hh.in ${CMAKE_CURRENT_BINARY_DIR}/nael_utils_version.hh)
 
 # ----------------------------------------------------------------------------
 # library configuration
