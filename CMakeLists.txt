@@ -9,10 +9,10 @@ cmake_minimum_required (VERSION 3.26)
 # ============================================================================
 
 project (nael_utils
-	VERSION 1.1.0
+	VERSION 1.2.0
 	LANGUAGES CXX)
 
-option (${PROJECT_NAME}_AS_SUBMODULE "enable cppcheck" ON)
+option (${PROJECT_NAME}_AS_SUBMODULE "treat as submodule" ON)
 
 # ============================================================================
 # External requirements
@@ -29,7 +29,9 @@ include (GNUInstallDirs)
 # External requirements setup
 # ----------------------------------------------------------------------------
 
-list (PREPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules)
+if( NOT ${PROJECT_NAME}_AS_SUBMODULE )
+    list (PREPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules)
+endif()
 list (PREPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 # library behaviour
@@ -48,8 +50,8 @@ set (CMAKE_CXX_STANDARD 20)
 set (CMAKE_CXX_STANDARD_REQUIRED ON)
 set (CMAKE_CXX_EXTENSIONS OFF)
 
-if( NOT ${PROJECT_NAME}_AS_SUBMODULE )
-    set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
+if( NOT ${PROJECT_NAME}_AS_SUBMODULE AND NOT MSVC)
     set (data_base_path ${CMAKE_SOURCE_DIR}/compilation-databases/${CMAKE_BUILD_TYPE})
     file (MAKE_DIRECTORY "${data_base_path}")
     add_custom_target(
@@ -132,4 +134,6 @@ add_subdirectory (src)
 # Documentation
 # ============================================================================
 
-add_subdirectory (docs)
+if( NOT ${PROJECT_NAME}_AS_SUBMODULE )
+    add_subdirectory (docs)
+endif()

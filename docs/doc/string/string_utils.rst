@@ -3,4 +3,4 @@
 String utilities
 ===================
 
-.. doxygenfile:: string_utils.hh
+.. doxygennamespace:: str

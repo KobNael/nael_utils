@@ -1,9 +1,6 @@
 #pragma once
 #include <nael_utils/model/model_desc.hh>
 
-namespace bg = boost::gregorian;
-namespace bpt = boost::posix_time;
-
 //----------------------------------
 // Small but quite exhaustive dto
 //----------------------------------

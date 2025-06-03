@@ -5,6 +5,9 @@
 
 #include <nael_utils/json/json_handler.hh>
 
+#include <chrono>
+#include <thread>
+
 /**
  * Class test for filesystem helpers
  */
@@ -40,8 +43,7 @@ protected:
         ASSERT_EQ(_context, c2);
         //Check vector elements
         std::vector<std::string> new_ids, ref_ids{"idA", "idB"};
-        std::transform(
-            c1.vec_id_obj.begin(), c1.vec_id_obj.end(),
+        std::ranges::transform(c1.vec_id_obj,
             std::back_inserter(new_ids),
             [](auto&& obj) { return obj.id_att; });
         ASSERT_EQ(new_ids, ref_ids);
@@ -81,6 +83,8 @@ TEST_F(stream_io, export_import_file)
     EXPECT_EQ(_context.vec_id_obj.size(), 2u);
     //Export
     json::export_to_file("export.json", _context);
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
     //Reimport in a new contexts
     model_test::dto::BasicContextDto new_context, new_context2;

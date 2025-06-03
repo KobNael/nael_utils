@@ -13,5 +13,13 @@ on:
 jobs:
   # Call pipeline
   cpp_pipeline:
-    uses: KobNael/nael_cpp_action/.github/workflows/cpp-workflow.yml@dev
-    secrets: inherit
+    uses: KobNael/nael_cpp_action/.github/workflows/cpp-workflow.yml@v1
+    with:
+      WITH_COVERAGE: true
+      RUN_SONAR: true
+      CHECK_QUALITY_GATE: true
+      UPLOAD_ARTIFACT: false
+    secrets:
+      GH_PAT: "${{ secrets.GH_PAT }}"
+      SONAR_TOKEN: "${{ secrets.SONAR_TOKEN }}"
+      SONAR_HOST_URL: "${{ secrets.SONAR_HOST_URL }}"
