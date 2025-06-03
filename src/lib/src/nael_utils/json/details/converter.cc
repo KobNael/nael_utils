@@ -55,7 +55,7 @@ namespace boost
         /**
          * @brief convert a gregorian date to a json::value
          * @param[out] jv the json::value
-         * @param d the date
+         * @param pt the ptime
          */
         void tag_invoke( const json::value_from_tag&, json::value& jv, ptime const& pt )
         {

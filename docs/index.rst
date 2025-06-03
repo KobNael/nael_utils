@@ -26,5 +26,6 @@ This library regroup some usefull tools for c++ applications :
    doc/sort/lexical_sort
    doc/period/period
    doc/thread_pool/thread_pool
+   doc/cmake-modules/cmake-modules
 
 

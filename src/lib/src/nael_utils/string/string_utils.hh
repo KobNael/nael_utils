@@ -1,5 +1,5 @@
 /**
- * @file string_utils
+ * @file string_utils.hh
  * @brief Contains some tools for string manipulation
  */
 
