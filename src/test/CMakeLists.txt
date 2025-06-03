@@ -1,8 +1,11 @@
 
 include (unit_tests)
 
+find_package (Boost REQUIRED)
+
 target_sources (unit_tests
     PRIVATE
+    src/Utils_TestEnvironment.cc
     #--------
     # utils
     #--------
@@ -36,6 +39,8 @@ target_sources (unit_tests
 target_link_libraries (unit_tests
     PRIVATE
         nael_utils
+		Boost::boost
+		Boost::json
         GTest::gtest_main
     )
 
