@@ -6,21 +6,27 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'Utils'
+import os
+import sys
+sys.path.insert(0, os.path.abspath('.'))
+
+project = 'Utils @PROJECT_VERSION@'
 copyright = '2024, Aurélien Questel'
 author = 'Aurélien Questel'
-release = '1.1.0'
+release = '@PROJECT_VERSION@'
+primary_domain = 'cmake'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
     'sphinx.ext.autodoc',
+    'sphinxcontrib.moderncmakedomain',
     'breathe'
 ]
 
 exclude_patterns = []
-source_suffix = ['.rst', '.md']
+source_suffix = ['.rst', '.md', '.cmake']
 
 
 # -- Options for HTML output -------------------------------------------------
