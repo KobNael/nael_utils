@@ -2,6 +2,7 @@
 /**
  * @brief Create a new type of numerical identifier
  * @param class_name the name of the class
+ * @warning avoid to use this tool inside a namespace
  *
  * Example:
  * @code{cpp}
