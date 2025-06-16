@@ -278,3 +278,16 @@ public: \
 #define MAKE_CLASS_ATT( const_att_seq, editable_att_seq ) \
     MAKE_CLASS_BASIC_ATT( const_att_seq, 1 ) \
     MAKE_CLASS_BASIC_ATT( editable_att_seq, 0 )
+
+
+#define MAKE_ATT( att_desc ) \
+private: MAKE_CLASS_ATT_DECL_VARIABLE(,,att_desc) \
+public: \
+MAKE_ATT_GETTER_VARIABLE(,0,att_desc)\
+MAKE_ATT_GETTER_VARIABLE(,1,att_desc)\
+MAKE_ATT_SETTER_VARIABLE(,,att_desc)
+
+#define MAKE_CONST_ATT( att_desc ) \
+private: MAKE_CLASS_ATT_DECL_VARIABLE(,,att_desc) \
+public: \
+MAKE_ATT_GETTER_VARIABLE(,1,att_desc)
