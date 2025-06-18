@@ -116,6 +116,16 @@ namespace thread
                 }
             }
 
+            size_t get_pool_size() const
+            {
+                return _workers.size();
+            }
+
+            size_t get_queue_size() const
+            {
+                return _queue.size();
+            }
+
         private:
             /** @brief Worker implementation */
             static void worker(Pool& p)
@@ -144,7 +154,7 @@ namespace thread
                 for(size_t i(0); i<nworkers; ++i)
                 {
                     _workers.push_back(
-                    std::thread( std::bind(worker, std::ref(*this) ) )
+                        std::thread( std::bind(worker, std::ref(*this) ) )
                     );
                 }
             }
