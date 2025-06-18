@@ -124,6 +124,57 @@ public: \
 #define MAKE_DTO_ENUM BOOST_DEFINE_ENUM
 
 /**
+ * @brief Generate the declaration and every set / get for basic attribute
+ * @code{cpp}
+ *     MAKE_ATT( (std::string)(id)("default") )
+ *     MAKE_ATT( (float)(contribution) )
+ * @endcode
+ *   expands to
+ * @code{cpp}
+ *   private:
+ *       std::string _id={"default"};
+ *   public:
+ *       std::string const &get_id() const { return _id; }
+ *       std::string &get_id() { return _id; }
+ *       void set_id(std::string const &val) { _id = val; }
+ *   private:
+ *       float _contribution;
+ *   public:
+ *       float &get_contribution() { return _contribution; }
+ *       float const &get_contribution() const { return _contribution; }
+ *       void set_contribution(float const &val) { _contribution = val; }
+ * @endcode
+ * @param att_desc sequence describing the attribute : (type)(name)[(default_value)]
+ */
+#define MAKE_ATT( att_desc ) \
+private: MAKE_CLASS_ATT_DECL_VARIABLE(,,att_desc) \
+public: \
+MAKE_ATT_GETTER_VARIABLE(,0,att_desc)\
+MAKE_ATT_GETTER_VARIABLE(,1,att_desc)\
+MAKE_ATT_SETTER_VARIABLE(,,att_desc)
+
+/**
+ * @brief Generate the declaration and every get for basic non modifiable attribute
+ * @code{cpp}
+ *     MAKE_CONST_ATT( (std::vector<std::string>)(ids) )
+ * @endcode
+ *   expands to
+ * @code{cpp}
+ *   private:
+ *       std::vector<std::string> _ids;
+ *   public:
+ *       std::vector<std::string> const &get_ids() const { return _ids; }
+ * @endcode
+ * @param att_desc sequence describing the attribute : (type)(name)
+ */
+
+#define MAKE_CONST_ATT( att_desc ) \
+private: MAKE_CLASS_ATT_DECL_VARIABLE(,,att_desc) \
+public: \
+MAKE_ATT_GETTER_VARIABLE(,1,att_desc)
+
+
+/**
  * @brief Generate an editable attribute std::map<key, value> _name along with its getters
  * @code{cpp}
  *     MAKE_MAP(std::string, int, values)
@@ -280,14 +331,3 @@ public: \
     MAKE_CLASS_BASIC_ATT( editable_att_seq, 0 )
 
 
-#define MAKE_ATT( att_desc ) \
-private: MAKE_CLASS_ATT_DECL_VARIABLE(,,att_desc) \
-public: \
-MAKE_ATT_GETTER_VARIABLE(,0,att_desc)\
-MAKE_ATT_GETTER_VARIABLE(,1,att_desc)\
-MAKE_ATT_SETTER_VARIABLE(,,att_desc)
-
-#define MAKE_CONST_ATT( att_desc ) \
-private: MAKE_CLASS_ATT_DECL_VARIABLE(,,att_desc) \
-public: \
-MAKE_ATT_GETTER_VARIABLE(,1,att_desc)
