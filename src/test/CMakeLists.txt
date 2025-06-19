@@ -1,11 +1,12 @@
 
-include (unit_tests)
+if(NOT nael_utils_AS_SUBMODULE)
+    include (unit_tests)
+endif()
 
 find_package (Boost REQUIRED)
 
 target_sources (unit_tests
     PRIVATE
-    src/Utils_TestEnvironment.cc
     #--------
     # utils
     #--------
@@ -37,6 +38,13 @@ target_sources (unit_tests
     src/test_data/test_data_model.cc
     )
 
+if (NOT nael_utils_AS_SUBMODULE AND nael_utils_WITH_COVERAGE)
+    target_sources (unit_tests
+        PRIVATE
+        src/Utils_TestEnvironment.cc)
+endif ()
+
+
 target_link_libraries (unit_tests
     PRIVATE
         nael_utils
@@ -53,11 +61,11 @@ target_include_directories (unit_tests
 # ----------------------------------------------------------------------------
 # run_unit_tests
 # ----------------------------------------------------------------------------
-if (NOT ${PROJECT_NAME}_AS_SUBMODULE AND ${PROJECT_NAME}_WITH_COVERAGE)
+if (NOT nael_utils_AS_SUBMODULE AND nael_utils_WITH_COVERAGE)
     generate_coverage_report (TARGET run_unit_tests)
 endif ()
 
-if (NOT ${PROJECT_NAME}_AS_SUBMODULE AND ${PROJECT_NAME}_WITH_VALGRIND)
+if (NOT nael_utils_AS_SUBMODULE AND nael_utils_WITH_VALGRIND)
     enable_memcheck (TARGET unit_tests)
 endif ()
 
