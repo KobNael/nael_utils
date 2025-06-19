@@ -171,7 +171,7 @@ struct ratio_period: public extended_period
         ~ratio_period() override = default;
 
         /** @brief the ratio */
-        long long _ratio;
+        float _ratio;
 
         /** @brief equality operator */
         bool operator==(ratio_period const &cp) const = default;

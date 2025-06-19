@@ -21,6 +21,7 @@ target_sources (unit_tests
     # period utils
     src/period/capa_periods.test.cc
     src/period/periods.test.cc
+    src/period/ratio_periods.test.cc
     # safe_comp utils
     src/safe_comp/safe_comp.test.cc
     # sort utils
