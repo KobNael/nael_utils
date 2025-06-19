@@ -12,7 +12,7 @@ namespace details
     // struct MakeUnion
     //------------------
     //Compute the union between two optional periods on a given period
-    time_period MakeUnion::operator()(std::optional<time_period> const&p1, std::optional<time_period> const&p2, time_period const &period) const
+    time_period MakeUnion::operator()(std::optional<time_period> const &p1, std::optional<time_period> const &p2, time_period const &period) const
     {
         (void)p1;
         (void)p2;
@@ -21,7 +21,7 @@ namespace details
         return period;
     }
     // Compute the union between two optional capa_periods on a given period
-    std::optional<capa_period> MakeUnion::operator()(std::optional<capa_period> const&p1, std::optional<capa_period> const&p2, time_period const &period) const
+    std::optional<capa_period> MakeUnion::operator()(std::optional<capa_period> const &p1, std::optional<capa_period> const &p2, time_period const &period) const
     {
         //compute the capacity
         if(long capa( (p1?p1->_capa:0)+(p2?p2->_capa:0) ); 0 != capa)
@@ -31,7 +31,7 @@ namespace details
         return {};
     }
     // Compute the union between an optional time_period and an optional capa_period on a given period
-    std::optional<time_period> MakeUnion::operator()(std::optional<time_period> const&p1, std::optional<capa_period> const&p2, time_period const &period) const
+    std::optional<time_period> MakeUnion::operator()(std::optional<time_period> const &p1, std::optional<capa_period> const &p2, time_period const &period) const
     {
         return operator()(p1, p2?p2->_period:std::optional<time_period>({}), period);
     }
@@ -40,7 +40,7 @@ namespace details
     // struct MakeDiff
     //------------------
     // Compute the difference between two optional periods on a given period
-    std::optional<time_period> MakeDiff::operator()(std::optional<time_period> const&p1, std::optional<time_period> const&p2, time_period const &period) const
+    std::optional<time_period> MakeDiff::operator()(std::optional<time_period> const &p1, std::optional<time_period> const &p2, time_period const &period) const
     {
         //if !p1 or both periods return nothing
         if(!p1 || p2)
@@ -54,7 +54,7 @@ namespace details
         }
     }
     // Compute the difference between two optional capa_periods on a given period
-    std::optional<capa_period> MakeDiff::operator()(std::optional<capa_period> const&p1, std::optional<capa_period> const&p2, time_period const &period) const
+    std::optional<capa_period> MakeDiff::operator()(std::optional<capa_period> const &p1, std::optional<capa_period> const &p2, time_period const &period) const
     {
         //compute the remaining capacity
         if(long capa( (p1?p1->_capa:0)-(p2?p2->_capa:0) ); 0 != capa)
@@ -64,12 +64,12 @@ namespace details
         return {};
     }
     // Compute the difference between an optional time_period and an optional capa_period on a given period
-    std::optional<time_period> MakeDiff::operator()(std::optional<time_period> const&p1, std::optional<capa_period> const&p2, time_period const &period) const
+    std::optional<time_period> MakeDiff::operator()(std::optional<time_period> const &p1, std::optional<capa_period> const &p2, time_period const &period) const
     {
         return operator()(p1, p2?p2->_period:std::optional<time_period>({}), period);
     }
     // Compute the difference between an optional capa_period and an optional time_period on a given period
-    std::optional<capa_period> MakeDiff::operator()(std::optional<capa_period> const&p1, std::optional<time_period> const&p2, time_period const &period) const
+    std::optional<capa_period> MakeDiff::operator()(std::optional<capa_period> const &p1, std::optional<time_period> const &p2, time_period const &period) const
     {
         //get the capacity of p1
         long capa ( (p1?p1->_capa:0) );
@@ -80,7 +80,7 @@ namespace details
     // struct MakeInter
     //------------------
     // Compute the intersection between two optional periods on a given period
-    std::optional<time_period> MakeInter::operator()(std::optional<time_period> const&p1, std::optional<time_period> const&p2, time_period const &period) const
+    std::optional<time_period> MakeInter::operator()(std::optional<time_period> const &p1, std::optional<time_period> const &p2, time_period const &period) const
     {
         //if only p1 or p2, return nothing
         if(!p1 || !p2)
@@ -94,7 +94,7 @@ namespace details
         }
     }
     // Compute the intersection between two optional capa_periods on a given period
-    std::optional<capa_period> MakeInter::operator()(std::optional<capa_period> const&p1, std::optional<capa_period> const&p2, time_period const &period) const
+    std::optional<capa_period> MakeInter::operator()(std::optional<capa_period> const &p1, std::optional<capa_period> const &p2, time_period const &period) const
     {
         //if only p1 or p2, return nothing
         if(!p1 || !p2)
@@ -111,7 +111,7 @@ namespace details
         }
     }
     // Compute the intersection between an optional time_period and an optional capa_period on a given period
-    std::optional<time_period> MakeInter::operator()(std::optional<time_period> const&p1, std::optional<capa_period> const&p2, time_period const &period) const
+    std::optional<time_period> MakeInter::operator()(std::optional<time_period> const &p1, std::optional<capa_period> const &p2, time_period const &period) const
     {
         //if only p1 or p2, return nothing
         if(!p1 || !p2)
@@ -125,7 +125,7 @@ namespace details
         }
     }
     // Compute the intersection between an optional capa_period and an optional time_period on a given period
-    std::optional<capa_period> MakeInter::operator()(std::optional<capa_period> const&p1, std::optional<time_period> const&p2, time_period const &period) const
+    std::optional<capa_period> MakeInter::operator()(std::optional<capa_period> const &p1, std::optional<time_period> const &p2, time_period const &period) const
     {
         //if only p1 or p2, return nothing
         if(!p1 || !p2)

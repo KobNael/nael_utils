@@ -18,7 +18,7 @@ bool can_merge(time_period const&tp1, time_period const &tp2)
  * @param cp2 the second period
  * @return true if p1 and p2 have the same capa and adjacent periods
  */
-bool can_merge(capa_period const&cp1, capa_period const &cp2)
+bool can_merge(capa_period const &cp1, capa_period const &cp2)
 {
     return cp1._capa == cp2._capa && can_merge(cp1._period, cp2._period);
 }
