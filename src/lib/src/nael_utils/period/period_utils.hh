@@ -222,6 +222,13 @@ template<typename PeriodT>
 boost::posix_time::time_duration get_total_duration(std::list<PeriodT> const &periods);
 
 /**
+ * @brief Compute the relative duration of a list of periods
+ * @param periods the periods with ratio
+ * @return the relative duration
+ */
+boost::posix_time::time_duration get_relative_duration(LRatioPeriod const &periods);
+
+/**
  * @brief Collect the capa_period with enough capacity and return them as time_period
  * @param periods the list of capa_periods
  * @param min the minimal capacity

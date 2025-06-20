@@ -140,7 +140,7 @@ struct capa_period: public extended_period
 
 /**
  * @struct capa_period
- * @brief Represents a capacity on a time_period
+ * @brief Represents a variation on a time_period
  * @addtogroup period_type_def
  */
 struct ratio_period: public extended_period

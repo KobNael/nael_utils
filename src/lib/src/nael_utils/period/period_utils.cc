@@ -3,6 +3,8 @@
 #include <nael_utils/safe_comp/safe_comp.hh>
 #include <algorithm>
 
+namespace bpt = boost::posix_time;
+
 /**
  * @brief check that two time_period can be merged
  * @param tp1 the first period
@@ -89,4 +91,20 @@ LTimePeriod get_eligible_periods(LCapaPeriod const &periods, unsigned min)
             }
         });
     return result;
+}
+
+//Compute the relative duration of a list of periods
+boost::posix_time::time_duration get_relative_duration(LRatioPeriod const &periods)
+{
+    boost::posix_time::time_duration relative_duration(0,0,0);
+    //Get the total (ponderated) duration in milli sec
+    double total_millisec =
+        std::accumulate(
+            periods.begin(), periods.end(), double(0),
+            [](double total, ratio_period const& period)
+            {
+                return total + double(period.length().total_milliseconds())*period._ratio;
+            } );
+    //Convert into a duration
+    return bpt::milliseconds( long(std::floor(total_millisec)) );
 }
