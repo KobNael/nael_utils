@@ -117,11 +117,11 @@ public: \
  *      VAL_3
  *  )
  * @endcode
- * @remark it is just an alias for BOOST_DEFINE_ENUM
+ * @remark it is just an alias for BOOST_DEFINE_ENUM_CLASS
  * @remark these structures are serializable and streamable
  * @see  json::import_from_file() and json::export_to_file()
  */
-#define MAKE_DTO_ENUM BOOST_DEFINE_ENUM
+#define MAKE_DTO_ENUM BOOST_DEFINE_ENUM_CLASS
 
 /**
  * @brief Generate the declaration and every set / get for basic attribute
