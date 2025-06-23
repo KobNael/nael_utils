@@ -93,18 +93,37 @@ LTimePeriod get_eligible_periods(LCapaPeriod const &periods, unsigned min)
     return result;
 }
 
-//Compute the relative duration of a list of periods
-boost::posix_time::time_duration get_relative_duration(LRatioPeriod const &periods)
+//Compute a relative duration
+boost::posix_time::time_duration compute_relative_duration(boost::posix_time::time_duration duration, float ratio)
 {
-    boost::posix_time::time_duration relative_duration(0,0,0);
-    //Get the total (ponderated) duration in milli sec
-    double total_millisec =
-        std::accumulate(
-            periods.begin(), periods.end(), double(0),
-            [](double total, ratio_period const& period)
+    return bpt::milliseconds(
+        long(
+            std::round(
+                double(duration.total_milliseconds())*ratio
+            )
+        )
+    );
+}
+
+//Compute an absolute duration
+boost::posix_time::time_duration compute_theoretical_duration(boost::posix_time::time_duration duration, float ratio)
+{
+    return bpt::milliseconds(
+        long(
+            std::round(
+                double(duration.total_milliseconds())/ratio
+            )
+        )
+    );
+}
+
+//Compute the relative duration of a list of periods
+bpt::time_duration get_relative_duration(LRatioPeriod const &periods)
+{
+    return std::accumulate(
+            periods.begin(), periods.end(), bpt::time_duration(0,0,0),
+            [](bpt::time_duration duration, ratio_period const& period)
             {
-                return total + double(period.length().total_milliseconds())*period._ratio;
+                return duration + period.get_relative_duration();
             } );
-    //Convert into a duration
-    return bpt::milliseconds( long(std::floor(total_millisec)) );
 }

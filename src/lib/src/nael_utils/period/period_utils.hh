@@ -213,6 +213,22 @@ std::list<PeriodT> get_inter(PeriodT const &period1, PeriodU const& period2, boo
 }
 
 /**
+ * @brief Compute a relative duration
+ * @param duration the absolute duration
+ * @param ratio the ratio to apply
+ * @return the relative duration
+ */
+boost::posix_time::time_duration compute_relative_duration(boost::posix_time::time_duration duration, float ratio);
+
+/**
+ * @brief Compute an absolute duration
+ * @param duration the relative duration
+ * @param ratio the ratio to apply
+ * @return the absolute duration
+ */
+boost::posix_time::time_duration compute_theoretical_duration(boost::posix_time::time_duration duration, float ratio);
+
+/**
  * @brief Compute the cumulative duration of a list of periods
  * @tparam PeriodT the type of periods
  * @param periods the periods of production
@@ -227,6 +243,7 @@ boost::posix_time::time_duration get_total_duration(std::list<PeriodT> const &pe
  * @return the relative duration
  */
 boost::posix_time::time_duration get_relative_duration(LRatioPeriod const &periods);
+
 
 /**
  * @brief Collect the capa_period with enough capacity and return them as time_period

@@ -20,6 +20,7 @@ target_sources (unit_tests
     src/model/model_desc.test.cc
     src/model/dto_to_bo.test.cc
     # period utils
+    src/period/period_utils.test.cc
     src/period/capa_periods.test.cc
     src/period/periods.test.cc
     src/period/ratio_periods.test.cc

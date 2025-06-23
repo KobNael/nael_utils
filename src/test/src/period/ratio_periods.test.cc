@@ -35,52 +35,6 @@ TEST(ratio_periods, basics)
     ASSERT_EQ(rp1.end(), p.end());
 }
 
-TEST(ratio_periods, total_duration)
-{
-    bg::date d = bg::day_clock::local_day();
-
-    LRatioPeriod mylist;
-    ASSERT_EQ( get_total_duration(mylist), bpt::seconds(0) );
-
-    mylist = { ratio_period(1., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))) };
-    ASSERT_EQ( get_total_duration(mylist), bpt::hours(1) );
-
-    mylist = { ratio_period(1., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))),
-        ratio_period(1., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))) };
-    ASSERT_EQ( get_total_duration(mylist), bpt::hours(2) );
-
-    mylist = { ratio_period(1., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))),
-        ratio_period(1., bpt::ptime(d, bpt::time_duration(10, 20, 30)) , bpt::ptime(d, bpt::time_duration(10, 21, 32))) };
-    ASSERT_EQ( get_total_duration(mylist), bpt::time_duration(1, 1, 2) );
-}
-
-TEST(ratio_periods, relative_duration)
-{
-    bg::date d = bg::day_clock::local_day();
-
-    LRatioPeriod mylist;
-    ASSERT_EQ( get_relative_duration(mylist), bpt::seconds(0) );
-
-    mylist = { ratio_period(1., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))) };
-    ASSERT_EQ( get_relative_duration(mylist), bpt::hours(1) );
-
-    mylist = { ratio_period(1., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))),
-        ratio_period(1., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))) };
-    ASSERT_EQ( get_relative_duration(mylist), bpt::hours(2) );
-
-    mylist = { ratio_period(1., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))),
-        ratio_period(1., bpt::ptime(d, bpt::time_duration(10, 20, 30)) , bpt::ptime(d, bpt::time_duration(10, 21, 32))) };
-    ASSERT_EQ( get_relative_duration(mylist), bpt::time_duration(1, 1, 2) );
-
-    mylist = { ratio_period(0., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))),
-        ratio_period(0., bpt::ptime(d, bpt::time_duration(10, 20, 30)) , bpt::ptime(d, bpt::time_duration(10, 21, 32))) };
-    ASSERT_EQ( get_relative_duration(mylist), bpt::seconds(0) );
-
-    mylist = { ratio_period(0.5, bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))),
-        ratio_period(1., bpt::ptime(d, bpt::time_duration(10, 20, 30)) , bpt::ptime(d, bpt::time_duration(10, 21, 32))) };
-    ASSERT_EQ( get_relative_duration(mylist), bpt::time_duration(0, 31, 2) );
-}
-
 TEST(ratio_periods, get_union)
 {
     bg::date d = bg::day_clock::local_day();
@@ -242,48 +196,4 @@ TEST(ratio_periods, get_inter)
     interRes = get_inter(myRatioList, mylist);
     ASSERT_EQ(interRes, expRes);
 
-
 }
-//     myRatioList = { ratio_period(1., bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(12)))
-//             , ratio_period(1., bpt::ptime(d,bpt::hours(13)) , bpt::ptime(d,bpt::hours(14))) } ;
-//     mylist = { ratio_period(1., bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11))) };
-//     interRes = get_inter(myRatioList, mylist);
-//     ASSERT_EQ(interRes, mylist);
-//     interRes = get_inter(mylist, myRatioList);
-//     ASSERT_EQ(interRes, mylist);
-
-//     myRatioList = { ratio_period(1., bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(12)))
-//             , ratio_period(1., bpt::ptime(d,bpt::hours(13)) , bpt::ptime(d,bpt::hours(14))) };
-//     mylist = { ratio_period(1., bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(15))) };
-
-//     expRes = { ratio_period(1., bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12)))
-//                     , ratio_period(1., bpt::ptime(d,bpt::hours(13)) , bpt::ptime(d,bpt::hours(14))) };
-
-//     interRes = get_inter(myRatioList, mylist);
-//     ASSERT_EQ(interRes, expRes);
-//     interRes = get_inter(mylist, myRatioList);
-//     ASSERT_EQ(interRes, expRes);
-
-//     myRatioList = { ratio_period(1., bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(12)))
-//             , ratio_period(1., bpt::ptime(d,bpt::hours(13)) , bpt::ptime(d,bpt::hours(18))) };
-//     mylist = { ratio_period(1., bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(18))) };
-
-//     expRes = { ratio_period(1., bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(12)))
-//                         , ratio_period(1., bpt::ptime(d,bpt::hours(13)) , bpt::ptime(d,bpt::hours(18))) };
-
-//     interRes = get_inter(mylist, myRatioList);
-//     ASSERT_EQ(interRes, expRes);
-//     interRes = get_inter(myRatioList, mylist);
-//     ASSERT_EQ(interRes, expRes);
-
-//     //null sum
-//     myRatioList = { ratio_period(2, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10))) };
-//     mylist = { ratio_period(0, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::time_duration(9,30,0)))
-//             , ratio_period(-2, bpt::ptime(d,bpt::time_duration(9,30,0)) , bpt::ptime(d,bpt::hours(10))) };
-
-//     expRes = { ratio_period(-2, bpt::ptime(d,bpt::time_duration(9,30,0)) , bpt::ptime(d,bpt::hours(10))) };
-//     interRes = get_inter(mylist, myRatioList, false);
-//     ASSERT_EQ(interRes, expRes);
-//     interRes = get_inter(myRatioList, mylist, false);
-//     ASSERT_EQ(interRes, expRes);
-

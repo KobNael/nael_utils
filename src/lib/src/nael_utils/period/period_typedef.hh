@@ -170,6 +170,11 @@ struct ratio_period: public extended_period
          */
         ~ratio_period() override = default;
 
+        /**
+         * @return the relative duration
+         */
+        boost::posix_time::time_duration get_relative_duration() const;
+
         /** @brief the ratio */
         float _ratio;
 

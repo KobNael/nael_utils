@@ -28,25 +28,6 @@ TEST(periods, order)
     ASSERT_TRUE(bpt::not_a_date_time > bpt::ptime(d, bpt::hours(9)) );
 }
 
-TEST(periods, total_duration)
-{
-    bg::date d = bg::day_clock::local_day();
-
-    LTimePeriod mylist;
-    ASSERT_EQ( get_total_duration(mylist), bpt::seconds(0) );
-
-    mylist = { time_period( bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))) };
-    ASSERT_EQ( get_total_duration(mylist), bpt::hours(1) );
-
-    mylist = { time_period( bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))),
-        time_period( bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))) };
-    ASSERT_EQ( get_total_duration(mylist), bpt::hours(2) );
-
-    mylist = { time_period( bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))),
-        time_period( bpt::ptime(d, bpt::time_duration(10, 20, 30)) , bpt::ptime(d, bpt::time_duration(10, 21, 32))) };
-    ASSERT_EQ( get_total_duration(mylist), bpt::time_duration(1, 1, 2) );
-}
-
 TEST(periods, get_inter)
 {
     bg::date d = bg::day_clock::local_day();
