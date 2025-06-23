@@ -9,8 +9,9 @@
  * Two types of time period are proposed, along with shortcuts for list of periods:
  * - #time_period : shortcut for boost::posix_time::time_period
  * - capa_period : #time_period with capacity (long)
+ * - ratio_period : #time_period with a ratio (float)
  *
- * On can then compute the union, the intersection or the difference between list of periods:
+ * One can then compute the union, the intersection or the difference between list of periods:
  *  - Union : compute the some of the capacity
  *    - the union of {[a, b, 2]} and {[b, c, 3]}, with a<b<c is {[a, b, 2], [b, c, 3]}
  *    - the union of {[a, b, 2]} and {[a, b, 3]} is {[a, b, 5]}
