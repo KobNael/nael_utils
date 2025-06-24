@@ -46,6 +46,10 @@ ratio_period merge(ratio_period const &rp1, ratio_period const &rp2);
 template<typename PeriodT>
 void merge_adjacent_periods(std::list<PeriodT> &periods)
 {
+    if(periods.empty())
+    {
+        return;
+    }
     auto it = periods.begin();
     //for each pair of period
     while(std::next(it) != periods.end())
@@ -76,6 +80,10 @@ void merge_adjacent_periods(std::list<PeriodT> &periods)
 template<typename PeriodT>
 void check_vector(std::list<PeriodT> const&periods)
 {
+    if(periods.empty())
+    {
+        return;
+    }
     auto it = periods.begin();
     //for each pair of period
     while(std::next(it) != periods.end())
