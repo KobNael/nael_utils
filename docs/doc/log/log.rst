@@ -107,3 +107,8 @@ Main macros for :ref:`log_file` manipulation
 .. doxygendefine:: INFO_RANGE
 .. doxygendefine:: DBUG_RANGE
 
+
+Full reference
+----------------
+
+.. doxygenfile:: log.hh

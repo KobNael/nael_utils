@@ -9,7 +9,8 @@ For the computation details see :ref:`period_functor`.
 --------------------------------------
 
 .. doxygenfile:: period_utils.hh
-    :sections: briefdescription detaileddescription dcop-func typedef innerclass public-attrib public-func func
+
+
 
 .. toctree::
    :hidden:

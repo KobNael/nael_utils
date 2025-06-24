@@ -16,12 +16,17 @@ namespace io
         {
             if( file != ""){
                 stream.open(file.c_str() , std::ios::out);
-                if( stream.fail() ){
+                if( stream.fail() )
+                {
                     throw io::access_error("Could not create log file " + file);
-                }else{
+                }
+                else
+                {
                     stream.imbue(std::locale(std::locale::classic()));
                 }
-            }else{
+            }
+            else
+            {
                 throw io::access_error("Invalid name of log file") ;
             }
         }

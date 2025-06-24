@@ -16,17 +16,17 @@ namespace io
      * @enum LogLevel
      * @brief Describes the verbosity of the logger
      * @see Logger::setLogLevel
-     * @see io::SetLogLevel()
+     * @see io::SetLogLevel
      */
-    BOOST_DEFINE_ENUM(
-        LogLevel,
+    enum LogLevel{
         OFF,      ///< No log at all
         ERROR,    ///< Only Error messages
         WARNING,  ///< Error and Warning messages
         INFO,     ///< Error, Warning and Info messages
         EXTENDED, ///< Error, Warning, Info and Extended messages
         DEBUG     ///< Error, Warning, Info and Debug messages
-    );
+    };
+    BOOST_DESCRIBE_ENUM(LogLevel, OFF, ERROR, WARNING, INFO, EXTENDED, DEBUG)
 
     /**
      * @class Logger

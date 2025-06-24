@@ -9,23 +9,29 @@
  * Two types of time period are proposed, along with shortcuts for list of periods:
  * - #time_period : shortcut for boost::posix_time::time_period
  * - capa_period : #time_period with capacity (long)
+ * - ratio_period : #time_period with a ratio (float)
  *
- * On can then compute the union, the intersection or the difference between list of periods:
- *  - Union : compute the some of the capacity
+ * One can then compute the union, the intersection or the difference between list of periods:
+ *  - Union of capa_periods : compute the sum of the capacity
  *    - the union of {[a, b, 2]} and {[b, c, 3]}, with a<b<c is {[a, b, 2], [b, c, 3]}
  *    - the union of {[a, b, 2]} and {[a, b, 3]} is {[a, b, 5]}
  *    - the union of {[a, c, 2]} and {[a, b, 3]}, with a<b<c, is {[a, b, 5], [b, c, 2]}
- *  - Intersection : limit to the intersection with minimal capacity
+ *  - Union of ratio_periods : compute the product of the ratios (the default value being 1.)
+ *    - the union of {[a, b, 2.]} and {[a, b, 3.]} is {[a, b, 5.]}
+ *    - the union of {[a, c, 2.]} and {[a, b, 3.]}, with a<b<c, is {[a, b, 6.], [b, c, 3.]}
+ *  - Intersection of capa_periods : limit to the intersection with minimal capacity
  *    - the intersection of {[a, b, 2]} and {[a, b, 3]} is {[a, b, 2]}
  *    - the intersection of {[a, c, 2]} and {[a, b, 3]}, with a<b<c, is {[a, b, 2]}
- *  - Difference : compute the difference of the overlapping capacities
+ *  - Intersection of ratio_periods and periods : limit the ratio_periods to the other periods
+ *    - the intersection of {[a, c, 2.]} and {[a, b]}, with a<b<c, is {[a, b, 2.]}
+ *  - Difference of capa_periods : compute the difference of the overlapping capacities
  *    - the difference of {[a, b, 2]} and {[b, c, 3]}, with a<b<c is {[a, b, 2], [b, c, -3]}
  *    - the difference of {[a, b, 2]} and {[a, b, 3]} is {[a, b, -1]}
  *    - the difference of {[a, c, 2]} and {[a, b, 3]}, with a<b<c, is {[a, b, -1], [b, c, 2]}
  *
- * @remark Each method has an optional parameter merge_adjacent telling if one should merge the adjacent periods (with the same capacity)
+ * @remark Each method has an optional parameter merge_adjacent telling if one should merge the adjacent periods (with the same capacity or ratio)
  * @remark Every capa_period with a capacity of 0 will be removed
- * @warning Every list must contain sorted and disjoint periods
+ * @warning Every list must contain sorted and disjoint (or adjacent) periods
  */
 
 ///////////
@@ -213,6 +219,22 @@ std::list<PeriodT> get_inter(PeriodT const &period1, PeriodU const& period2, boo
 }
 
 /**
+ * @brief Compute a relative duration
+ * @param duration the absolute duration
+ * @param ratio the ratio to apply
+ * @return the relative duration
+ */
+boost::posix_time::time_duration compute_relative_duration(boost::posix_time::time_duration duration, float ratio);
+
+/**
+ * @brief Compute an absolute duration
+ * @param duration the relative duration
+ * @param ratio the ratio to apply
+ * @return the absolute duration
+ */
+boost::posix_time::time_duration compute_theoretical_duration(boost::posix_time::time_duration duration, float ratio);
+
+/**
  * @brief Compute the cumulative duration of a list of periods
  * @tparam PeriodT the type of periods
  * @param periods the periods of production
@@ -220,6 +242,14 @@ std::list<PeriodT> get_inter(PeriodT const &period1, PeriodU const& period2, boo
  */
 template<typename PeriodT>
 boost::posix_time::time_duration get_total_duration(std::list<PeriodT> const &periods);
+
+/**
+ * @brief Compute the relative duration of a list of periods
+ * @param periods the periods with ratio
+ * @return the relative duration
+ */
+boost::posix_time::time_duration get_relative_duration(LRatioPeriod const &periods);
+
 
 /**
  * @brief Collect the capa_period with enough capacity and return them as time_period

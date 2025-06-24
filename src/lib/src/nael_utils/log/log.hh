@@ -100,12 +100,6 @@ namespace io
             static std::unordered_map<std::string, FileLogger, string_hash, std::equal_to<>> _file_loggers;
     };
 
-    /**
-     * @brief Set the log level
-     * @param level the log level
-     */
-    void SetLogLevel(LogLevel level);
-
     /*
      * Forward declare of print_range.
      */

@@ -10,22 +10,32 @@
  * @brief check that two time_period can be merged
  * @return true if p1 and p2 are adjacent
  */
-bool can_merge(time_period const&tp1, time_period const &tp2);
+bool can_merge(time_period const &tp1, time_period const &tp2);
 /**
  * @brief check that two capa_period can be merged
  * @return true if p1 and p2 have the same capa and adjacent periods
  */
-bool can_merge(capa_period const&cp1, capa_period const &cp2);
+bool can_merge(capa_period const &cp1, capa_period const &cp2);
+/**
+ * @brief check that two ratio_period can be merged
+ * @return true if p1 and p2 have the same ratio and adjacent periods
+ */
+bool can_merge(ratio_period const &rp1, ratio_period const &rp2);
 /**
  * @return the result of the merge of two time_period
- * @pre the periods can be merged
+ * @pre the periods can be merged, ie. are adjacent
  */
-time_period merge(time_period const&tp1, time_period const &tp2);
+time_period merge(time_period const &tp1, time_period const &tp2);
 /**
  * @return the result of the merge of two capa_period
- * @pre the periods can be merged
+ * @pre the periods can be merged, ie. are adjacent and have the same capa
  */
 capa_period merge(capa_period const&cp1, capa_period const &cp2);
+/**
+ * @brief merge two ratio_period
+ * @pre the periods can be merged, ie. are adjacent and have the same ratio
+ */
+ratio_period merge(ratio_period const &rp1, ratio_period const &rp2);
 
 /**
  * @brief Browse a list of periods and merge the adjacent one
