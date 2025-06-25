@@ -195,12 +195,14 @@ protected:
     void SetUp() override
     {
         io::LoggerManager::SetDefaultName(LOG_NAME);
+        _bckup = std::cout.rdbuf();
         _cout.str("");
         _cout.clear();
         std::cout.rdbuf(_cout.rdbuf());
     }
     void TearDown() override
     {
+        std::cout.rdbuf(_bckup);
         io::LoggerManager::ClearLogger();
     }
     std::string get_cout()
@@ -209,6 +211,7 @@ protected:
     }
 private:
     std::stringstream _cout;
+    std::streambuf *_bckup;
 };
 
 TEST_F(tee_logger, off_level)

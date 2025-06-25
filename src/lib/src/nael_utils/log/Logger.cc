@@ -51,11 +51,10 @@ namespace io
     //TeeLogger constructor
     TeeLogger::TeeLogger(std::string const& file, io::LogLevel level)
     : Logger<TeeStream>(file, level)
+    , _teeStream(TeeDevice(std::cout, _fstream))
     {
         open_stream(file, _fstream);
-        _teeDevice = std::make_unique<TeeDevice>(std::cout, _fstream);
-        _teeStream = std::make_unique<TeeStream>(*_teeDevice);
-        this->setLog( *_teeStream );
+        this->setLog( _teeStream );
     }
     TeeLogger::~TeeLogger()
     {

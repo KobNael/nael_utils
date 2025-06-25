@@ -157,8 +157,6 @@ namespace io
             /** @brief ostream to file */
             std::ofstream _fstream;
             /** @brief TeeDevice to both console and file */
-            std::unique_ptr<TeeDevice> _teeDevice;
-            /** @brief TeeDevice to both console and file */
-            std::unique_ptr<TeeStream> _teeStream;
+            TeeStream _teeStream;
     };
 }//namespace io
