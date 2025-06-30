@@ -259,5 +259,13 @@ boost::posix_time::time_duration get_relative_duration(LRatioPeriod const &perio
  */
 LTimePeriod get_eligible_periods(LCapaPeriod const &periods, unsigned min);
 
+/**
+ * @brief Checks that two ptime are the same (with a tolerance)
+ * @param lhs the first datetime
+ * @param rhs the second datetime
+ * @param tol the tolerance
+ */
+bool is_same(boost::posix_time::ptime const &lhs, boost::posix_time::ptime const &rhs, boost::posix_time::time_duration const &tol=boost::posix_time::milliseconds(10));
+
 //Implementation
 #include <nael_utils/period/period_utils.tpp>
