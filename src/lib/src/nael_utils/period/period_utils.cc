@@ -128,6 +128,11 @@ bpt::time_duration get_relative_duration(LRatioPeriod const &periods)
             } );
 }
 
+time_period make_empty_period(boost::posix_time::ptime ptime)
+{
+    return time_period(ptime, ptime + bpt::milliseconds(10));
+}
+
 // Checks that two ptime are the same (with a tolerance)
 bool is_same(bpt::ptime const &lhs, bpt::ptime const &rhs, bpt::time_duration const &tol)
 {

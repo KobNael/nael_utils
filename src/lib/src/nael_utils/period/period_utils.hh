@@ -260,6 +260,13 @@ boost::posix_time::time_duration get_relative_duration(LRatioPeriod const &perio
 LTimePeriod get_eligible_periods(LCapaPeriod const &periods, unsigned min);
 
 /**
+ * @brief Create an artificial empty period
+ * @param datetime the ptime
+ * @return a time period [ptime, ptime+10 milliseconds[
+ */
+time_period make_empty_period(boost::posix_time::ptime ptime);
+
+/**
  * @brief Checks that two ptime are the same (with a tolerance)
  * @param lhs the first datetime
  * @param rhs the second datetime
