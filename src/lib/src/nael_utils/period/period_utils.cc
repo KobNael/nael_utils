@@ -9,11 +9,11 @@ namespace bpt = boost::posix_time;
  * @brief check that two time_period can be merged
  * @param tp1 the first period
  * @param tp2 the second period
- * @return true if p1 and p2 are adjacent
+ * @return true if p1 and p2 are adjacent with some tolerance
  */
 bool can_merge(time_period const &tp1, time_period const &tp2)
 {
-    return tp1.end() == tp2.begin() || tp2.end() == tp1.begin();
+    return is_same(tp1.end(), tp2.begin()) || is_same(tp2.end(), tp1.begin());
 }
 
 /**
@@ -126,4 +126,23 @@ bpt::time_duration get_relative_duration(LRatioPeriod const &periods)
             {
                 return duration + period.get_relative_duration();
             } );
+}
+
+time_period make_empty_period(boost::posix_time::ptime ptime)
+{
+    return time_period(ptime, ptime + bpt::milliseconds(10));
+}
+
+// Checks that two ptime are the same (with a tolerance)
+bool is_same(bpt::ptime const &lhs, bpt::ptime const &rhs, bpt::time_duration const &tol)
+{
+    if(lhs.date() != rhs.date())
+    {
+        return false;
+    }
+    bpt::time_duration diff = (lhs > rhs)
+        ? lhs - rhs
+        : rhs - lhs;
+
+    return diff <= tol;
 }

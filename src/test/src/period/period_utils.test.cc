@@ -118,3 +118,19 @@ TEST(periods, compute_theoretical_duration)
     //19'48" of theoretical production with a 33% rate => can be made in 60'
     EXPECT_EQ(bpt::hours(1), compute_theoretical_duration( bpt::time_duration(0,19,48), .33));
 }
+
+TEST(date_time, is_same)
+{
+    bg::date d = bg::day_clock::local_day();
+
+    bpt::ptime lhs(d, bpt::time_duration(1, 2, 3, 4));
+    bpt::ptime rhs = lhs;
+    EXPECT_TRUE( is_same(lhs, rhs) );
+
+    rhs = bpt::ptime(d, bpt::time_duration(1, 2, 3, 1000));
+    EXPECT_TRUE( is_same(lhs, rhs) ) << lhs << " == " << rhs << " with a default tolerance";
+
+    rhs = bpt::ptime(d, bpt::time_duration(1, 2, 3, 30000));
+    EXPECT_FALSE( is_same(lhs, rhs) ) << lhs << " != " << rhs << " with a default tolerance";
+    EXPECT_TRUE( is_same(lhs, rhs, boost::posix_time::milliseconds(30)) ) << lhs << " == " << rhs << " with a tolerance of " << boost::posix_time::milliseconds(30);
+}

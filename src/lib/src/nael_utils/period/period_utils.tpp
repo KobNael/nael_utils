@@ -118,12 +118,13 @@ void opt_insert(std::optional<PeriodT> p, std::list<PeriodT> &list)
  * @tparam FuncT the type of functor
  * @param periods1 the first list of periods
  * @param periods2 the second list of periods
+ * @param func the functor to use
  * @param merge_adjacent should we merge the adjacent periods
  * @pre the lists must be sorted and contain disjoint periods
  * @return the result of the merge
  */
 template<typename PeriodT, typename PeriodU, typename FuncT>
-std::list<PeriodT> merge(std::list<PeriodT> const&periods1, std::list<PeriodU> const& periods2, bool merge_adjacent)
+std::list<PeriodT> merge(std::list<PeriodT> const&periods1, std::list<PeriodU> const& periods2, FuncT const &func, bool merge_adjacent)
 {
     namespace bpt = boost::posix_time;
     std::list<PeriodT> res;
@@ -132,9 +133,6 @@ std::list<PeriodT> merge(std::list<PeriodT> const&periods1, std::list<PeriodU> c
     check_vector(periods2);
 #endif
     //Check vectors
-    //Create functor
-    FuncT func;
-    (void) func;
     //Browse lists
     auto it1 = periods1.begin();
     auto it2 = periods2.begin();
@@ -144,20 +142,20 @@ std::list<PeriodT> merge(std::list<PeriodT> const&periods1, std::list<PeriodU> c
     while(it1 != periods1.end() && it2 != periods2.end())
     {
         //if periods does not intersect
-        if(it1->end() <= it2->begin() || it2->end() <= it1->begin())
+        if(it1->end() < it2->begin() || it2->end() < it1->begin())
         {
             //take the earliest one, and apply the functor on it
             if(it1->end() <= it2->begin())
             {
                 curtime = std::max(curtime, it1->begin());
-                opt_insert<PeriodT>(func(*it1, (std::optional<PeriodU>)std::nullopt, time_period(curtime, it1->end())), res);
+                opt_insert<PeriodT>(func(*it1, (std::optional<PeriodU>)std::nullopt, curtime, it1->end()), res);
                 curtime = it1->end();
                 ++it1;
             }
             else
             {
                 curtime = std::max(curtime, it2->begin());
-                opt_insert<PeriodT>(func((std::optional<PeriodT>)std::nullopt, *it2, time_period(curtime, it2->end())), res);
+                opt_insert<PeriodT>(func((std::optional<PeriodT>)std::nullopt, *it2, curtime, it2->end()), res);
                 curtime = it2->end();
                 ++it2;
             }
@@ -172,16 +170,16 @@ std::list<PeriodT> merge(std::list<PeriodT> const&periods1, std::list<PeriodU> c
             {
                 if(it1->begin() < begin_inter)
                 {
-                    opt_insert<PeriodT>(func(*it1, (std::optional<PeriodU>)std::nullopt, time_period(std::max(curtime, it1->begin()), begin_inter)), res);
+                    opt_insert<PeriodT>(func(*it1, (std::optional<PeriodU>)std::nullopt, std::max(curtime, it1->begin()), begin_inter), res);
                 }
                 if(it2->begin() < begin_inter)
                 {
-                    opt_insert<PeriodT>(func((std::optional<PeriodT>)std::nullopt, *it2, time_period(std::max(curtime, it2->begin()), begin_inter)), res);
+                    opt_insert<PeriodT>(func((std::optional<PeriodT>)std::nullopt, *it2, std::max(curtime, it2->begin()), begin_inter), res);
                 }
                 curtime = begin_inter;
             }
             //intersection
-            opt_insert<PeriodT>(func(*it1, *it2, time_period(begin_inter, end_inter)), res);
+            opt_insert<PeriodT>(func(*it1, *it2, begin_inter, end_inter), res);
             //update curtime
             curtime = end_inter;
             //increase iterator accordingly
@@ -202,13 +200,13 @@ std::list<PeriodT> merge(std::list<PeriodT> const&periods1, std::list<PeriodU> c
         : curtime;
     while(it1 != periods1.end())
     {
-        opt_insert<PeriodT>(func(*it1, (std::optional<PeriodU>)std::nullopt, time_period(std::max(curtime, it1->begin()), it1->end())), res);
+        opt_insert<PeriodT>(func(*it1, (std::optional<PeriodU>)std::nullopt, std::max(curtime, it1->begin()), it1->end()), res);
         curtime = it1->end();
         ++it1;
     }
     while(it2 != periods2.end())
     {
-        opt_insert<PeriodT>(func((std::optional<PeriodT>)std::nullopt, *it2, time_period(std::max(curtime, it2->begin()), it2->end())), res);
+        opt_insert<PeriodT>(func((std::optional<PeriodT>)std::nullopt, *it2, std::max(curtime, it2->begin()), it2->end()), res);
         curtime = it2->end();
         ++it2;
     }
@@ -225,14 +223,14 @@ std::list<PeriodT> merge(std::list<PeriodT> const&periods1, std::list<PeriodU> c
 template<typename PeriodT, typename PeriodU>
 std::list<PeriodT> get_union(std::list<PeriodT> const&periods1, std::list<PeriodU> const& periods2, bool merge_adjacent)
 {
-    return merge<PeriodT, PeriodU, details::MakeUnion>(periods1, periods2, merge_adjacent);
+    return merge<PeriodT, PeriodU, details::MakeUnion>(periods1, periods2, details::MakeUnion(), merge_adjacent);
 }
 
 /* Compute the difference of two lists of Periods */
 template<typename PeriodT, typename PeriodU>
 std::list<PeriodT> get_diff(std::list<PeriodT> const&periods1, std::list<PeriodU> const& periods2, bool merge_adjacent)
 {
-    return merge<PeriodT, PeriodU, details::MakeDiff>(periods1, periods2, merge_adjacent);
+    return merge<PeriodT, PeriodU, details::MakeDiff>(periods1, periods2, details::MakeDiff(), merge_adjacent);
 }
 
 
@@ -240,7 +238,14 @@ std::list<PeriodT> get_diff(std::list<PeriodT> const&periods1, std::list<PeriodU
 template<typename PeriodT, typename PeriodU>
 std::list<PeriodT> get_inter(std::list<PeriodT> const&periods1, std::list<PeriodU> const& periods2, bool merge_adjacent)
 {
-    return merge<PeriodT, PeriodU, details::MakeInter>(periods1, periods2, merge_adjacent);
+    return merge<PeriodT, PeriodU, details::MakeInter>(periods1, periods2, details::MakeInter(false), merge_adjacent);
+}
+
+/* Compute the intersection of two lists of Periods and keep the periods with just one time stamp */
+template<typename PeriodT, typename PeriodU>
+std::list<PeriodT> get_inter_with_empty(std::list<PeriodT> const&periods1, std::list<PeriodU> const& periods2, bool merge_adjacent)
+{
+    return merge<PeriodT, PeriodU, details::MakeInter>(periods1, periods2, details::MakeInter(true), merge_adjacent);
 }
 
 /* Compute the cumulative duration of a list of periods */
