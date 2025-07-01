@@ -107,7 +107,7 @@ namespace details
          * @brief Constructor
          * @param keep_empty Should we keep the period with only one time stamp
          */
-        MakeInter(bool keep_empty) : _keep_empty(keep_empty)
+        explicit MakeInter(bool keep_empty) : _keep_empty(keep_empty)
         {}
 
         /**
