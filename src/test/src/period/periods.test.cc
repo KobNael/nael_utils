@@ -121,6 +121,65 @@ TEST(periods, get_inter)
 
 }
 
+TEST(periods, get_inter_with_empty)
+{
+    bg::date d = bg::day_clock::local_day();
+
+    //Declarations
+    LTimePeriod mylist1, mylist2, interRes, expRes;
+    LTimePeriod invalidList =
+        { time_period( bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10)))
+        , time_period( bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10)))};
+
+    //invalid list
+#ifndef NDEBUG
+    ASSERT_THROW(get_inter_with_empty(mylist1, invalidList), std::logic_error);
+    ASSERT_THROW(get_inter_with_empty(invalidList, mylist1), std::logic_error);
+#endif
+    //empty lists
+    interRes = get_inter_with_empty(mylist1, mylist2);
+    ASSERT_EQ(interRes, expRes);
+
+    //list are identical
+    mylist1 = { time_period( bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10)) )
+            , time_period( bpt::ptime(d, bpt::hours(11)) , bpt::ptime(d, bpt::hours(12)) ) };
+    mylist2 = { time_period( bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10)) )
+            , time_period( bpt::ptime(d, bpt::hours(11)) , bpt::ptime(d, bpt::hours(12)) ) };
+    ASSERT_EQ(mylist1, mylist2);
+    interRes = get_inter_with_empty(mylist1, mylist2);
+    ASSERT_EQ(interRes, mylist1);
+    interRes = get_inter_with_empty(mylist2, mylist1);
+    ASSERT_EQ(interRes, mylist1);
+
+    //Some tests on intersection computation
+    mylist1 = { time_period( bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10)) )
+             , time_period( bpt::ptime(d, bpt::hours(10)) , bpt::ptime(d, bpt::hours(11)) )
+             , time_period( bpt::ptime(d, bpt::hours(11)) , bpt::ptime(d, bpt::hours(12)) ) };
+    mylist2 = { time_period( bpt::ptime(d, bpt::hours(10)) , bpt::ptime(d, bpt::hours(11)) ) };
+
+    interRes = get_inter_with_empty(mylist1, mylist2);
+    ASSERT_EQ(interRes, mylist2);
+    interRes = get_inter_with_empty(mylist2, mylist1);
+    ASSERT_EQ(interRes, mylist2);
+
+    mylist1 = { time_period( bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10)) ) };
+    mylist2 = { time_period( bpt::ptime(d, bpt::hours(10)) , bpt::ptime(d, bpt::hours(11)) ) };
+    expRes = { make_empty_period( bpt::ptime(d, bpt::hours(10)) ) };
+    interRes = get_inter_with_empty(mylist1, mylist2);
+    ASSERT_EQ(interRes, expRes);
+    interRes = get_inter_with_empty(mylist2, mylist1);
+    ASSERT_EQ(interRes, expRes);
+
+    mylist1 = { time_period( bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10)) ),
+                time_period( bpt::ptime(d, bpt::hours(11)) , bpt::ptime(d, bpt::hours(12)) ) };
+    mylist2 = { time_period( bpt::ptime(d, bpt::hours(10)) , bpt::ptime(d, bpt::hours(11)) ) };
+    expRes = { make_empty_period( bpt::ptime(d, bpt::hours(10)) ), make_empty_period( bpt::ptime(d, bpt::hours(11)) ) };
+    interRes = get_inter_with_empty(mylist1, mylist2);
+    ASSERT_EQ(interRes, expRes);
+    interRes = get_inter_with_empty(mylist2, mylist1);
+    ASSERT_EQ(interRes, expRes);
+}
+
 TEST(periods, get_union)
 {
     bg::date d = bg::day_clock::local_day();

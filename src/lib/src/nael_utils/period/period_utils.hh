@@ -31,6 +31,7 @@
  *
  * @remark Each method has an optional parameter merge_adjacent telling if one should merge the adjacent periods (with the same capacity or ratio)
  * @remark Every capa_period with a capacity of 0 will be removed
+ * @remark In some case, one may need to keep 'empty' periods (eg. to compute some ending times)
  * @warning Every list must contain sorted and disjoint (or adjacent) periods
  */
 
@@ -203,9 +204,9 @@ std::list<PeriodT> get_inter(std::list<PeriodT> const &periods, PeriodU const &p
     return get_inter(periods, std::list<PeriodU>(1,period), merge_adjacent);
 }
 /**
- * @brief Compute the intersection of two periods
- * @tparam PeriodT the type of first periods
- * @tparam PeriodU the type of second periods
+ * @brief Compute the intersection of two period
+ * @tparam PeriodT the type of first period
+ * @tparam PeriodU the type of second period
  * @param period1 the first period
  * @param period2 the second period
  * @param merge_adjacent should we merge the adjacent periods
@@ -217,7 +218,64 @@ std::list<PeriodT> get_inter(PeriodT const &period1, PeriodU const& period2, boo
 {
     return get_inter(std::list<PeriodT>(1,period1), std::list<PeriodU>(1, period2), merge_adjacent);
 }
-
+/**
+ * @brief Compute the intersection of two lists of Periods and keep the periods with just one time stamp
+ * @tparam PeriodT the type of first periods
+ * @tparam PeriodU the type of second periods
+ * @param periods1 first list
+ * @param periods2 second list
+ * @param merge_adjacent should we merge the adjacent periods
+ * @pre the lists must be sorted and contain disjoint periods
+ * @return the intersection
+ */
+template<typename PeriodT, typename PeriodU>
+std::list<PeriodT> get_inter_with_empty(std::list<PeriodT> const &periods1, std::list<PeriodU> const &periods2, bool merge_adjacent=true);
+/**
+ * @brief Compute the intersection of two lists of Periods and keep the periods with just one time stamp
+ * @tparam PeriodT the type of first period
+ * @tparam PeriodU the type of second periods
+ * @param period the period
+ * @param periods the list
+ * @param merge_adjacent should we merge the adjacent periods
+ * @pre the list must be sorted and contain disjoint periods
+ * @return the intersection
+ */
+template<typename PeriodT, typename PeriodU>
+std::list<PeriodT> get_inter_with_empty(PeriodT const &period, std::list<PeriodU> const& periods, bool merge_adjacent=true)
+{
+    return get_inter_with_empty(std::list<PeriodT>(1,period), periods, merge_adjacent);
+}
+/**
+ * @brief Compute the intersection of two lists of Periods and keep the periods with just one time stamp
+ * @tparam PeriodT the type of first periods
+ * @tparam PeriodU the type of second period
+ * @param periods the list
+ * @param period the period
+ * @param merge_adjacent should we merge the adjacent periods
+ * @param keep_empty should we keep the empty periods
+ * @pre the list must be sorted and contain disjoint periods
+ * @return the intersection
+ */
+template<typename PeriodT, typename PeriodU>
+std::list<PeriodT> get_inter_with_empty(std::list<PeriodT> const &periods, PeriodU const &period, bool merge_adjacent=true)
+{
+    return get_inter_with_empty(periods, std::list<PeriodU>(1,period), merge_adjacent);
+}
+/**
+ * @brief Compute the intersection of two lists of Periods and keep the periods with just one time stamp
+ * @tparam PeriodT the type of first period
+ * @tparam PeriodU the type of second period
+ * @param period1 the first period
+ * @param period2 the second period
+ * @param merge_adjacent should we merge the adjacent periods
+ * @pre the list must be sorted and contain disjoint periods
+ * @return the intersection
+ */
+template<typename PeriodT, typename PeriodU>
+std::list<PeriodT> get_inter_with_empty(PeriodT const &period1, PeriodU const& period2, bool merge_adjacent=true)
+{
+    return get_inter_with_empty(std::list<PeriodT>(1,period1), std::list<PeriodU>(1, period2), merge_adjacent);
+}
 /**
  * @brief Compute a relative duration
  * @param duration the absolute duration
@@ -249,7 +307,6 @@ boost::posix_time::time_duration get_total_duration(std::list<PeriodT> const &pe
  * @return the relative duration
  */
 boost::posix_time::time_duration get_relative_duration(LRatioPeriod const &periods);
-
 
 /**
  * @brief Collect the capa_period with enough capacity and return them as time_period
