@@ -25,85 +25,86 @@ namespace io
      */
     class LoggerManager
     {
-        public:
-        //TeeLoggers
-            /**
-             * @brief Get or create a TeeLogger
-             * @param name name of the logger, empty string for default name
-             * @return A reference to the logger
-             */
-            static TeeLogger &GetLogger(std::string_view name="");
-            /**
-             * @brief Clear a logger
-             * @param name name of the logger, empty string for default name
-             */
-            static void ClearLogger(std::string_view name="");
-            /**
-             * @brief Set the loglevel of a TeeLogger
-             * @param name name of the logger, empty string for default name
-             * @param level the log level
-             */
-            static void SetLogLevel(LogLevel level, std::string_view name="");
-            /**
-             * @brief Set the default verbosity
-             * @param level the verbosity
-             */
-            static void SetDefaultLogLevel(LogLevel level)
-            {
-                _log_level = level;
-            }
-            /**
-             * @brief Set the default name
-             * @param name name of the logger
-             */
-            static void SetDefaultName(std::string_view name)
-            {
-                _logfile_name = name;
-            }
+    public:
+        // TeeLoggers
+        /**
+         * @brief Get or create a TeeLogger
+         * @param name name of the logger, empty string for default name
+         * @return A reference to the logger
+         */
+        static TeeLogger &GetLogger(std::string_view name = "");
+        /**
+         * @brief Clear a logger
+         * @param name name of the logger, empty string for default name
+         */
+        static void ClearLogger(std::string_view name = "");
+        /**
+         * @brief Set the loglevel of a TeeLogger
+         * @param name name of the logger, empty string for default name
+         * @param level the log level
+         */
+        static void SetLogLevel(LogLevel level, std::string_view name = "");
+        /**
+         * @brief Set the default verbosity
+         * @param level the verbosity
+         */
+        static void SetDefaultLogLevel(LogLevel level)
+        {
+            _log_level = level;
+        }
+        /**
+         * @brief Set the default name
+         * @param name name of the logger
+         */
+        static void SetDefaultName(std::string_view name)
+        {
+            _logfile_name = name;
+        }
 
-        private:
-            /** @brief static storage of the tee logger */
-            static std::unordered_map<std::string, TeeLogger, string_hash, std::equal_to<>> _tee_loggers;
-            /** @brief default log file name */
-            static std::string _logfile_name;
-            /** @brief default log level */
-            static LogLevel _log_level;
+    private:
+        /** @brief static storage of the tee logger */
+        static std::unordered_map<std::string, TeeLogger, string_hash, std::equal_to<>> _tee_loggers;
+        /** @brief default log file name */
+        static std::string _logfile_name;
+        /** @brief default log level */
+        static LogLevel _log_level;
 
-        //FileLoggers
-        public:
-            /**
-             * @brief Get or create a FileLogger
-             * @param name name of the logger
-             * @return A reference to the logger
-             */
-            static FileLogger &GetFileLogger(std::string_view name);
-            /**
-             * @brief Clear a FileLogger
-             * @param name name of the logger
-             */
-            static void ClearFileLogger(std::string_view name);
-            /**
-             * @brief Set the loglevel of a FileLogger
-             * @param name name of the logger
-             * @param level the log level
-             */
-            static void SetFileLogLevel(LogLevel level, std::string_view name);
+        // FileLoggers
+    public:
+        /**
+         * @brief Get or create a FileLogger
+         * @param name name of the logger
+         * @return A reference to the logger
+         */
+        static FileLogger &GetFileLogger(std::string_view name);
+        /**
+         * @brief Clear a FileLogger
+         * @param name name of the logger
+         */
+        static void ClearFileLogger(std::string_view name);
+        /**
+         * @brief Set the loglevel of a FileLogger
+         * @param name name of the logger
+         * @param level the log level
+         */
+        static void SetFileLogLevel(LogLevel level, std::string_view name);
 
-        //Common
-        public:
-            /**
-             * @brief Clear every logger (file or tee)
-             */
-            static void ClearAllLoggers();
-        private:
-            /** @brief static storage of the file logger */
-            static std::unordered_map<std::string, FileLogger, string_hash, std::equal_to<>> _file_loggers;
+        // Common
+    public:
+        /**
+         * @brief Clear every logger (file or tee)
+         */
+        static void ClearAllLoggers();
+
+    private:
+        /** @brief static storage of the file logger */
+        static std::unordered_map<std::string, FileLogger, string_hash, std::equal_to<>> _file_loggers;
     };
 
     /*
      * Forward declare of print_range.
      */
-    template<typename Range>
+    template <typename Range>
     std::ostream &print_range(std::ostream &os, Range const &range);
 
     /**
@@ -112,7 +113,7 @@ namespace io
      * @param os the ostream
      * @param obj the object
      */
-    template<typename T>
+    template <typename T>
     std::ostream &print(std::ostream &os, T const &obj)
     {
         return os << obj;
@@ -136,7 +137,7 @@ namespace io
      * @param os the ostream
      * @param obj the object
      */
-    template<typename T>
+    template <typename T>
     std::ostream &print(std::ostream &os, std::reference_wrapper<T> const &obj)
     {
         return print(os, obj.get());
@@ -149,7 +150,7 @@ namespace io
      * @param p the pair
      */
     template <typename U, typename V>
-    std::ostream &print(std::ostream &os, const std::pair<U,V> &p)
+    std::ostream &print(std::ostream &os, const std::pair<U, V> &p)
     {
         os << "(";
         print(os, p.first) << ", ";
@@ -162,20 +163,20 @@ namespace io
      * @param os the ostream
      * @param range the range of object
      */
-    template<typename Range>
+    template <typename Range>
     std::ostream &print_range(std::ostream &os, Range const &range)
     {
         os << "[";
         bool first{true};
-        for(auto obj : range)
+        for (auto obj : range)
         {
-            print(os << (first?"":","), obj);
+            print(os << (first ? "" : ","), obj);
             first = false;
         }
         return os << "]";
     }
 
-} //namespace io
+} // namespace io
 
 /**
  * @brief Execute the following instruction provided that a condition is satified
@@ -188,7 +189,11 @@ namespace io
  *  if(!cond){} else instruction
  * @endcode
  */
-#define COND_STATEMENT(cond) if(!cond) {} else
+#define COND_STATEMENT(cond) \
+    if (!cond)               \
+    {                        \
+    }                        \
+    else
 
 /**
  * @brief Log a message in a stream, provided that the log level is >= io::LogLevel::ERROR
@@ -248,45 +253,45 @@ namespace io
  * @param header the message
  * @param range the range
  */
-#define EROR_RANGE(log, header, range) \
+#define EROR_RANGE(log, header, range)                 \
     COND_STATEMENT(log.shouldLog(io::LogLevel::ERROR)) \
-        io::print_range(log.getLog() << header, range)
+    io::print_range(log.getLog() << header, range)
 /**
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::WARNING
  * @param log the log
  * @param header the message
  * @param range the range
  */
-#define WARN_RANGE(log, header, range) \
+#define WARN_RANGE(log, header, range)                   \
     COND_STATEMENT(log.shouldLog(io::LogLevel::WARNING)) \
-        io::print_range(log.getLog() << header, range)
+    io::print_range(log.getLog() << header, range)
 /**
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::INFO
  * @param log the log
  * @param header the message
  * @param range the range
  */
-#define INFO_RANGE(log, header, range) \
+#define INFO_RANGE(log, header, range)                \
     COND_STATEMENT(log.shouldLog(io::LogLevel::INFO)) \
-        io::print_range(log.getLog() << header, range)
+    io::print_range(log.getLog() << header, range)
 /**
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::EXTENDED
  * @param log the log
  * @param header the message
  * @param range the range
  */
-#define EXTD_RANGE(log, header, range) \
+#define EXTD_RANGE(log, header, range)                    \
     COND_STATEMENT(log.shouldLog(io::LogLevel::EXTENDED)) \
-        io::print_range(log.getLog() << header, range)
+    io::print_range(log.getLog() << header, range)
 /**
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::DEBUG
  * @param log the log
  * @param header the message
  * @param range the range
  */
-#define DBUG_RANGE(log, header, range) \
+#define DBUG_RANGE(log, header, range)                 \
     COND_STATEMENT(log.shouldLog(io::LogLevel::DEBUG)) \
-        io::print_range(log.getLog() << header, range)
+    io::print_range(log.getLog() << header, range)
 
 /**
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::ERROR

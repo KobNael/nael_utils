@@ -108,7 +108,8 @@ namespace details
          * @param keep_empty Should we keep the period with only one time stamp
          */
         explicit MakeInter(bool keep_empty) : _keep_empty(keep_empty)
-        {}
+        {
+        }
 
         /**
          * @brief Compute the intersection between two optional periods on a given period
@@ -157,4 +158,4 @@ namespace details
         std::optional<ratio_period> operator()(std::optional<ratio_period> const &p1, std::optional<time_period> const &p2, boost::posix_time::ptime const &from, boost::posix_time::ptime const &to) const;
     };
 
-}//namespace details
+} // namespace details

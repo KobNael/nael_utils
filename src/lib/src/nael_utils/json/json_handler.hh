@@ -16,7 +16,7 @@ namespace json
      * @param context the context to fill
      * @pre T has been declared using #MAKE_DTO_STRUCT
      */
-    template<typename T>
+    template <typename T>
     void import_from_stream(std::istream &istream, T &context)
     {
         boost::json::value j = boost::json::parse(istream);
@@ -30,7 +30,7 @@ namespace json
      * @param context the context to fill
      * @pre T has been declared using #MAKE_DTO_STRUCT
      */
-    template<typename T>
+    template <typename T>
     void import_from_file(std::string const &filePath, T &context)
     {
         std::ifstream istream(filePath, std::ios::in);
@@ -49,24 +49,24 @@ namespace json
      * @param context the context to export
      * @pre T has been declared using #MAKE_DTO_STRUCT
      */
-    template<typename T>
+    template <typename T>
     void export_to_stream(std::ostream &ostream, T const &context)
     {
-        ostream << boost::json::value_from( context );
+        ostream << boost::json::value_from(context);
     }
 
-     /**
+    /**
      * @brief Export a context to a file
      * @tparam T the type of context
      * @param filePath path to the file
      * @param context the context to export
      * @pre T has been declared using #MAKE_DTO_STRUCT
      */
-    template<typename T>
+    template <typename T>
     void export_to_file(std::string const &filePath, T const &context)
     {
         std::ofstream ostream(filePath, std::ios::out);
         export_to_stream(ostream, context);
         ostream.close();
     }
-} //namespace json
+} // namespace json

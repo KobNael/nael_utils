@@ -18,7 +18,8 @@ namespace io
      * @see Logger::setLogLevel
      * @see io::SetLogLevel
      */
-    enum LogLevel{
+    enum LogLevel
+    {
         OFF,      ///< No log at all
         ERROR,    ///< Only Error messages
         WARNING,  ///< Error and Warning messages
@@ -33,73 +34,74 @@ namespace io
      * @brief Interface for logger
      * @tparam ostream The type of output stream
      */
-    template<typename ostream>
+    template <typename ostream>
     class Logger
     {
-        public:
-            /**
-             * @brief Constructor
-             * @param file path to the log file
-             * @param level initial verbosity
-             */
-            Logger(std::string const& file, LogLevel level=io::LogLevel::INFO)
-                : _filePath(file)
-                , _level(level)
-            {}
+    public:
+        /**
+         * @brief Constructor
+         * @param file path to the log file
+         * @param level initial verbosity
+         */
+        Logger(std::string const &file, LogLevel level = io::LogLevel::INFO)
+            : _filePath(file), _level(level)
+        {
+        }
 
-            /**
-             * @brief Destruct
-             */
-            virtual ~Logger() = default;
+        /**
+         * @brief Destruct
+         */
+        virtual ~Logger() = default;
 
-            /**
-             * @brief set the verbosity
-             */
-            void setLogLevel(LogLevel level)
-            {
-                _level = level;
-            }
+        /**
+         * @brief set the verbosity
+         */
+        void setLogLevel(LogLevel level)
+        {
+            _level = level;
+        }
 
-            /**
-             * @brief set the verbosity
-             */
-            LogLevel getLogLevel() const
-            {
-                return _level;
-            }
+        /**
+         * @brief set the verbosity
+         */
+        LogLevel getLogLevel() const
+        {
+            return _level;
+        }
 
-            /**
-             * @return true if the verbosity is greater than leve
-             */
-            bool shouldLog(LogLevel level) const
-            {
-                return _level >= level;
-            }
+        /**
+         * @return true if the verbosity is greater than leve
+         */
+        bool shouldLog(LogLevel level) const
+        {
+            return _level >= level;
+        }
 
-            /**
-             * @return the ostream
-             */
-            ostream &getLog()
-            {
-                return *_stream;
-            };
+        /**
+         * @return the ostream
+         */
+        ostream &getLog()
+        {
+            return *_stream;
+        };
 
-            /**
-             * @brief set the stream
-             */
-            void setLog(ostream& stream)
-            {
-                _stream = &stream;
-            }
+        /**
+         * @brief set the stream
+         */
+        void setLog(ostream &stream)
+        {
+            _stream = &stream;
+        }
 
-        protected:
-            /** @brief Path to the log file */
-            std::string _filePath={""};
-        private:
-            /** @brief Verbosity */
-            LogLevel _level={LogLevel::INFO};
-            /** @brief the stream */
-            ostream *_stream={nullptr};
+    protected:
+        /** @brief Path to the log file */
+        std::string _filePath = {""};
+
+    private:
+        /** @brief Verbosity */
+        LogLevel _level = {LogLevel::INFO};
+        /** @brief the stream */
+        ostream *_stream = {nullptr};
     };
 
     /**
@@ -108,21 +110,22 @@ namespace io
      */
     class FileLogger : public Logger<std::ofstream>
     {
-        public:
-            /**
-             * @brief Constructor
-             * @param file path to the log file
-             * @param level initial verbosity
-             * @throw if the file can not be open
-             */
-            FileLogger(std::string const& file, LogLevel level=LogLevel::INFO);
+    public:
+        /**
+         * @brief Constructor
+         * @param file path to the log file
+         * @param level initial verbosity
+         * @throw if the file can not be open
+         */
+        FileLogger(std::string const &file, LogLevel level = LogLevel::INFO);
 
-            /**
-             * @brief Destructor
-             */
-            ~FileLogger() override;
-        private:
-            std::unique_ptr<std::ofstream> _internal_stream = std::make_unique<std::ofstream>();
+        /**
+         * @brief Destructor
+         */
+        ~FileLogger() override;
+
+    private:
+        std::unique_ptr<std::ofstream> _internal_stream = std::make_unique<std::ofstream>();
     };
 
     /**
@@ -132,7 +135,7 @@ namespace io
     /**
      * @brief Definition of a tee stream
      */
-    using TeeStream= boost::iostreams::stream<TeeDevice>;
+    using TeeStream = boost::iostreams::stream<TeeDevice>;
 
     /**
      * @class TeeLogger
@@ -140,23 +143,23 @@ namespace io
      */
     class TeeLogger : public Logger<TeeStream>
     {
-        public:
-            /**
-             * @brief Constructor
-             * @param file path to the log file
-             * @param level verbosity
-             */
-            TeeLogger(std::string const& file, LogLevel level=LogLevel::INFO);
+    public:
+        /**
+         * @brief Constructor
+         * @param file path to the log file
+         * @param level verbosity
+         */
+        TeeLogger(std::string const &file, LogLevel level = LogLevel::INFO);
 
-            /**
-             * @brief Destructor
-             */
-            ~TeeLogger() override;
+        /**
+         * @brief Destructor
+         */
+        ~TeeLogger() override;
 
-        private:
-            /** @brief ostream to file */
-            std::ofstream _fstream;
-            /** @brief TeeDevice to both console and file */
-            TeeStream _teeStream;
+    private:
+        /** @brief ostream to file */
+        std::ofstream _fstream;
+        /** @brief TeeDevice to both console and file */
+        TeeStream _teeStream;
     };
-}//namespace io
+} // namespace io

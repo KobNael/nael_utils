@@ -14,24 +14,24 @@ namespace details
      */
     struct streamable
     {
-        public:
-            /**
-             * @brief Print the structure description in a stream
-             * @param os the stream
-             */
-            virtual std::ostream &stream(std::ostream &os) const = 0;
+    public:
+        /**
+         * @brief Print the structure description in a stream
+         * @param os the stream
+         */
+        virtual std::ostream &stream(std::ostream &os) const = 0;
 
-            /**
-             * @brief Default Comparison operator
-             */
-            bool operator==(streamable const&) const = default;
+        /**
+         * @brief Default Comparison operator
+         */
+        bool operator==(streamable const &) const = default;
 
-        private:
-            /** @brief OStream operator for streamable structure */
-            friend std::ostream &operator<<(std::ostream &os, streamable const &obj)
-            {
-                return obj.stream(os);
-            }
+    private:
+        /** @brief OStream operator for streamable structure */
+        friend std::ostream &operator<<(std::ostream &os, streamable const &obj)
+        {
+            return obj.stream(os);
+        }
     };
 
-}//details
+} // details

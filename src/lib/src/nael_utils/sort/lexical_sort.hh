@@ -16,7 +16,7 @@
  *      return true if both sides are equivalent
  * @tparam T type of elements to compare
  */
-template<typename T>
+template <typename T>
 struct LexicalComparator
 {
     /**
@@ -44,14 +44,15 @@ struct LexicalComparator
  * @brief Comparator for strict comparison
  * @tparam T the type of elements to compare
  */
-template<typename T>
+template <typename T>
 struct Comparator
 {
     /**
      * @brief Constructor
      */
     explicit Comparator<T>(LexicalComparator<T> const *cmp) : internal_cmp(cmp)
-    {}
+    {
+    }
 
     /**
      * @brief Pointer to original LexicalComparator
@@ -77,8 +78,8 @@ struct Comparator
  * @param lexical_comp The original LexicalComparator
  * @return a Comparator for strict comparison using lexical_comp
  */
-template<typename T>
-Comparator<T> makeComparator(LexicalComparator<T> const & lexical_comp)
+template <typename T>
+Comparator<T> makeComparator(LexicalComparator<T> const &lexical_comp)
 {
     return Comparator<T>(&lexical_comp);
 }
@@ -101,40 +102,39 @@ Comparator<T> makeComparator(LexicalComparator<T> const & lexical_comp)
  * @param start begin iterator for range of elements to sort
  * @param end end iterator for range of elements to sort
  */
-template<typename it_comparator, typename it_to_sort>
+template <typename it_comparator, typename it_to_sort>
 void lexical_sort(
     it_comparator cur_comp,
     it_comparator end_comp,
     it_to_sort start,
     it_to_sort end)
 {
-    if(cur_comp == end_comp)
+    if (cur_comp == end_comp)
     {
         return;
     }
-    //Sort without tolerance, on deterministic mode if there is no other criterion
+    // Sort without tolerance, on deterministic mode if there is no other criterion
     else
     {
-        std::stable_sort( start, end, makeComparator(**cur_comp));
+        std::stable_sort(start, end, makeComparator(**cur_comp));
     }
     it_to_sort cur = start;
     // While there is another criterion
-    while(cur != end)
+    while (cur != end)
     {
-        //Search last element equivalent to current one (using tolerance)
+        // Search last element equivalent to current one (using tolerance)
         it_to_sort next = cur;
-        while(next != end
-        && (*cur_comp)->is_equivalent(*cur, *next))
+        while (next != end && (*cur_comp)->is_equivalent(*cur, *next))
         {
             ++next;
         }
-        //now sort the range (if any) with next criterion
-        if(cur != next)
+        // now sort the range (if any) with next criterion
+        if (cur != next)
         {
             lexical_sort(std::next(cur_comp), end_comp, cur, next);
         }
-        //handle next range if any
-        if(next == end)
+        // handle next range if any
+        if (next == end)
         {
             return;
         }

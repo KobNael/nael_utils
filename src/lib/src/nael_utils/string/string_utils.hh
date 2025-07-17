@@ -27,15 +27,17 @@ namespace str
      * @return the value
      * @throw bad_lexical_cast if the value can not be parsed
      */
-    template<typename T>
+    template <typename T>
     T get_val_from_str(const std::string &str_val)
     {
-        try{
-            T val_l = boost::lexical_cast<T>( str_val );
+        try
+        {
+            T val_l = boost::lexical_cast<T>(str_val);
             return val_l;
         }
-        catch ( const boost::bad_lexical_cast& ) {
-            throw bad_lexical_cast( "Cannot parse value : " + str_val);
+        catch (const boost::bad_lexical_cast &)
+        {
+            throw bad_lexical_cast("Cannot parse value : " + str_val);
         }
     }
 
@@ -44,14 +46,14 @@ namespace str
      * @return the value
      * @throw bad_lexical_cast if the value can not be parsed
      */
-    template<>
+    template <>
     bg::date get_val_from_str<bg::date>(const std::string &str_val);
     /**
      * @brief Read a value from a string (using boost::lexical_cast)
      * @return the value
      * @throw bad_lexical_cast if the value can not be parsed
      */
-    template<>
+    template <>
     bpt::ptime get_val_from_str<bpt::ptime>(const std::string &str_val);
 
     /**

@@ -27,44 +27,46 @@ using time_period = boost::posix_time::time_period;
  */
 struct extended_period
 {
-    public:
-        /**
-         * @brief constructor
-         * @param period the time_period
-         */
-        extended_period(time_period const &period)
-            : _period(period)
-        {}
-        /**
-         * @brief destructor
-         */
-        virtual ~extended_period() = 0;
+public:
+    /**
+     * @brief constructor
+     * @param period the time_period
+     */
+    extended_period(time_period const &period)
+        : _period(period)
+    {
+    }
+    /**
+     * @brief destructor
+     */
+    virtual ~extended_period() = 0;
 
-        /**
-         * @brief constructor
-         * @param start the starting date time
-         * @param end the ending date time
-         */
-        extended_period(boost::posix_time::ptime const &start, boost::posix_time::ptime const &end)
-            : _period(time_period(start, end))
-        {}
-        /** @return the begin of the period */
-        boost::posix_time::ptime begin() const { return _period.begin(); }
-        /** @return the end of the period */
-        boost::posix_time::ptime end() const { return _period.end(); }
-        /** @return the period duration */
-        boost::posix_time::time_duration length() const { return _period.length(); }
-        /** @brief Add duration to both begin and end. */
-        void shift(boost::posix_time::time_duration const &d) { _period.shift(d); }
-        /** @return true if the time_period intersects another time_period */
-        bool intersect(extended_period const &ep) const { return _period.intersects(ep._period); }
-        /** @return true if the time_period contains a ptime */
-        bool contains(boost::posix_time::ptime const &t) const { return _period.contains(t); }
-        /** @brief the time_period */
-        time_period _period;
+    /**
+     * @brief constructor
+     * @param start the starting date time
+     * @param end the ending date time
+     */
+    extended_period(boost::posix_time::ptime const &start, boost::posix_time::ptime const &end)
+        : _period(time_period(start, end))
+    {
+    }
+    /** @return the begin of the period */
+    boost::posix_time::ptime begin() const { return _period.begin(); }
+    /** @return the end of the period */
+    boost::posix_time::ptime end() const { return _period.end(); }
+    /** @return the period duration */
+    boost::posix_time::time_duration length() const { return _period.length(); }
+    /** @brief Add duration to both begin and end. */
+    void shift(boost::posix_time::time_duration const &d) { _period.shift(d); }
+    /** @return true if the time_period intersects another time_period */
+    bool intersect(extended_period const &ep) const { return _period.intersects(ep._period); }
+    /** @return true if the time_period contains a ptime */
+    bool contains(boost::posix_time::ptime const &t) const { return _period.contains(t); }
+    /** @brief the time_period */
+    time_period _period;
 
-        /** @brief equality operator */
-        bool operator==(extended_period const &ep) const = default;
+    /** @brief equality operator */
+    bool operator==(extended_period const &ep) const = default;
 };
 
 /**
@@ -72,48 +74,49 @@ struct extended_period
  * @brief Represents a capacity on a time_period
  * @addtogroup period_type_def
  */
-struct capa_period: public extended_period
+struct capa_period : public extended_period
 {
-    public:
-        /**
-         * @brief constructor
-         * @param capa the capacity
-         * @param period the time_period
-         */
-        capa_period(long long capa, time_period const &period)
-            : extended_period(period)
-            , _capa(capa)
-        {}
-        /**
-         * @brief constructor
-         * @param capa the capacity
-         * @param start the starting date time
-         * @param end the ending date time
-         */
-        capa_period(long long capa, boost::posix_time::ptime const &start, boost::posix_time::ptime const &end)
-            : extended_period(start, end)
-            , _capa(capa)
-        {}
-        /**
-         * @brief destructor
-         */
-        ~capa_period() override = default;
+public:
+    /**
+     * @brief constructor
+     * @param capa the capacity
+     * @param period the time_period
+     */
+    capa_period(long long capa, time_period const &period)
+        : extended_period(period), _capa(capa)
+    {
+    }
+    /**
+     * @brief constructor
+     * @param capa the capacity
+     * @param start the starting date time
+     * @param end the ending date time
+     */
+    capa_period(long long capa, boost::posix_time::ptime const &start, boost::posix_time::ptime const &end)
+        : extended_period(start, end), _capa(capa)
+    {
+    }
+    /**
+     * @brief destructor
+     */
+    ~capa_period() override = default;
 
-        /** @brief the capacity */
-        long long _capa;
+    /** @brief the capacity */
+    long long _capa;
 
-        /** @brief equality operator */
-        bool operator==(capa_period const &cp) const = default;
-    private:
-        /**
-         * @brief OStream operator for capa_period
-         * @param os the ostream
-         * @param cp the capa_period
-         */
-        friend std::ostream &operator<<(std::ostream &os, capa_period const &cp)
-        {
-            return os << "(" << cp._period << "/" << cp._capa << ")";
-        }
+    /** @brief equality operator */
+    bool operator==(capa_period const &cp) const = default;
+
+private:
+    /**
+     * @brief OStream operator for capa_period
+     * @param os the ostream
+     * @param cp the capa_period
+     */
+    friend std::ostream &operator<<(std::ostream &os, capa_period const &cp)
+    {
+        return os << "(" << cp._period << "/" << cp._capa << ")";
+    }
 };
 
 /**
@@ -121,53 +124,54 @@ struct capa_period: public extended_period
  * @brief Represents a variation on a time_period
  * @addtogroup period_type_def
  */
-struct ratio_period: public extended_period
+struct ratio_period : public extended_period
 {
-    public:
-        /**
-         * @brief constructor
-         * @param ratio the variation
-         * @param period the time_period
-         */
-        ratio_period(float ratio, time_period const &period)
-            : extended_period(period)
-            , _ratio(ratio)
-        {}
-        /**
-         * @brief constructor
-         * @param ratio the variation
-         * @param start the starting date time
-         * @param end the ending date time
-         */
-        ratio_period(float ratio, boost::posix_time::ptime const &start, boost::posix_time::ptime const &end)
-            : extended_period(start, end)
-            , _ratio(ratio)
-        {}
-        /**
-         * @brief destructor
-         */
-        ~ratio_period() override = default;
+public:
+    /**
+     * @brief constructor
+     * @param ratio the variation
+     * @param period the time_period
+     */
+    ratio_period(float ratio, time_period const &period)
+        : extended_period(period), _ratio(ratio)
+    {
+    }
+    /**
+     * @brief constructor
+     * @param ratio the variation
+     * @param start the starting date time
+     * @param end the ending date time
+     */
+    ratio_period(float ratio, boost::posix_time::ptime const &start, boost::posix_time::ptime const &end)
+        : extended_period(start, end), _ratio(ratio)
+    {
+    }
+    /**
+     * @brief destructor
+     */
+    ~ratio_period() override = default;
 
-        /**
-         * @return the relative duration
-         */
-        boost::posix_time::time_duration get_relative_duration() const;
+    /**
+     * @return the relative duration
+     */
+    boost::posix_time::time_duration get_relative_duration() const;
 
-        /** @brief the ratio */
-        float _ratio;
+    /** @brief the ratio */
+    float _ratio;
 
-        /** @brief equality operator */
-        bool operator==(ratio_period const &cp) const = default;
-    private:
-        /**
-         * @brief OStream operator for ratio_period
-         * @param os the ostream
-         * @param rp the ratio_period
-         */
-        friend std::ostream &operator<<(std::ostream &os, ratio_period const &rp)
-        {
-            return os << "(" << rp._period << "/" << rp._ratio << ")";
-        }
+    /** @brief equality operator */
+    bool operator==(ratio_period const &cp) const = default;
+
+private:
+    /**
+     * @brief OStream operator for ratio_period
+     * @param os the ostream
+     * @param rp the ratio_period
+     */
+    friend std::ostream &operator<<(std::ostream &os, ratio_period const &rp)
+    {
+        return os << "(" << rp._period << "/" << rp._ratio << ")";
+    }
 };
 
 /**

@@ -5,7 +5,7 @@
 
 /**
  * @file period_utils.hh
- * @brief Toolbox for manipulation of time period.   
+ * @brief Toolbox for manipulation of time period.
  * Two types of time period are proposed, along with shortcuts for list of periods:
  * - #time_period : shortcut for boost::posix_time::time_period
  * - capa_period : #time_period with capacity (long)
@@ -48,8 +48,8 @@
  * @pre the lists must be sorted and contain disjoint periods
  * @return the union
  */
-template<typename PeriodT, typename PeriodU>
-std::list<PeriodT> get_union(std::list<PeriodT> const &periods1, std::list<PeriodU> const &periods2, bool merge_adjacent=true);
+template <typename PeriodT, typename PeriodU>
+std::list<PeriodT> get_union(std::list<PeriodT> const &periods1, std::list<PeriodU> const &periods2, bool merge_adjacent = true);
 /**
  * @brief Compute the union of a period and a list of periods
  * @tparam PeriodT the type of first periods
@@ -60,10 +60,10 @@ std::list<PeriodT> get_union(std::list<PeriodT> const &periods1, std::list<Perio
  * @pre the list must be sorted and contain disjoint periods
  * @return the union
  */
-template<typename PeriodT, typename PeriodU>
-std::list<PeriodT> get_union(PeriodT const &period, std::list<PeriodU> const& periods, bool merge_adjacent=true)
+template <typename PeriodT, typename PeriodU>
+std::list<PeriodT> get_union(PeriodT const &period, std::list<PeriodU> const &periods, bool merge_adjacent = true)
 {
-    return get_union(std::list<PeriodT>(1,period), periods, merge_adjacent);
+    return get_union(std::list<PeriodT>(1, period), periods, merge_adjacent);
 }
 
 /**
@@ -76,10 +76,10 @@ std::list<PeriodT> get_union(PeriodT const &period, std::list<PeriodU> const& pe
  * @pre the list must be sorted and contain disjoint periods
  * @return the union
  */
-template<typename PeriodT, typename PeriodU>
-std::list<PeriodT> get_union(std::list<PeriodT> const &periods, PeriodU const &period, bool merge_adjacent=true)
+template <typename PeriodT, typename PeriodU>
+std::list<PeriodT> get_union(std::list<PeriodT> const &periods, PeriodU const &period, bool merge_adjacent = true)
 {
-    return get_union(periods, std::list<PeriodU>(1,period), merge_adjacent);
+    return get_union(periods, std::list<PeriodU>(1, period), merge_adjacent);
 }
 /**
  * @brief Compute the union of two periods
@@ -91,10 +91,10 @@ std::list<PeriodT> get_union(std::list<PeriodT> const &periods, PeriodU const &p
  * @pre the list must be sorted and contain disjoint periods
  * @return the union
  */
-template<typename PeriodT, typename PeriodU>
-std::list<PeriodT> get_union(PeriodT const &period1, PeriodU const& period2, bool merge_adjacent=true)
+template <typename PeriodT, typename PeriodU>
+std::list<PeriodT> get_union(PeriodT const &period1, PeriodU const &period2, bool merge_adjacent = true)
 {
-    return get_union(std::list<PeriodT>(1,period1), std::list<PeriodU>(1, period2), merge_adjacent);
+    return get_union(std::list<PeriodT>(1, period1), std::list<PeriodU>(1, period2), merge_adjacent);
 }
 
 ////////////////
@@ -110,8 +110,8 @@ std::list<PeriodT> get_union(PeriodT const &period1, PeriodU const& period2, boo
  * @pre the lists must be sorted and contain disjoint periods
  * @return the difference
  */
-template<typename PeriodT, typename PeriodU>
-std::list<PeriodT> get_diff(std::list<PeriodT> const &periods1, std::list<PeriodU> const &periods2, bool merge_adjacent=true);
+template <typename PeriodT, typename PeriodU>
+std::list<PeriodT> get_diff(std::list<PeriodT> const &periods1, std::list<PeriodU> const &periods2, bool merge_adjacent = true);
 /**
  * @brief Compute the difference of a period and a list of periods
  * @tparam PeriodT the type of first periods
@@ -122,10 +122,10 @@ std::list<PeriodT> get_diff(std::list<PeriodT> const &periods1, std::list<Period
  * @pre the list must be sorted and contain disjoint periods
  * @return the difference
  */
-template<typename PeriodT, typename PeriodU>
-std::list<PeriodT> get_diff(PeriodT const &period, std::list<PeriodU> const& periods, bool merge_adjacent=true)
+template <typename PeriodT, typename PeriodU>
+std::list<PeriodT> get_diff(PeriodT const &period, std::list<PeriodU> const &periods, bool merge_adjacent = true)
 {
-    return get_diff(std::list<PeriodT>(1,period), periods, merge_adjacent);
+    return get_diff(std::list<PeriodT>(1, period), periods, merge_adjacent);
 }
 /**
  * @brief Compute the difference of a list of periods and a period
@@ -137,10 +137,10 @@ std::list<PeriodT> get_diff(PeriodT const &period, std::list<PeriodU> const& per
  * @pre the list must be sorted and contain disjoint periods
  * @return the difference
  */
-template<typename PeriodT, typename PeriodU>
-std::list<PeriodT> get_diff(std::list<PeriodT> const &periods, PeriodU const &period, bool merge_adjacent=true)
+template <typename PeriodT, typename PeriodU>
+std::list<PeriodT> get_diff(std::list<PeriodT> const &periods, PeriodU const &period, bool merge_adjacent = true)
 {
-    return get_diff(periods, std::list<PeriodU>(1,period), merge_adjacent);
+    return get_diff(periods, std::list<PeriodU>(1, period), merge_adjacent);
 }
 /**
  * @brief Compute the difference of two periods
@@ -152,10 +152,10 @@ std::list<PeriodT> get_diff(std::list<PeriodT> const &periods, PeriodU const &pe
  * @pre the list must be sorted and contain disjoint periods
  * @return the difference
  */
-template<typename PeriodT, typename PeriodU>
-std::list<PeriodT> get_diff(PeriodT const &period1, PeriodU const& period2, bool merge_adjacent=true)
+template <typename PeriodT, typename PeriodU>
+std::list<PeriodT> get_diff(PeriodT const &period1, PeriodU const &period2, bool merge_adjacent = true)
 {
-    return get_diff(std::list<PeriodT>(1,period1), std::list<PeriodU>(1, period2), merge_adjacent);
+    return get_diff(std::list<PeriodT>(1, period1), std::list<PeriodU>(1, period2), merge_adjacent);
 }
 
 //////////////////
@@ -171,8 +171,8 @@ std::list<PeriodT> get_diff(PeriodT const &period1, PeriodU const& period2, bool
  * @pre the lists must be sorted and contain disjoint periods
  * @return the intersection
  */
-template<typename PeriodT, typename PeriodU>
-std::list<PeriodT> get_inter(std::list<PeriodT> const &periods1, std::list<PeriodU> const &periods2, bool merge_adjacent=true);
+template <typename PeriodT, typename PeriodU>
+std::list<PeriodT> get_inter(std::list<PeriodT> const &periods1, std::list<PeriodU> const &periods2, bool merge_adjacent = true);
 /**
  * @brief Compute the intersection of a period and a list of periods
  * @tparam PeriodT the type of first period
@@ -183,10 +183,10 @@ std::list<PeriodT> get_inter(std::list<PeriodT> const &periods1, std::list<Perio
  * @pre the list must be sorted and contain disjoint periods
  * @return the intersection
  */
-template<typename PeriodT, typename PeriodU>
-std::list<PeriodT> get_inter(PeriodT const &period, std::list<PeriodU> const& periods, bool merge_adjacent=true)
+template <typename PeriodT, typename PeriodU>
+std::list<PeriodT> get_inter(PeriodT const &period, std::list<PeriodU> const &periods, bool merge_adjacent = true)
 {
-    return get_inter(std::list<PeriodT>(1,period), periods, merge_adjacent);
+    return get_inter(std::list<PeriodT>(1, period), periods, merge_adjacent);
 }
 /**
  * @brief Compute the intersection of a list of periods and a period
@@ -198,10 +198,10 @@ std::list<PeriodT> get_inter(PeriodT const &period, std::list<PeriodU> const& pe
  * @pre the list must be sorted and contain disjoint periods
  * @return the intersection
  */
-template<typename PeriodT, typename PeriodU>
-std::list<PeriodT> get_inter(std::list<PeriodT> const &periods, PeriodU const &period, bool merge_adjacent=true)
+template <typename PeriodT, typename PeriodU>
+std::list<PeriodT> get_inter(std::list<PeriodT> const &periods, PeriodU const &period, bool merge_adjacent = true)
 {
-    return get_inter(periods, std::list<PeriodU>(1,period), merge_adjacent);
+    return get_inter(periods, std::list<PeriodU>(1, period), merge_adjacent);
 }
 /**
  * @brief Compute the intersection of two period
@@ -213,10 +213,10 @@ std::list<PeriodT> get_inter(std::list<PeriodT> const &periods, PeriodU const &p
  * @pre the list must be sorted and contain disjoint periods
  * @return the intersection
  */
-template<typename PeriodT, typename PeriodU>
-std::list<PeriodT> get_inter(PeriodT const &period1, PeriodU const& period2, bool merge_adjacent=true)
+template <typename PeriodT, typename PeriodU>
+std::list<PeriodT> get_inter(PeriodT const &period1, PeriodU const &period2, bool merge_adjacent = true)
 {
-    return get_inter(std::list<PeriodT>(1,period1), std::list<PeriodU>(1, period2), merge_adjacent);
+    return get_inter(std::list<PeriodT>(1, period1), std::list<PeriodU>(1, period2), merge_adjacent);
 }
 /**
  * @brief Compute the intersection of two lists of Periods and keep the periods with just one time stamp
@@ -228,8 +228,8 @@ std::list<PeriodT> get_inter(PeriodT const &period1, PeriodU const& period2, boo
  * @pre the lists must be sorted and contain disjoint periods
  * @return the intersection
  */
-template<typename PeriodT, typename PeriodU>
-std::list<PeriodT> get_inter_with_empty(std::list<PeriodT> const &periods1, std::list<PeriodU> const &periods2, bool merge_adjacent=true);
+template <typename PeriodT, typename PeriodU>
+std::list<PeriodT> get_inter_with_empty(std::list<PeriodT> const &periods1, std::list<PeriodU> const &periods2, bool merge_adjacent = true);
 /**
  * @brief Compute the intersection of two lists of Periods and keep the periods with just one time stamp
  * @tparam PeriodT the type of first period
@@ -240,10 +240,10 @@ std::list<PeriodT> get_inter_with_empty(std::list<PeriodT> const &periods1, std:
  * @pre the list must be sorted and contain disjoint periods
  * @return the intersection
  */
-template<typename PeriodT, typename PeriodU>
-std::list<PeriodT> get_inter_with_empty(PeriodT const &period, std::list<PeriodU> const& periods, bool merge_adjacent=true)
+template <typename PeriodT, typename PeriodU>
+std::list<PeriodT> get_inter_with_empty(PeriodT const &period, std::list<PeriodU> const &periods, bool merge_adjacent = true)
 {
-    return get_inter_with_empty(std::list<PeriodT>(1,period), periods, merge_adjacent);
+    return get_inter_with_empty(std::list<PeriodT>(1, period), periods, merge_adjacent);
 }
 /**
  * @brief Compute the intersection of two lists of Periods and keep the periods with just one time stamp
@@ -256,10 +256,10 @@ std::list<PeriodT> get_inter_with_empty(PeriodT const &period, std::list<PeriodU
  * @pre the list must be sorted and contain disjoint periods
  * @return the intersection
  */
-template<typename PeriodT, typename PeriodU>
-std::list<PeriodT> get_inter_with_empty(std::list<PeriodT> const &periods, PeriodU const &period, bool merge_adjacent=true)
+template <typename PeriodT, typename PeriodU>
+std::list<PeriodT> get_inter_with_empty(std::list<PeriodT> const &periods, PeriodU const &period, bool merge_adjacent = true)
 {
-    return get_inter_with_empty(periods, std::list<PeriodU>(1,period), merge_adjacent);
+    return get_inter_with_empty(periods, std::list<PeriodU>(1, period), merge_adjacent);
 }
 /**
  * @brief Compute the intersection of two lists of Periods and keep the periods with just one time stamp
@@ -271,10 +271,10 @@ std::list<PeriodT> get_inter_with_empty(std::list<PeriodT> const &periods, Perio
  * @pre the list must be sorted and contain disjoint periods
  * @return the intersection
  */
-template<typename PeriodT, typename PeriodU>
-std::list<PeriodT> get_inter_with_empty(PeriodT const &period1, PeriodU const& period2, bool merge_adjacent=true)
+template <typename PeriodT, typename PeriodU>
+std::list<PeriodT> get_inter_with_empty(PeriodT const &period1, PeriodU const &period2, bool merge_adjacent = true)
 {
-    return get_inter_with_empty(std::list<PeriodT>(1,period1), std::list<PeriodU>(1, period2), merge_adjacent);
+    return get_inter_with_empty(std::list<PeriodT>(1, period1), std::list<PeriodU>(1, period2), merge_adjacent);
 }
 /**
  * @brief Compute a relative duration
@@ -298,7 +298,7 @@ boost::posix_time::time_duration compute_theoretical_duration(boost::posix_time:
  * @param periods the periods of production
  * @return the cumulative duration
  */
-template<typename PeriodT>
+template <typename PeriodT>
 boost::posix_time::time_duration get_total_duration(std::list<PeriodT> const &periods);
 
 /**
@@ -329,7 +329,7 @@ time_period make_empty_period(boost::posix_time::ptime ptime);
  * @param rhs the second datetime
  * @param tol the tolerance
  */
-bool is_same(boost::posix_time::ptime const &lhs, boost::posix_time::ptime const &rhs, boost::posix_time::time_duration const &tol=boost::posix_time::milliseconds(10));
+bool is_same(boost::posix_time::ptime const &lhs, boost::posix_time::ptime const &rhs, boost::posix_time::time_duration const &tol = boost::posix_time::milliseconds(10));
 
-//Implementation
+// Implementation
 #include <nael_utils/period/period_utils.tpp>

@@ -17,10 +17,7 @@ namespace
             std::distance(
                 view.cbegin(),
                 std::ranges::find_if(view, [](char c)
-                {
-                    return !std::isspace(c);
-                })
-            ) );
+                                     { return !std::isspace(c); })));
         s = view;
     }
 
@@ -32,10 +29,7 @@ namespace
             std::distance(
                 view.crbegin(),
                 std::ranges::find_if(view | std::views::reverse, [](char c)
-                {
-                    return !std::isspace(c);
-                })
-            ) );
+                                     { return !std::isspace(c); })));
         s = view;
     }
 
@@ -46,7 +40,7 @@ namespace
         rtrim(s);
     }
 
-} //namespace
+} // namespace
 
 namespace str
 {
@@ -57,16 +51,16 @@ namespace str
         return s;
     }
 
-    template<>
+    template <>
     bg::date get_val_from_str<bg::date>(const std::string &str_val)
     {
         return bg::date_from_iso_string(str_val);
     }
 
-    template<>
+    template <>
     bpt::ptime get_val_from_str<bpt::ptime>(const std::string &str_val)
     {
         return bpt::from_iso_extended_string(str_val);
     }
 
-}//namespace str
+} // namespace str

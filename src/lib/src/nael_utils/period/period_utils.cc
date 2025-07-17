@@ -48,7 +48,7 @@ bool can_merge(ratio_period const &rp1, ratio_period const &rp2)
 time_period merge(time_period const &tp1, time_period const &tp2)
 {
     assert(can_merge(tp1, tp2));
-    return tp1.span( tp2 );
+    return tp1.span(tp2);
 }
 
 /**
@@ -61,7 +61,7 @@ time_period merge(time_period const &tp1, time_period const &tp2)
 capa_period merge(capa_period const &cp1, capa_period const &cp2)
 {
     assert(can_merge(cp1, cp2));
-    return capa_period(cp1._capa, cp1._period.span( cp2._period ));
+    return capa_period(cp1._capa, cp1._period.span(cp2._period));
 }
 
 /**
@@ -74,7 +74,7 @@ capa_period merge(capa_period const &cp1, capa_period const &cp2)
 ratio_period merge(ratio_period const &rp1, ratio_period const &rp2)
 {
     assert(can_merge(rp1, rp2));
-    return ratio_period(rp1._ratio, rp1._period.span( rp2._period ));
+    return ratio_period(rp1._ratio, rp1._period.span(rp2._period));
 }
 
 // Collect the capa_period with enough capacity and return them as time_period
@@ -85,7 +85,7 @@ LTimePeriod get_eligible_periods(LCapaPeriod const &periods, unsigned min)
         periods.cbegin(), periods.cend(),
         [min, &result](capa_period const &cp)
         {
-            if(cp._capa >= min)
+            if (cp._capa >= min)
             {
                 result.push_back(cp._period);
             }
@@ -93,39 +93,33 @@ LTimePeriod get_eligible_periods(LCapaPeriod const &periods, unsigned min)
     return result;
 }
 
-//Compute a relative duration
+// Compute a relative duration
 boost::posix_time::time_duration compute_relative_duration(boost::posix_time::time_duration duration, float ratio)
 {
     return bpt::milliseconds(
         long(
             std::round(
-                double(duration.total_milliseconds())*ratio
-            )
-        )
-    );
+                double(duration.total_milliseconds()) * ratio)));
 }
 
-//Compute an absolute duration
+// Compute an absolute duration
 boost::posix_time::time_duration compute_theoretical_duration(boost::posix_time::time_duration duration, float ratio)
 {
     return bpt::milliseconds(
         long(
             std::round(
-                double(duration.total_milliseconds())/ratio
-            )
-        )
-    );
+                double(duration.total_milliseconds()) / ratio)));
 }
 
-//Compute the relative duration of a list of periods
+// Compute the relative duration of a list of periods
 bpt::time_duration get_relative_duration(LRatioPeriod const &periods)
 {
     return std::accumulate(
-            periods.begin(), periods.end(), bpt::time_duration(0,0,0),
-            [](bpt::time_duration duration, ratio_period const& period)
-            {
-                return duration + period.get_relative_duration();
-            } );
+        periods.begin(), periods.end(), bpt::time_duration(0, 0, 0),
+        [](bpt::time_duration duration, ratio_period const &period)
+        {
+            return duration + period.get_relative_duration();
+        });
 }
 
 time_period make_empty_period(boost::posix_time::ptime ptime)
@@ -136,13 +130,13 @@ time_period make_empty_period(boost::posix_time::ptime ptime)
 // Checks that two ptime are the same (with a tolerance)
 bool is_same(bpt::ptime const &lhs, bpt::ptime const &rhs, bpt::time_duration const &tol)
 {
-    if(lhs.date() != rhs.date())
+    if (lhs.date() != rhs.date())
     {
         return false;
     }
     bpt::time_duration diff = (lhs > rhs)
-        ? lhs - rhs
-        : rhs - lhs;
+                                  ? lhs - rhs
+                                  : rhs - lhs;
 
     return diff <= tol;
 }
