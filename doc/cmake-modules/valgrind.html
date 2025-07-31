@@ -1,0 +1,198 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Valgrind Memcheck &mdash; Utils 1.2.0 1.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=6efca38a"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Unit tests binary" href="unit_tests.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Utils 1.2.0
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../log/log.html">Log utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exception/exception.html">Exception</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model/model.html">Data Model Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../json/json.html">Json utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../string/string_utils.html">String utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../safecomp/safecomp.html">Safe numerical comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sort/lexical_sort.html">Lexical sort</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../period/period.html">Period utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../thread_pool/thread_pool.html">Thread Pool</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="cmake-modules.html">Cmake-modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="coverage.html">Coverage analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cppcheck.html">CppCheck analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="default_warnings.html">Compilation flags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Findcppcheck.html">CppCheck search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Findgcov.html">Gcov search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Findgcovr.html">Gcovr search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Findlcov.html">Lcov search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="FindSphinx.html">Sphinx search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Findvalgrind.html">Valgrind search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unit_tests.html">Unit tests binary</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Valgrind Memcheck</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">valgrind</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Utils 1.2.0</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="cmake-modules.html">Cmake-modules</a></li>
+      <li class="breadcrumb-item active">Valgrind Memcheck</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/doc/cmake-modules/valgrind.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="unit_tests.html" class="btn btn-neutral float-left" title="Unit tests binary" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="valgrind-memcheck">
+<span id="valgrind"></span><h1>Valgrind Memcheck<a class="headerlink" href="#valgrind-memcheck" title="Link to this heading"></a></h1>
+<section id="id1">
+<h2>valgrind<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>This module defines functions to help use the valgrind tools.
+<span class="target" id="index-0-command:enable_memcheck"></span><a class="reference internal" href="#command:enable_memcheck" title="enable_memcheck"><code class="xref cmake cmake-command docutils literal notranslate"><span class="pre">enable_memcheck()</span></code></a> enables rumtime leak detection.</p>
+<p>Loading this file creates a <code class="docutils literal notranslate"><span class="pre">run_memcheck</span></code> target.</p>
+<dl class="cmake command">
+<dt class="sig sig-object cmake" id="command:enable_memcheck">
+<span class="sig-name descname"><span class="pre">enable_memcheck</span></span><a class="headerlink" href="#command:enable_memcheck" title="Link to this definition"></a></dt>
+<dd><p>Automatically add memory leak detection with valgrind’s memcheck for target.</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nf">enable_memcheck(</span><span class="no">TARGET</span><span class="w"> </span><span class="nb">targetName</span>
+<span class="w">  </span><span class="p">[</span><span class="no">TARGET_ARGS</span><span class="w"> </span><span class="nb">args...</span><span class="p">]</span>
+<span class="w">  </span><span class="p">[</span><span class="no">MEMCHECK_ARGS</span><span class="w"> </span><span class="nb">args...</span><span class="p">]</span>
+<span class="w">  </span><span class="p">[</span><span class="no">EXCLUDE_FROM</span><span class="w"> </span><span class="no">ALL</span><span class="p">]</span>
+<span class="nf">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">enable_memcheck</span></code> creates a new target <code class="docutils literal notranslate"><span class="pre">run_memcheck_&lt;targetName&gt;</span></code> to
+trigger analysis.</p>
+<p>The options are:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">TARGET</span> <span class="pre">targetName</span></code></dt><dd><p>Specifies the target to be analysed, which must be a known CMake executable
+target.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">TARGET_ARGS</span> <span class="pre">args...</span></code></dt><dd><p>Specifies additional arguments to be forwarded to the target called. This
+allows for instance to define a language folder, data directories, etc.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">MEMCHECK_ARGS</span> <span class="pre">args...</span></code></dt><dd><p>Specifies additional arguments to be appended to the memcheck call. This
+allows for instance to increase the stack trace size for some binaries.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">EXCLUDE_FROM_ALL</span></code></dt><dd><p>Normally, the function creates a dependency between the <code class="docutils literal notranslate"><span class="pre">run_memcheck</span></code>
+target and the current <code class="docutils literal notranslate"><span class="pre">run_memcheck_&lt;targetName&gt;</span></code> target, allowing the
+first one to trigger the other one. If this behaviour is not desired (as may
+be the case when some resource is required but not always available), this
+option can be used to prevent the dependency from beeing added.</p>
+</dd>
+</dl>
+<p>For each registered target, a result file is created in
+<code class="docutils literal notranslate"><span class="pre">${data_base_path}/valgrind-reports</span></code>, the actual file name is
+<code class="docutils literal notranslate"><span class="pre">&lt;targetName&gt;.memcheck-results.log</span></code>.</p>
+<p>If not set, ${data_base_path} will be set as ${CMAKE_BINARY_DIR}</p>
+</dd></dl>
+
+<dl class="cmake command">
+<dt class="sig sig-object cmake" id="command:run_memcheck">
+<span class="sig-name descname"><span class="pre">run_memcheck</span></span><a class="headerlink" href="#command:run_memcheck" title="Link to this definition"></a></dt>
+<dd><p>Automatically call memcheck to run and analyse all registered
+<code class="docutils literal notranslate"><span class="pre">run_memcheck_&lt;target_name&gt;</span></code> targets (except those marked with
+<code class="docutils literal notranslate"><span class="pre">EXCLUDE_FROM_ALL</span></code>).</p>
+</dd></dl>
+
+<p>Usage example:</p>
+<blockquote>
+<div><div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nf">set</span> <span class="nf">(</span><span class="no">CMAKE_EXPORT_COMPILE_COMMANDS</span><span class="w"> </span><span class="no">ON</span><span class="nf">)</span>
+
+<span class="nf">include(</span><span class="nb">valgrind</span><span class="nf">)</span>
+
+<span class="nf">add_library(</span><span class="nb">FooLib</span><span class="w"> </span><span class="nb">FooLib.cc</span><span class="nf">)</span>
+<span class="nf">add_executable(</span><span class="nb">FooExe</span><span class="w"> </span><span class="nb">FooExe.cc</span><span class="nf">)</span>
+<span class="nf">add_executable(</span><span class="nb">FooTest</span><span class="w"> </span><span class="nb">FooTest.cc</span><span class="nf">)</span>
+
+<span class="nf">enable_memcheck(</span><span class="no">TARGET</span><span class="w"> </span><span class="nb">FooTest</span>
+<span class="w">  </span><span class="no">TARGET_ARGS</span><span class="w"> </span><span class="p">-</span><span class="nb">lang</span><span class="w"> </span><span class="s">&quot;${CURRENT_SOURCE_DIR}/lang&quot;</span><span class="nf">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Aurélien Questel.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

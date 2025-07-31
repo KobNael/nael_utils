@@ -1,0 +1,451 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Period Functors &mdash; Utils 1.2.0 1.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=6efca38a"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Thread Pool" href="../thread_pool/thread_pool.html" />
+    <link rel="prev" title="Period utilities" href="period.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Utils 1.2.0
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../log/log.html">Log utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exception/exception.html">Exception</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model/model.html">Data Model Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../json/json.html">Json utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../string/string_utils.html">String utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../safecomp/safecomp.html">Safe numerical comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sort/lexical_sort.html">Lexical sort</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="period.html">Period utilities</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="period.html#_CPPv4I00E9get_unionNSt4listI7PeriodTEERKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb"><code class="docutils literal notranslate"><span class="pre">get_union()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="period.html#_CPPv4I00E9get_unionNSt4listI7PeriodTEERK7PeriodTRKNSt4listI7PeriodUEEb"><code class="docutils literal notranslate"><span class="pre">get_union()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="period.html#_CPPv4I00E9get_unionNSt4listI7PeriodTEERKNSt4listI7PeriodTEERK7PeriodUb"><code class="docutils literal notranslate"><span class="pre">get_union()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="period.html#_CPPv4I00E9get_unionNSt4listI7PeriodTEERK7PeriodTRK7PeriodUb"><code class="docutils literal notranslate"><span class="pre">get_union()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="period.html#_CPPv4I00E8get_diffNSt4listI7PeriodTEERKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb"><code class="docutils literal notranslate"><span class="pre">get_diff()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="period.html#_CPPv4I00E8get_diffNSt4listI7PeriodTEERK7PeriodTRKNSt4listI7PeriodUEEb"><code class="docutils literal notranslate"><span class="pre">get_diff()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="period.html#_CPPv4I00E8get_diffNSt4listI7PeriodTEERKNSt4listI7PeriodTEERK7PeriodUb"><code class="docutils literal notranslate"><span class="pre">get_diff()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="period.html#_CPPv4I00E8get_diffNSt4listI7PeriodTEERK7PeriodTRK7PeriodUb"><code class="docutils literal notranslate"><span class="pre">get_diff()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="period.html#_CPPv4I00E9get_interNSt4listI7PeriodTEERKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb"><code class="docutils literal notranslate"><span class="pre">get_inter()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="period.html#_CPPv4I00E9get_interNSt4listI7PeriodTEERK7PeriodTRKNSt4listI7PeriodUEEb"><code class="docutils literal notranslate"><span class="pre">get_inter()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="period.html#_CPPv4I00E9get_interNSt4listI7PeriodTEERKNSt4listI7PeriodTEERK7PeriodUb"><code class="docutils literal notranslate"><span class="pre">get_inter()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="period.html#_CPPv4I00E9get_interNSt4listI7PeriodTEERK7PeriodTRK7PeriodUb"><code class="docutils literal notranslate"><span class="pre">get_inter()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="period.html#_CPPv4I00E20get_inter_with_emptyNSt4listI7PeriodTEERKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb"><code class="docutils literal notranslate"><span class="pre">get_inter_with_empty()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="period.html#_CPPv4I00E20get_inter_with_emptyNSt4listI7PeriodTEERK7PeriodTRKNSt4listI7PeriodUEEb"><code class="docutils literal notranslate"><span class="pre">get_inter_with_empty()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="period.html#_CPPv4I00E20get_inter_with_emptyNSt4listI7PeriodTEERKNSt4listI7PeriodTEERK7PeriodUb"><code class="docutils literal notranslate"><span class="pre">get_inter_with_empty()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="period.html#_CPPv4I00E20get_inter_with_emptyNSt4listI7PeriodTEERK7PeriodTRK7PeriodUb"><code class="docutils literal notranslate"><span class="pre">get_inter_with_empty()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="period.html#_CPPv425compute_relative_durationN5boost10posix_time13time_durationEf"><code class="docutils literal notranslate"><span class="pre">compute_relative_duration()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="period.html#_CPPv428compute_theoretical_durationN5boost10posix_time13time_durationEf"><code class="docutils literal notranslate"><span class="pre">compute_theoretical_duration()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="period.html#_CPPv4I0E18get_total_durationN5boost10posix_time13time_durationERKNSt4listI7PeriodTEE"><code class="docutils literal notranslate"><span class="pre">get_total_duration()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="period.html#_CPPv421get_relative_durationRK12LRatioPeriod"><code class="docutils literal notranslate"><span class="pre">get_relative_duration()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="period.html#_CPPv420get_eligible_periodsRK11LCapaPeriodj"><code class="docutils literal notranslate"><span class="pre">get_eligible_periods()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="period.html#_CPPv417make_empty_periodN5boost10posix_time5ptimeE"><code class="docutils literal notranslate"><span class="pre">make_empty_period()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="period.html#_CPPv47is_sameRKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeERKN5boost10posix_time13time_durationE"><code class="docutils literal notranslate"><span class="pre">is_same()</span></code></a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Period Functors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv47details"><code class="docutils literal notranslate"><span class="pre">details</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N7details8MakeDiffE"><code class="docutils literal notranslate"><span class="pre">details::MakeDiff</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N7details9MakeInterE"><code class="docutils literal notranslate"><span class="pre">details::MakeInter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N7details9MakeUnionE"><code class="docutils literal notranslate"><span class="pre">details::MakeUnion</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../thread_pool/thread_pool.html">Thread Pool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cmake-modules/cmake-modules.html">Cmake-modules</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Utils 1.2.0</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="period.html">Period utilities</a></li>
+      <li class="breadcrumb-item active">Period Functors</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/doc/period/period_functor.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="period.html" class="btn btn-neutral float-left" title="Period utilities" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../thread_pool/thread_pool.html" class="btn btn-neutral float-right" title="Thread Pool" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="period-functors">
+<span id="period-functor"></span><h1>Period Functors<a class="headerlink" href="#period-functors" title="Link to this heading"></a></h1>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv47details">
+<span id="_CPPv37details"></span><span id="_CPPv27details"></span><span id="details"></span><span class="target" id="namespacedetails"></span><span class="k"><span class="pre">namespace</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">details</span></span></span><a class="headerlink" href="#_CPPv47details" title="Link to this definition"></a><br /></dt>
+<dd><dl class="cpp struct">
+<dt class="sig sig-object cpp" id="_CPPv4N7details8MakeDiffE">
+<span id="_CPPv3N7details8MakeDiffE"></span><span id="_CPPv2N7details8MakeDiffE"></span><span id="details::MakeDiff"></span><span class="target" id="structdetails_1_1MakeDiff"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">MakeDiff</span></span></span><a class="headerlink" href="#_CPPv4N7details8MakeDiffE" title="Link to this definition"></a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;period_functor.hh&gt;</em></div>
+<p>Functor making the difference of two (capa) periods. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7details8MakeDiffclERKNSt8optionalI11time_periodEERKNSt8optionalI11time_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE">
+<span id="_CPPv3NK7details8MakeDiffclERKNSt8optionalI11time_periodEERKNSt8optionalI11time_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE"></span><span id="_CPPv2NK7details8MakeDiffclERKNSt8optionalI11time_periodEERKNSt8optionalI11time_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE"></span><span id="details::MakeDiff::call-operator__std::optional:time_period:CR.std::optional:time_period:CR.boost::posix_time::ptimeCR.boost::posix_time::ptimeCRC"></span><span class="target" id="structdetails_1_1MakeDiff_1a7f51bfa1df47fa8a4aeb9aa15f4c66b9"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">time_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">time_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p1</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">time_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p2</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">from</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">to</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7details8MakeDiffclERKNSt8optionalI11time_periodEERKNSt8optionalI11time_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the difference between two optional periods on a given period. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p1</strong> – the first period </p></li>
+<li><p><strong>p2</strong> – the second period </p></li>
+<li><p><strong>from</strong> – the starting ptime of the period to consider </p></li>
+<li><p><strong>to</strong> – the ending ptime of the period to consider </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the resulting time_period </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7details8MakeDiffclERKNSt8optionalI11capa_periodEERKNSt8optionalI11capa_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE">
+<span id="_CPPv3NK7details8MakeDiffclERKNSt8optionalI11capa_periodEERKNSt8optionalI11capa_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE"></span><span id="_CPPv2NK7details8MakeDiffclERKNSt8optionalI11capa_periodEERKNSt8optionalI11capa_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE"></span><span id="details::MakeDiff::call-operator__std::optional:capa_period:CR.std::optional:capa_period:CR.boost::posix_time::ptimeCR.boost::posix_time::ptimeCRC"></span><span class="target" id="structdetails_1_1MakeDiff_1a295c5cbcb60658237ae4174282d0b5e5"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">capa_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">capa_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p1</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">capa_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p2</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">from</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">to</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7details8MakeDiffclERKNSt8optionalI11capa_periodEERKNSt8optionalI11capa_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the difference between two optional capa_periods on a given period. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p1</strong> – the first capa_period</p></li>
+<li><p><strong>p2</strong> – the second capa_period</p></li>
+<li><p><strong>from</strong> – the starting ptime of the period to consider </p></li>
+<li><p><strong>to</strong> – the ending ptime of the period to consider </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the resulting capa_period</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7details8MakeDiffclERKNSt8optionalI11time_periodEERKNSt8optionalI11capa_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE">
+<span id="_CPPv3NK7details8MakeDiffclERKNSt8optionalI11time_periodEERKNSt8optionalI11capa_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE"></span><span id="_CPPv2NK7details8MakeDiffclERKNSt8optionalI11time_periodEERKNSt8optionalI11capa_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE"></span><span id="details::MakeDiff::call-operator__std::optional:time_period:CR.std::optional:capa_period:CR.boost::posix_time::ptimeCR.boost::posix_time::ptimeCRC"></span><span class="target" id="structdetails_1_1MakeDiff_1af42f4f068b6d9c79914c2a229bcad411"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">time_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">time_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p1</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">capa_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p2</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">from</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">to</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7details8MakeDiffclERKNSt8optionalI11time_periodEERKNSt8optionalI11capa_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the difference between an optional time_period and an optional capa_period on a given period. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p1</strong> – the time_period </p></li>
+<li><p><strong>p2</strong> – the capa_period</p></li>
+<li><p><strong>from</strong> – the starting ptime of the period to consider </p></li>
+<li><p><strong>to</strong> – the ending ptime of the period to consider </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the resulting time_period </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7details8MakeDiffclERKNSt8optionalI11capa_periodEERKNSt8optionalI11time_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE">
+<span id="_CPPv3NK7details8MakeDiffclERKNSt8optionalI11capa_periodEERKNSt8optionalI11time_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE"></span><span id="_CPPv2NK7details8MakeDiffclERKNSt8optionalI11capa_periodEERKNSt8optionalI11time_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE"></span><span id="details::MakeDiff::call-operator__std::optional:capa_period:CR.std::optional:time_period:CR.boost::posix_time::ptimeCR.boost::posix_time::ptimeCRC"></span><span class="target" id="structdetails_1_1MakeDiff_1adb81034782d2042f01c6322fe3a1cda8"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">capa_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">capa_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p1</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">time_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p2</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">from</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">to</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7details8MakeDiffclERKNSt8optionalI11capa_periodEERKNSt8optionalI11time_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the difference between an optional capa_period and an optional time_period on a given period. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p1</strong> – the first period </p></li>
+<li><p><strong>p2</strong> – the second period </p></li>
+<li><p><strong>from</strong> – the starting ptime of the period to consider </p></li>
+<li><p><strong>to</strong> – the ending ptime of the period to consider </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the resulting capa_period</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt class="sig sig-object cpp" id="_CPPv4N7details9MakeInterE">
+<span id="_CPPv3N7details9MakeInterE"></span><span id="_CPPv2N7details9MakeInterE"></span><span id="details::MakeInter"></span><span class="target" id="structdetails_1_1MakeInter"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">MakeInter</span></span></span><a class="headerlink" href="#_CPPv4N7details9MakeInterE" title="Link to this definition"></a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;period_functor.hh&gt;</em></div>
+<p>Functor making the intersection of two (capa) periods. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7details9MakeInter9MakeInterEb">
+<span id="_CPPv3N7details9MakeInter9MakeInterEb"></span><span id="_CPPv2N7details9MakeInter9MakeInterEb"></span><span id="details::MakeInter::MakeInter__b"></span><span class="target" id="structdetails_1_1MakeInter_1aa827b3723e8b5ea9f4d05abc5aef3f14"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">MakeInter</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">keep_empty</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7details9MakeInter9MakeInterEb" title="Link to this definition"></a><br /></dt>
+<dd><p>Constructor. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>keep_empty</strong> – Should we keep the period with only one time stamp </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7details9MakeInterclERKNSt8optionalI11time_periodEERKNSt8optionalI11time_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE">
+<span id="_CPPv3NK7details9MakeInterclERKNSt8optionalI11time_periodEERKNSt8optionalI11time_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE"></span><span id="_CPPv2NK7details9MakeInterclERKNSt8optionalI11time_periodEERKNSt8optionalI11time_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE"></span><span id="details::MakeInter::call-operator__std::optional:time_period:CR.std::optional:time_period:CR.boost::posix_time::ptimeCR.boost::posix_time::ptimeCRC"></span><span class="target" id="structdetails_1_1MakeInter_1a1987a2a594c5e6832246370ea427fcb4"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">time_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">time_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p1</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">time_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p2</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">from</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">to</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7details9MakeInterclERKNSt8optionalI11time_periodEERKNSt8optionalI11time_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the intersection between two optional periods on a given period. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p1</strong> – the first period </p></li>
+<li><p><strong>p2</strong> – the second period </p></li>
+<li><p><strong>from</strong> – the starting ptime of the period to consider </p></li>
+<li><p><strong>to</strong> – the ending ptime of the period to consider </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the resulting time_period </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7details9MakeInterclERKNSt8optionalI11capa_periodEERKNSt8optionalI11capa_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE">
+<span id="_CPPv3NK7details9MakeInterclERKNSt8optionalI11capa_periodEERKNSt8optionalI11capa_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE"></span><span id="_CPPv2NK7details9MakeInterclERKNSt8optionalI11capa_periodEERKNSt8optionalI11capa_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE"></span><span id="details::MakeInter::call-operator__std::optional:capa_period:CR.std::optional:capa_period:CR.boost::posix_time::ptimeCR.boost::posix_time::ptimeCRC"></span><span class="target" id="structdetails_1_1MakeInter_1a3839312a1fde0e945323aadd56fbe3af"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">capa_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">capa_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p1</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">capa_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p2</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">from</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">to</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7details9MakeInterclERKNSt8optionalI11capa_periodEERKNSt8optionalI11capa_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the intersection between two optional capa_periods on a given period. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p1</strong> – the first capa_period</p></li>
+<li><p><strong>p2</strong> – the second capa_period</p></li>
+<li><p><strong>from</strong> – the starting ptime of the period to consider </p></li>
+<li><p><strong>to</strong> – the ending ptime of the period to consider </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the resulting capa_period</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7details9MakeInterclERKNSt8optionalI11time_periodEERKNSt8optionalI11capa_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE">
+<span id="_CPPv3NK7details9MakeInterclERKNSt8optionalI11time_periodEERKNSt8optionalI11capa_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE"></span><span id="_CPPv2NK7details9MakeInterclERKNSt8optionalI11time_periodEERKNSt8optionalI11capa_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE"></span><span id="details::MakeInter::call-operator__std::optional:time_period:CR.std::optional:capa_period:CR.boost::posix_time::ptimeCR.boost::posix_time::ptimeCRC"></span><span class="target" id="structdetails_1_1MakeInter_1aa146f906ceac79c8054c338f5ad287b5"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">time_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">time_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p1</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">capa_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p2</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">from</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">to</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7details9MakeInterclERKNSt8optionalI11time_periodEERKNSt8optionalI11capa_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the intersection between an optional time_period and an optional capa_period on a given period. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p1</strong> – the time_period </p></li>
+<li><p><strong>p2</strong> – the capa_period</p></li>
+<li><p><strong>from</strong> – the starting ptime of the period to consider </p></li>
+<li><p><strong>to</strong> – the ending ptime of the period to consider </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the resulting time_period </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7details9MakeInterclERKNSt8optionalI11capa_periodEERKNSt8optionalI11time_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE">
+<span id="_CPPv3NK7details9MakeInterclERKNSt8optionalI11capa_periodEERKNSt8optionalI11time_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE"></span><span id="_CPPv2NK7details9MakeInterclERKNSt8optionalI11capa_periodEERKNSt8optionalI11time_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE"></span><span id="details::MakeInter::call-operator__std::optional:capa_period:CR.std::optional:time_period:CR.boost::posix_time::ptimeCR.boost::posix_time::ptimeCRC"></span><span class="target" id="structdetails_1_1MakeInter_1ac0157a1972fdd5481cfa4c1f9025519a"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">capa_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">capa_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p1</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">time_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p2</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">from</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">to</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7details9MakeInterclERKNSt8optionalI11capa_periodEERKNSt8optionalI11time_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the intersection between an optional capa_period and an optional time_period on a given period. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p1</strong> – the first period </p></li>
+<li><p><strong>p2</strong> – the second period </p></li>
+<li><p><strong>from</strong> – the starting ptime of the period to consider </p></li>
+<li><p><strong>to</strong> – the ending ptime of the period to consider </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the resulting capa_period</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7details9MakeInterclERKNSt8optionalI12ratio_periodEERKNSt8optionalI11time_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE">
+<span id="_CPPv3NK7details9MakeInterclERKNSt8optionalI12ratio_periodEERKNSt8optionalI11time_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE"></span><span id="_CPPv2NK7details9MakeInterclERKNSt8optionalI12ratio_periodEERKNSt8optionalI11time_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE"></span><span id="details::MakeInter::call-operator__std::optional:ratio_period:CR.std::optional:time_period:CR.boost::posix_time::ptimeCR.boost::posix_time::ptimeCRC"></span><span class="target" id="structdetails_1_1MakeInter_1a9aa4555e1c64029bff9d9f7c7f346897"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">ratio_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">ratio_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p1</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">time_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p2</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">from</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">to</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7details9MakeInterclERKNSt8optionalI12ratio_periodEERKNSt8optionalI11time_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the intersection between an optional ratio_period and an optional time_period on a given period. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p1</strong> – the ratio_period</p></li>
+<li><p><strong>p2</strong> – the time_period </p></li>
+<li><p><strong>from</strong> – the starting ptime of the period to consider </p></li>
+<li><p><strong>to</strong> – the ending ptime of the period to consider </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the resulting ratio_period</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N7details9MakeInter11_keep_emptyE">
+<span id="_CPPv3N7details9MakeInter11_keep_emptyE"></span><span id="_CPPv2N7details9MakeInter11_keep_emptyE"></span><span id="details::MakeInter::_keep_empty__b"></span><span class="target" id="structdetails_1_1MakeInter_1aa6b51b5eed58553cfaa463f458c8aecf"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_keep_empty</span></span></span><a class="headerlink" href="#_CPPv4N7details9MakeInter11_keep_emptyE" title="Link to this definition"></a><br /></dt>
+<dd><p>Should we keep the period with only one time stamp. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt class="sig sig-object cpp" id="_CPPv4N7details9MakeUnionE">
+<span id="_CPPv3N7details9MakeUnionE"></span><span id="_CPPv2N7details9MakeUnionE"></span><span id="details::MakeUnion"></span><span class="target" id="structdetails_1_1MakeUnion"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">MakeUnion</span></span></span><a class="headerlink" href="#_CPPv4N7details9MakeUnionE" title="Link to this definition"></a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;period_functor.hh&gt;</em></div>
+<p>Functor making the union of two (capa) periods. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7details9MakeUnionclERKNSt8optionalI11time_periodEERKNSt8optionalI11time_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE">
+<span id="_CPPv3NK7details9MakeUnionclERKNSt8optionalI11time_periodEERKNSt8optionalI11time_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE"></span><span id="_CPPv2NK7details9MakeUnionclERKNSt8optionalI11time_periodEERKNSt8optionalI11time_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE"></span><span id="details::MakeUnion::call-operator__std::optional:time_period:CR.std::optional:time_period:CR.boost::posix_time::ptimeCR.boost::posix_time::ptimeCRC"></span><span class="target" id="structdetails_1_1MakeUnion_1a50da32bb241120059d1bfae42d185f8c"></span><span class="n"><span class="pre">time_period</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">time_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p1</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">time_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p2</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">from</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">to</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7details9MakeUnionclERKNSt8optionalI11time_periodEERKNSt8optionalI11time_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the union between two optional periods on a given period. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p1</strong> – the first period </p></li>
+<li><p><strong>p2</strong> – the second period </p></li>
+<li><p><strong>from</strong> – the starting ptime of the period to consider </p></li>
+<li><p><strong>to</strong> – the ending ptime of the period to consider </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the resulting time_period </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7details9MakeUnionclERKNSt8optionalI11capa_periodEERKNSt8optionalI11capa_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE">
+<span id="_CPPv3NK7details9MakeUnionclERKNSt8optionalI11capa_periodEERKNSt8optionalI11capa_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE"></span><span id="_CPPv2NK7details9MakeUnionclERKNSt8optionalI11capa_periodEERKNSt8optionalI11capa_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE"></span><span id="details::MakeUnion::call-operator__std::optional:capa_period:CR.std::optional:capa_period:CR.boost::posix_time::ptimeCR.boost::posix_time::ptimeCRC"></span><span class="target" id="structdetails_1_1MakeUnion_1a950cbb7b2d1d20f6aa9c45965f40f8ad"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">capa_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">capa_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p1</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">capa_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p2</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">from</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">to</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7details9MakeUnionclERKNSt8optionalI11capa_periodEERKNSt8optionalI11capa_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the union between two optional capa_periods on a given period. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p1</strong> – the first capa_period</p></li>
+<li><p><strong>p2</strong> – the second capa_period</p></li>
+<li><p><strong>from</strong> – the starting ptime of the period to consider </p></li>
+<li><p><strong>to</strong> – the ending ptime of the period to consider </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7details9MakeUnionclERKNSt8optionalI12ratio_periodEERKNSt8optionalI12ratio_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE">
+<span id="_CPPv3NK7details9MakeUnionclERKNSt8optionalI12ratio_periodEERKNSt8optionalI12ratio_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE"></span><span id="_CPPv2NK7details9MakeUnionclERKNSt8optionalI12ratio_periodEERKNSt8optionalI12ratio_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE"></span><span id="details::MakeUnion::call-operator__std::optional:ratio_period:CR.std::optional:ratio_period:CR.boost::posix_time::ptimeCR.boost::posix_time::ptimeCRC"></span><span class="target" id="structdetails_1_1MakeUnion_1a4085bc5be020e6479f8f67d43a113ce2"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">ratio_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">ratio_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p1</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">ratio_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p2</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">from</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">to</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7details9MakeUnionclERKNSt8optionalI12ratio_periodEERKNSt8optionalI12ratio_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the union between two optional ratio_periods on a given period. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p1</strong> – the first ratio_period</p></li>
+<li><p><strong>p2</strong> – the second ratio_period</p></li>
+<li><p><strong>from</strong> – the starting ptime of the period to consider </p></li>
+<li><p><strong>to</strong> – the ending ptime of the period to consider </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7details9MakeUnionclERKNSt8optionalI11time_periodEERKNSt8optionalI11capa_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE">
+<span id="_CPPv3NK7details9MakeUnionclERKNSt8optionalI11time_periodEERKNSt8optionalI11capa_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE"></span><span id="_CPPv2NK7details9MakeUnionclERKNSt8optionalI11time_periodEERKNSt8optionalI11capa_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE"></span><span id="details::MakeUnion::call-operator__std::optional:time_period:CR.std::optional:capa_period:CR.boost::posix_time::ptimeCR.boost::posix_time::ptimeCRC"></span><span class="target" id="structdetails_1_1MakeUnion_1a4234821f1338a37f1ab00338daeaef67"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">time_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">time_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p1</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">capa_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p2</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">from</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">to</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7details9MakeUnionclERKNSt8optionalI11time_periodEERKNSt8optionalI11capa_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the union between an optional time_period and an optional capa_period on a given period. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p1</strong> – the time_period </p></li>
+<li><p><strong>p2</strong> – the capa_period</p></li>
+<li><p><strong>from</strong> – the starting ptime of the period to consider </p></li>
+<li><p><strong>to</strong> – the ending ptime of the period to consider </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the resulting time_period </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Aurélien Questel.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

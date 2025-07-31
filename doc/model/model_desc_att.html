@@ -1,0 +1,437 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Model Generation &mdash; Utils 1.2.0 1.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=6efca38a"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Json utilities" href="../json/json.html" />
+    <link rel="prev" title="Data Model Stream" href="model_print.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Utils 1.2.0
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../log/log.html">Log utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exception/exception.html">Exception</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="model.html">Data Model Utils</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="model_desc.html">Data Model Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_print.html">Data Model Stream</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Data Model Generation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../json/json.html">Json utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../string/string_utils.html">String utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../safecomp/safecomp.html">Safe numerical comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sort/lexical_sort.html">Lexical sort</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../period/period.html">Period utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../thread_pool/thread_pool.html">Thread Pool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cmake-modules/cmake-modules.html">Cmake-modules</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Utils 1.2.0</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="model.html">Data Model Utils</a></li>
+      <li class="breadcrumb-item active">Data Model Generation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/doc/model/model_desc_att.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="model_print.html" class="btn btn-neutral float-left" title="Data Model Stream" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../json/json.html" class="btn btn-neutral float-right" title="Json utilities" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="data-model-generation">
+<span id="model-desc-att"></span><h1>Data Model Generation<a class="headerlink" href="#data-model-generation" title="Link to this heading"></a></h1>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-defines">Defines</p>
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.GET_DTO_ATT_NAME_VARIABLE">
+<span class="target" id="model__desc__att_8hh_1a643d1e8ba5322843b4dd620da9ec91ec"></span><span class="sig-name descname"><span class="n"><span class="pre">GET_DTO_ATT_NAME_VARIABLE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">r</span></span>, <span class="n"><span class="pre">data</span></span>, <span class="n"><span class="pre">i</span></span>, <span class="n"><span class="pre">att_desc</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GET_DTO_ATT_NAME_VARIABLE" title="Link to this definition"></a><br /></dt>
+<dd><p>Extract the name of an attribute described as a tuple (type, name) adding a separator if needed. </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This macro should not be called directly, it is used through <a class="reference internal" href="model_desc.html#model__desc_8hh_1a17c7ae1f1ad13ff5aa7e5636fd6fb8d9"><span class="std std-ref">MAKE_CLASS_ATT</span></a> and <a class="reference internal" href="model_desc.html#model__desc_8hh_1a258a491864f3e6bdbcc3c0cae8f93ad7"><span class="std std-ref">MAKE_DTO_STRUCT</span></a></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong></p></li>
+<li><p><strong>data</strong></p></li>
+<li><p><strong>i</strong></p></li>
+<li><p><strong>att_desc</strong> – the tuple </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.GET_DTO_ATT_NAMES">
+<span class="target" id="model__desc__att_8hh_1af307cbb89f8b680e72a51b1f6df76e85"></span><span class="sig-name descname"><span class="n"><span class="pre">GET_DTO_ATT_NAMES</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">att_seq</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GET_DTO_ATT_NAMES" title="Link to this definition"></a><br /></dt>
+<dd><p>Extract every attribute names from a sequence of attribute description. </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This macro should not be called directly, it is used through <a class="reference internal" href="model_desc.html#model__desc_8hh_1a258a491864f3e6bdbcc3c0cae8f93ad7"><span class="std std-ref">MAKE_DTO_STRUCT</span></a></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>att_seq</strong> – the sequence of attributes </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.COMPARE_ATT_VARIABLE">
+<span class="target" id="model__desc__att_8hh_1a263744cb5fdf084b4e0fff71374d1087"></span><span class="sig-name descname"><span class="n"><span class="pre">COMPARE_ATT_VARIABLE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">r</span></span>, <span class="n"><span class="pre">data</span></span>, <span class="n"><span class="pre">att</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.COMPARE_ATT_VARIABLE" title="Link to this definition"></a><br /></dt>
+<dd><p>Generate a safe comparison on an attribute. </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This macro should not be called directly, it is used through <a class="reference internal" href="model_desc.html#model__desc_8hh_1add118b6d8457b20ee9f095c40136180f"><span class="std std-ref">MAKE_CLASS_SORT</span></a></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong></p></li>
+<li><p><strong>data</strong></p></li>
+<li><p><strong>att</strong> – name of the attribute </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.COMPARE_ATT_LIST">
+<span class="target" id="model__desc__att_8hh_1a5a5cd10095dc765f15bde3b7b8869503"></span><span class="sig-name descname"><span class="n"><span class="pre">COMPARE_ATT_LIST</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">att_seq</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.COMPARE_ATT_LIST" title="Link to this definition"></a><br /></dt>
+<dd><p>Generate a safe comparison on a sequence of attributes. </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This macro should not be called directly, it is used through <a class="reference internal" href="model_desc.html#model__desc_8hh_1add118b6d8457b20ee9f095c40136180f"><span class="std std-ref">MAKE_CLASS_SORT</span></a></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>att_seq</strong></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.MAKE_ATT_INIT">
+<span class="target" id="model__desc__att_8hh_1aa082948f7b25a1d7dd6b91e713dbd03b"></span><span class="sig-name descname"><span class="n"><span class="pre">MAKE_ATT_INIT</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">add</span></span>, <span class="n"><span class="pre">val</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.MAKE_ATT_INIT" title="Link to this definition"></a><br /></dt>
+<dd><p>Generate an initialization of an attribute value. </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This macro should not be called directly, it is used through <a class="reference internal" href="model_desc.html#model__desc_8hh_1a17c7ae1f1ad13ff5aa7e5636fd6fb8d9"><span class="std std-ref">MAKE_CLASS_ATT</span></a> and <a class="reference internal" href="model_desc.html#model__desc_8hh_1a258a491864f3e6bdbcc3c0cae8f93ad7"><span class="std std-ref">MAKE_DTO_STRUCT</span></a></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>add</strong> – should we add the initialization </p></li>
+<li><p><strong>val</strong> – the value </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.MAKE_DTO_ATT_DECL_VARIABLE">
+<span class="target" id="model__desc__att_8hh_1a5781bf5444f172902e5de1a1e5835915"></span><span class="sig-name descname"><span class="n"><span class="pre">MAKE_DTO_ATT_DECL_VARIABLE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">r</span></span>, <span class="n"><span class="pre">data</span></span>, <span class="n"><span class="pre">att_desc</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.MAKE_DTO_ATT_DECL_VARIABLE" title="Link to this definition"></a><br /></dt>
+<dd><p>Create the declaration of an attribute described as a tuple (type, name) </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This macro should not be called directly, it is used through <a class="reference internal" href="model_desc.html#model__desc_8hh_1a17c7ae1f1ad13ff5aa7e5636fd6fb8d9"><span class="std std-ref">MAKE_CLASS_ATT</span></a> and <a class="reference internal" href="model_desc.html#model__desc_8hh_1a258a491864f3e6bdbcc3c0cae8f93ad7"><span class="std std-ref">MAKE_DTO_STRUCT</span></a></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong></p></li>
+<li><p><strong>data</strong></p></li>
+<li><p><strong>att_desc</strong> – the tuple </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.MAKE_CLASS_ATT_DECL_VARIABLE">
+<span class="target" id="model__desc__att_8hh_1a4d85ef5cf47c88ddc8f03f6a543aaf39"></span><span class="sig-name descname"><span class="n"><span class="pre">MAKE_CLASS_ATT_DECL_VARIABLE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">r</span></span>, <span class="n"><span class="pre">data</span></span>, <span class="n"><span class="pre">att_desc</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.MAKE_CLASS_ATT_DECL_VARIABLE" title="Link to this definition"></a><br /></dt>
+<dd><p>Create the declaration of an attribute described as a tuple (type, name) </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This macro should not be called directly, it is used through <a class="reference internal" href="model_desc.html#model__desc_8hh_1a17c7ae1f1ad13ff5aa7e5636fd6fb8d9"><span class="std std-ref">MAKE_CLASS_ATT</span></a> and <a class="reference internal" href="model_desc.html#model__desc_8hh_1a258a491864f3e6bdbcc3c0cae8f93ad7"><span class="std std-ref">MAKE_DTO_STRUCT</span></a></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong></p></li>
+<li><p><strong>data</strong></p></li>
+<li><p><strong>att_desc</strong> – the tuple </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.MAKE_ATT_DECLARATION">
+<span class="target" id="model__desc__att_8hh_1a4590cb92b46cd2c8889e0ff4fd779d93"></span><span class="sig-name descname"><span class="n"><span class="pre">MAKE_ATT_DECLARATION</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">class</span></span>, <span class="n"><span class="pre">att_seq</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.MAKE_ATT_DECLARATION" title="Link to this definition"></a><br /></dt>
+<dd><p>Create the declaration of every attribute in a sequence of attribute description. </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This macro should not be called directly, it is used through <a class="reference internal" href="model_desc.html#model__desc_8hh_1a17c7ae1f1ad13ff5aa7e5636fd6fb8d9"><span class="std std-ref">MAKE_CLASS_ATT</span></a> and <a class="reference internal" href="model_desc.html#model__desc_8hh_1a258a491864f3e6bdbcc3c0cae8f93ad7"><span class="std std-ref">MAKE_DTO_STRUCT</span></a></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>att_seq</strong> – the sequence of attributes </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.MAKE_ATT_SETTER_VARIABLE">
+<span class="target" id="model__desc__att_8hh_1a9f15f3136a006ee16eaec3811b9049d8"></span><span class="sig-name descname"><span class="n"><span class="pre">MAKE_ATT_SETTER_VARIABLE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">r</span></span>, <span class="n"><span class="pre">data</span></span>, <span class="n"><span class="pre">att_desc</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.MAKE_ATT_SETTER_VARIABLE" title="Link to this definition"></a><br /></dt>
+<dd><p>Create the declaration of the setter of an attribute. </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This macro should not be called directly, it is used through <a class="reference internal" href="model_desc.html#model__desc_8hh_1a17c7ae1f1ad13ff5aa7e5636fd6fb8d9"><span class="std std-ref">MAKE_CLASS_ATT</span></a></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong></p></li>
+<li><p><strong>data</strong></p></li>
+<li><p><strong>att_desc</strong> – the attribute described as sequence (type)(name) </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.MAKE_ATT_SETTER">
+<span class="target" id="model__desc__att_8hh_1a8cfdf05f6fffca829f7030526a389781"></span><span class="sig-name descname"><span class="n"><span class="pre">MAKE_ATT_SETTER</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">att_seq</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.MAKE_ATT_SETTER" title="Link to this definition"></a><br /></dt>
+<dd><p>Create the declaration of the setters for every attribute in a sequence of attribute description. </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This macro should not be called directly, it is used through <a class="reference internal" href="model_desc.html#model__desc_8hh_1a17c7ae1f1ad13ff5aa7e5636fd6fb8d9"><span class="std std-ref">MAKE_CLASS_ATT</span></a></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>att_seq</strong> – the sequence of attributes </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.MAKE_ATT_GETTER_VARIABLE">
+<span class="target" id="model__desc__att_8hh_1a234538b178ba5edd52f3b900ef558eae"></span><span class="sig-name descname"><span class="n"><span class="pre">MAKE_ATT_GETTER_VARIABLE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">r</span></span>, <span class="n"><span class="pre">is_const</span></span>, <span class="n"><span class="pre">att_desc</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.MAKE_ATT_GETTER_VARIABLE" title="Link to this definition"></a><br /></dt>
+<dd><p>Create the declaration of the getter(s) of an attribute. </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This macro should not be called directly, it is used through <a class="reference internal" href="model_desc.html#model__desc_8hh_1a17c7ae1f1ad13ff5aa7e5636fd6fb8d9"><span class="std std-ref">MAKE_CLASS_ATT</span></a></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong></p></li>
+<li><p><strong>is_const</strong> – is the attribute const (if not a getter type&amp; get_att() will be created) </p></li>
+<li><p><strong>att_desc</strong> – the attribute described as sequence (type)(name) </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.MAKE_ATT_GETTER">
+<span class="target" id="model__desc__att_8hh_1af360dce40ca5bec91707acbe112c62f9"></span><span class="sig-name descname"><span class="n"><span class="pre">MAKE_ATT_GETTER</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">att_seq</span></span>, <span class="n"><span class="pre">is_const</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.MAKE_ATT_GETTER" title="Link to this definition"></a><br /></dt>
+<dd><p>Create the declaration of the getters for every attribute in a sequence of attribute description. </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This macro should not be called directly, it is used through <a class="reference internal" href="model_desc.html#model__desc_8hh_1a17c7ae1f1ad13ff5aa7e5636fd6fb8d9"><span class="std std-ref">MAKE_CLASS_ATT</span></a></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>is_const</strong> – is the attribute const (if not a getter type&amp; get_att() will be created) </p></li>
+<li><p><strong>att_seq</strong> – the sequence of attributes </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.MAKE_MAP_ATT">
+<span class="target" id="model__desc__att_8hh_1a0ed36b8976b011cfc4b71944dfceebc1"></span><span class="sig-name descname"><span class="n"><span class="pre">MAKE_MAP_ATT</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">key</span></span>, <span class="n"><span class="pre">value</span></span>, <span class="n"><span class="pre">name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.MAKE_MAP_ATT" title="Link to this definition"></a><br /></dt>
+<dd><p>Generate an editable attribute <code class="docutils literal notranslate"><span class="pre">std::map&lt;key,</span> <span class="pre">value&gt;</span> <span class="pre">_name</span></code> and every getter/setter. </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This macro should not be called directly, it is used through <a class="reference internal" href="model_desc.html#model__desc_8hh_1a9b37263a14d27b6292ff61c819d96538"><span class="std std-ref">MAKE_MAP</span></a></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – the type of the keys </p></li>
+<li><p><strong>value</strong> – the type of the values </p></li>
+<li><p><strong>name</strong> – the name of the attribute </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.MAKE_SET_ATT">
+<span class="target" id="model__desc__att_8hh_1a19f74c9477452f8abdeda86006ea579a"></span><span class="sig-name descname"><span class="n"><span class="pre">MAKE_SET_ATT</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">value</span></span>, <span class="n"><span class="pre">name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.MAKE_SET_ATT" title="Link to this definition"></a><br /></dt>
+<dd><p>Generate an editable attribute <code class="docutils literal notranslate"><span class="pre">std::set&lt;value&gt;</span> <span class="pre">_name</span></code> and every getter/setter. </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This macro should not be called directly, it is used through <a class="reference internal" href="model_desc.html#model__desc_8hh_1a61d321315f92bb5534ef62858e859ba4"><span class="std std-ref">MAKE_SET</span></a></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – the type of the values </p></li>
+<li><p><strong>name</strong> – the name of the attribute </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.MAKE_STRHASH_MAP_ATT">
+<span class="target" id="model__desc__att_8hh_1a7e1e9d18ad2246f9396e336459d509bc"></span><span class="sig-name descname"><span class="n"><span class="pre">MAKE_STRHASH_MAP_ATT</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">value</span></span>, <span class="n"><span class="pre">name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.MAKE_STRHASH_MAP_ATT" title="Link to this definition"></a><br /></dt>
+<dd><p>Generate an editable attribute <code class="docutils literal notranslate"><span class="pre">std::unordered_map&lt;std::string,</span> <span class="pre">value&gt;</span> <span class="pre">_name</span></code> and every getter/setter. </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This macro should not be called directly, it is used through <a class="reference internal" href="model_desc.html#model__desc_8hh_1a935781ed75a003b4583fc03dc50cfec2"><span class="std std-ref">MAKE_STRHASH_MAP</span></a></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – the type of the values </p></li>
+<li><p><strong>name</strong> – the name of the attribute </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.MAKE_BASIC_CLASS_REF_ATT">
+<span class="target" id="model__desc__att_8hh_1a54495eec531119e7b4dfcdec7c129e45"></span><span class="sig-name descname"><span class="n"><span class="pre">MAKE_BASIC_CLASS_REF_ATT</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">type</span></span>, <span class="n"><span class="pre">name</span></span>, <span class="n"><span class="pre">is_const</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.MAKE_BASIC_CLASS_REF_ATT" title="Link to this definition"></a><br /></dt>
+<dd><p>Generate an editable attribute <code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">&amp;_name</span></code> and every getter/setter. </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This macro should not be called directly, it is used through <a class="reference internal" href="model_desc.html#model__desc_8hh_1a1fad5066df9165318360ac1ffedfd386"><span class="std std-ref">MAKE_CLASS_REF_ATT</span></a> and <a class="reference internal" href="model_desc.html#model__desc_8hh_1afbbf266775fc4d4d56f669a2c3a97da6"><span class="std std-ref">MAKE_CLASS_CONSTREF_ATT</span></a></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>type</strong> – the class name </p></li>
+<li><p><strong>name</strong> – the name of the attribute </p></li>
+<li><p><strong>is_const</strong> – is the reference const </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.MAKE_CLASS_BASIC_ATT">
+<span class="target" id="model__desc__att_8hh_1af6bf20a20bc074464048a2be37c0bb22"></span><span class="sig-name descname"><span class="n"><span class="pre">MAKE_CLASS_BASIC_ATT</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">att_seq</span></span>, <span class="n"><span class="pre">is_const</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.MAKE_CLASS_BASIC_ATT" title="Link to this definition"></a><br /></dt>
+<dd><p>Generate every declaration and getters/setters for a sequence of attributes each attribute being a sequence (type)(name) </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This macro should not be called directly, it is used through <a class="reference internal" href="model_desc.html#model__desc_8hh_1a17c7ae1f1ad13ff5aa7e5636fd6fb8d9"><span class="std std-ref">MAKE_CLASS_ATT</span></a></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>att_seq</strong> – the sequence of attributes </p></li>
+<li><p><strong>is_const</strong> – true if the attribute is const and not editable </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Aurélien Questel.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

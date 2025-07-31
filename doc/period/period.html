@@ -1,0 +1,748 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Period utilities &mdash; Utils 1.2.0 1.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=6efca38a"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Period Functors" href="period_functor.html" />
+    <link rel="prev" title="Lexical sort" href="../sort/lexical_sort.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Utils 1.2.0
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../log/log.html">Log utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exception/exception.html">Exception</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model/model.html">Data Model Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../json/json.html">Json utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../string/string_utils.html">String utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../safecomp/safecomp.html">Safe numerical comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sort/lexical_sort.html">Lexical sort</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Period utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4I00E9get_unionNSt4listI7PeriodTEERKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb"><code class="docutils literal notranslate"><span class="pre">get_union()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4I00E9get_unionNSt4listI7PeriodTEERK7PeriodTRKNSt4listI7PeriodUEEb"><code class="docutils literal notranslate"><span class="pre">get_union()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4I00E9get_unionNSt4listI7PeriodTEERKNSt4listI7PeriodTEERK7PeriodUb"><code class="docutils literal notranslate"><span class="pre">get_union()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4I00E9get_unionNSt4listI7PeriodTEERK7PeriodTRK7PeriodUb"><code class="docutils literal notranslate"><span class="pre">get_union()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4I00E8get_diffNSt4listI7PeriodTEERKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb"><code class="docutils literal notranslate"><span class="pre">get_diff()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4I00E8get_diffNSt4listI7PeriodTEERK7PeriodTRKNSt4listI7PeriodUEEb"><code class="docutils literal notranslate"><span class="pre">get_diff()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4I00E8get_diffNSt4listI7PeriodTEERKNSt4listI7PeriodTEERK7PeriodUb"><code class="docutils literal notranslate"><span class="pre">get_diff()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4I00E8get_diffNSt4listI7PeriodTEERK7PeriodTRK7PeriodUb"><code class="docutils literal notranslate"><span class="pre">get_diff()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4I00E9get_interNSt4listI7PeriodTEERKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb"><code class="docutils literal notranslate"><span class="pre">get_inter()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4I00E9get_interNSt4listI7PeriodTEERK7PeriodTRKNSt4listI7PeriodUEEb"><code class="docutils literal notranslate"><span class="pre">get_inter()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4I00E9get_interNSt4listI7PeriodTEERKNSt4listI7PeriodTEERK7PeriodUb"><code class="docutils literal notranslate"><span class="pre">get_inter()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4I00E9get_interNSt4listI7PeriodTEERK7PeriodTRK7PeriodUb"><code class="docutils literal notranslate"><span class="pre">get_inter()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4I00E20get_inter_with_emptyNSt4listI7PeriodTEERKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb"><code class="docutils literal notranslate"><span class="pre">get_inter_with_empty()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4I00E20get_inter_with_emptyNSt4listI7PeriodTEERK7PeriodTRKNSt4listI7PeriodUEEb"><code class="docutils literal notranslate"><span class="pre">get_inter_with_empty()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4I00E20get_inter_with_emptyNSt4listI7PeriodTEERKNSt4listI7PeriodTEERK7PeriodUb"><code class="docutils literal notranslate"><span class="pre">get_inter_with_empty()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4I00E20get_inter_with_emptyNSt4listI7PeriodTEERK7PeriodTRK7PeriodUb"><code class="docutils literal notranslate"><span class="pre">get_inter_with_empty()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv425compute_relative_durationN5boost10posix_time13time_durationEf"><code class="docutils literal notranslate"><span class="pre">compute_relative_duration()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv428compute_theoretical_durationN5boost10posix_time13time_durationEf"><code class="docutils literal notranslate"><span class="pre">compute_theoretical_duration()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4I0E18get_total_durationN5boost10posix_time13time_durationERKNSt4listI7PeriodTEE"><code class="docutils literal notranslate"><span class="pre">get_total_duration()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv421get_relative_durationRK12LRatioPeriod"><code class="docutils literal notranslate"><span class="pre">get_relative_duration()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv420get_eligible_periodsRK11LCapaPeriodj"><code class="docutils literal notranslate"><span class="pre">get_eligible_periods()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv417make_empty_periodN5boost10posix_time5ptimeE"><code class="docutils literal notranslate"><span class="pre">make_empty_period()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv47is_sameRKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeERKN5boost10posix_time13time_durationE"><code class="docutils literal notranslate"><span class="pre">is_same()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="period_functor.html">Period Functors</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../thread_pool/thread_pool.html">Thread Pool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cmake-modules/cmake-modules.html">Cmake-modules</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Utils 1.2.0</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Period utilities</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/doc/period/period.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="../sort/lexical_sort.html" class="btn btn-neutral float-left" title="Lexical sort" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="period_functor.html" class="btn btn-neutral float-right" title="Period Functors" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="period-utilities">
+<span id="period-utils"></span><h1>Period utilities<a class="headerlink" href="#period-utilities" title="Link to this heading"></a></h1>
+<p>This page contains the public interface for period manipulation.
+For the computation details see <a class="reference internal" href="period_functor.html#period-functor"><span class="std std-ref">Period Functors</span></a>.</p>
+<hr class="docutils" />
+<p>Toolbox for manipulation of time period. Two types of time period are proposed, along with shortcuts for list of periods: </p>
+<p><ul class="simple">
+<li><p>time_period : shortcut for boost::posix_time::time_period</p></li>
+<li><p>capa_period : time_period with capacity (long)</p></li>
+<li><p>ratio_period : time_period with a ratio (float)</p></li>
+</ul>
+</p>
+<p>One can then compute the union, the intersection or the difference between list of periods:<ul class="simple">
+<li><p>Union of capa_periods : compute the sum of the capacity<ul>
+<li><p>the union of {[a, b, 2]} and {[b, c, 3]}, with a&lt;b&lt;c is {[a, b, 2], [b, c, 3]}</p></li>
+<li><p>the union of {[a, b, 2]} and {[a, b, 3]} is {[a, b, 5]}</p></li>
+<li><p>the union of {[a, c, 2]} and {[a, b, 3]}, with a&lt;b&lt;c, is {[a, b, 5], [b, c, 2]}</p></li>
+</ul>
+</p></li>
+<li><p>Union of ratio_periods : compute the product of the ratios (the default value being 1.)<ul>
+<li><p>the union of {[a, b, 2.]} and {[a, b, 3.]} is {[a, b, 5.]}</p></li>
+<li><p>the union of {[a, c, 2.]} and {[a, b, 3.]}, with a&lt;b&lt;c, is {[a, b, 6.], [b, c, 3.]}</p></li>
+</ul>
+</p></li>
+<li><p>Intersection of capa_periods : limit to the intersection with minimal capacity<ul>
+<li><p>the intersection of {[a, b, 2]} and {[a, b, 3]} is {[a, b, 2]}</p></li>
+<li><p>the intersection of {[a, c, 2]} and {[a, b, 3]}, with a&lt;b&lt;c, is {[a, b, 2]}</p></li>
+</ul>
+</p></li>
+<li><p>Intersection of ratio_periods and periods : limit the ratio_periods to the other periods<ul>
+<li><p>the intersection of {[a, c, 2.]} and {[a, b]}, with a&lt;b&lt;c, is {[a, b, 2.]}</p></li>
+</ul>
+</p></li>
+<li><p>Difference of capa_periods : compute the difference of the overlapping capacities<ul>
+<li><p>the difference of {[a, b, 2]} and {[b, c, 3]}, with a&lt;b&lt;c is {[a, b, 2], [b, c, -3]}</p></li>
+<li><p>the difference of {[a, b, 2]} and {[a, b, 3]} is {[a, b, -1]}</p></li>
+<li><p>the difference of {[a, c, 2]} and {[a, b, 3]}, with a&lt;b&lt;c, is {[a, b, -1], [b, c, 2]}</p></li>
+</ul>
+</p></li>
+</ul>
+</p>
+<p><div class="remark admonition">
+<p class="admonition-title">Remark</p>
+<p>Each method has an optional parameter merge_adjacent telling if one should merge the adjacent periods (with the same capacity or ratio) </p>
+</div>
+<div class="remark admonition">
+<p class="admonition-title">Remark</p>
+<p>Every capa_period with a capacity of 0 will be removed </p>
+</div>
+<div class="remark admonition">
+<p class="admonition-title">Remark</p>
+<p>In some case, one may need to keep ‘empty’ periods (eg. to compute some ending times) </p>
+</div>
+</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Every list must contain sorted and disjoint (or adjacent) periods </p>
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I00E9get_unionNSt4listI7PeriodTEERKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb">
+<span id="_CPPv3I00E9get_unionRKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb"></span><span id="_CPPv2I00E9get_unionRKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodT</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodU</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="period__utils_8hh_1a2693f3d895d972d291bdca50281b42b9"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E9get_unionNSt4listI7PeriodTEERKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb" title="get_union::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_union</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E9get_unionNSt4listI7PeriodTEERKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb" title="get_union::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">periods1</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E9get_unionNSt4listI7PeriodTEERKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb" title="get_union::PeriodU"><span class="n"><span class="pre">PeriodU</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">periods2</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">merge_adjacent</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00E9get_unionNSt4listI7PeriodTEERKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the union of two lists of Periods. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>PeriodT</strong> – the type of first periods </p></li>
+<li><p><strong>PeriodU</strong> – the type of second periods </p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>periods1</strong> – first list </p></li>
+<li><p><strong>periods2</strong> – second list </p></li>
+<li><p><strong>merge_adjacent</strong> – should we merge the adjacent periods </p></li>
+</ul>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the lists must be sorted and contain disjoint periods </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the union </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I00E9get_unionNSt4listI7PeriodTEERK7PeriodTRKNSt4listI7PeriodUEEb">
+<span id="_CPPv3I00E9get_unionRK7PeriodTRKNSt4listI7PeriodUEEb"></span><span id="_CPPv2I00E9get_unionRK7PeriodTRKNSt4listI7PeriodUEEb"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodT</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodU</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="period__utils_8hh_1add5d0a85ee8f4648aec909b64cb02d82"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E9get_unionNSt4listI7PeriodTEERK7PeriodTRKNSt4listI7PeriodUEEb" title="get_union::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_union</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00E9get_unionNSt4listI7PeriodTEERK7PeriodTRKNSt4listI7PeriodUEEb" title="get_union::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">period</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E9get_unionNSt4listI7PeriodTEERK7PeriodTRKNSt4listI7PeriodUEEb" title="get_union::PeriodU"><span class="n"><span class="pre">PeriodU</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">periods</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">merge_adjacent</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00E9get_unionNSt4listI7PeriodTEERK7PeriodTRKNSt4listI7PeriodUEEb" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the union of a period and a list of periods. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>PeriodT</strong> – the type of first periods </p></li>
+<li><p><strong>PeriodU</strong> – the type of second periods </p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>period</strong> – the period </p></li>
+<li><p><strong>periods</strong> – the list </p></li>
+<li><p><strong>merge_adjacent</strong> – should we merge the adjacent periods </p></li>
+</ul>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the list must be sorted and contain disjoint periods </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the union </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I00E9get_unionNSt4listI7PeriodTEERKNSt4listI7PeriodTEERK7PeriodUb">
+<span id="_CPPv3I00E9get_unionRKNSt4listI7PeriodTEERK7PeriodUb"></span><span id="_CPPv2I00E9get_unionRKNSt4listI7PeriodTEERK7PeriodUb"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodT</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodU</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="period__utils_8hh_1ac6cc55ad0c0f7a6f30839ab9c22910c9"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E9get_unionNSt4listI7PeriodTEERKNSt4listI7PeriodTEERK7PeriodUb" title="get_union::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_union</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E9get_unionNSt4listI7PeriodTEERKNSt4listI7PeriodTEERK7PeriodUb" title="get_union::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">periods</span></span>, <a class="reference internal" href="#_CPPv4I00E9get_unionNSt4listI7PeriodTEERKNSt4listI7PeriodTEERK7PeriodUb" title="get_union::PeriodU"><span class="n"><span class="pre">PeriodU</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">period</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">merge_adjacent</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00E9get_unionNSt4listI7PeriodTEERKNSt4listI7PeriodTEERK7PeriodUb" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the union of a list of periods and a period. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>PeriodT</strong> – the type of first periods </p></li>
+<li><p><strong>PeriodU</strong> – the type of second periods </p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>period</strong> – the period </p></li>
+<li><p><strong>periods</strong> – the list </p></li>
+<li><p><strong>merge_adjacent</strong> – should we merge the adjacent periods </p></li>
+</ul>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the list must be sorted and contain disjoint periods </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the union </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I00E9get_unionNSt4listI7PeriodTEERK7PeriodTRK7PeriodUb">
+<span id="_CPPv3I00E9get_unionRK7PeriodTRK7PeriodUb"></span><span id="_CPPv2I00E9get_unionRK7PeriodTRK7PeriodUb"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodT</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodU</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="period__utils_8hh_1a9532121ee5e173182fc8963525d2ded4"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E9get_unionNSt4listI7PeriodTEERK7PeriodTRK7PeriodUb" title="get_union::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_union</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00E9get_unionNSt4listI7PeriodTEERK7PeriodTRK7PeriodUb" title="get_union::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">period1</span></span>, <a class="reference internal" href="#_CPPv4I00E9get_unionNSt4listI7PeriodTEERK7PeriodTRK7PeriodUb" title="get_union::PeriodU"><span class="n"><span class="pre">PeriodU</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">period2</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">merge_adjacent</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00E9get_unionNSt4listI7PeriodTEERK7PeriodTRK7PeriodUb" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the union of two periods. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>PeriodT</strong> – the type of first periods </p></li>
+<li><p><strong>PeriodU</strong> – the type of second periods </p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>period1</strong> – the first period </p></li>
+<li><p><strong>period2</strong> – the second period </p></li>
+<li><p><strong>merge_adjacent</strong> – should we merge the adjacent periods </p></li>
+</ul>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the list must be sorted and contain disjoint periods </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the union </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I00E8get_diffNSt4listI7PeriodTEERKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb">
+<span id="_CPPv3I00E8get_diffRKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb"></span><span id="_CPPv2I00E8get_diffRKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodT</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodU</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="period__utils_8hh_1ad34ffe776371458a060699c674f5d26c"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E8get_diffNSt4listI7PeriodTEERKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb" title="get_diff::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_diff</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E8get_diffNSt4listI7PeriodTEERKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb" title="get_diff::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">periods1</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E8get_diffNSt4listI7PeriodTEERKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb" title="get_diff::PeriodU"><span class="n"><span class="pre">PeriodU</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">periods2</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">merge_adjacent</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00E8get_diffNSt4listI7PeriodTEERKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the difference of two lists of Periods. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>PeriodT</strong> – the type of first periods </p></li>
+<li><p><strong>PeriodU</strong> – the type of second periods </p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>periods1</strong> – first list </p></li>
+<li><p><strong>periods2</strong> – second list </p></li>
+<li><p><strong>merge_adjacent</strong> – should we merge the adjacent periods </p></li>
+</ul>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the lists must be sorted and contain disjoint periods </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the difference </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I00E8get_diffNSt4listI7PeriodTEERK7PeriodTRKNSt4listI7PeriodUEEb">
+<span id="_CPPv3I00E8get_diffRK7PeriodTRKNSt4listI7PeriodUEEb"></span><span id="_CPPv2I00E8get_diffRK7PeriodTRKNSt4listI7PeriodUEEb"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodT</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodU</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="period__utils_8hh_1a5da87a58d9a17912d305d3ad55a9b871"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E8get_diffNSt4listI7PeriodTEERK7PeriodTRKNSt4listI7PeriodUEEb" title="get_diff::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_diff</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00E8get_diffNSt4listI7PeriodTEERK7PeriodTRKNSt4listI7PeriodUEEb" title="get_diff::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">period</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E8get_diffNSt4listI7PeriodTEERK7PeriodTRKNSt4listI7PeriodUEEb" title="get_diff::PeriodU"><span class="n"><span class="pre">PeriodU</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">periods</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">merge_adjacent</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00E8get_diffNSt4listI7PeriodTEERK7PeriodTRKNSt4listI7PeriodUEEb" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the difference of a period and a list of periods. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>PeriodT</strong> – the type of first periods </p></li>
+<li><p><strong>PeriodU</strong> – the type of second periods </p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>period</strong> – the period </p></li>
+<li><p><strong>periods</strong> – the list </p></li>
+<li><p><strong>merge_adjacent</strong> – should we merge the adjacent periods </p></li>
+</ul>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the list must be sorted and contain disjoint periods </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the difference </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I00E8get_diffNSt4listI7PeriodTEERKNSt4listI7PeriodTEERK7PeriodUb">
+<span id="_CPPv3I00E8get_diffRKNSt4listI7PeriodTEERK7PeriodUb"></span><span id="_CPPv2I00E8get_diffRKNSt4listI7PeriodTEERK7PeriodUb"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodT</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodU</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="period__utils_8hh_1a21fac22535db2e7c5b9a21307fd6eb8d"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E8get_diffNSt4listI7PeriodTEERKNSt4listI7PeriodTEERK7PeriodUb" title="get_diff::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_diff</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E8get_diffNSt4listI7PeriodTEERKNSt4listI7PeriodTEERK7PeriodUb" title="get_diff::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">periods</span></span>, <a class="reference internal" href="#_CPPv4I00E8get_diffNSt4listI7PeriodTEERKNSt4listI7PeriodTEERK7PeriodUb" title="get_diff::PeriodU"><span class="n"><span class="pre">PeriodU</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">period</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">merge_adjacent</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00E8get_diffNSt4listI7PeriodTEERKNSt4listI7PeriodTEERK7PeriodUb" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the difference of a list of periods and a period. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>PeriodT</strong> – the type of first periods </p></li>
+<li><p><strong>PeriodU</strong> – the type of second periods </p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>periods</strong> – the list </p></li>
+<li><p><strong>period</strong> – the period </p></li>
+<li><p><strong>merge_adjacent</strong> – should we merge the adjacent periods </p></li>
+</ul>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the list must be sorted and contain disjoint periods </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the difference </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I00E8get_diffNSt4listI7PeriodTEERK7PeriodTRK7PeriodUb">
+<span id="_CPPv3I00E8get_diffRK7PeriodTRK7PeriodUb"></span><span id="_CPPv2I00E8get_diffRK7PeriodTRK7PeriodUb"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodT</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodU</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="period__utils_8hh_1a38d40f872c68742a66c473e2bd341a90"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E8get_diffNSt4listI7PeriodTEERK7PeriodTRK7PeriodUb" title="get_diff::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_diff</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00E8get_diffNSt4listI7PeriodTEERK7PeriodTRK7PeriodUb" title="get_diff::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">period1</span></span>, <a class="reference internal" href="#_CPPv4I00E8get_diffNSt4listI7PeriodTEERK7PeriodTRK7PeriodUb" title="get_diff::PeriodU"><span class="n"><span class="pre">PeriodU</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">period2</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">merge_adjacent</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00E8get_diffNSt4listI7PeriodTEERK7PeriodTRK7PeriodUb" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the difference of two periods. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>PeriodT</strong> – the type of first periods </p></li>
+<li><p><strong>PeriodU</strong> – the type of second periods </p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>period1</strong> – the first period </p></li>
+<li><p><strong>period2</strong> – the second period </p></li>
+<li><p><strong>merge_adjacent</strong> – should we merge the adjacent periods </p></li>
+</ul>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the list must be sorted and contain disjoint periods </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the difference </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I00E9get_interNSt4listI7PeriodTEERKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb">
+<span id="_CPPv3I00E9get_interRKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb"></span><span id="_CPPv2I00E9get_interRKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodT</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodU</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="period__utils_8hh_1abed1177bcb9428f5894b028044aa22d9"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E9get_interNSt4listI7PeriodTEERKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb" title="get_inter::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_inter</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E9get_interNSt4listI7PeriodTEERKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb" title="get_inter::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">periods1</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E9get_interNSt4listI7PeriodTEERKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb" title="get_inter::PeriodU"><span class="n"><span class="pre">PeriodU</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">periods2</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">merge_adjacent</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00E9get_interNSt4listI7PeriodTEERKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the intersection of two lists of Periods. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>PeriodT</strong> – the type of first periods </p></li>
+<li><p><strong>PeriodU</strong> – the type of second periods </p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>periods1</strong> – first list </p></li>
+<li><p><strong>periods2</strong> – second list </p></li>
+<li><p><strong>merge_adjacent</strong> – should we merge the adjacent periods </p></li>
+</ul>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the lists must be sorted and contain disjoint periods </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the intersection </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I00E9get_interNSt4listI7PeriodTEERK7PeriodTRKNSt4listI7PeriodUEEb">
+<span id="_CPPv3I00E9get_interRK7PeriodTRKNSt4listI7PeriodUEEb"></span><span id="_CPPv2I00E9get_interRK7PeriodTRKNSt4listI7PeriodUEEb"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodT</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodU</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="period__utils_8hh_1ab0f379462810bf1afb4176f69dc21c54"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E9get_interNSt4listI7PeriodTEERK7PeriodTRKNSt4listI7PeriodUEEb" title="get_inter::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_inter</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00E9get_interNSt4listI7PeriodTEERK7PeriodTRKNSt4listI7PeriodUEEb" title="get_inter::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">period</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E9get_interNSt4listI7PeriodTEERK7PeriodTRKNSt4listI7PeriodUEEb" title="get_inter::PeriodU"><span class="n"><span class="pre">PeriodU</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">periods</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">merge_adjacent</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00E9get_interNSt4listI7PeriodTEERK7PeriodTRKNSt4listI7PeriodUEEb" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the intersection of a period and a list of periods. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>PeriodT</strong> – the type of first period </p></li>
+<li><p><strong>PeriodU</strong> – the type of second periods </p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>period</strong> – the period </p></li>
+<li><p><strong>periods</strong> – the list </p></li>
+<li><p><strong>merge_adjacent</strong> – should we merge the adjacent periods </p></li>
+</ul>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the list must be sorted and contain disjoint periods </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the intersection </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I00E9get_interNSt4listI7PeriodTEERKNSt4listI7PeriodTEERK7PeriodUb">
+<span id="_CPPv3I00E9get_interRKNSt4listI7PeriodTEERK7PeriodUb"></span><span id="_CPPv2I00E9get_interRKNSt4listI7PeriodTEERK7PeriodUb"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodT</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodU</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="period__utils_8hh_1a62cdb5425fc4a4f42aca5a9ef5abc1cd"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E9get_interNSt4listI7PeriodTEERKNSt4listI7PeriodTEERK7PeriodUb" title="get_inter::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_inter</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E9get_interNSt4listI7PeriodTEERKNSt4listI7PeriodTEERK7PeriodUb" title="get_inter::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">periods</span></span>, <a class="reference internal" href="#_CPPv4I00E9get_interNSt4listI7PeriodTEERKNSt4listI7PeriodTEERK7PeriodUb" title="get_inter::PeriodU"><span class="n"><span class="pre">PeriodU</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">period</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">merge_adjacent</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00E9get_interNSt4listI7PeriodTEERKNSt4listI7PeriodTEERK7PeriodUb" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the intersection of a list of periods and a period. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>PeriodT</strong> – the type of first periods </p></li>
+<li><p><strong>PeriodU</strong> – the type of second period </p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>periods</strong> – the list </p></li>
+<li><p><strong>period</strong> – the period </p></li>
+<li><p><strong>merge_adjacent</strong> – should we merge the adjacent periods </p></li>
+</ul>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the list must be sorted and contain disjoint periods </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the intersection </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I00E9get_interNSt4listI7PeriodTEERK7PeriodTRK7PeriodUb">
+<span id="_CPPv3I00E9get_interRK7PeriodTRK7PeriodUb"></span><span id="_CPPv2I00E9get_interRK7PeriodTRK7PeriodUb"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodT</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodU</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="period__utils_8hh_1a948ea28f4391167e2f61f055245bceda"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E9get_interNSt4listI7PeriodTEERK7PeriodTRK7PeriodUb" title="get_inter::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_inter</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00E9get_interNSt4listI7PeriodTEERK7PeriodTRK7PeriodUb" title="get_inter::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">period1</span></span>, <a class="reference internal" href="#_CPPv4I00E9get_interNSt4listI7PeriodTEERK7PeriodTRK7PeriodUb" title="get_inter::PeriodU"><span class="n"><span class="pre">PeriodU</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">period2</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">merge_adjacent</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00E9get_interNSt4listI7PeriodTEERK7PeriodTRK7PeriodUb" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the intersection of two period. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>PeriodT</strong> – the type of first period </p></li>
+<li><p><strong>PeriodU</strong> – the type of second period </p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>period1</strong> – the first period </p></li>
+<li><p><strong>period2</strong> – the second period </p></li>
+<li><p><strong>merge_adjacent</strong> – should we merge the adjacent periods </p></li>
+</ul>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the list must be sorted and contain disjoint periods </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the intersection </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I00E20get_inter_with_emptyNSt4listI7PeriodTEERKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb">
+<span id="_CPPv3I00E20get_inter_with_emptyRKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb"></span><span id="_CPPv2I00E20get_inter_with_emptyRKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodT</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodU</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="period__utils_8hh_1aec7d7a87e7856a4f230b17dfb90b82c4"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E20get_inter_with_emptyNSt4listI7PeriodTEERKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb" title="get_inter_with_empty::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_inter_with_empty</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E20get_inter_with_emptyNSt4listI7PeriodTEERKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb" title="get_inter_with_empty::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">periods1</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E20get_inter_with_emptyNSt4listI7PeriodTEERKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb" title="get_inter_with_empty::PeriodU"><span class="n"><span class="pre">PeriodU</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">periods2</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">merge_adjacent</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00E20get_inter_with_emptyNSt4listI7PeriodTEERKNSt4listI7PeriodTEERKNSt4listI7PeriodUEEb" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the intersection of two lists of Periods and keep the periods with just one time stamp. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>PeriodT</strong> – the type of first periods </p></li>
+<li><p><strong>PeriodU</strong> – the type of second periods </p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>periods1</strong> – first list </p></li>
+<li><p><strong>periods2</strong> – second list </p></li>
+<li><p><strong>merge_adjacent</strong> – should we merge the adjacent periods </p></li>
+</ul>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the lists must be sorted and contain disjoint periods </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the intersection </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I00E20get_inter_with_emptyNSt4listI7PeriodTEERK7PeriodTRKNSt4listI7PeriodUEEb">
+<span id="_CPPv3I00E20get_inter_with_emptyRK7PeriodTRKNSt4listI7PeriodUEEb"></span><span id="_CPPv2I00E20get_inter_with_emptyRK7PeriodTRKNSt4listI7PeriodUEEb"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodT</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodU</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="period__utils_8hh_1ae97b1047ff823adb54454df33828dff0"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E20get_inter_with_emptyNSt4listI7PeriodTEERK7PeriodTRKNSt4listI7PeriodUEEb" title="get_inter_with_empty::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_inter_with_empty</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00E20get_inter_with_emptyNSt4listI7PeriodTEERK7PeriodTRKNSt4listI7PeriodUEEb" title="get_inter_with_empty::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">period</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E20get_inter_with_emptyNSt4listI7PeriodTEERK7PeriodTRKNSt4listI7PeriodUEEb" title="get_inter_with_empty::PeriodU"><span class="n"><span class="pre">PeriodU</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">periods</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">merge_adjacent</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00E20get_inter_with_emptyNSt4listI7PeriodTEERK7PeriodTRKNSt4listI7PeriodUEEb" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the intersection of two lists of Periods and keep the periods with just one time stamp. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>PeriodT</strong> – the type of first period </p></li>
+<li><p><strong>PeriodU</strong> – the type of second periods </p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>period</strong> – the period </p></li>
+<li><p><strong>periods</strong> – the list </p></li>
+<li><p><strong>merge_adjacent</strong> – should we merge the adjacent periods </p></li>
+</ul>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the list must be sorted and contain disjoint periods </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the intersection </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I00E20get_inter_with_emptyNSt4listI7PeriodTEERKNSt4listI7PeriodTEERK7PeriodUb">
+<span id="_CPPv3I00E20get_inter_with_emptyRKNSt4listI7PeriodTEERK7PeriodUb"></span><span id="_CPPv2I00E20get_inter_with_emptyRKNSt4listI7PeriodTEERK7PeriodUb"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodT</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodU</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="period__utils_8hh_1a8caf4890d6c64c22bd28ca17285af34e"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E20get_inter_with_emptyNSt4listI7PeriodTEERKNSt4listI7PeriodTEERK7PeriodUb" title="get_inter_with_empty::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_inter_with_empty</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E20get_inter_with_emptyNSt4listI7PeriodTEERKNSt4listI7PeriodTEERK7PeriodUb" title="get_inter_with_empty::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">periods</span></span>, <a class="reference internal" href="#_CPPv4I00E20get_inter_with_emptyNSt4listI7PeriodTEERKNSt4listI7PeriodTEERK7PeriodUb" title="get_inter_with_empty::PeriodU"><span class="n"><span class="pre">PeriodU</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">period</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">merge_adjacent</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00E20get_inter_with_emptyNSt4listI7PeriodTEERKNSt4listI7PeriodTEERK7PeriodUb" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the intersection of two lists of Periods and keep the periods with just one time stamp. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>PeriodT</strong> – the type of first periods </p></li>
+<li><p><strong>PeriodU</strong> – the type of second period </p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>periods</strong> – the list </p></li>
+<li><p><strong>period</strong> – the period </p></li>
+<li><p><strong>merge_adjacent</strong> – should we merge the adjacent periods </p></li>
+<li><p><strong>keep_empty</strong> – should we keep the empty periods </p></li>
+</ul>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the list must be sorted and contain disjoint periods </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the intersection </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I00E20get_inter_with_emptyNSt4listI7PeriodTEERK7PeriodTRK7PeriodUb">
+<span id="_CPPv3I00E20get_inter_with_emptyRK7PeriodTRK7PeriodUb"></span><span id="_CPPv2I00E20get_inter_with_emptyRK7PeriodTRK7PeriodUb"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodT</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodU</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="period__utils_8hh_1ae0694116e1c6249c65e8d3686e95908f"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E20get_inter_with_emptyNSt4listI7PeriodTEERK7PeriodTRK7PeriodUb" title="get_inter_with_empty::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_inter_with_empty</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00E20get_inter_with_emptyNSt4listI7PeriodTEERK7PeriodTRK7PeriodUb" title="get_inter_with_empty::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">period1</span></span>, <a class="reference internal" href="#_CPPv4I00E20get_inter_with_emptyNSt4listI7PeriodTEERK7PeriodTRK7PeriodUb" title="get_inter_with_empty::PeriodU"><span class="n"><span class="pre">PeriodU</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">period2</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">merge_adjacent</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00E20get_inter_with_emptyNSt4listI7PeriodTEERK7PeriodTRK7PeriodUb" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the intersection of two lists of Periods and keep the periods with just one time stamp. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>PeriodT</strong> – the type of first period </p></li>
+<li><p><strong>PeriodU</strong> – the type of second period </p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>period1</strong> – the first period </p></li>
+<li><p><strong>period2</strong> – the second period </p></li>
+<li><p><strong>merge_adjacent</strong> – should we merge the adjacent periods </p></li>
+</ul>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the list must be sorted and contain disjoint periods </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the intersection </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv425compute_relative_durationN5boost10posix_time13time_durationEf">
+<span id="_CPPv325compute_relative_durationN5boost10posix_time13time_durationEf"></span><span id="_CPPv225compute_relative_durationN5boost10posix_time13time_durationEf"></span><span id="compute_relative_duration__boost::posix_time::time_duration.float"></span><span class="target" id="period__utils_8hh_1a2d298cfd94c55d35a0976ef93e3556c3"></span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">time_duration</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">compute_relative_duration</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">time_duration</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">duration</span></span>, <span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">ratio</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv425compute_relative_durationN5boost10posix_time13time_durationEf" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute a relative duration. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>duration</strong> – the absolute duration </p></li>
+<li><p><strong>ratio</strong> – the ratio to apply </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the relative duration </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv428compute_theoretical_durationN5boost10posix_time13time_durationEf">
+<span id="_CPPv328compute_theoretical_durationN5boost10posix_time13time_durationEf"></span><span id="_CPPv228compute_theoretical_durationN5boost10posix_time13time_durationEf"></span><span id="compute_theoretical_duration__boost::posix_time::time_duration.float"></span><span class="target" id="period__utils_8hh_1ac8754c502a7e75d859c38fbc80ad072f"></span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">time_duration</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">compute_theoretical_duration</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">time_duration</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">duration</span></span>, <span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">ratio</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv428compute_theoretical_durationN5boost10posix_time13time_durationEf" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute an absolute duration. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>duration</strong> – the relative duration </p></li>
+<li><p><strong>ratio</strong> – the ratio to apply </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the absolute duration </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0E18get_total_durationN5boost10posix_time13time_durationERKNSt4listI7PeriodTEE">
+<span id="_CPPv3I0E18get_total_durationRKNSt4listI7PeriodTEE"></span><span id="_CPPv2I0E18get_total_durationRKNSt4listI7PeriodTEE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PeriodT</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="period__utils_8hh_1a267eb3bed3994bde9da987f7fb0239eb"></span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">time_duration</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_total_duration</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I0E18get_total_durationN5boost10posix_time13time_durationERKNSt4listI7PeriodTEE" title="get_total_duration::PeriodT"><span class="n"><span class="pre">PeriodT</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">periods</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0E18get_total_durationN5boost10posix_time13time_durationERKNSt4listI7PeriodTEE" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the cumulative duration of a list of periods. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>PeriodT</strong> – the type of periods </p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>periods</strong> – the periods of production </p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the cumulative duration </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv421get_relative_durationRK12LRatioPeriod">
+<span id="_CPPv321get_relative_durationRK12LRatioPeriod"></span><span id="_CPPv221get_relative_durationRK12LRatioPeriod"></span><span id="get_relative_duration__LRatioPeriodCR"></span><span class="target" id="period__utils_8hh_1a2cf034a8de2f5f924389ba10bc8beeb8"></span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">time_duration</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_relative_duration</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">LRatioPeriod</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">periods</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv421get_relative_durationRK12LRatioPeriod" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the relative duration of a list of periods. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>periods</strong> – the periods with ratio </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the relative duration </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv420get_eligible_periodsRK11LCapaPeriodj">
+<span id="_CPPv320get_eligible_periodsRK11LCapaPeriodj"></span><span id="_CPPv220get_eligible_periodsRK11LCapaPeriodj"></span><span id="get_eligible_periods__LCapaPeriodCR.unsigned"></span><span class="target" id="period__utils_8hh_1ae4be27a5a6e4cfa61f5fbd1327770287"></span><span class="n"><span class="pre">LTimePeriod</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_eligible_periods</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">LCapaPeriod</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">periods</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">min</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv420get_eligible_periodsRK11LCapaPeriodj" title="Link to this definition"></a><br /></dt>
+<dd><p>Collect the capa_period with enough capacity and return them as time_period. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>periods</strong> – the list of capa_periods </p></li>
+<li><p><strong>min</strong> – the minimal capacity </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the corresponding time_periods </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv417make_empty_periodN5boost10posix_time5ptimeE">
+<span id="_CPPv317make_empty_periodN5boost10posix_time5ptimeE"></span><span id="_CPPv217make_empty_periodN5boost10posix_time5ptimeE"></span><span id="make_empty_period__boost::posix_time::ptime"></span><span class="target" id="period__utils_8hh_1aa9afddd844c4611b596d0de3b3c6c6a1"></span><span class="n"><span class="pre">time_period</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">make_empty_period</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">ptime</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv417make_empty_periodN5boost10posix_time5ptimeE" title="Link to this definition"></a><br /></dt>
+<dd><p>Create an artificial empty period. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>datetime</strong> – the ptime </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a time period [ptime, ptime+10 milliseconds[ </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv47is_sameRKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeERKN5boost10posix_time13time_durationE">
+<span id="_CPPv37is_sameRKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeERKN5boost10posix_time13time_durationE"></span><span id="_CPPv27is_sameRKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeERKN5boost10posix_time13time_durationE"></span><span id="is_same__boost::posix_time::ptimeCR.boost::posix_time::ptimeCR.boost::posix_time::time_durationCR"></span><span class="target" id="period__utils_8hh_1a0bf37285097ee3717749422f760095e0"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">is_same</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">lhs</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">rhs</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">time_duration</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">tol</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">milliseconds</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">10</span></span><span class="p"><span class="pre">)</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv47is_sameRKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeERKN5boost10posix_time13time_durationE" title="Link to this definition"></a><br /></dt>
+<dd><p>Checks that two ptime are the same (with a tolerance) </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lhs</strong> – the first datetime </p></li>
+<li><p><strong>rhs</strong> – the second datetime </p></li>
+<li><p><strong>tol</strong> – the tolerance </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Aurélien Questel.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,219 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>String utilities &mdash; Utils 1.2.0 1.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=6efca38a"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Safe numerical comparison" href="../safecomp/safecomp.html" />
+    <link rel="prev" title="Json utilities" href="../json/json.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Utils 1.2.0
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../log/log.html">Log utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exception/exception.html">Exception</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model/model.html">Data Model Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../json/json.html">Json utilities</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">String utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv43str"><code class="docutils literal notranslate"><span class="pre">str</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N3str4trimENSt6stringE"><code class="docutils literal notranslate"><span class="pre">str::trim()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4IEN3str16get_val_from_strIN2bg4dateEEEN2bg4dateERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">str::get_val_from_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4IEN3str16get_val_from_strIN3bpt5ptimeEEEN3bpt5ptimeERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">str::get_val_from_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4I0EN3str16get_val_from_strE1TRKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">str::get_val_from_str()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../safecomp/safecomp.html">Safe numerical comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sort/lexical_sort.html">Lexical sort</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../period/period.html">Period utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../thread_pool/thread_pool.html">Thread Pool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cmake-modules/cmake-modules.html">Cmake-modules</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Utils 1.2.0</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">String utilities</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/doc/string/string_utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="../json/json.html" class="btn btn-neutral float-left" title="Json utilities" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../safecomp/safecomp.html" class="btn btn-neutral float-right" title="Safe numerical comparison" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="string-utilities">
+<span id="string-utils"></span><h1>String utilities<a class="headerlink" href="#string-utilities" title="Link to this heading"></a></h1>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv43str">
+<span id="_CPPv33str"></span><span id="_CPPv23str"></span><span id="str"></span><span class="target" id="namespacestr"></span><span class="k"><span class="pre">namespace</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">str</span></span></span><a class="headerlink" href="#_CPPv43str" title="Link to this definition"></a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N3str4trimENSt6stringE">
+<span id="_CPPv3N3str4trimENSt6stringE"></span><span id="_CPPv2N3str4trimENSt6stringE"></span><span id="str::trim__ss"></span><span class="target" id="namespacestr_1a89ca7852959156d16e338c4331a7eeb8"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trim</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3str4trimENSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Trim a string from both ends. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>s</strong> – The string to trim </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a copy of s without any space before (resp. after) the first (resp. last) character </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4IEN3str16get_val_from_strIN2bg4dateEEEN2bg4dateERKNSt6stringE">
+<span id="_CPPv3IEN3str16get_val_from_strIN2bg4dateEEERKNSt6stringE"></span><span id="_CPPv2IEN3str16get_val_from_strIN2bg4dateEEERKNSt6stringE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespacestr_1abe103d83818a574bb852086a7768a8a3"></span><span class="n"><span class="pre">bg</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">date</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_val_from_str</span></span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">bg</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">date</span></span><span class="p"><span class="pre">&gt;</span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str_val</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4IEN3str16get_val_from_strIN2bg4dateEEEN2bg4dateERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Read a value from a string (using boost::lexical_cast) </p>
+<dl class="field-list simple">
+<dt class="field-odd">Throws<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><span class="cpp-expr sig sig-inline cpp"><span class="n">bad_lexical_cast</span></span></span> – if the value can not be parsed </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the value </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4IEN3str16get_val_from_strIN3bpt5ptimeEEEN3bpt5ptimeERKNSt6stringE">
+<span id="_CPPv3IEN3str16get_val_from_strIN3bpt5ptimeEEERKNSt6stringE"></span><span id="_CPPv2IEN3str16get_val_from_strIN3bpt5ptimeEEERKNSt6stringE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespacestr_1ad830125861966745e0c30a26513a6625"></span><span class="n"><span class="pre">bpt</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_val_from_str</span></span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">bpt</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="p"><span class="pre">&gt;</span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str_val</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4IEN3str16get_val_from_strIN3bpt5ptimeEEEN3bpt5ptimeERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Read a value from a string (using boost::lexical_cast) </p>
+<dl class="field-list simple">
+<dt class="field-odd">Throws<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><span class="cpp-expr sig sig-inline cpp"><span class="n">bad_lexical_cast</span></span></span> – if the value can not be parsed </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the value </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN3str16get_val_from_strE1TRKNSt6stringE">
+<span id="_CPPv3I0EN3str16get_val_from_strERKNSt6stringE"></span><span id="_CPPv2I0EN3str16get_val_from_strERKNSt6stringE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespacestr_1a23e73e1d14143ac40933af697bd03fb7"></span><a class="reference internal" href="#_CPPv4I0EN3str16get_val_from_strE1TRKNSt6stringE" title="str::get_val_from_str::T"><span class="n"><span class="pre">T</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_val_from_str</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str_val</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3str16get_val_from_strE1TRKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Dedicated exception for cast error from (resp. to) string. </p>
+<p>Read a value from a string (using boost::lexical_cast) </p>
+<dl class="field-list simple">
+<dt class="field-odd">Throws<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><span class="cpp-expr sig sig-inline cpp"><span class="n">bad_lexical_cast</span></span></span> – if the value can not be parsed </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the value </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp">
+<span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespacestr_1abe103d83818a574bb852086a7768a8a3"></span><span class="n"><span class="pre">bg</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">date</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_val_from_str</span></span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">bg</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">date</span></span><span class="p"><span class="pre">&gt;</span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str_val</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Read a value from a string (using boost::lexical_cast) </p>
+<dl class="field-list simple">
+<dt class="field-odd">Throws<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><span class="cpp-expr sig sig-inline cpp"><span class="n">bad_lexical_cast</span></span></span> – if the value can not be parsed </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the value </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp">
+<span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespacestr_1ad830125861966745e0c30a26513a6625"></span><span class="n"><span class="pre">bpt</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_val_from_str</span></span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">bpt</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="p"><span class="pre">&gt;</span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str_val</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Read a value from a string (using boost::lexical_cast) </p>
+<dl class="field-list simple">
+<dt class="field-odd">Throws<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><span class="cpp-expr sig sig-inline cpp"><span class="n">bad_lexical_cast</span></span></span> – if the value can not be parsed </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the value </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Aurélien Questel.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,560 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Model Description &mdash; Utils 1.2.0 1.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=6efca38a"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Data Model Stream" href="model_print.html" />
+    <link rel="prev" title="Data Model Utils" href="model.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Utils 1.2.0
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../log/log.html">Log utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exception/exception.html">Exception</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="model.html">Data Model Utils</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Data Model Description</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv411string_hash"><code class="docutils literal notranslate"><span class="pre">string_hash</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N11string_hash14is_transparentE"><code class="docutils literal notranslate"><span class="pre">string_hash::is_transparent</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK11string_hashclEPKc"><code class="docutils literal notranslate"><span class="pre">string_hash::operator()()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK11string_hashclENSt11string_viewE"><code class="docutils literal notranslate"><span class="pre">string_hash::operator()()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK11string_hashclERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">string_hash::operator()()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="model_print.html">Data Model Stream</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_desc_att.html">Data Model Generation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../json/json.html">Json utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../string/string_utils.html">String utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../safecomp/safecomp.html">Safe numerical comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sort/lexical_sort.html">Lexical sort</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../period/period.html">Period utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../thread_pool/thread_pool.html">Thread Pool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cmake-modules/cmake-modules.html">Cmake-modules</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Utils 1.2.0</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="model.html">Data Model Utils</a></li>
+      <li class="breadcrumb-item active">Data Model Description</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/doc/model/model_desc.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="model.html" class="btn btn-neutral float-left" title="Data Model Utils" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="model_print.html" class="btn btn-neutral float-right" title="Data Model Stream" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="data-model-description">
+<span id="model-desc"></span><h1>Data Model Description<a class="headerlink" href="#data-model-description" title="Link to this heading"></a></h1>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-defines">Defines</p>
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.N_SEC_IN_DAY">
+<span class="target" id="model__desc_8hh_1ab791fe831f50f9859b888f61a8b3e773"></span><span class="sig-name descname"><span class="n"><span class="pre">N_SEC_IN_DAY</span></span></span><a class="headerlink" href="#c.N_SEC_IN_DAY" title="Link to this definition"></a><br /></dt>
+<dd><p>Constant equals to the number of seconds in a day. </p>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.N_SEC_IN_HOUR">
+<span class="target" id="model__desc_8hh_1a5c4e3a7eeaeee086063d3cfc78b21b92"></span><span class="sig-name descname"><span class="n"><span class="pre">N_SEC_IN_HOUR</span></span></span><a class="headerlink" href="#c.N_SEC_IN_HOUR" title="Link to this definition"></a><br /></dt>
+<dd><p>Constant equals to the number of seconds in an hour. </p>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.MAKE_CLASS_SORT">
+<span class="target" id="model__desc_8hh_1add118b6d8457b20ee9f095c40136180f"></span><span class="sig-name descname"><span class="n"><span class="pre">MAKE_CLASS_SORT</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">class_name</span></span>, <span class="n"><span class="pre">att_list</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.MAKE_CLASS_SORT" title="Link to this definition"></a><br /></dt>
+<dd><p>Create an operator&lt; based on a list of attributes.</p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MAKE_CLASS_SORT</span><span class="p">(</span><span class="n">AbstractClosing</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">from</span><span class="p">,</span><span class="w"> </span><span class="n">to</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+</pre></div>
+</div>
+ expands to <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">public</span><span class="o">:</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="k">operator</span><span class="o">&lt;</span><span class="p">(</span><span class="n">AbstractClosing</span><span class="w"> </span><span class="k">const</span><span class="o">&amp;</span><span class="n">other</span><span class="p">)</span><span class="w"> </span><span class="k">const</span>
+<span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">safecomp</span><span class="o">::</span><span class="n">neq</span><span class="p">(</span><span class="w"> </span><span class="n">get_from</span><span class="p">(),</span><span class="w"> </span><span class="n">other</span><span class="p">.</span><span class="n">get_from</span><span class="p">()</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="w">   </span><span class="p">{</span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">safecomp</span><span class="o">::</span><span class="n">lt</span><span class="p">(</span><span class="w"> </span><span class="n">get_from</span><span class="p">(),</span><span class="w"> </span><span class="n">other</span><span class="p">.</span><span class="n">get_from</span><span class="p">()</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">      </span><span class="k">else</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">   </span><span class="p">}</span>
+<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">safecomp</span><span class="o">::</span><span class="n">neq</span><span class="p">(</span><span class="w"> </span><span class="n">get_to</span><span class="p">(),</span><span class="w"> </span><span class="n">other</span><span class="p">.</span><span class="n">get_to</span><span class="p">()</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="w">   </span><span class="p">{</span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">safecomp</span><span class="o">::</span><span class="n">lt</span><span class="p">(</span><span class="w"> </span><span class="n">get_to</span><span class="p">()</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">other</span><span class="p">.</span><span class="n">get_to</span><span class="p">()</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">      </span><span class="k">else</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">   </span><span class="p">}</span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+ </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_name</strong> – the name of the class </p></li>
+<li><p><strong>att_list</strong> – the list of attributes to sort on </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.MAKE_DTO_STRUCT">
+<span class="target" id="model__desc_8hh_1a258a491864f3e6bdbcc3c0cae8f93ad7"></span><span class="sig-name descname"><span class="n"><span class="pre">MAKE_DTO_STRUCT</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">struct_name</span></span>, <span class="n"><span class="pre">att_seq</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.MAKE_DTO_STRUCT" title="Link to this definition"></a><br /></dt>
+<dd><p>allow the declaration of a structure </p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MAKE_DTO_STRUCT</span><span class="p">(</span>
+<span class="w">    </span><span class="n">PressDto</span><span class="p">,</span>
+<span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">)(</span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="p">)(</span><span class="n">pos</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+ expands to <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">PressDto</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">pos</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+ <div class="remark admonition">
+<p class="admonition-title">Remark</p>
+<p>these structures are serializable and streamable </p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../json/json.html#namespacejson_1af8d3ea838620dc2a4f2a9b7048eaeadd"><span class="std std-ref">json::import_from_file()</span></a> and <a class="reference internal" href="../json/json.html#namespacejson_1a8f7940206530279418f13e5b7d406e98"><span class="std std-ref">json::export_to_file()</span></a></p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>details::streamable</p>
+</div>
+</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>struct_name</strong> – the name of the struct </p></li>
+<li><p><strong>att_seq</strong> – the sequence of sequences describing the attribute </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.MAKE_DTO_ENUM">
+<span class="target" id="model__desc_8hh_1aa2d857d837d5005363020ef6da039add"></span><span class="sig-name descname"><span class="n"><span class="pre">MAKE_DTO_ENUM</span></span></span><a class="headerlink" href="#c.MAKE_DTO_ENUM" title="Link to this definition"></a><br /></dt>
+<dd><p>allow the declaration of an enum </p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MAKE_DTO_ENUM</span><span class="p">(</span>
+<span class="w">    </span><span class="c1">//Name</span>
+<span class="w">    </span><span class="n">EnumDto</span><span class="p">,</span>
+<span class="w">    </span><span class="c1">//Values</span>
+<span class="w">    </span><span class="n">VAL_1</span><span class="p">,</span>
+<span class="w">    </span><span class="n">VAL_2</span><span class="p">,</span>
+<span class="w">    </span><span class="n">VAL_3</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+ <div class="remark admonition">
+<p class="admonition-title">Remark</p>
+<p>it is just an alias for BOOST_DEFINE_ENUM </p>
+</div>
+<div class="remark admonition">
+<p class="admonition-title">Remark</p>
+<p>these structures are serializable and streamable </p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../json/json.html#namespacejson_1af8d3ea838620dc2a4f2a9b7048eaeadd"><span class="std std-ref">json::import_from_file()</span></a> and <a class="reference internal" href="../json/json.html#namespacejson_1a8f7940206530279418f13e5b7d406e98"><span class="std std-ref">json::export_to_file()</span></a></p>
+</div>
+</p>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.MAKE_ATT">
+<span class="target" id="model__desc_8hh_1aa334561c877284549161f24d65927f0f"></span><span class="sig-name descname"><span class="n"><span class="pre">MAKE_ATT</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">att_desc</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.MAKE_ATT" title="Link to this definition"></a><br /></dt>
+<dd><p>Generate the declaration and every set / get for basic attribute. </p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MAKE_ATT</span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">)(</span><span class="n">id</span><span class="p">)(</span><span class="s">&quot;default&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="n">MAKE_ATT</span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="kt">float</span><span class="p">)(</span><span class="n">contribution</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+</pre></div>
+</div>
+ expands to <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">private</span><span class="o">:</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">_id</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;default&quot;</span><span class="p">};</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="n">get_id</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">_id</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="o">&amp;</span><span class="n">get_id</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">_id</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">set_id</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="k">private</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">_contribution</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="o">&amp;</span><span class="n">get_contribution</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">_contribution</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="n">get_contribution</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">_contribution</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">set_contribution</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">_contribution</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</pre></div>
+</div>
+ </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>att_desc</strong> – sequence describing the attribute : (type)(name)[(default_value)] </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.MAKE_NON_COPYABLE_ATT">
+<span class="target" id="model__desc_8hh_1a758426adaf741077099e97b02eef9858"></span><span class="sig-name descname"><span class="n"><span class="pre">MAKE_NON_COPYABLE_ATT</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">att_desc</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.MAKE_NON_COPYABLE_ATT" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.MAKE_CONST_ATT">
+<span class="target" id="model__desc_8hh_1ad904d30a36adc1ce2cb24c26b3e856eb"></span><span class="sig-name descname"><span class="n"><span class="pre">MAKE_CONST_ATT</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">att_desc</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.MAKE_CONST_ATT" title="Link to this definition"></a><br /></dt>
+<dd><p>Generate the declaration and every get for basic non modifiable attribute. </p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MAKE_CONST_ATT</span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">)(</span><span class="n">ids</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+</pre></div>
+</div>
+ expands to <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">private</span><span class="o">:</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">_ids</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="n">get_ids</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">_ids</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</pre></div>
+</div>
+ </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>att_desc</strong> – sequence describing the attribute : (type)(name) </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.MAKE_MAP">
+<span class="target" id="model__desc_8hh_1a9b37263a14d27b6292ff61c819d96538"></span><span class="sig-name descname"><span class="n"><span class="pre">MAKE_MAP</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">key</span></span>, <span class="n"><span class="pre">value</span></span>, <span class="n"><span class="pre">name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.MAKE_MAP" title="Link to this definition"></a><br /></dt>
+<dd><p>Generate an editable attribute std::map&lt;key, value&gt; _name along with its getters. </p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MAKE_MAP</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="n">values</span><span class="p">)</span>
+</pre></div>
+</div>
+ expands to <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">private</span><span class="o">:</span>
+<span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">_values</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="n">get_values</span><span class="p">()</span>
+<span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">_values</span><span class="p">;</span>
+<span class="w"> </span><span class="p">}</span>
+<span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="n">get_values</span><span class="p">()</span><span class="w"> </span><span class="k">const</span>
+<span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">_values</span><span class="p">;</span>
+<span class="w"> </span><span class="p">}</span>
+</pre></div>
+</div>
+ </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – the type of keys </p></li>
+<li><p><strong>value</strong> – the type of values </p></li>
+<li><p><strong>name</strong> – the name of the attribute </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.MAKE_SET">
+<span class="target" id="model__desc_8hh_1a61d321315f92bb5534ef62858e859ba4"></span><span class="sig-name descname"><span class="n"><span class="pre">MAKE_SET</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">value</span></span>, <span class="n"><span class="pre">name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.MAKE_SET" title="Link to this definition"></a><br /></dt>
+<dd><p>Generate an editable attribute std::set&lt;value&gt; _name along with its getters. </p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MAKE_SET</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="n">values</span><span class="p">)</span>
+</pre></div>
+</div>
+ expands to <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">private</span><span class="o">:</span>
+<span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">set</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">_values</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">set</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="n">get_values</span><span class="p">()</span>
+<span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">_values</span><span class="p">;</span>
+<span class="w"> </span><span class="p">}</span>
+<span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">set</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="n">get_values</span><span class="p">()</span><span class="w"> </span><span class="k">const</span>
+<span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">_values</span><span class="p">;</span>
+<span class="w"> </span><span class="p">}</span>
+</pre></div>
+</div>
+ </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – the type of values </p></li>
+<li><p><strong>name</strong> – the name of the attribute </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.MAKE_STRHASH_MAP">
+<span class="target" id="model__desc_8hh_1a935781ed75a003b4583fc03dc50cfec2"></span><span class="sig-name descname"><span class="n"><span class="pre">MAKE_STRHASH_MAP</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">value</span></span>, <span class="n"><span class="pre">name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.MAKE_STRHASH_MAP" title="Link to this definition"></a><br /></dt>
+<dd><p>Generate an editable attribute std::unordered_map&lt;std::string, value&gt; _name along with its getters. </p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MAKE_STRHASH_MAP</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="n">values</span><span class="p">)</span>
+</pre></div>
+</div>
+ expands to <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">private</span><span class="o">:</span>
+<span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="n">string_hash</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">equal_to</span><span class="o">&lt;&gt;&gt;</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="n">string_hash</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">equal_to</span><span class="o">&lt;&gt;&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="n">get_values</span><span class="p">()</span>
+<span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">_values</span><span class="p">;</span>
+<span class="w"> </span><span class="p">}</span>
+<span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="n">string_hash</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">equal_to</span><span class="o">&lt;&gt;&gt;</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="n">get_values</span><span class="p">()</span><span class="w"> </span><span class="k">const</span>
+<span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">_values</span><span class="p">;</span>
+<span class="w"> </span><span class="p">}</span>
+</pre></div>
+</div>
+ <div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#structstring__hash"><span class="std std-ref">string_hash</span></a></p>
+</div>
+</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – the type of values </p></li>
+<li><p><strong>name</strong> – the name of the attribute </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.MAKE_CLASS_REF_ATT">
+<span class="target" id="model__desc_8hh_1a1fad5066df9165318360ac1ffedfd386"></span><span class="sig-name descname"><span class="n"><span class="pre">MAKE_CLASS_REF_ATT</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">type</span></span>, <span class="n"><span class="pre">name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.MAKE_CLASS_REF_ATT" title="Link to this definition"></a><br /></dt>
+<dd><p>Generate an editable attribute type &amp; _name along with its getters. </p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MAKE_CLASS_REF_ATT</span><span class="p">(</span><span class="n">type</span><span class="p">,</span><span class="w"> </span><span class="n">obj</span><span class="p">)</span>
+</pre></div>
+</div>
+ expands to <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">private</span><span class="o">:</span>
+<span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">&amp;</span><span class="n">_obj</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">&amp;</span><span class="n">get_obj</span><span class="p">()</span>
+<span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">_obj</span><span class="p">;</span>
+<span class="w"> </span><span class="p">}</span>
+<span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="n">get_obj</span><span class="p">()</span><span class="w"> </span><span class="k">const</span>
+<span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">_obj</span><span class="p">;</span>
+<span class="w"> </span><span class="p">}</span>
+</pre></div>
+</div>
+ </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>type</strong> – the class name </p></li>
+<li><p><strong>name</strong> – the name of the attribute </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.MAKE_CLASS_CONSTREF_ATT">
+<span class="target" id="model__desc_8hh_1afbbf266775fc4d4d56f669a2c3a97da6"></span><span class="sig-name descname"><span class="n"><span class="pre">MAKE_CLASS_CONSTREF_ATT</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">type</span></span>, <span class="n"><span class="pre">name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.MAKE_CLASS_CONSTREF_ATT" title="Link to this definition"></a><br /></dt>
+<dd><p>Generate a read only attribute type const &amp; _name along with its getters. </p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MAKE_CLASS_CONSTREF_ATT</span><span class="p">(</span><span class="n">type</span><span class="p">,</span><span class="w"> </span><span class="n">obj</span><span class="p">)</span>
+</pre></div>
+</div>
+ expands to <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">private</span><span class="o">:</span>
+<span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="n">_obj</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="n">get_obj</span><span class="p">()</span><span class="w"> </span><span class="k">const</span>
+<span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">_obj</span><span class="p">;</span>
+<span class="w"> </span><span class="p">}</span>
+</pre></div>
+</div>
+ </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>type</strong> – the class name </p></li>
+<li><p><strong>name</strong> – the name of the attribute </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.MAKE_CLASS_ATT">
+<span class="target" id="model__desc_8hh_1a17c7ae1f1ad13ff5aa7e5636fd6fb8d9"></span><span class="sig-name descname"><span class="n"><span class="pre">MAKE_CLASS_ATT</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">const_att_seq</span></span>, <span class="n"><span class="pre">editable_att_seq</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.MAKE_CLASS_ATT" title="Link to this definition"></a><br /></dt>
+<dd><p>Generate every set / get for basic attributes. </p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MAKE_CLASS_ATT</span><span class="p">(</span>
+<span class="w">    </span><span class="c1">//non editable attributes</span>
+<span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">)(</span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">),</span>
+<span class="w">    </span><span class="c1">//editable attributes</span>
+<span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="p">)(</span><span class="n">pos</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+ expands to <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">private</span><span class="o">:</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">_id</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="n">get_id</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">_id</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="k">private</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">_x</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">set_x</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="n">p</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">_x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="o">&amp;</span><span class="n">get_x</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">_x</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">get_x</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">_x</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="k">private</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">_pos</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">set_pos</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="n">p</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">_pos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="o">&amp;</span><span class="n">get_pos</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">_pos</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">get_pos</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">_pos</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</pre></div>
+</div>
+ </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>const_att_seq</strong> – sequence of non editable attributes </p></li>
+<li><p><strong>editable_att_seq</strong> – sequence of editable attributes </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<dl class="cpp struct">
+<dt class="sig sig-object cpp" id="_CPPv411string_hash">
+<span id="_CPPv311string_hash"></span><span id="_CPPv211string_hash"></span><span id="string_hash"></span><span class="target" id="structstring__hash"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">string_hash</span></span></span><a class="headerlink" href="#_CPPv411string_hash" title="Link to this definition"></a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;hash.hh&gt;</em></div>
+<p>heterogenous lookup for string </p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://www.cppstories.com/2021/heterogeneous-access-cpp20/#how-to-enable-it-for-unordered-containers">https://www.cppstories.com/2021/heterogeneous-access-cpp20/#how-to-enable-it-for-unordered-containers</a></p>
+</div>
+</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N11string_hash14is_transparentE">
+<span id="_CPPv3N11string_hash14is_transparentE"></span><span id="_CPPv2N11string_hash14is_transparentE"></span><span class="target" id="structstring__hash_1ac602a5e0fa2ea76cd2d6329232aaa0bc"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">is_transparent</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><a class="headerlink" href="#_CPPv4N11string_hash14is_transparentE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK11string_hashclEPKc">
+<span id="_CPPv3NK11string_hashclEPKc"></span><span id="_CPPv2NK11string_hashclEPKc"></span><span id="string_hash::call-operator__cCPC"></span><span class="target" id="structstring__hash_1a25579b39818ac8e55f33afc90cb23f7a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">txt</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK11string_hashclEPKc" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK11string_hashclENSt11string_viewE">
+<span id="_CPPv3NK11string_hashclENSt11string_viewE"></span><span id="_CPPv2NK11string_hashclENSt11string_viewE"></span><span id="string_hash::call-operator__std::string_viewC"></span><span class="target" id="structstring__hash_1a111fe7cbae964888949a8302f7ff311f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">txt</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK11string_hashclENSt11string_viewE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK11string_hashclERKNSt6stringE">
+<span id="_CPPv3NK11string_hashclERKNSt6stringE"></span><span id="_CPPv2NK11string_hashclERKNSt6stringE"></span><span id="string_hash::call-operator__ssCRC"></span><span class="target" id="structstring__hash_1a9e1adeed763f5fb772b9981b2d31ce0c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">txt</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK11string_hashclERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Aurélien Questel.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

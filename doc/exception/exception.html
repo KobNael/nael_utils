@@ -1,0 +1,323 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exception &mdash; Utils 1.2.0 1.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=6efca38a"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Data Model Utils" href="../model/model.html" />
+    <link rel="prev" title="Log utilities" href="../log/log.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Utils 1.2.0
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../log/log.html">Log utilities</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Exception</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv413NaelException"><code class="docutils literal notranslate"><span class="pre">NaelException</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N13NaelException13NaelExceptionERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">NaelException::NaelException()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK13NaelException4whatEv"><code class="docutils literal notranslate"><span class="pre">NaelException::what()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N13NaelExceptionD0Ev"><code class="docutils literal notranslate"><span class="pre">NaelException::~NaelException()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N13NaelException8_messageE"><code class="docutils literal notranslate"><span class="pre">NaelException::_message</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv411fatal_error"><code class="docutils literal notranslate"><span class="pre">fatal_error</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N11fatal_error11fatal_errorERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">fatal_error::fatal_error()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N11fatal_errorD0Ev"><code class="docutils literal notranslate"><span class="pre">fatal_error::~fatal_error()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv42io"><code class="docutils literal notranslate"><span class="pre">io</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N2io12access_errorE"><code class="docutils literal notranslate"><span class="pre">io::access_error</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io12access_error12access_errorERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">io::access_error::access_error()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io12access_errorD0Ev"><code class="docutils literal notranslate"><span class="pre">io::access_error::~access_error()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv42bo"><code class="docutils literal notranslate"><span class="pre">bo</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N2bo11consistencyE"><code class="docutils literal notranslate"><span class="pre">bo::consistency</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2bo11consistency11consistencyERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">bo::consistency::consistency()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2bo11consistencyD0Ev"><code class="docutils literal notranslate"><span class="pre">bo::consistency::~consistency()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv43opt"><code class="docutils literal notranslate"><span class="pre">opt</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N3opt11consistencyE"><code class="docutils literal notranslate"><span class="pre">opt::consistency</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N3opt11consistency11consistencyERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">opt::consistency::consistency()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N3opt11consistencyD0Ev"><code class="docutils literal notranslate"><span class="pre">opt::consistency::~consistency()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../model/model.html">Data Model Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../json/json.html">Json utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../string/string_utils.html">String utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../safecomp/safecomp.html">Safe numerical comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sort/lexical_sort.html">Lexical sort</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../period/period.html">Period utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../thread_pool/thread_pool.html">Thread Pool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cmake-modules/cmake-modules.html">Cmake-modules</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Utils 1.2.0</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Exception</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/doc/exception/exception.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="../log/log.html" class="btn btn-neutral float-left" title="Log utilities" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../model/model.html" class="btn btn-neutral float-right" title="Data Model Utils" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="exception">
+<span id="id1"></span><h1>Exception<a class="headerlink" href="#exception" title="Link to this heading"></a></h1>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-defines">Defines</p>
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.MAKE_EXCEPTION">
+<span class="target" id="exception_8hh_1afc41e4e79f05bb6c9defdec7e1ba2233"></span><span class="sig-name descname"><span class="n"><span class="pre">MAKE_EXCEPTION</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">class_name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.MAKE_EXCEPTION" title="Link to this definition"></a><br /></dt>
+<dd><p>Create a new type of exception. </p>
+<p>
+Example: <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">test</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">MAKE_EXCEPTION</span><span class="p">(</span><span class="n">base</span><span class="p">)</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">throw_base</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="n">test</span><span class="o">::</span><span class="n">base</span><span class="p">(</span><span class="s">&quot;dedicated error&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+ </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_name</strong> – the name of the class</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv413NaelException">
+<span id="_CPPv313NaelException"></span><span id="_CPPv213NaelException"></span><span id="NaelException"></span><span class="target" id="classNaelException"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">NaelException</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">exception</span></span><a class="headerlink" href="#_CPPv413NaelException" title="Link to this definition"></a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;exception.hh&gt;</em></div>
+<p>Pure virtual class to create dedicated exceptions. </p>
+<p>Subclassed by <a class="reference internal" href="#classbo_1_1consistency"><span class="std std-ref">bo::consistency</span></a>, <a class="reference internal" href="#classfatal__error"><span class="std std-ref">fatal_error</span></a>, <a class="reference internal" href="#classopt_1_1consistency"><span class="std std-ref">opt::consistency</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N13NaelException13NaelExceptionERKNSt6stringE">
+<span id="_CPPv3N13NaelException13NaelExceptionERKNSt6stringE"></span><span id="_CPPv2N13NaelException13NaelExceptionERKNSt6stringE"></span><span id="NaelException::NaelException__ssCR"></span><span class="target" id="classNaelException_1ac3d4f63a3c8cb900604a9b7175ccc413"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">NaelException</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">message</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13NaelException13NaelExceptionERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK13NaelException4whatEv">
+<span id="_CPPv3NK13NaelException4whatEv"></span><span id="_CPPv2NK13NaelException4whatEv"></span><span id="NaelException::whatC"></span><span class="target" id="classNaelException_1a786d6df8322f78ff00a0564d3356ef4d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">what</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK13NaelException4whatEv" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N13NaelExceptionD0Ev">
+<span id="_CPPv3N13NaelExceptionD0Ev"></span><span id="_CPPv2N13NaelExceptionD0Ev"></span><span id="NaelException::~NaelException"></span><span class="target" id="classNaelException_1a7659038764e15844cfaf1a5d4561c387"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">~NaelException</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><a class="headerlink" href="#_CPPv4N13NaelExceptionD0Ev" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N13NaelException8_messageE">
+<span id="_CPPv3N13NaelException8_messageE"></span><span id="_CPPv2N13NaelException8_messageE"></span><span id="NaelException::_message__ss"></span><span class="target" id="classNaelException_1a4891b9a0d387c11244bf652f06b83c1b"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_message</span></span></span><a class="headerlink" href="#_CPPv4N13NaelException8_messageE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv411fatal_error">
+<span id="_CPPv311fatal_error"></span><span id="_CPPv211fatal_error"></span><span id="fatal_error"></span><span class="target" id="classfatal__error"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">fatal_error</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv413NaelException" title="NaelException"><span class="n"><span class="pre">NaelException</span></span></a><a class="headerlink" href="#_CPPv411fatal_error" title="Link to this definition"></a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;exception.hh&gt;</em></div>
+<p>Dedicated exception for irrecoverable error. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N11fatal_error11fatal_errorERKNSt6stringE">
+<span id="_CPPv3N11fatal_error11fatal_errorERKNSt6stringE"></span><span id="_CPPv2N11fatal_error11fatal_errorERKNSt6stringE"></span><span id="fatal_error::fatal_error__ssCR"></span><span class="target" id="classfatal__error_1a3871ae4248698c2bad410072947ccd25"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">fatal_error</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">message</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11fatal_error11fatal_errorERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N11fatal_errorD0Ev">
+<span id="_CPPv3N11fatal_errorD0Ev"></span><span id="_CPPv2N11fatal_errorD0Ev"></span><span id="fatal_error::~fatal_error"></span><span class="target" id="classfatal__error_1a5b71405e3debeae114159c34b429dbda"></span><span class="sig-name descname"><span class="n"><span class="pre">~fatal_error</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">default</span></span><a class="headerlink" href="#_CPPv4N11fatal_errorD0Ev" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv42io">
+<span id="_CPPv32io"></span><span id="_CPPv22io"></span><span id="io"></span><span class="target" id="namespaceio"></span><span class="k"><span class="pre">namespace</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">io</span></span></span><a class="headerlink" href="#_CPPv42io" title="Link to this definition"></a><br /></dt>
+<dd><dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N2io12access_errorE">
+<span id="_CPPv3N2io12access_errorE"></span><span id="_CPPv2N2io12access_errorE"></span><span id="io::access_error"></span><span class="target" id="classio_1_1access__error"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">access_error</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv413NaelException" title="NaelException"><span class="n"><span class="pre">NaelException</span></span></a><a class="headerlink" href="#_CPPv4N2io12access_errorE" title="Link to this definition"></a><br /></dt>
+<dd><p>Exception for file access error. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io12access_error12access_errorERKNSt6stringE">
+<span id="_CPPv3N2io12access_error12access_errorERKNSt6stringE"></span><span id="_CPPv2N2io12access_error12access_errorERKNSt6stringE"></span><span id="io::access_error::access_error__ssCR"></span><span class="target" id="classio_1_1access__error_1a9802d7178e605b11e0d7ed9b8970f8b7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">access_error</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">message</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2io12access_error12access_errorERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io12access_errorD0Ev">
+<span id="_CPPv3N2io12access_errorD0Ev"></span><span id="_CPPv2N2io12access_errorD0Ev"></span><span id="io::access_error::~access_error"></span><span class="target" id="classio_1_1access__error_1ad896d6074508c909b6273b40959ecc0e"></span><span class="sig-name descname"><span class="n"><span class="pre">~access_error</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">default</span></span><a class="headerlink" href="#_CPPv4N2io12access_errorD0Ev" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv42bo">
+<span id="_CPPv32bo"></span><span id="_CPPv22bo"></span><span id="bo"></span><span class="target" id="namespacebo"></span><span class="k"><span class="pre">namespace</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bo</span></span></span><a class="headerlink" href="#_CPPv42bo" title="Link to this definition"></a><br /></dt>
+<dd><dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N2bo11consistencyE">
+<span id="_CPPv3N2bo11consistencyE"></span><span id="_CPPv2N2bo11consistencyE"></span><span id="bo::consistency"></span><span class="target" id="classbo_1_1consistency"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">consistency</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv413NaelException" title="NaelException"><span class="n"><span class="pre">NaelException</span></span></a><a class="headerlink" href="#_CPPv4N2bo11consistencyE" title="Link to this definition"></a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;exception.hh&gt;</em></div>
+<p>Dedicated exception for consistency in input data. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2bo11consistency11consistencyERKNSt6stringE">
+<span id="_CPPv3N2bo11consistency11consistencyERKNSt6stringE"></span><span id="_CPPv2N2bo11consistency11consistencyERKNSt6stringE"></span><span id="bo::consistency::consistency__ssCR"></span><span class="target" id="classbo_1_1consistency_1a68f1c1a73835c073ad6e6788fef20aab"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">consistency</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">message</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2bo11consistency11consistencyERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2bo11consistencyD0Ev">
+<span id="_CPPv3N2bo11consistencyD0Ev"></span><span id="_CPPv2N2bo11consistencyD0Ev"></span><span id="bo::consistency::~consistency"></span><span class="target" id="classbo_1_1consistency_1adc6c0a2cdb0f77cc02dc1b06a33734fb"></span><span class="sig-name descname"><span class="n"><span class="pre">~consistency</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">default</span></span><a class="headerlink" href="#_CPPv4N2bo11consistencyD0Ev" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv43opt">
+<span id="_CPPv33opt"></span><span id="_CPPv23opt"></span><span id="opt"></span><span class="target" id="namespaceopt"></span><span class="k"><span class="pre">namespace</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">opt</span></span></span><a class="headerlink" href="#_CPPv43opt" title="Link to this definition"></a><br /></dt>
+<dd><dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N3opt11consistencyE">
+<span id="_CPPv3N3opt11consistencyE"></span><span id="_CPPv2N3opt11consistencyE"></span><span id="opt::consistency"></span><span class="target" id="classopt_1_1consistency"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">consistency</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv413NaelException" title="NaelException"><span class="n"><span class="pre">NaelException</span></span></a><a class="headerlink" href="#_CPPv4N3opt11consistencyE" title="Link to this definition"></a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;exception.hh&gt;</em></div>
+<p>Dedicated exception for consistency during optimization. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N3opt11consistency11consistencyERKNSt6stringE">
+<span id="_CPPv3N3opt11consistency11consistencyERKNSt6stringE"></span><span id="_CPPv2N3opt11consistency11consistencyERKNSt6stringE"></span><span id="opt::consistency::consistency__ssCR"></span><span class="target" id="classopt_1_1consistency_1a1f6c12e6858a24e33c81d12ac085d58d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">consistency</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">message</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3opt11consistency11consistencyERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N3opt11consistencyD0Ev">
+<span id="_CPPv3N3opt11consistencyD0Ev"></span><span id="_CPPv2N3opt11consistencyD0Ev"></span><span id="opt::consistency::~consistency"></span><span class="target" id="classopt_1_1consistency_1a4c0fa77c6127d07c0a01aa389b3537ee"></span><span class="sig-name descname"><span class="n"><span class="pre">~consistency</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">default</span></span><a class="headerlink" href="#_CPPv4N3opt11consistencyD0Ev" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="simple">
+<dt>These exceptions are also provided :</dt><dd><ul class="simple">
+<li><p><cite>fatal_error</cite> : exception for irrecoverable error</p></li>
+<li><p><cite>bo::consistency</cite> : exception for consistency issue in Business Object Model</p></li>
+<li><p><cite>io::access_error</cite> : exception for file access error</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Aurélien Questel.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

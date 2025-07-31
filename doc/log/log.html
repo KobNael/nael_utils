@@ -1,0 +1,1316 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Log utilities &mdash; Utils 1.2.0 1.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=6efca38a"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Exception" href="../exception/exception.html" />
+    <link rel="prev" title="Utils documentation" href="../../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Utils 1.2.0
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Log utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#log-level">Log level</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N2io8LogLevelE"><code class="docutils literal notranslate"><span class="pre">LogLevel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io8LogLevel3OFFE"><code class="docutils literal notranslate"><span class="pre">LogLevel::OFF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io8LogLevel5ERRORE"><code class="docutils literal notranslate"><span class="pre">LogLevel::ERROR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io8LogLevel7WARNINGE"><code class="docutils literal notranslate"><span class="pre">LogLevel::WARNING</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io8LogLevel4INFOE"><code class="docutils literal notranslate"><span class="pre">LogLevel::INFO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io8LogLevel8EXTENDEDE"><code class="docutils literal notranslate"><span class="pre">LogLevel::EXTENDED</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io8LogLevel5DEBUGE"><code class="docutils literal notranslate"><span class="pre">LogLevel::DEBUG</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#loggers">Loggers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#log-file">Log file</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io10FileLoggerE"><code class="docutils literal notranslate"><span class="pre">FileLogger</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#teelogger">TeeLogger</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io9TeeLoggerE"><code class="docutils literal notranslate"><span class="pre">TeeLogger</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#logger-manager">Logger Manager</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io13LoggerManagerE"><code class="docutils literal notranslate"><span class="pre">LoggerManager</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#logger">Logger</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4I0EN2io6LoggerE"><code class="docutils literal notranslate"><span class="pre">Logger</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#macros">Macros</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#main-macros-for-tee-logger-manipulation">Main macros for <span class="xref std std-ref">tee_logger</span> manipulation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#main-macros-for-log-file-manipulation">Main macros for <span class="xref std std-ref">log_file</span> manipulation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#full-reference">Full reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv42io"><code class="docutils literal notranslate"><span class="pre">io</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4I0EN2io11print_rangeERNSt7ostreamERNSt7ostreamERK5Range"><code class="docutils literal notranslate"><span class="pre">io::print_range()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4I0EN2io5printERNSt7ostreamERNSt7ostreamERK1T"><code class="docutils literal notranslate"><span class="pre">io::print()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4I0EN2io5printERNSt7ostreamERNSt7ostreamERKNSt6vectorI1TEE"><code class="docutils literal notranslate"><span class="pre">io::print()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4I0EN2io5printERNSt7ostreamERNSt7ostreamERKNSt17reference_wrapperI1TEE"><code class="docutils literal notranslate"><span class="pre">io::print()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4I00EN2io5printERNSt7ostreamERNSt7ostreamERKNSt4pairI1U1VEE"><code class="docutils literal notranslate"><span class="pre">io::print()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io13LoggerManager12_tee_loggersE"><code class="docutils literal notranslate"><span class="pre">io::LoggerManager::_tee_loggers</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io13LoggerManager13_logfile_nameE"><code class="docutils literal notranslate"><span class="pre">io::LoggerManager::_logfile_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io13LoggerManager10_log_levelE"><code class="docutils literal notranslate"><span class="pre">io::LoggerManager::_log_level</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io13LoggerManager13_file_loggersE"><code class="docutils literal notranslate"><span class="pre">io::LoggerManager::_file_loggers</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../exception/exception.html">Exception</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model/model.html">Data Model Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../json/json.html">Json utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../string/string_utils.html">String utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../safecomp/safecomp.html">Safe numerical comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sort/lexical_sort.html">Lexical sort</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../period/period.html">Period utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../thread_pool/thread_pool.html">Thread Pool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cmake-modules/cmake-modules.html">Cmake-modules</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Utils 1.2.0</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Log utilities</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/doc/log/log.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="../../index.html" class="btn btn-neutral float-left" title="Utils documentation" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../exception/exception.html" class="btn btn-neutral float-right" title="Exception" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="log-utilities">
+<span id="log-utils"></span><h1>Log utilities<a class="headerlink" href="#log-utilities" title="Link to this heading"></a></h1>
+<dl class="simple">
+<dt>Here you can find some tools for logging purpose :</dt><dd><ul class="simple">
+<li><p>The verbosity is defined with the enum <a class="reference internal" href="#log-level"><span class="std std-ref">Log level</span></a></p></li>
+<li><dl class="simple">
+<dt>Two loggers are available :</dt><dd><ul>
+<li><p>A basic <a class="reference internal" href="#log-file"><span class="std std-ref">Log file</span></a></p></li>
+<li><p><a class="reference internal" href="#tee-logger"><span class="std std-ref">TeeLogger</span></a>, allowing to simultaneously print in the terminal and in a file</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>A <a class="reference internal" href="#logger-manager"><span class="std std-ref">Logger Manager</span></a> is also provided</p></li>
+<li><p><a class="reference internal" href="#macros"><span class="std std-ref">Macros</span></a> to log while taking the verbosity into account</p></li>
+</ul>
+</dd>
+</dl>
+<hr class="docutils" />
+<section id="log-level">
+<span id="id1"></span><h2>Log level<a class="headerlink" href="#log-level" title="Link to this heading"></a></h2>
+<p>The verbosity of the log can be set using</p>
+<dl class="cpp enum">
+<dt class="sig sig-object cpp" id="_CPPv4N2io8LogLevelE">
+<span id="_CPPv3N2io8LogLevelE"></span><span id="_CPPv2N2io8LogLevelE"></span><span class="target" id="namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-prename descclassname"><a class="reference internal" href="../exception/exception.html#_CPPv42io" title="io"><span class="n"><span class="pre">io</span></span></a><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">LogLevel</span></span></span><a class="headerlink" href="#_CPPv4N2io8LogLevelE" title="Link to this definition"></a><br /></dt>
+<dd><p>Describes the verbosity of the logger. </p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#classio_1_1Logger_1a710408a2e64c617e81f7c0b1520bfd41"><span class="std std-ref">Logger::setLogLevel</span></a></p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>io::SetLogLevel </p>
+</div>
+</p>
+<p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N2io8LogLevel3OFFE">
+<span id="_CPPv3N2io8LogLevel3OFFE"></span><span id="_CPPv2N2io8LogLevel3OFFE"></span><span class="target" id="namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4a23105b775d02bb4e4c93cf34eaa64007"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">OFF</span></span></span><a class="headerlink" href="#_CPPv4N2io8LogLevel3OFFE" title="Link to this definition"></a><br /></dt>
+<dd><p>No log at all. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N2io8LogLevel5ERRORE">
+<span id="_CPPv3N2io8LogLevel5ERRORE"></span><span id="_CPPv2N2io8LogLevel5ERRORE"></span><span class="target" id="namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4aafd9dff8efc451804eca93ec7826c0c3"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ERROR</span></span></span><a class="headerlink" href="#_CPPv4N2io8LogLevel5ERRORE" title="Link to this definition"></a><br /></dt>
+<dd><p>Only Error messages. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N2io8LogLevel7WARNINGE">
+<span id="_CPPv3N2io8LogLevel7WARNINGE"></span><span id="_CPPv2N2io8LogLevel7WARNINGE"></span><span class="target" id="namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4a0520d28ea260bfb74177e02e5756c6a7"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">WARNING</span></span></span><a class="headerlink" href="#_CPPv4N2io8LogLevel7WARNINGE" title="Link to this definition"></a><br /></dt>
+<dd><p>Error and Warning messages. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N2io8LogLevel4INFOE">
+<span id="_CPPv3N2io8LogLevel4INFOE"></span><span id="_CPPv2N2io8LogLevel4INFOE"></span><span class="target" id="namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4ab06358dd7edb8a6e63f5992416db7e54"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">INFO</span></span></span><a class="headerlink" href="#_CPPv4N2io8LogLevel4INFOE" title="Link to this definition"></a><br /></dt>
+<dd><p>Error, Warning and Info messages. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N2io8LogLevel8EXTENDEDE">
+<span id="_CPPv3N2io8LogLevel8EXTENDEDE"></span><span id="_CPPv2N2io8LogLevel8EXTENDEDE"></span><span class="target" id="namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4a6a952cc35c608de7b03623c95404fd00"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">EXTENDED</span></span></span><a class="headerlink" href="#_CPPv4N2io8LogLevel8EXTENDEDE" title="Link to this definition"></a><br /></dt>
+<dd><p>Error, Warning, Info and Extended messages. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N2io8LogLevel5DEBUGE">
+<span id="_CPPv3N2io8LogLevel5DEBUGE"></span><span id="_CPPv2N2io8LogLevel5DEBUGE"></span><span class="target" id="namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4a2ebc18396fa9e461490a7ea228650b83"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DEBUG</span></span></span><a class="headerlink" href="#_CPPv4N2io8LogLevel5DEBUGE" title="Link to this definition"></a><br /></dt>
+<dd><p>Error, Warning, Info and Debug messages. </p>
+</dd></dl>
+
+</dd></dl>
+
+<hr class="docutils" />
+</section>
+<section id="loggers">
+<span id="id2"></span><h2>Loggers<a class="headerlink" href="#loggers" title="Link to this heading"></a></h2>
+<section id="log-file">
+<span id="id3"></span><h3>Log file<a class="headerlink" href="#log-file" title="Link to this heading"></a></h3>
+<p>A logfile can be managed through</p>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N2io10FileLoggerE">
+<span id="_CPPv3N2io10FileLoggerE"></span><span id="_CPPv2N2io10FileLoggerE"></span><span id="io::FileLogger"></span><span class="target" id="classio_1_1FileLogger"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">FileLogger</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="../exception/exception.html#_CPPv42io" title="io"><span class="n"><span class="pre">io</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4I0EN2io6LoggerE" title="io::Logger"><span class="n"><span class="pre">Logger</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ofstream</span></span><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4N2io10FileLoggerE" title="Link to this definition"></a><br /></dt>
+<dd><p>Log in a file. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io10FileLogger10FileLoggerERKNSt6stringE8LogLevel">
+<span id="_CPPv3N2io10FileLogger10FileLoggerERKNSt6stringE8LogLevel"></span><span id="_CPPv2N2io10FileLogger10FileLoggerERKNSt6stringE8LogLevel"></span><span id="io::FileLogger::FileLogger__ssCR.LogLevel"></span><span class="target" id="classio_1_1FileLogger_1a313e832ceb7ae8ca7491031c9e054a18"></span><span class="sig-name descname"><span class="n"><span class="pre">FileLogger</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">file</span></span>, <a class="reference internal" href="#_CPPv4N2io8LogLevelE" title="io::LogLevel"><span class="n"><span class="pre">LogLevel</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">level</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io8LogLevelE" title="io::LogLevel"><span class="n"><span class="pre">LogLevel</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N2io8LogLevel4INFOE" title="io::LogLevel::INFO"><span class="n"><span class="pre">INFO</span></span></a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2io10FileLogger10FileLoggerERKNSt6stringE8LogLevel" title="Link to this definition"></a><br /></dt>
+<dd><p>Constructor. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file</strong> – path to the log file </p></li>
+<li><p><strong>level</strong> – initial verbosity </p></li>
+</ul>
+</dd>
+<dt class="field-even">Throws<span class="colon">:</span></dt>
+<dd class="field-even"><p><span><span class="cpp-expr sig sig-inline cpp">if</span></span> – the file can not be open </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io10FileLoggerD0Ev">
+<span id="_CPPv3N2io10FileLoggerD0Ev"></span><span id="_CPPv2N2io10FileLoggerD0Ev"></span><span id="io::FileLogger::~FileLogger"></span><span class="target" id="classio_1_1FileLogger_1a7e21c3a13a509d8570728cb3fd959dba"></span><span class="sig-name descname"><span class="n"><span class="pre">~FileLogger</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N2io10FileLoggerD0Ev" title="Link to this definition"></a><br /></dt>
+<dd><p>Destructor. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+<section id="teelogger">
+<span id="tee-logger"></span><h3>TeeLogger<a class="headerlink" href="#teelogger" title="Link to this heading"></a></h3>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N2io9TeeLoggerE">
+<span id="_CPPv3N2io9TeeLoggerE"></span><span id="_CPPv2N2io9TeeLoggerE"></span><span id="io::TeeLogger"></span><span class="target" id="classio_1_1TeeLogger"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TeeLogger</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="../exception/exception.html#_CPPv42io" title="io"><span class="n"><span class="pre">io</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4I0EN2io6LoggerE" title="io::Logger"><span class="n"><span class="pre">Logger</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">TeeStream</span></span><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4N2io9TeeLoggerE" title="Link to this definition"></a><br /></dt>
+<dd><p>Log both in a file and a terminal. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io9TeeLogger9TeeLoggerERKNSt6stringE8LogLevel">
+<span id="_CPPv3N2io9TeeLogger9TeeLoggerERKNSt6stringE8LogLevel"></span><span id="_CPPv2N2io9TeeLogger9TeeLoggerERKNSt6stringE8LogLevel"></span><span id="io::TeeLogger::TeeLogger__ssCR.LogLevel"></span><span class="target" id="classio_1_1TeeLogger_1af47dc20fe064128a1a89996bbd125434"></span><span class="sig-name descname"><span class="n"><span class="pre">TeeLogger</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">file</span></span>, <a class="reference internal" href="#_CPPv4N2io8LogLevelE" title="io::LogLevel"><span class="n"><span class="pre">LogLevel</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">level</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io8LogLevelE" title="io::LogLevel"><span class="n"><span class="pre">LogLevel</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N2io8LogLevel4INFOE" title="io::LogLevel::INFO"><span class="n"><span class="pre">INFO</span></span></a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2io9TeeLogger9TeeLoggerERKNSt6stringE8LogLevel" title="Link to this definition"></a><br /></dt>
+<dd><p>Constructor. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file</strong> – path to the log file </p></li>
+<li><p><strong>level</strong> – verbosity </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io9TeeLoggerD0Ev">
+<span id="_CPPv3N2io9TeeLoggerD0Ev"></span><span id="_CPPv2N2io9TeeLoggerD0Ev"></span><span id="io::TeeLogger::~TeeLogger"></span><span class="target" id="classio_1_1TeeLogger_1af0592ad32be00af6f8981bedd77a084e"></span><span class="sig-name descname"><span class="n"><span class="pre">~TeeLogger</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N2io9TeeLoggerD0Ev" title="Link to this definition"></a><br /></dt>
+<dd><p>Destructor. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+<section id="logger-manager">
+<span id="id4"></span><h3>Logger Manager<a class="headerlink" href="#logger-manager" title="Link to this heading"></a></h3>
+<p>One can create, access and set the verbosity an instance of <a class="reference internal" href="#tee-logger"><span class="std std-ref">TeeLogger</span></a> or <a class="reference internal" href="#log-file"><span class="std std-ref">Log file</span></a> using the following class :</p>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N2io13LoggerManagerE">
+<span id="_CPPv3N2io13LoggerManagerE"></span><span id="_CPPv2N2io13LoggerManagerE"></span><span id="io::LoggerManager"></span><span class="target" id="classio_1_1LoggerManager"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">LoggerManager</span></span></span><a class="headerlink" href="#_CPPv4N2io13LoggerManagerE" title="Link to this definition"></a><br /></dt>
+<dd><p>Store and give access to TeeLoggers. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-functions">Public Static Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io13LoggerManager9GetLoggerENSt11string_viewE">
+<span id="_CPPv3N2io13LoggerManager9GetLoggerENSt11string_viewE"></span><span id="_CPPv2N2io13LoggerManager9GetLoggerENSt11string_viewE"></span><span id="io::LoggerManager::GetLogger__std::string_view"></span><span class="target" id="classio_1_1LoggerManager_1a94063803f352fac9d492961383170c7d"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io9TeeLoggerE" title="io::TeeLogger"><span class="n"><span class="pre">TeeLogger</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">GetLogger</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">name</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="s"><span class="pre">&quot;&quot;</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2io13LoggerManager9GetLoggerENSt11string_viewE" title="Link to this definition"></a><br /></dt>
+<dd><p>Get or create a <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">TeeLogger</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> – name of the logger, empty string for default name </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A reference to the logger </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io13LoggerManager11ClearLoggerENSt11string_viewE">
+<span id="_CPPv3N2io13LoggerManager11ClearLoggerENSt11string_viewE"></span><span id="_CPPv2N2io13LoggerManager11ClearLoggerENSt11string_viewE"></span><span id="io::LoggerManager::ClearLogger__std::string_view"></span><span class="target" id="classio_1_1LoggerManager_1a427b41058d03ca42aae1057bb40d033f"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ClearLogger</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">name</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="s"><span class="pre">&quot;&quot;</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2io13LoggerManager11ClearLoggerENSt11string_viewE" title="Link to this definition"></a><br /></dt>
+<dd><p>Clear a logger. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> – name of the logger, empty string for default name </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io13LoggerManager11SetLogLevelE8LogLevelNSt11string_viewE">
+<span id="_CPPv3N2io13LoggerManager11SetLogLevelE8LogLevelNSt11string_viewE"></span><span id="_CPPv2N2io13LoggerManager11SetLogLevelE8LogLevelNSt11string_viewE"></span><span id="io::LoggerManager::SetLogLevel__LogLevel.std::string_view"></span><span class="target" id="classio_1_1LoggerManager_1a21940ead5c62f875d143fef0de5e12dd"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SetLogLevel</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N2io8LogLevelE" title="io::LogLevel"><span class="n"><span class="pre">LogLevel</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">level</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">name</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="s"><span class="pre">&quot;&quot;</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2io13LoggerManager11SetLogLevelE8LogLevelNSt11string_viewE" title="Link to this definition"></a><br /></dt>
+<dd><p>Set the loglevel of a <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">TeeLogger</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – name of the logger, empty string for default name </p></li>
+<li><p><strong>level</strong> – the log level </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io13LoggerManager18SetDefaultLogLevelE8LogLevel">
+<span id="_CPPv3N2io13LoggerManager18SetDefaultLogLevelE8LogLevel"></span><span id="_CPPv2N2io13LoggerManager18SetDefaultLogLevelE8LogLevel"></span><span id="io::LoggerManager::SetDefaultLogLevel__LogLevel"></span><span class="target" id="classio_1_1LoggerManager_1a3791b643bd0e7aed166306413165ee17"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SetDefaultLogLevel</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N2io8LogLevelE" title="io::LogLevel"><span class="n"><span class="pre">LogLevel</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">level</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2io13LoggerManager18SetDefaultLogLevelE8LogLevel" title="Link to this definition"></a><br /></dt>
+<dd><p>Set the default verbosity. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>level</strong> – the verbosity </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io13LoggerManager14SetDefaultNameENSt11string_viewE">
+<span id="_CPPv3N2io13LoggerManager14SetDefaultNameENSt11string_viewE"></span><span id="_CPPv2N2io13LoggerManager14SetDefaultNameENSt11string_viewE"></span><span id="io::LoggerManager::SetDefaultName__std::string_view"></span><span class="target" id="classio_1_1LoggerManager_1a1a7f4c58c57a1566741e49e9f63ed950"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SetDefaultName</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2io13LoggerManager14SetDefaultNameENSt11string_viewE" title="Link to this definition"></a><br /></dt>
+<dd><p>Set the default name. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> – name of the logger </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io13LoggerManager13GetFileLoggerENSt11string_viewE">
+<span id="_CPPv3N2io13LoggerManager13GetFileLoggerENSt11string_viewE"></span><span id="_CPPv2N2io13LoggerManager13GetFileLoggerENSt11string_viewE"></span><span id="io::LoggerManager::GetFileLogger__std::string_view"></span><span class="target" id="classio_1_1LoggerManager_1a70f558acf526ee1fdbf50e586d526124"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io10FileLoggerE" title="io::FileLogger"><span class="n"><span class="pre">FileLogger</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">GetFileLogger</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2io13LoggerManager13GetFileLoggerENSt11string_viewE" title="Link to this definition"></a><br /></dt>
+<dd><p>Get or create a <a class="reference internal" href="#classio_1_1FileLogger"><span class="std std-ref">FileLogger</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> – name of the logger </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A reference to the logger </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io13LoggerManager15ClearFileLoggerENSt11string_viewE">
+<span id="_CPPv3N2io13LoggerManager15ClearFileLoggerENSt11string_viewE"></span><span id="_CPPv2N2io13LoggerManager15ClearFileLoggerENSt11string_viewE"></span><span id="io::LoggerManager::ClearFileLogger__std::string_view"></span><span class="target" id="classio_1_1LoggerManager_1ab5d1973ab5ba16618d99d85c7e300bfd"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ClearFileLogger</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2io13LoggerManager15ClearFileLoggerENSt11string_viewE" title="Link to this definition"></a><br /></dt>
+<dd><p>Clear a <a class="reference internal" href="#classio_1_1FileLogger"><span class="std std-ref">FileLogger</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> – name of the logger </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io13LoggerManager15SetFileLogLevelE8LogLevelNSt11string_viewE">
+<span id="_CPPv3N2io13LoggerManager15SetFileLogLevelE8LogLevelNSt11string_viewE"></span><span id="_CPPv2N2io13LoggerManager15SetFileLogLevelE8LogLevelNSt11string_viewE"></span><span id="io::LoggerManager::SetFileLogLevel__LogLevel.std::string_view"></span><span class="target" id="classio_1_1LoggerManager_1a20acd342ff5385622f04a8ecd0d7b427"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SetFileLogLevel</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N2io8LogLevelE" title="io::LogLevel"><span class="n"><span class="pre">LogLevel</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">level</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2io13LoggerManager15SetFileLogLevelE8LogLevelNSt11string_viewE" title="Link to this definition"></a><br /></dt>
+<dd><p>Set the loglevel of a <a class="reference internal" href="#classio_1_1FileLogger"><span class="std std-ref">FileLogger</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – name of the logger </p></li>
+<li><p><strong>level</strong> – the log level </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io13LoggerManager15ClearAllLoggersEv">
+<span id="_CPPv3N2io13LoggerManager15ClearAllLoggersEv"></span><span id="_CPPv2N2io13LoggerManager15ClearAllLoggersEv"></span><span id="io::LoggerManager::ClearAllLoggers"></span><span class="target" id="classio_1_1LoggerManager_1a0816d8d1fa3c75752fe929f9cc4b89e8"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ClearAllLoggers</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2io13LoggerManager15ClearAllLoggersEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Clear every logger (file or tee) </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+<section id="logger">
+<span id="abstract-logger"></span><h3>Logger<a class="headerlink" href="#logger" title="Link to this heading"></a></h3>
+<p>Both the <a class="reference internal" href="#log-file"><span class="std std-ref">Log file</span></a> and the <a class="reference internal" href="#tee-logger"><span class="std std-ref">TeeLogger</span></a> inherits from the following class:</p>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN2io6LoggerE">
+<span id="_CPPv3I0EN2io6LoggerE"></span><span id="_CPPv2I0EN2io6LoggerE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ostream</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classio_1_1Logger"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Logger</span></span></span><a class="headerlink" href="#_CPPv4I0EN2io6LoggerE" title="Link to this definition"></a><br /></dt>
+<dd><p>Interface for logger. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ostream</strong> – The type of output stream </p>
+</dd>
+</dl>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io6Logger6LoggerERKNSt6stringE8LogLevel">
+<span id="_CPPv3N2io6Logger6LoggerERKNSt6stringE8LogLevel"></span><span id="_CPPv2N2io6Logger6LoggerERKNSt6stringE8LogLevel"></span><span id="io::Logger::Logger__ssCR.LogLevel"></span><span class="target" id="classio_1_1Logger_1a550eceb6ebaac583317828f86e9821cd"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Logger</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">file</span></span>, <a class="reference internal" href="#_CPPv4N2io8LogLevelE" title="io::LogLevel"><span class="n"><span class="pre">LogLevel</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">level</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../exception/exception.html#_CPPv42io" title="io"><span class="n"><span class="pre">io</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N2io8LogLevelE" title="io::LogLevel"><span class="n"><span class="pre">LogLevel</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N2io8LogLevel4INFOE" title="io::LogLevel::INFO"><span class="n"><span class="pre">INFO</span></span></a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2io6Logger6LoggerERKNSt6stringE8LogLevel" title="Link to this definition"></a><br /></dt>
+<dd><p>Constructor. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file</strong> – path to the log file </p></li>
+<li><p><strong>level</strong> – initial verbosity </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io6LoggerD0Ev">
+<span id="_CPPv3N2io6LoggerD0Ev"></span><span id="_CPPv2N2io6LoggerD0Ev"></span><span id="io::Logger::~Logger"></span><span class="target" id="classio_1_1Logger_1afa1ddc22379306214e3b33c0fe01df8b"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">~Logger</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">default</span></span><a class="headerlink" href="#_CPPv4N2io6LoggerD0Ev" title="Link to this definition"></a><br /></dt>
+<dd><p>Destruct. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io6Logger11setLogLevelE8LogLevel">
+<span id="_CPPv3N2io6Logger11setLogLevelE8LogLevel"></span><span id="_CPPv2N2io6Logger11setLogLevelE8LogLevel"></span><span id="io::Logger::setLogLevel__LogLevel"></span><span class="target" id="classio_1_1Logger_1a710408a2e64c617e81f7c0b1520bfd41"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setLogLevel</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N2io8LogLevelE" title="io::LogLevel"><span class="n"><span class="pre">LogLevel</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">level</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2io6Logger11setLogLevelE8LogLevel" title="Link to this definition"></a><br /></dt>
+<dd><p>set the verbosity </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK2io6Logger11getLogLevelEv">
+<span id="_CPPv3NK2io6Logger11getLogLevelEv"></span><span id="_CPPv2NK2io6Logger11getLogLevelEv"></span><span id="io::Logger::getLogLevelC"></span><span class="target" id="classio_1_1Logger_1a7d2fa35681162bec305e9335eef58eee"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io8LogLevelE" title="io::LogLevel"><span class="n"><span class="pre">LogLevel</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getLogLevel</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK2io6Logger11getLogLevelEv" title="Link to this definition"></a><br /></dt>
+<dd><p>set the verbosity </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK2io6Logger9shouldLogE8LogLevel">
+<span id="_CPPv3NK2io6Logger9shouldLogE8LogLevel"></span><span id="_CPPv2NK2io6Logger9shouldLogE8LogLevel"></span><span id="io::Logger::shouldLog__LogLevelC"></span><span class="target" id="classio_1_1Logger_1a2f25febeeb0f836ca1b7e96a6d08a890"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">shouldLog</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N2io8LogLevelE" title="io::LogLevel"><span class="n"><span class="pre">LogLevel</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">level</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK2io6Logger9shouldLogE8LogLevel" title="Link to this definition"></a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>true if the verbosity is greater than leve </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io6Logger6getLogEv">
+<span id="_CPPv3N2io6Logger6getLogEv"></span><span id="_CPPv2N2io6Logger6getLogEv"></span><span id="io::Logger::getLog"></span><span class="target" id="classio_1_1Logger_1a573d2a80297f4252888ae1488bb0fd65"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0EN2io6LoggerE" title="io::Logger::ostream"><span class="n"><span class="pre">ostream</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">getLog</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2io6Logger6getLogEv" title="Link to this definition"></a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the ostream </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io6Logger6setLogER7ostream">
+<span id="_CPPv3N2io6Logger6setLogER7ostream"></span><span id="_CPPv2N2io6Logger6setLogER7ostream"></span><span id="io::Logger::setLog__ostreamR"></span><span class="target" id="classio_1_1Logger_1ac1ff79261c76a7338af3acf6e2926fa7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setLog</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN2io6LoggerE" title="io::Logger::ostream"><span class="n"><span class="pre">ostream</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">stream</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2io6Logger6setLogER7ostream" title="Link to this definition"></a><br /></dt>
+<dd><p>set the stream </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<hr class="docutils" />
+</section>
+</section>
+<section id="macros">
+<span id="id5"></span><h2>Macros<a class="headerlink" href="#macros" title="Link to this heading"></a></h2>
+<section id="main-macros-for-tee-logger-manipulation">
+<span id="tee-logger-macros"></span><h3>Main macros for <a class="reference internal" href="#tee-logger"><span class="std std-ref">TeeLogger</span></a> manipulation<a class="headerlink" href="#main-macros-for-tee-logger-manipulation" title="Link to this heading"></a></h3>
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.ERORLOG">
+<span class="target" id="log_8hh_1ad5aaf15017d339313f22e9c7cf9f1b21"></span><span class="sig-name descname"><span class="n"><span class="pre">ERORLOG</span></span></span><a class="headerlink" href="#c.ERORLOG" title="Link to this definition"></a><br /></dt>
+<dd><p>Log a message in the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a>, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4aafd9dff8efc451804eca93ec7826c0c3"><span class="std std-ref">io::LogLevel::ERROR</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Throws if<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a> has not been created </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.WARNLOG">
+<span class="target" id="log_8hh_1af0a3ccaca0fb65a75306bc737888e6d7"></span><span class="sig-name descname"><span class="n"><span class="pre">WARNLOG</span></span></span><a class="headerlink" href="#c.WARNLOG" title="Link to this definition"></a><br /></dt>
+<dd><p>Log a message in the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a>, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4a0520d28ea260bfb74177e02e5756c6a7"><span class="std std-ref">io::LogLevel::WARNING</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Throws if<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a> has not been created </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.INFOLOG">
+<span class="target" id="log_8hh_1adc65d9c7fe44956b58be03eed1ee959c"></span><span class="sig-name descname"><span class="n"><span class="pre">INFOLOG</span></span></span><a class="headerlink" href="#c.INFOLOG" title="Link to this definition"></a><br /></dt>
+<dd><p>Log a message in the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a>, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4ab06358dd7edb8a6e63f5992416db7e54"><span class="std std-ref">io::LogLevel::INFO</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Throws if<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a> has not been created </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.DBUGLOG">
+<span class="target" id="log_8hh_1a7326070db8a413f6ef604d0378f686cc"></span><span class="sig-name descname"><span class="n"><span class="pre">DBUGLOG</span></span></span><a class="headerlink" href="#c.DBUGLOG" title="Link to this definition"></a><br /></dt>
+<dd><p>Log a message in the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a>, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4a2ebc18396fa9e461490a7ea228650b83"><span class="std std-ref">io::LogLevel::DEBUG</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Throws if<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a> has not been created </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.ERORLOG_RANGE">
+<span class="target" id="log_8hh_1a12c06b7dd6fec87ea3ebe7874c1d2732"></span><span class="sig-name descname"><span class="n"><span class="pre">ERORLOG_RANGE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">header</span></span>, <span class="n"><span class="pre">range</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.ERORLOG_RANGE" title="Link to this definition"></a><br /></dt>
+<dd><p>Log a range with a header message in the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a>, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4aafd9dff8efc451804eca93ec7826c0c3"><span class="std std-ref">io::LogLevel::ERROR</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> – the message </p></li>
+<li><p><strong>range</strong> – the range </p></li>
+</ul>
+</dd>
+<dt class="field-even">Throws if<span class="colon">:</span></dt>
+<dd class="field-even"><p>the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a> has not been created </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.WARNLOG_RANGE">
+<span class="target" id="log_8hh_1aa8e8fa498c29005be012f39b6b64d458"></span><span class="sig-name descname"><span class="n"><span class="pre">WARNLOG_RANGE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">header</span></span>, <span class="n"><span class="pre">range</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.WARNLOG_RANGE" title="Link to this definition"></a><br /></dt>
+<dd><p>Log a range with a header message in the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a>, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4a0520d28ea260bfb74177e02e5756c6a7"><span class="std std-ref">io::LogLevel::WARNING</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> – the message </p></li>
+<li><p><strong>range</strong> – the range </p></li>
+</ul>
+</dd>
+<dt class="field-even">Throws if<span class="colon">:</span></dt>
+<dd class="field-even"><p>the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a> has not been created </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.INFOLOG_RANGE">
+<span class="target" id="log_8hh_1ada948486ef441fb18fca32b546b9a09f"></span><span class="sig-name descname"><span class="n"><span class="pre">INFOLOG_RANGE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">header</span></span>, <span class="n"><span class="pre">range</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.INFOLOG_RANGE" title="Link to this definition"></a><br /></dt>
+<dd><p>Log a range with a header message in the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a>, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4ab06358dd7edb8a6e63f5992416db7e54"><span class="std std-ref">io::LogLevel::INFO</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> – the message </p></li>
+<li><p><strong>range</strong> – the range </p></li>
+</ul>
+</dd>
+<dt class="field-even">Throws if<span class="colon">:</span></dt>
+<dd class="field-even"><p>the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a> has not been created </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.DBUGLOG_RANGE">
+<span class="target" id="log_8hh_1a03ee0328d200f4c9d17caff5c6864fa0"></span><span class="sig-name descname"><span class="n"><span class="pre">DBUGLOG_RANGE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">header</span></span>, <span class="n"><span class="pre">range</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.DBUGLOG_RANGE" title="Link to this definition"></a><br /></dt>
+<dd><p>Log a range with a header message in the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a>, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4a2ebc18396fa9e461490a7ea228650b83"><span class="std std-ref">io::LogLevel::DEBUG</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> – the message </p></li>
+<li><p><strong>range</strong> – the range </p></li>
+</ul>
+</dd>
+<dt class="field-even">Throws if<span class="colon">:</span></dt>
+<dd class="field-even"><p>the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a> has not been created </p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="main-macros-for-log-file-manipulation">
+<span id="logger-macros"></span><h3>Main macros for <a class="reference internal" href="#log-file"><span class="std std-ref">Log file</span></a> manipulation<a class="headerlink" href="#main-macros-for-log-file-manipulation" title="Link to this heading"></a></h3>
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.EROR">
+<span class="target" id="log_8hh_1a685ab489f355b610377ec0bd17e94495"></span><span class="sig-name descname"><span class="n"><span class="pre">EROR</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">log</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.EROR" title="Link to this definition"></a><br /></dt>
+<dd><p>Log a message in a stream, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4aafd9dff8efc451804eca93ec7826c0c3"><span class="std std-ref">io::LogLevel::ERROR</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>log</strong> – the log </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.WARN">
+<span class="target" id="log_8hh_1aab20dfc79569187b72614a0bb59731ea"></span><span class="sig-name descname"><span class="n"><span class="pre">WARN</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">log</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.WARN" title="Link to this definition"></a><br /></dt>
+<dd><p>Log a message in a stream, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4a0520d28ea260bfb74177e02e5756c6a7"><span class="std std-ref">io::LogLevel::WARNING</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>log</strong> – the log </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.INFO">
+<span class="target" id="log_8hh_1a777078457e305c3744c8035425719351"></span><span class="sig-name descname"><span class="n"><span class="pre">INFO</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">log</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.INFO" title="Link to this definition"></a><br /></dt>
+<dd><p>Log a message in a stream, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4ab06358dd7edb8a6e63f5992416db7e54"><span class="std std-ref">io::LogLevel::INFO</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>log</strong> – the log </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.DBUG">
+<span class="target" id="log_8hh_1a48abf2ad65ac93794e929a414bec49e0"></span><span class="sig-name descname"><span class="n"><span class="pre">DBUG</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">log</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.DBUG" title="Link to this definition"></a><br /></dt>
+<dd><p>Log a message in a stream, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4a2ebc18396fa9e461490a7ea228650b83"><span class="std std-ref">io::LogLevel::DEBUG</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>log</strong> – the log </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.EROR_RANGE">
+<span class="target" id="log_8hh_1aac46679c4931f3ea6ebdd565682229e2"></span><span class="sig-name descname"><span class="n"><span class="pre">EROR_RANGE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">log</span></span>, <span class="n"><span class="pre">header</span></span>, <span class="n"><span class="pre">range</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.EROR_RANGE" title="Link to this definition"></a><br /></dt>
+<dd><p>Log a range with a header message in the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a>, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4aafd9dff8efc451804eca93ec7826c0c3"><span class="std std-ref">io::LogLevel::ERROR</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>log</strong> – the log </p></li>
+<li><p><strong>header</strong> – the message </p></li>
+<li><p><strong>range</strong> – the range </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.WARN_RANGE">
+<span class="target" id="log_8hh_1a2619220c811021e8c8f0529d18854f27"></span><span class="sig-name descname"><span class="n"><span class="pre">WARN_RANGE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">log</span></span>, <span class="n"><span class="pre">header</span></span>, <span class="n"><span class="pre">range</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.WARN_RANGE" title="Link to this definition"></a><br /></dt>
+<dd><p>Log a range with a header message in the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a>, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4a0520d28ea260bfb74177e02e5756c6a7"><span class="std std-ref">io::LogLevel::WARNING</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>log</strong> – the log </p></li>
+<li><p><strong>header</strong> – the message </p></li>
+<li><p><strong>range</strong> – the range </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.INFO_RANGE">
+<span class="target" id="log_8hh_1ac77aec229fd3cb8b68d607602f3f8aa6"></span><span class="sig-name descname"><span class="n"><span class="pre">INFO_RANGE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">log</span></span>, <span class="n"><span class="pre">header</span></span>, <span class="n"><span class="pre">range</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.INFO_RANGE" title="Link to this definition"></a><br /></dt>
+<dd><p>Log a range with a header message in the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a>, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4ab06358dd7edb8a6e63f5992416db7e54"><span class="std std-ref">io::LogLevel::INFO</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>log</strong> – the log </p></li>
+<li><p><strong>header</strong> – the message </p></li>
+<li><p><strong>range</strong> – the range </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.DBUG_RANGE">
+<span class="target" id="log_8hh_1ae42e8ade438196dfdeae5d1955d3cb57"></span><span class="sig-name descname"><span class="n"><span class="pre">DBUG_RANGE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">log</span></span>, <span class="n"><span class="pre">header</span></span>, <span class="n"><span class="pre">range</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.DBUG_RANGE" title="Link to this definition"></a><br /></dt>
+<dd><p>Log a range with a header message in the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a>, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4a2ebc18396fa9e461490a7ea228650b83"><span class="std std-ref">io::LogLevel::DEBUG</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>log</strong> – the log </p></li>
+<li><p><strong>header</strong> – the message </p></li>
+<li><p><strong>range</strong> – the range </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+<section id="full-reference">
+<h2>Full reference<a class="headerlink" href="#full-reference" title="Link to this heading"></a></h2>
+<p>log utilities </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-defines">Defines</p>
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.COND_STATEMENT">
+<span class="target" id="log_8hh_1a8bd593fdde21fca2294c77dff7847436"></span><span class="sig-name descname"><span class="n"><span class="pre">COND_STATEMENT</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">cond</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.COND_STATEMENT" title="Link to this definition"></a><br /></dt>
+<dd><p>Execute the following instruction provided that a condition is satified. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cond</strong> – the condition <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">COND_STATEMENT</span><span class="p">(</span><span class="n">cond</span><span class="p">)</span><span class="w"> </span><span class="n">instruction</span>
+</pre></div>
+</div>
+ expands to <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">cond</span><span class="p">){}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="n">instruction</span>
+</pre></div>
+</div>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp">
+<span class="target" id="log_8hh_1a685ab489f355b610377ec0bd17e94495"></span><span class="sig-name descname"><span class="n"><span class="pre">EROR</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">log</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Log a message in a stream, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4aafd9dff8efc451804eca93ec7826c0c3"><span class="std std-ref">io::LogLevel::ERROR</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>log</strong> – the log </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp">
+<span class="target" id="log_8hh_1aab20dfc79569187b72614a0bb59731ea"></span><span class="sig-name descname"><span class="n"><span class="pre">WARN</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">log</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Log a message in a stream, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4a0520d28ea260bfb74177e02e5756c6a7"><span class="std std-ref">io::LogLevel::WARNING</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>log</strong> – the log </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp">
+<span class="target" id="log_8hh_1a777078457e305c3744c8035425719351"></span><span class="sig-name descname"><span class="n"><span class="pre">INFO</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">log</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Log a message in a stream, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4ab06358dd7edb8a6e63f5992416db7e54"><span class="std std-ref">io::LogLevel::INFO</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>log</strong> – the log </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.EXTD">
+<span class="target" id="log_8hh_1afe5ddc2a0b178860a807255738bf4a03"></span><span class="sig-name descname"><span class="n"><span class="pre">EXTD</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">log</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.EXTD" title="Link to this definition"></a><br /></dt>
+<dd><p>Log a message in a stream, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4a6a952cc35c608de7b03623c95404fd00"><span class="std std-ref">io::LogLevel::EXTENDED</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>log</strong> – the log </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp">
+<span class="target" id="log_8hh_1a48abf2ad65ac93794e929a414bec49e0"></span><span class="sig-name descname"><span class="n"><span class="pre">DBUG</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">log</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Log a message in a stream, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4a2ebc18396fa9e461490a7ea228650b83"><span class="std std-ref">io::LogLevel::DEBUG</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>log</strong> – the log </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp">
+<span class="target" id="log_8hh_1ad5aaf15017d339313f22e9c7cf9f1b21"></span><span class="sig-name descname"><span class="n"><span class="pre">ERORLOG</span></span></span><br /></dt>
+<dd><p>Log a message in the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a>, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4aafd9dff8efc451804eca93ec7826c0c3"><span class="std std-ref">io::LogLevel::ERROR</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Throws if<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a> has not been created </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp">
+<span class="target" id="log_8hh_1af0a3ccaca0fb65a75306bc737888e6d7"></span><span class="sig-name descname"><span class="n"><span class="pre">WARNLOG</span></span></span><br /></dt>
+<dd><p>Log a message in the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a>, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4a0520d28ea260bfb74177e02e5756c6a7"><span class="std std-ref">io::LogLevel::WARNING</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Throws if<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a> has not been created </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp">
+<span class="target" id="log_8hh_1adc65d9c7fe44956b58be03eed1ee959c"></span><span class="sig-name descname"><span class="n"><span class="pre">INFOLOG</span></span></span><br /></dt>
+<dd><p>Log a message in the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a>, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4ab06358dd7edb8a6e63f5992416db7e54"><span class="std std-ref">io::LogLevel::INFO</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Throws if<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a> has not been created </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.EXTDLOG">
+<span class="target" id="log_8hh_1af6cc23c9d32b703bb72cf2519e4a4305"></span><span class="sig-name descname"><span class="n"><span class="pre">EXTDLOG</span></span></span><a class="headerlink" href="#c.EXTDLOG" title="Link to this definition"></a><br /></dt>
+<dd><p>Log a message in the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a>, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4a6a952cc35c608de7b03623c95404fd00"><span class="std std-ref">io::LogLevel::EXTENDED</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Throws if<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a> has not been created </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp">
+<span class="target" id="log_8hh_1a7326070db8a413f6ef604d0378f686cc"></span><span class="sig-name descname"><span class="n"><span class="pre">DBUGLOG</span></span></span><br /></dt>
+<dd><p>Log a message in the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a>, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4a2ebc18396fa9e461490a7ea228650b83"><span class="std std-ref">io::LogLevel::DEBUG</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Throws if<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a> has not been created </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp">
+<span class="target" id="log_8hh_1aac46679c4931f3ea6ebdd565682229e2"></span><span class="sig-name descname"><span class="n"><span class="pre">EROR_RANGE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">log</span></span>, <span class="n"><span class="pre">header</span></span>, <span class="n"><span class="pre">range</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Log a range with a header message in the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a>, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4aafd9dff8efc451804eca93ec7826c0c3"><span class="std std-ref">io::LogLevel::ERROR</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>log</strong> – the log </p></li>
+<li><p><strong>header</strong> – the message </p></li>
+<li><p><strong>range</strong> – the range </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp">
+<span class="target" id="log_8hh_1a2619220c811021e8c8f0529d18854f27"></span><span class="sig-name descname"><span class="n"><span class="pre">WARN_RANGE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">log</span></span>, <span class="n"><span class="pre">header</span></span>, <span class="n"><span class="pre">range</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Log a range with a header message in the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a>, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4a0520d28ea260bfb74177e02e5756c6a7"><span class="std std-ref">io::LogLevel::WARNING</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>log</strong> – the log </p></li>
+<li><p><strong>header</strong> – the message </p></li>
+<li><p><strong>range</strong> – the range </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp">
+<span class="target" id="log_8hh_1ac77aec229fd3cb8b68d607602f3f8aa6"></span><span class="sig-name descname"><span class="n"><span class="pre">INFO_RANGE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">log</span></span>, <span class="n"><span class="pre">header</span></span>, <span class="n"><span class="pre">range</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Log a range with a header message in the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a>, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4ab06358dd7edb8a6e63f5992416db7e54"><span class="std std-ref">io::LogLevel::INFO</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>log</strong> – the log </p></li>
+<li><p><strong>header</strong> – the message </p></li>
+<li><p><strong>range</strong> – the range </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.EXTD_RANGE">
+<span class="target" id="log_8hh_1a3a10624570941583310ea7c0acd6d599"></span><span class="sig-name descname"><span class="n"><span class="pre">EXTD_RANGE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">log</span></span>, <span class="n"><span class="pre">header</span></span>, <span class="n"><span class="pre">range</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.EXTD_RANGE" title="Link to this definition"></a><br /></dt>
+<dd><p>Log a range with a header message in the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a>, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4a6a952cc35c608de7b03623c95404fd00"><span class="std std-ref">io::LogLevel::EXTENDED</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>log</strong> – the log </p></li>
+<li><p><strong>header</strong> – the message </p></li>
+<li><p><strong>range</strong> – the range </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp">
+<span class="target" id="log_8hh_1ae42e8ade438196dfdeae5d1955d3cb57"></span><span class="sig-name descname"><span class="n"><span class="pre">DBUG_RANGE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">log</span></span>, <span class="n"><span class="pre">header</span></span>, <span class="n"><span class="pre">range</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Log a range with a header message in the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a>, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4a2ebc18396fa9e461490a7ea228650b83"><span class="std std-ref">io::LogLevel::DEBUG</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>log</strong> – the log </p></li>
+<li><p><strong>header</strong> – the message </p></li>
+<li><p><strong>range</strong> – the range </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp">
+<span class="target" id="log_8hh_1a12c06b7dd6fec87ea3ebe7874c1d2732"></span><span class="sig-name descname"><span class="n"><span class="pre">ERORLOG_RANGE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">header</span></span>, <span class="n"><span class="pre">range</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Log a range with a header message in the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a>, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4aafd9dff8efc451804eca93ec7826c0c3"><span class="std std-ref">io::LogLevel::ERROR</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> – the message </p></li>
+<li><p><strong>range</strong> – the range </p></li>
+</ul>
+</dd>
+<dt class="field-even">Throws if<span class="colon">:</span></dt>
+<dd class="field-even"><p>the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a> has not been created </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp">
+<span class="target" id="log_8hh_1aa8e8fa498c29005be012f39b6b64d458"></span><span class="sig-name descname"><span class="n"><span class="pre">WARNLOG_RANGE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">header</span></span>, <span class="n"><span class="pre">range</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Log a range with a header message in the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a>, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4a0520d28ea260bfb74177e02e5756c6a7"><span class="std std-ref">io::LogLevel::WARNING</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> – the message </p></li>
+<li><p><strong>range</strong> – the range </p></li>
+</ul>
+</dd>
+<dt class="field-even">Throws if<span class="colon">:</span></dt>
+<dd class="field-even"><p>the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a> has not been created </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp">
+<span class="target" id="log_8hh_1ada948486ef441fb18fca32b546b9a09f"></span><span class="sig-name descname"><span class="n"><span class="pre">INFOLOG_RANGE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">header</span></span>, <span class="n"><span class="pre">range</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Log a range with a header message in the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a>, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4ab06358dd7edb8a6e63f5992416db7e54"><span class="std std-ref">io::LogLevel::INFO</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> – the message </p></li>
+<li><p><strong>range</strong> – the range </p></li>
+</ul>
+</dd>
+<dt class="field-even">Throws if<span class="colon">:</span></dt>
+<dd class="field-even"><p>the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a> has not been created </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.EXTDLOG_RANGE">
+<span class="target" id="log_8hh_1a02fe074f23d3baac3eba6f25dd1ba253"></span><span class="sig-name descname"><span class="n"><span class="pre">EXTDLOG_RANGE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">header</span></span>, <span class="n"><span class="pre">range</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.EXTDLOG_RANGE" title="Link to this definition"></a><br /></dt>
+<dd><p>Log a range with a header message in the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a>, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4a6a952cc35c608de7b03623c95404fd00"><span class="std std-ref">io::LogLevel::EXTENDED</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> – the message </p></li>
+<li><p><strong>range</strong> – the range </p></li>
+</ul>
+</dd>
+<dt class="field-even">Throws if<span class="colon">:</span></dt>
+<dd class="field-even"><p>the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a> has not been created </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp">
+<span class="target" id="log_8hh_1a03ee0328d200f4c9d17caff5c6864fa0"></span><span class="sig-name descname"><span class="n"><span class="pre">DBUGLOG_RANGE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">header</span></span>, <span class="n"><span class="pre">range</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Log a range with a header message in the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a>, provided that the log level is &gt;= <a class="reference internal" href="#namespaceio_1a57d647fab3c5694df1c02cd7ba1644e4a2ebc18396fa9e461490a7ea228650b83"><span class="std std-ref">io::LogLevel::DEBUG</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> – the message </p></li>
+<li><p><strong>range</strong> – the range </p></li>
+</ul>
+</dd>
+<dt class="field-even">Throws if<span class="colon">:</span></dt>
+<dd class="field-even"><p>the main <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">io::TeeLogger</span></a> has not been created </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.PRINT_PERCENTAGE">
+<span class="target" id="log_8hh_1ae706cbf648013bb698f8a4c03882df8b"></span><span class="sig-name descname"><span class="n"><span class="pre">PRINT_PERCENTAGE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">val</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PRINT_PERCENTAGE" title="Link to this definition"></a><br /></dt>
+<dd><p>print a numeric value as a percentage, with a precision of 2 </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>val</strong> – the value </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.PRINT_ENUM">
+<span class="target" id="log_8hh_1a7ddd9932d0eec9981d7002b4884a3c02"></span><span class="sig-name descname"><span class="n"><span class="pre">PRINT_ENUM</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">val</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PRINT_ENUM" title="Link to this definition"></a><br /></dt>
+<dd><p>print an enum value created with MAKE_DTO_ENUM as a string </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>val</strong> – the value </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv42io">
+<span id="_CPPv32io"></span><span id="_CPPv22io"></span><span id="io"></span><span class="target" id="namespaceio"></span><span class="k"><span class="pre">namespace</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">io</span></span></span><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN2io11print_rangeERNSt7ostreamERNSt7ostreamERK5Range">
+<span id="_CPPv3I0EN2io11print_rangeERNSt7ostreamERK5Range"></span><span id="_CPPv2I0EN2io11print_rangeERNSt7ostreamERK5Range"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Range</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespaceio_1a4cc05ab703c2bd35ccc2f1f1c4b6b440"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">print_range</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">os</span></span>, <a class="reference internal" href="#_CPPv4I0EN2io11print_rangeERNSt7ostreamERNSt7ostreamERK5Range" title="io::print_range::Range"><span class="n"><span class="pre">Range</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">range</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN2io11print_rangeERNSt7ostreamERNSt7ostreamERK5Range" title="Link to this definition"></a><br /></dt>
+<dd><p>Print every object of a range in a stream. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>Range</strong> – the type of range </p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>os</strong> – the ostream </p></li>
+<li><p><strong>range</strong> – the range of object </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN2io5printERNSt7ostreamERNSt7ostreamERK1T">
+<span id="_CPPv3I0EN2io5printERNSt7ostreamERK1T"></span><span id="_CPPv2I0EN2io5printERNSt7ostreamERK1T"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespaceio_1aa27e134f681927d18f6865d2b7e183fc"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">print</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">os</span></span>, <a class="reference internal" href="#_CPPv4I0EN2io5printERNSt7ostreamERNSt7ostreamERK1T" title="io::print::T"><span class="n"><span class="pre">T</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">obj</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN2io5printERNSt7ostreamERNSt7ostreamERK1T" title="Link to this definition"></a><br /></dt>
+<dd><p>Print an object in a stream. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>T</strong> – the type of object </p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>os</strong> – the ostream </p></li>
+<li><p><strong>obj</strong> – the object </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN2io5printERNSt7ostreamERNSt7ostreamERKNSt6vectorI1TEE">
+<span id="_CPPv3I0EN2io5printERNSt7ostreamERKNSt6vectorI1TEE"></span><span id="_CPPv2I0EN2io5printERNSt7ostreamERKNSt6vectorI1TEE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespaceio_1a3c7e0aa8f8fab2219d61fe3ec4030b04"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">print</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">os</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I0EN2io5printERNSt7ostreamERNSt7ostreamERKNSt6vectorI1TEE" title="io::print::T"><span class="n"><span class="pre">T</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">range</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN2io5printERNSt7ostreamERNSt7ostreamERKNSt6vectorI1TEE" title="Link to this definition"></a><br /></dt>
+<dd><p>Print a range of object in a stream. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>T</strong> – the type of object </p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>os</strong> – the ostream </p></li>
+<li><p><strong>range</strong> – the object </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN2io5printERNSt7ostreamERNSt7ostreamERKNSt17reference_wrapperI1TEE">
+<span id="_CPPv3I0EN2io5printERNSt7ostreamERKNSt17reference_wrapperI1TEE"></span><span id="_CPPv2I0EN2io5printERNSt7ostreamERKNSt17reference_wrapperI1TEE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespaceio_1a26719d918c8f106d4b79f91c0d653792"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">print</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">os</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">reference_wrapper</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I0EN2io5printERNSt7ostreamERNSt7ostreamERKNSt17reference_wrapperI1TEE" title="io::print::T"><span class="n"><span class="pre">T</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">obj</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN2io5printERNSt7ostreamERNSt7ostreamERKNSt17reference_wrapperI1TEE" title="Link to this definition"></a><br /></dt>
+<dd><p>Print an object in a stream. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>T</strong> – the type of object </p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>os</strong> – the ostream </p></li>
+<li><p><strong>obj</strong> – the object </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I00EN2io5printERNSt7ostreamERNSt7ostreamERKNSt4pairI1U1VEE">
+<span id="_CPPv3I00EN2io5printERNSt7ostreamERKNSt4pairI1U1VEE"></span><span id="_CPPv2I00EN2io5printERNSt7ostreamERKNSt4pairI1U1VEE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">U</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">V</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespaceio_1a8d301af3d92d3ed69ef1574fe52bf25e"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">print</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">os</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">pair</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00EN2io5printERNSt7ostreamERNSt7ostreamERKNSt4pairI1U1VEE" title="io::print::U"><span class="n"><span class="pre">U</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I00EN2io5printERNSt7ostreamERNSt7ostreamERKNSt4pairI1U1VEE" title="io::print::V"><span class="n"><span class="pre">V</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN2io5printERNSt7ostreamERNSt7ostreamERKNSt4pairI1U1VEE" title="Link to this definition"></a><br /></dt>
+<dd><p>Print a pair of object in a stream. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>U</strong> – the first type of object in the pair </p></li>
+<li><p><strong>V</strong> – the second type of object in the pair </p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>os</strong> – the ostream </p></li>
+<li><p><strong>p</strong> – the pair </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<dl class="cpp class">
+<dt class="sig sig-object cpp">
+<span class="target" id="classio_1_1LoggerManager"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">LoggerManager</span></span></span><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;log.hh&gt;</em></div>
+<p>Store and give access to TeeLoggers. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-functions">Public Static Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp">
+<span class="target" id="classio_1_1LoggerManager_1a94063803f352fac9d492961383170c7d"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io9TeeLoggerE" title="io::TeeLogger"><span class="n"><span class="pre">TeeLogger</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">GetLogger</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">name</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="s"><span class="pre">&quot;&quot;</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Get or create a <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">TeeLogger</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> – name of the logger, empty string for default name </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A reference to the logger </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp">
+<span class="target" id="classio_1_1LoggerManager_1a427b41058d03ca42aae1057bb40d033f"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ClearLogger</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">name</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="s"><span class="pre">&quot;&quot;</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Clear a logger. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> – name of the logger, empty string for default name </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp">
+<span class="target" id="classio_1_1LoggerManager_1a21940ead5c62f875d143fef0de5e12dd"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SetLogLevel</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N2io8LogLevelE" title="io::LogLevel"><span class="n"><span class="pre">LogLevel</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">level</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">name</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="s"><span class="pre">&quot;&quot;</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Set the loglevel of a <a class="reference internal" href="#classio_1_1TeeLogger"><span class="std std-ref">TeeLogger</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – name of the logger, empty string for default name </p></li>
+<li><p><strong>level</strong> – the log level </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp">
+<span class="target" id="classio_1_1LoggerManager_1a3791b643bd0e7aed166306413165ee17"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SetDefaultLogLevel</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N2io8LogLevelE" title="io::LogLevel"><span class="n"><span class="pre">LogLevel</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">level</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Set the default verbosity. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>level</strong> – the verbosity </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp">
+<span class="target" id="classio_1_1LoggerManager_1a1a7f4c58c57a1566741e49e9f63ed950"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SetDefaultName</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">name</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Set the default name. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> – name of the logger </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp">
+<span class="target" id="classio_1_1LoggerManager_1a70f558acf526ee1fdbf50e586d526124"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io10FileLoggerE" title="io::FileLogger"><span class="n"><span class="pre">FileLogger</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">GetFileLogger</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">name</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Get or create a <a class="reference internal" href="#classio_1_1FileLogger"><span class="std std-ref">FileLogger</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> – name of the logger </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A reference to the logger </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp">
+<span class="target" id="classio_1_1LoggerManager_1ab5d1973ab5ba16618d99d85c7e300bfd"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ClearFileLogger</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">name</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Clear a <a class="reference internal" href="#classio_1_1FileLogger"><span class="std std-ref">FileLogger</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> – name of the logger </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp">
+<span class="target" id="classio_1_1LoggerManager_1a20acd342ff5385622f04a8ecd0d7b427"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SetFileLogLevel</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N2io8LogLevelE" title="io::LogLevel"><span class="n"><span class="pre">LogLevel</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">level</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">name</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Set the loglevel of a <a class="reference internal" href="#classio_1_1FileLogger"><span class="std std-ref">FileLogger</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – name of the logger </p></li>
+<li><p><strong>level</strong> – the log level </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp">
+<span class="target" id="classio_1_1LoggerManager_1a0816d8d1fa3c75752fe929f9cc4b89e8"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ClearAllLoggers</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Clear every logger (file or tee) </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-static-attributes">Private Static Attributes</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N2io13LoggerManager12_tee_loggersE">
+<span id="_CPPv3N2io13LoggerManager12_tee_loggersE"></span><span id="_CPPv2N2io13LoggerManager12_tee_loggersE"></span><span id="io::LoggerManager::_tee_loggers__std::unordered_map:ss.TeeLogger.string_hash.std::equal_to:::"></span><span class="target" id="classio_1_1LoggerManager_1a9824d9df8b49b95d028b13b939a3116e"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">unordered_map</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io9TeeLoggerE" title="io::TeeLogger"><span class="n"><span class="pre">TeeLogger</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../model/model_desc.html#_CPPv411string_hash" title="string_hash"><span class="n"><span class="pre">string_hash</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">equal_to</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_tee_loggers</span></span></span><a class="headerlink" href="#_CPPv4N2io13LoggerManager12_tee_loggersE" title="Link to this definition"></a><br /></dt>
+<dd><p>static storage of the tee logger </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N2io13LoggerManager13_logfile_nameE">
+<span id="_CPPv3N2io13LoggerManager13_logfile_nameE"></span><span id="_CPPv2N2io13LoggerManager13_logfile_nameE"></span><span id="io::LoggerManager::_logfile_name__ss"></span><span class="target" id="classio_1_1LoggerManager_1ac3798cdfce5928a685f715cd3c576a5a"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_logfile_name</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">(</span></span><span class="s"><span class="pre">&quot;default&quot;</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#_CPPv4N2io13LoggerManager13_logfile_nameE" title="Link to this definition"></a><br /></dt>
+<dd><p>default log file name </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N2io13LoggerManager10_log_levelE">
+<span id="_CPPv3N2io13LoggerManager10_log_levelE"></span><span id="_CPPv2N2io13LoggerManager10_log_levelE"></span><span id="io::LoggerManager::_log_level__LogLevel"></span><span class="target" id="classio_1_1LoggerManager_1ab915a0d11f595e6d4801d9fb05f73fd6"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io8LogLevelE" title="io::LogLevel"><span class="n"><span class="pre">LogLevel</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_log_level</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io8LogLevelE" title="io::LogLevel"><span class="n"><span class="pre">LogLevel</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N2io8LogLevel4INFOE" title="io::LogLevel::INFO"><span class="n"><span class="pre">INFO</span></span></a><a class="headerlink" href="#_CPPv4N2io13LoggerManager10_log_levelE" title="Link to this definition"></a><br /></dt>
+<dd><p>default log level </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N2io13LoggerManager13_file_loggersE">
+<span id="_CPPv3N2io13LoggerManager13_file_loggersE"></span><span id="_CPPv2N2io13LoggerManager13_file_loggersE"></span><span id="io::LoggerManager::_file_loggers__std::unordered_map:ss.FileLogger.string_hash.std::equal_to:::"></span><span class="target" id="classio_1_1LoggerManager_1a66ca57ce3e0e6caedf622761c59fb07a"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">unordered_map</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io10FileLoggerE" title="io::FileLogger"><span class="n"><span class="pre">FileLogger</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../model/model_desc.html#_CPPv411string_hash" title="string_hash"><span class="n"><span class="pre">string_hash</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">equal_to</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_file_loggers</span></span></span><a class="headerlink" href="#_CPPv4N2io13LoggerManager13_file_loggersE" title="Link to this definition"></a><br /></dt>
+<dd><p>static storage of the file logger </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Aurélien Questel.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
