@@ -135,5 +135,5 @@ add_subdirectory (src)
 # ============================================================================
 
 if( NOT ${PROJECT_NAME}_AS_SUBMODULE )
-    add_subdirectory (docs)
+    add_subdirectory (doc)
 endif()
