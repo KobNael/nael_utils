@@ -63,6 +63,17 @@ namespace details
          * @return the resulting time_period
          */
         std::optional<time_period> operator()(std::optional<time_period> const &p1, std::optional<time_period> const &p2, boost::posix_time::ptime const &from, boost::posix_time::ptime const &to) const;
+
+        /**
+         * @brief Compute the difference between two optional ratio_periods on a given period
+         * @param p1 the first ratio_period
+         * @param p2 the second ratio_period
+         * @param from the starting ptime of the period to consider
+         * @param to the ending ptime of the period to consider
+         * @return the resulting ratio_period
+         */
+        std::optional<ratio_period> operator()(std::optional<ratio_period> const &p1, std::optional<ratio_period> const &p2, boost::posix_time::ptime const &from, boost::posix_time::ptime const &to) const;
+
         /**
          * @brief Compute the difference between two optional capa_periods on a given period
          * @param p1 the first capa_period
@@ -90,6 +101,16 @@ namespace details
          * @return the resulting capa_period
          */
         std::optional<capa_period> operator()(std::optional<capa_period> const &p1, std::optional<time_period> const &p2, boost::posix_time::ptime const &from, boost::posix_time::ptime const &to) const;
+
+        /**
+         * @brief Compute the difference between an optional ratio_period and an optional time_period on a given period
+         * @param p1 the first period
+         * @param p2 the second period
+         * @param from the starting ptime of the period to consider
+         * @param to the ending ptime of the period to consider
+         * @return the resulting ratio_period
+         */
+        std::optional<ratio_period> operator()(std::optional<ratio_period> const &p1, std::optional<time_period> const &p2, boost::posix_time::ptime const &from, boost::posix_time::ptime const &to) const;
     };
 
     /**

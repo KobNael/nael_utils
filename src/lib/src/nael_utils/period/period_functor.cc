@@ -75,6 +75,14 @@ namespace details
         }
         return {};
     }
+
+    // Compute the difference between two optional ratio_periods on a given period
+    std::optional<ratio_period> MakeDiff::operator()(std::optional<ratio_period> const &p1, std::optional<ratio_period> const &p2, boost::posix_time::ptime const &from, boost::posix_time::ptime const &to) const
+    {
+        // compute the remaining ratio
+        float ratio((p1 ? p1->_ratio : 1) * (p2 ? p2->_ratio : 1));
+        return ratio_period(ratio, time_period(from, to));
+    }
     // Compute the difference between an optional time_period and an optional capa_period on a given period
     std::optional<time_period> MakeDiff::operator()(std::optional<time_period> const &p1, std::optional<capa_period> const &p2, boost::posix_time::ptime const &from, boost::posix_time::ptime const &to) const
     {
@@ -86,6 +94,14 @@ namespace details
         //get the capacity of p1
         long capa ( (p1?p1->_capa:0) );
         return operator()(p1, p2?capa_period(capa, *p2):std::optional<capa_period>({}), from, to);
+    }
+
+    // Compute the difference between an optional ratio_period and an optional time_period on a given period
+    std::optional<ratio_period> MakeDiff::operator()(std::optional<ratio_period> const &p1, std::optional<time_period> const &p2, boost::posix_time::ptime const &from, boost::posix_time::ptime const &to) const
+    {
+        //get the capacity of p1
+        float ratio ( (p1?p1->_ratio:1) );
+        return operator()(p1, p2?ratio_period(ratio, *p2):std::optional<ratio_period>({}), from, to);
     }
 
     //------------------
