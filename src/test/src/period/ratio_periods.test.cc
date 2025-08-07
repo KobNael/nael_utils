@@ -197,3 +197,67 @@ TEST(ratio_periods, get_inter)
     ASSERT_EQ(interRes, expRes);
 
 }
+
+
+TEST(ratio_periods, get_diff)
+{
+    bg::date d = bg::day_clock::local_day();
+    //Declarations
+    LRatioPeriod myRatioList, interRes, expRes;
+    LTimePeriod mylist;
+
+    //empty lists
+    interRes = get_diff(myRatioList, mylist);
+    ASSERT_EQ(interRes, expRes);
+    //Forbidden : do not compile
+    //interRes = get_inter(mylist, myRatioList);
+
+    //one empty LTimePeriod
+    myRatioList = {ratio_period(1.,  bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)) )};
+    expRes = { ratio_period(1., bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10))) };
+    interRes = get_diff(myRatioList, mylist);
+    ASSERT_EQ(interRes, expRes);
+
+    //list are identical (period wise)
+    myRatioList = { ratio_period(.7, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)))
+            , ratio_period(3.2, bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
+    mylist = { time_period(bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)))
+            , time_period(bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
+    expRes = {};
+    interRes = get_diff(myRatioList, mylist);
+    ASSERT_EQ(interRes, expRes);
+
+
+    //Some tests on intersection computation
+
+    //time period bigger
+    myRatioList = { ratio_period(1., bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)))
+            , ratio_period(2., bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11)))
+            , ratio_period(3., bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
+    mylist = { time_period(bpt::ptime(d,bpt::hours(8)) , bpt::ptime(d,bpt::hours(13))) };
+    expRes = {};
+
+    interRes = get_diff(myRatioList, mylist);
+    ASSERT_EQ(interRes, expRes);
+
+    //time period smaller
+    myRatioList = { ratio_period(1., bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)))
+            , ratio_period(2., bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11)))
+            , ratio_period(3., bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
+    mylist = { time_period(bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11))) };
+    expRes = { ratio_period(1., bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)))
+            , ratio_period(3., bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
+
+    interRes = get_diff(myRatioList, mylist);
+    ASSERT_EQ(interRes, expRes);
+
+    //time period smaller split
+    myRatioList = { ratio_period(2., bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(12))) };
+    mylist = { time_period(bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11))) };
+    expRes = { ratio_period(2., bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)))
+            , ratio_period(2., bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
+
+    interRes = get_diff(myRatioList, mylist);
+    ASSERT_EQ(interRes, expRes);
+
+}
