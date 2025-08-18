@@ -46,6 +46,11 @@ namespace details
     {
         return operator()(p1, p2 ? p2->_period : std::optional<time_period>({}), from, to);
     }
+    // Compute the union between an optional time_period and an optional capa_period on a given period
+    std::optional<time_period> MakeUnion::operator()(std::optional<time_period> const &p1, std::optional<ratio_period> const &p2, boost::posix_time::ptime const &from, boost::posix_time::ptime const &to) const
+    {
+        return operator()(p1, p2 ? p2->_period : std::optional<time_period>({}), from, to);
+    }
 
     //------------------
     // struct MakeDiff
