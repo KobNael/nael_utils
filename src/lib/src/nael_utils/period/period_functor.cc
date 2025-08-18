@@ -46,6 +46,11 @@ namespace details
     {
         return operator()(p1, p2 ? p2->_period : std::optional<time_period>({}), from, to);
     }
+    // Compute the union between an optional time_period and an optional capa_period on a given period
+    std::optional<time_period> MakeUnion::operator()(std::optional<time_period> const &p1, std::optional<ratio_period> const &p2, boost::posix_time::ptime const &from, boost::posix_time::ptime const &to) const
+    {
+        return operator()(p1, p2 ? p2->_period : std::optional<time_period>({}), from, to);
+    }
 
     //------------------
     // struct MakeDiff
@@ -85,6 +90,11 @@ namespace details
         // get the capacity of p1
         long capa((p1 ? p1->_capa : 0));
         return operator()(p1, p2 ? capa_period(capa, *p2) : std::optional<capa_period>({}), from, to);
+    }
+    // Compute the difference between an optional time_period and an optional ratio_period on a given period
+    std::optional<time_period> MakeDiff::operator()(std::optional<time_period> const &p1, std::optional<ratio_period> const &p2, boost::posix_time::ptime const &from, boost::posix_time::ptime const &to) const
+    {
+        return operator()(p1, p2 ? p2->_period : std::optional<time_period>({}), from, to);
     }
 
     //------------------
