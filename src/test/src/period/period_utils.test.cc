@@ -134,3 +134,17 @@ TEST(date_time, is_same)
     EXPECT_FALSE( is_same(lhs, rhs) ) << lhs << " != " << rhs << " with a default tolerance";
     EXPECT_TRUE( is_same(lhs, rhs, boost::posix_time::milliseconds(30)) ) << lhs << " == " << rhs << " with a tolerance of " << boost::posix_time::milliseconds(30);
 }
+
+TEST(time_duration, is_same)
+{
+    bpt::time_duration lhs(1, 2, 3, 4);
+    bpt::time_duration rhs = lhs;
+    EXPECT_TRUE( is_same(lhs, rhs) );
+
+    rhs = bpt::time_duration(1, 2, 3, 1000);
+    EXPECT_TRUE( is_same(lhs, rhs) ) << lhs << " == " << rhs << " with a default tolerance";
+
+    rhs = bpt::time_duration(1, 2, 3, 30000);
+    EXPECT_FALSE( is_same(lhs, rhs) ) << lhs << " != " << rhs << " with a default tolerance";
+    EXPECT_TRUE( is_same(lhs, rhs, boost::posix_time::milliseconds(30)) ) << lhs << " == " << rhs << " with a tolerance of " << boost::posix_time::milliseconds(30);
+}

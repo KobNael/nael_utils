@@ -178,13 +178,9 @@ TEST(ratio_periods, get_inter)
             , ratio_period(2., bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11)))
             , ratio_period(3., bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
     mylist = { time_period(bpt::ptime(d,bpt::hours(8)) , bpt::ptime(d,bpt::hours(13))) };
-    expRes = { ratio_period(1., bpt::ptime(d,bpt::hours( 8)) , bpt::ptime(d,bpt::hours(10)))
-                    , ratio_period(2., bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11)))
-                    , ratio_period(3., bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12)))
-                    , ratio_period(1., bpt::ptime(d,bpt::hours(12)) , bpt::ptime(d,bpt::hours(13))) };
 
     interRes = get_inter(myRatioList, mylist);
-    ASSERT_EQ(interRes, expRes);
+    ASSERT_EQ(interRes, myRatioList);
 
     //time period smaller
     myRatioList = { ratio_period(1., bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)))

@@ -30,7 +30,7 @@ namespace details
         // compute the capacity
         if (long capa((p1 ? p1->_capa : 0) + (p2 ? p2->_capa : 0)); 0 != capa)
         {
-            return capa_period(capa, time_period(from, to));
+            return capa_period(capa, from, to);
         }
         return {};
     }
@@ -39,7 +39,7 @@ namespace details
     {
         float ratio_1(p1 ? p1->_ratio : 1.);
         float ratio_2(p2 ? p2->_ratio : 1.);
-        return ratio_period(ratio_1 * ratio_2, time_period(from, to));
+        return ratio_period(ratio_1 * ratio_2, from, to);
     }
     // Compute the union between an optional time_period and an optional capa_period on a given period
     std::optional<time_period> MakeUnion::operator()(std::optional<time_period> const &p1, std::optional<capa_period> const &p2, boost::posix_time::ptime const &from, boost::posix_time::ptime const &to) const
@@ -70,7 +70,7 @@ namespace details
         // compute the remaining capacity
         if (long capa((p1 ? p1->_capa : 0) - (p2 ? p2->_capa : 0)); 0 != capa)
         {
-            return capa_period(capa, time_period(from, to));
+            return capa_period(capa, from, to);
         }
         return {};
     }
@@ -153,17 +153,23 @@ namespace details
     // Compute the intersection between an optional ratio_period and an optional time_period on a given period
     std::optional<ratio_period> MakeInter::operator()(std::optional<ratio_period> const &p1, std::optional<time_period> const &p2, boost::posix_time::ptime const &from, boost::posix_time::ptime const &to) const
     {
-        // If not ratio is given, default value is 1., so just check that p2 is here
-        if (p2)
+        // if both periods
+        if (p1 && p2)
         {
-            if (float ratio(p1 ? p1->_ratio : 1.); !safecomp::eq<float>(ratio, 0.))
+            if (auto inter = operator()((*p1)._period, (*p2), from, to); inter)
             {
-                // Get the intersection just on p2
-                if (auto inter = operator()((*p2), (*p2), from, to); inter)
-                {
-                    return ratio_period(ratio, *inter);
-                }
+                return ratio_period((*p1)._ratio, *inter);
             }
+        }
+        return {};
+    }
+    std::optional<time_period> MakeInter::operator()(std::optional<time_period> const &p1, std::optional<ratio_period> const &p2, boost::posix_time::ptime const &from, boost::posix_time::ptime const &to) const
+    {
+        // if both periods
+        if (p1 && p2)
+        {
+            // make the intersection on corresponding periods
+            return operator()(*p1, (*p2)._period, from, to);
         }
         return {};
     }

@@ -156,6 +156,15 @@ namespace details
          * @return the resulting ratio_period
          */
         std::optional<ratio_period> operator()(std::optional<ratio_period> const &p1, std::optional<time_period> const &p2, boost::posix_time::ptime const &from, boost::posix_time::ptime const &to) const;
+        /**
+         * @brief Compute the intersection between an optional time_period and an optional ratio_period on a given period
+         * @param p1 the time_period
+         * @param p2 the ratio_period
+         * @param from the starting ptime of the period to consider
+         * @param to the ending ptime of the period to consider
+         * @return the resulting time_period
+         */
+        std::optional<time_period> operator()(std::optional<time_period> const &p1, std::optional<ratio_period> const &p2, boost::posix_time::ptime const &from, boost::posix_time::ptime const &to) const;
     };
 
 } // namespace details

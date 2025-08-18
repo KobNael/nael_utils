@@ -140,3 +140,10 @@ bool is_same(bpt::ptime const &lhs, bpt::ptime const &rhs, bpt::time_duration co
 
     return diff <= tol;
 }
+
+// Checks that two durations are the same (with a tolerance)
+bool is_same(boost::posix_time::time_duration const &lhs, boost::posix_time::time_duration const &rhs, boost::posix_time::time_duration const &tol)
+{
+    boost::posix_time::time_duration diff = (lhs > rhs) ? lhs - rhs : rhs - lhs;
+    return diff <= tol;
+}
