@@ -331,5 +331,13 @@ time_period make_empty_period(boost::posix_time::ptime ptime);
  */
 bool is_same(boost::posix_time::ptime const &lhs, boost::posix_time::ptime const &rhs, boost::posix_time::time_duration const &tol = boost::posix_time::milliseconds(10));
 
+/**
+ * @brief Checks that two durations are the same (with a tolerance)
+ * @param lhs the first duration
+ * @param rhs the second duration
+ * @param tol the tolerance
+ */
+bool is_same(boost::posix_time::time_duration const &lhs, boost::posix_time::time_duration const &rhs, boost::posix_time::time_duration const &tol = boost::posix_time::milliseconds(10));
+
 // Implementation
 #include <nael_utils/period/period_utils.tpp>
