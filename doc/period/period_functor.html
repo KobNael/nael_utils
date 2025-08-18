@@ -74,6 +74,7 @@
 <li class="toctree-l2"><a class="reference internal" href="period.html#_CPPv420get_eligible_periodsRK11LCapaPeriodj"><code class="docutils literal notranslate"><span class="pre">get_eligible_periods()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="period.html#_CPPv417make_empty_periodN5boost10posix_time5ptimeE"><code class="docutils literal notranslate"><span class="pre">make_empty_period()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="period.html#_CPPv47is_sameRKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeERKN5boost10posix_time13time_durationE"><code class="docutils literal notranslate"><span class="pre">is_same()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="period.html#_CPPv47is_sameRKN5boost10posix_time13time_durationERKN5boost10posix_time13time_durationERKN5boost10posix_time13time_durationE"><code class="docutils literal notranslate"><span class="pre">is_same()</span></code></a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Period Functors</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv47details"><code class="docutils literal notranslate"><span class="pre">details</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N7details8MakeDiffE"><code class="docutils literal notranslate"><span class="pre">details::MakeDiff</span></code></a></li>
@@ -319,6 +320,25 @@
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the resulting ratio_period</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7details9MakeInterclERKNSt8optionalI11time_periodEERKNSt8optionalI12ratio_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE">
+<span id="_CPPv3NK7details9MakeInterclERKNSt8optionalI11time_periodEERKNSt8optionalI12ratio_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE"></span><span id="_CPPv2NK7details9MakeInterclERKNSt8optionalI11time_periodEERKNSt8optionalI12ratio_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE"></span><span id="details::MakeInter::call-operator__std::optional:time_period:CR.std::optional:ratio_period:CR.boost::posix_time::ptimeCR.boost::posix_time::ptimeCRC"></span><span class="target" id="structdetails_1_1MakeInter_1a59fa2f037098833c81943475918aa3fa"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">time_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">time_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p1</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">ratio_period</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p2</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">from</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">to</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7details9MakeInterclERKNSt8optionalI11time_periodEERKNSt8optionalI12ratio_periodEERKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeE" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the intersection between an optional time_period and an optional ratio_period on a given period. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p1</strong> – the time_period </p></li>
+<li><p><strong>p2</strong> – the ratio_period</p></li>
+<li><p><strong>from</strong> – the starting ptime of the period to consider </p></li>
+<li><p><strong>to</strong> – the ending ptime of the period to consider </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the resulting time_period </p>
 </dd>
 </dl>
 </dd></dl>
