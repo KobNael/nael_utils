@@ -93,6 +93,17 @@ LTimePeriod get_eligible_periods(LCapaPeriod const &periods, unsigned min)
     return result;
 }
 
+// Convert a list of time_period into a list of capa_period with a given capacity
+LCapaPeriod convert(LTimePeriod const &periods, long long capa)
+{
+    LCapaPeriod result;
+    std::ranges::transform(
+        periods,
+        std::back_inserter(result),
+            [capa](auto const& period) { return capa_period(capa, period); });
+    return result;
+}
+
 // Compute a relative duration
 boost::posix_time::time_duration compute_relative_duration(boost::posix_time::time_duration duration, float ratio)
 {

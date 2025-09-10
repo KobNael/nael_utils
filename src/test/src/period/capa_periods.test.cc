@@ -427,11 +427,19 @@ TEST(capa_periods, conversion)
     //----------------
     // Period => Capa
     //----------------
+
+
     LCapaPeriod myCapaList { capa_period(10, bpt::ptime(d,bpt::hours(10)), bpt::ptime(d,bpt::hours(12)) ) };
     LTimePeriod mylist {
         time_period( bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(11)) )
         , time_period( bpt::ptime(d,bpt::hours(13)), bpt::ptime(d,bpt::hours(14)) ) };
-    LCapaPeriod expCapaRes { capa_period(10, bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(12))) };
+    LCapaPeriod expCapaRes {
+        capa_period(5, bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(11)) )
+        , capa_period(5, bpt::ptime(d,bpt::hours(13)), bpt::ptime(d,bpt::hours(14)) )
+    };
+    ASSERT_EQ(expCapaRes, convert(mylist, 5L));
+
+    expCapaRes = { capa_period(10, bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(12))) };
     //No union since it make non sense
 
     //Intersection

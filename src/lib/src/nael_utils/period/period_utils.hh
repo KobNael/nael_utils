@@ -317,6 +317,14 @@ boost::posix_time::time_duration get_relative_duration(LRatioPeriod const &perio
 LTimePeriod get_eligible_periods(LCapaPeriod const &periods, unsigned min);
 
 /**
+ * @brief Convert a list of time_period into a list of capa_period with a given capacity
+ * @param periods the list of time_periods
+ * @param capa the capacity
+ * @return the corresponding capa_periods
+ */
+LCapaPeriod convert(LTimePeriod const &periods, long long capa);
+
+/**
  * @brief Create an artificial empty period
  * @param datetime the ptime
  * @return a time period [ptime, ptime+10 milliseconds[
