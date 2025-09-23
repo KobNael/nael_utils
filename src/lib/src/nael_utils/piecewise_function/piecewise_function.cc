@@ -123,8 +123,8 @@ Piecewise_linear_function sum_segments(Segment const &segment, Segment const &va
     // first part (if any)
     if(safecomp::lt(segment._from._x, variation._from._x))
     {
-        result.push_back({segment._from._x, segment._from._y});
-        result.push_back({variation._from._x, segment._from._y + segment_slope * (variation._from._x - segment._from._x)});
+        result.emplace_back(segment._from._x, segment._from._y);
+        result.emplace_back(variation._from._x, segment._from._y + segment_slope * (variation._from._x - segment._from._x));
     }
     // common part
     long double from_x = std::max(segment._from._x, variation._from._x);
@@ -133,12 +133,12 @@ Piecewise_linear_function sum_segments(Segment const &segment, Segment const &va
     long double y_to_variation = variation.get_y(to_x);
     long double from_y = segment.get_y(from_x) + y_from_variation;
     long double to_y = segment.get_y(to_x) + y_to_variation;
-    result.push_back({from_x, from_y});
-    result.push_back({to_x, to_y});
+    result.emplace_back(from_x, from_y);
+    result.emplace_back(to_x, to_y);
     // last part (if any)
     if(safecomp::gt(segment._to._x, variation._to._x))
     {
-        result.push_back({segment._to._x, segment._to._y + variation_delta_y});
+        result.emplace_back(segment._to._x, segment._to._y + variation_delta_y);
     }
 
     return result;
@@ -147,7 +147,7 @@ Piecewise_linear_function sum_segments(Segment const &segment, Segment const &va
 // Adds a non vertical variation to a piece-wise linear function
 Piecewise_linear_function add_variation(Piecewise_linear_function const &pwf, Segment const &variation)
 {
-    assert( !pwf.empty() );
+    assert( pwf.size() > 1 );
     assert( variation._from._x >= pwf.front()._x && pwf.back()._x >= variation._to._x );
     assert( safecomp::isnull(variation._from._y) );
     // get the variation characteristics
@@ -162,19 +162,19 @@ Piecewise_linear_function add_variation(Piecewise_linear_function const &pwf, Se
         // segment fully before variation
         if(safecomp::lt(cur_it->_x, variation._from._x))
         {
-            result.push_back({prev_it->_x, prev_it->_y});
-            result.push_back({cur_it->_x, cur_it->_y});
+            result.emplace_back(prev_it->_x, prev_it->_y);
+            result.emplace_back(cur_it->_x, cur_it->_y);
         }
         // segment fully after variation
         else if(safecomp::gt(prev_it->_x, variation._to._x))
         {
-            result.push_back({prev_it->_x, prev_it->_y + variation_delta_y});
-            result.push_back({cur_it->_x, cur_it->_y + variation_delta_y});
+            result.emplace_back(prev_it->_x, prev_it->_y + variation_delta_y);
+            result.emplace_back(cur_it->_x, cur_it->_y + variation_delta_y);
         }
         // intersection
         else
         {
-            auto const &sum = sum_segments(Segment(*prev_it, *cur_it), variation);
+            auto const &sum = sum_segments({*prev_it, *cur_it}, variation);
             result.insert(result.end(), sum.begin(), sum.end());
         }
     } while (++cur_it != pwf.end());

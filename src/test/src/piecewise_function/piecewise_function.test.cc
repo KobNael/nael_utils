@@ -14,6 +14,7 @@ TEST(piecewise_function, segment_utils)
     EXPECT_FALSE(std::isnan(segment.get_slope()));
     EXPECT_TRUE(safecomp::eq(segment.get_slope(), 1.0L));
     EXPECT_TRUE(safecomp::eq(segment.get_y(1.0), 1.0L));
+    GTEST_FLAG_SET(death_test_style, "threadsafe");
     ASSERT_DEBUG_DEATH(segment.get_y(2.0), ".*Assertion `safecomp::le\\(_from._x, x\\) && safecomp::le\\(x, _to._x\\)' failed.*");
     ASSERT_DEBUG_DEATH(segment.get_y(-12.), ".*Assertion `safecomp::le\\(_from._x, x\\) && safecomp::le\\(x, _to._x\\)' failed.*");
 
