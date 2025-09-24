@@ -37,6 +37,7 @@ target_sources (nael_utils
 	src/nael_utils/period/period_functor.cc
 	src/nael_utils/period/period_typedef.cc
 	src/nael_utils/period/period_utils.cc
+	src/nael_utils/piecewise_function/piecewise_function.cc
 	src/nael_utils/string/string_utils.cc
 	)
 

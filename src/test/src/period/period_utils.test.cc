@@ -2,8 +2,6 @@
 
 #include <nael_utils/period/period_utils.hh>
 
-#include <boost/assign/list_of.hpp>
-
 namespace bg=boost::gregorian;
 namespace bpt=boost::posix_time;
 
