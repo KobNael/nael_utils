@@ -118,4 +118,9 @@ TEST(piecewise_function, add_variation)
     expected = {{0.0, 100.0}, {10.0, 100.0}, {10.0, 150.0}, {20.0, 220.0}, {100.0, 220.0}, {100.0, 350.0}};
     ASSERT_NO_THROW(result = add_variation(result, variation));
     ASSERT_EQ(result, expected);
+    // Remove 40 at x=80
+    variation = {{80.0, 0.0}, {80.0, -40.0}};
+    expected = {{0.0, 100.0}, {10.0, 100.0}, {10.0, 150.0}, {20.0, 220.0}, {80.0, 220.0}, {80.0, 180.0}, {100.0, 180.0}, {100.0, 310.0}};
+    ASSERT_NO_THROW(result = add_variation(result, variation));
+    ASSERT_EQ(result, expected);
 }

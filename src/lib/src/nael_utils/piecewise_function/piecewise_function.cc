@@ -105,12 +105,14 @@ Piecewise_linear_function sum_segments(Segment const &segment, Segment const &va
         // if on a vertical segment move the target point
         if(std::isnan(segment_slope))
         {
+            assert(safecomp::eq(segment._from._x, variation._from._x));
             return Piecewise_linear_function{{segment._from._x, segment._from._y},
                                             {segment._to._x, segment._to._y + variation_delta_y}};
         }
         // otherwise split the segment in two parts
         else
         {
+            assert( segment._from._x <= variation._from._x && segment._to._x >= variation._to._x );
             long double y_at_variation = segment.get_y(variation._from._x);
             return Piecewise_linear_function{{segment._from._x, segment._from._y},
                                             {variation._from._x, y_at_variation},
@@ -124,7 +126,7 @@ Piecewise_linear_function sum_segments(Segment const &segment, Segment const &va
     if(safecomp::lt(segment._from._x, variation._from._x))
     {
         result.emplace_back(segment._from._x, segment._from._y);
-        result.emplace_back(variation._from._x, segment._from._y + segment_slope * (variation._from._x - segment._from._x));
+        result.emplace_back(variation._from._x, segment.get_y(segment._from._x));
     }
     // common part
     long double from_x = std::max(segment._from._x, variation._from._x);
