@@ -42,6 +42,36 @@ bool Segment::contains(Dot const &dot) const
         && safecomp::eq(dot._y, _from._y + get_slope() * (dot._x - _from._x));
 }
 
+// Check if a x coordinate is within the segment bounds
+bool Segment::x_in_range(long double x) const
+{
+    return safecomp::le(_from._x, x) && safecomp::le(x, _to._x);
+}
+
+// Check if a y coordinate is within the segment bounds
+bool Segment::y_in_range(long double y) const
+{
+    return (safecomp::le(_from._y, y) && safecomp::le(y, _to._y)) || (safecomp::le(_to._y, y) && safecomp::le(y, _from._y));
+}
+
+// Compute the x coordinate for a given y coordinate on the segment
+long double Segment::get_x(long double y) const
+{
+    assert(y_in_range(y));
+    // special case of horizontal segment
+    if(safecomp::eq(_from._y, _to._y))
+    {
+        return std::numeric_limits<long double>::quiet_NaN();
+    }
+    // special case for vertical segment
+    if(safecomp::eq(_from._x, _to._x))
+    {
+        return _from._x;
+    }
+    // normal case: non vertical segment
+    return _from._x + (y - _from._y) / get_slope();
+}
+
 // Compute the y coordinate for a given x coordinate on the segment
 long double Segment::get_y(long double x) const
 {
@@ -194,5 +224,35 @@ Piecewise_linear_function add_variation(Piecewise_linear_function const &pwf, st
     {
         result = add_variation(result, variation);
     }
+    return result;
+}
+
+// Return the list of intersection points between a piece-wise linear function and ordinate y
+Piecewise_linear_function get_intersection(Piecewise_linear_function const &pwf, long double y)
+{
+    Piecewise_linear_function result;
+    auto cur_it = std::next(pwf.begin());
+    do
+    {
+        auto const &segment = Segment{*std::prev(cur_it), *cur_it};
+        // if the segment is horizontal, check if y is on the segment
+        if(safecomp::eq(segment._from._y, segment._to._y))
+        {
+            if(safecomp::eq(segment._from._y, y))
+            {
+                result.emplace_back(segment._from);
+                result.emplace_back(segment._to);
+            }
+        }
+        else
+        {
+            if(segment.y_in_range(y))
+            {
+                result.emplace_back(segment.get_x(y), y);
+            }
+        }
+    } while (++cur_it != pwf.end());
+    // clean consecutive identical points
+    result.erase(std::unique(result.begin(), result.end()), result.end());
     return result;
 }

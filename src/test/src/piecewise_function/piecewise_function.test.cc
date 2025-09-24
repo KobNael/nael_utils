@@ -67,8 +67,6 @@ TEST(piecewise_function, merge_segments)
     ASSERT_EQ(fn, expected);
 }
 
-
-
 TEST(piecewise_function, add_variation)
 {
     // init with a flat function (y=100)
@@ -123,4 +121,71 @@ TEST(piecewise_function, add_variation)
     expected = {{0.0, 100.0}, {10.0, 100.0}, {10.0, 150.0}, {20.0, 220.0}, {80.0, 220.0}, {80.0, 180.0}, {100.0, 180.0}, {100.0, 310.0}};
     ASSERT_NO_THROW(result = add_variation(result, variation));
     ASSERT_EQ(result, expected);
+}
+
+TEST(piecewise_function, in_range)
+{
+    Segment segment{{-1.0, -1.0}, {1.0, 1.0}};
+    ASSERT_TRUE(segment.x_in_range(0.0));
+    ASSERT_FALSE(segment.x_in_range(-2.0));
+    ASSERT_FALSE(segment.x_in_range(2.0));
+    ASSERT_TRUE(segment.y_in_range(0.0));
+    ASSERT_FALSE(segment.y_in_range(-2.0));
+    ASSERT_FALSE(segment.y_in_range(2.0));
+    ASSERT_TRUE(segment.y_in_range(1.0));
+    segment = {{-1.0, 1.0}, {1.0, -1.0}};
+    ASSERT_TRUE(segment.x_in_range(0.0));
+    ASSERT_FALSE(segment.x_in_range(-2.0));
+    ASSERT_FALSE(segment.x_in_range(2.0));
+    ASSERT_TRUE(segment.y_in_range(0.0));
+    ASSERT_FALSE(segment.y_in_range(-2.0));
+    ASSERT_FALSE(segment.y_in_range(2.0));
+    ASSERT_TRUE(segment.y_in_range(1.0));
+    segment = {{1.0, 1.0}, {10.0, 1.0}};
+    ASSERT_TRUE(segment.x_in_range(1.0));
+    ASSERT_TRUE(segment.x_in_range(1.0));
+    ASSERT_TRUE(segment.y_in_range(1.0));
+    ASSERT_FALSE(segment.y_in_range(2.0));
+}
+TEST(piecewise_function, get_intersection)
+{
+    // simple intersection
+    Piecewise_linear_function fn = {{0.0, 0.0}, {100.0, 100.0}};
+    Piecewise_linear_function expected = {{50.0, 50.0}};
+    Piecewise_linear_function result;
+    ASSERT_NO_THROW(result = get_intersection(fn, 50.0));
+    ASSERT_EQ(result, expected);
+
+    // simple non intersection
+    fn = {{0.0, 0.0}, {100.0, 100.0}};
+    expected = {};
+    ASSERT_NO_THROW(result = get_intersection(fn, 150.0));
+    ASSERT_EQ(result, expected);
+
+    // horizontal segment with intersection
+    fn = {{0.0, 100.0}, {100.0, 100.0}};
+    expected = {{{0.0, 100.0}, {100.0, 100.0}}};
+    ASSERT_NO_THROW(result = get_intersection(fn, 100.0));
+    ASSERT_EQ(result, expected);
+
+    // horizontal segment no intersection
+    fn = {{0.0, 100.0}, {100.0, 100.0}};
+    expected = {};
+    ASSERT_NO_THROW(result = get_intersection(fn, 150.0));
+    ASSERT_EQ(result, expected);
+
+    // full variations
+    fn = {{0.0, 100.0}, {10.0, 100.0}, {10.0, 150.0}, {20.0, 220.0}, {80.0, 220.0}, {80.0, 180.0}, {100.0, 180.0}, {100.0, 310.0}};
+    expected = {{0.0, 100.0}, {10.0, 100.0}};
+    ASSERT_NO_THROW(result = get_intersection(fn, 100.0));
+    ASSERT_EQ(result, expected);
+
+    expected = {{10.0, 115.0}};
+    ASSERT_NO_THROW(result = get_intersection(fn, 115.0));
+    ASSERT_EQ(result, expected);
+
+    expected = {{17.0, 199.0}, {80.0, 199.0}, {100.0, 199.0}};
+    ASSERT_NO_THROW(result = get_intersection(fn, 199.0));
+    ASSERT_EQ(result, expected);
+
 }

@@ -41,6 +41,19 @@ struct Segment
      * @return True if the dot is on the segment, false otherwise.
      */
     bool contains(Dot const &dot) const;
+
+    /**
+     * @brief Check if a y coordinate is within the segment bounds
+     * @param y The y coordinate to check.
+     * @return True if the y coordinate is within the segment bounds, false otherwise.
+     */
+    bool y_in_range(long double y) const;
+    /**
+     * @brief Check if a x coordinate is within the segment bounds
+     * @param x The x coordinate to check.
+     * @return True if the x coordinate is within the segment bounds, false otherwise.
+     */
+    bool x_in_range(long double x) const;
     /**
      * @brief Compute the y coordinate for a given x coordinate on the segment
      * @param x The x coordinate.
@@ -48,6 +61,13 @@ struct Segment
      * @pre x must be within the segment bounds
      */
     long double get_y(long double x) const;
+    /**
+     * @brief Compute the x coordinate for a given y coordinate on the segment
+     * @param y The y coordinate.
+     * @return The corresponding x coordinate.
+     * @pre y must be within the segment bounds
+     */
+    long double get_x(long double y) const;
 
     /**
      * @brief Returns the slope of the segment
@@ -84,3 +104,11 @@ Piecewise_linear_function add_variation(Piecewise_linear_function const &pwf, Se
  * @return A new piece-wise linear function with the added segment.
  */
 Piecewise_linear_function add_variation(Piecewise_linear_function const &pwf, std::list<Segment> const &variations);
+
+/**
+ * @brief Return the list of intersection points between a piece-wise linear function and an horizontal segment
+ * @param pwf The original piece-wise linear function.
+ * @param y the y coordinate of the horizontal segment.
+ * @return The list of intersection points.
+ */
+Piecewise_linear_function get_intersection(Piecewise_linear_function const &pwf, long double y);
