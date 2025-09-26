@@ -14,8 +14,8 @@
  */
 struct Dot
 {
-    double _x;
-    double _y;
+    double _x= {0.};
+    double _y= {0.};
 
     // default comparison operator
     bool operator==(const Dot&) const;
@@ -34,8 +34,8 @@ struct Dot
  */
 struct Segment
 {
-    Dot _from;
-    Dot _to;
+    Dot _from={};
+    Dot _to={};
     /**
      * @brief Check if a dot is on the segment
      * @param dot The dot to check.
