@@ -311,7 +311,7 @@ Dot get_first_dot(Piecewise_linear_function const &pwf, double y, double x_start
             // second dot valid
             else if(comp(segment._to._y, y))
             {
-                return Dot(segment._to._x, y);
+                return {segment._to._x, y};
             }
             // invalid segment
             else
@@ -364,17 +364,14 @@ Dot get_last_dot(Piecewise_linear_function const &pwf, double y, double x_start,
     do
     {
         auto const &segment = Segment{*std::next(cur_it), *cur_it};
-        std::cout << "on " << segment << std::endl;
         // segment fully after interval
         if(safecomp::gt(segment._from._x, x_end))
         {
-            std::cout << "too far, continue" << std::endl;
             continue;
         }
         // segment fully before interval => not found
         if(safecomp::gt(x_start, segment._to._x))
         {
-            std::cout << "too early, not found" << std::endl;
             return {std::numeric_limits<long double>::quiet_NaN(), std::numeric_limits<long double>::quiet_NaN()};
         }
         // special case for vertical segment
@@ -388,7 +385,7 @@ Dot get_last_dot(Piecewise_linear_function const &pwf, double y, double x_start,
             // second dot valid
             else if(comp(segment._from._y, y))
             {
-                return Dot(segment._from._x, y);
+                return {segment._from._x, y};
             }
             // invalid segment
             else

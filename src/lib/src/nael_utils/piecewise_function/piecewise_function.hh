@@ -22,8 +22,7 @@ struct Dot
     // basic stream operator
     friend std::ostream &operator<<(std::ostream &os, Dot const &obj)
     {
-        os << "(" << obj._x << "," << obj._y << ")";
-        return os;
+        return os << "(" << obj._x << "," << obj._y << ")";
     }
 
 };
@@ -34,8 +33,8 @@ struct Dot
  */
 struct Segment
 {
-    Dot _from={};
-    Dot _to={};
+    Dot _from={0.,0.};
+    Dot _to={0.,0.};
     /**
      * @brief Check if a dot is on the segment
      * @param dot The dot to check.
@@ -81,8 +80,7 @@ struct Segment
     // basic stream operator
     friend std::ostream &operator<<(std::ostream &os, Segment const &obj)
     {
-        os << "[" << obj._from << " -> " << obj._to << "]";
-        return os;
+        return os << "[" << obj._from << " -> " << obj._to << "]";
     }
 };
 
