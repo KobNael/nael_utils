@@ -12,8 +12,8 @@ TEST(piecewise_function, segment_utils)
     EXPECT_FALSE(segment.contains({2.0, 2.0}));
     EXPECT_FALSE(segment.contains({0.5, 0.6}));
     EXPECT_FALSE(std::isnan(segment.get_slope()));
-    EXPECT_TRUE(safecomp::eq(segment.get_slope(), 1.0L));
-    EXPECT_TRUE(safecomp::eq(segment.get_y(1.0), 1.0L));
+    EXPECT_TRUE(safecomp::eq(segment.get_slope(), 1.0));
+    EXPECT_TRUE(safecomp::eq(segment.get_y(1.0), 1.0));
     GTEST_FLAG_SET(death_test_style, "threadsafe");
     ASSERT_DEBUG_DEATH(segment.get_y(2.0), ".*Assertion `safecomp::le\\(_from._x, x\\) && safecomp::le\\(x, _to._x\\)' failed.*");
     ASSERT_DEBUG_DEATH(segment.get_y(-12.), ".*Assertion `safecomp::le\\(_from._x, x\\) && safecomp::le\\(x, _to._x\\)' failed.*");
@@ -25,8 +25,8 @@ TEST(piecewise_function, segment_utils)
     EXPECT_FALSE(segment.contains({2.0, 2.0}));
     EXPECT_FALSE(segment.contains({0.5, 0.6}));
     EXPECT_FALSE(std::isnan(segment.get_slope()));
-    EXPECT_TRUE(safecomp::eq(segment.get_slope(), -1.0L));
-    EXPECT_TRUE(safecomp::eq(segment.get_y(1.0), -1.0L));
+    EXPECT_TRUE(safecomp::eq(segment.get_slope(), -1.0));
+    EXPECT_TRUE(safecomp::eq(segment.get_y(1.0), -1.0));
     ASSERT_DEBUG_DEATH(segment.get_y(2.0), ".*Assertion `safecomp::le\\(_from._x, x\\) && safecomp::le\\(x, _to._x\\)' failed.*");
     ASSERT_DEBUG_DEATH(segment.get_y(-12.), ".*Assertion `safecomp::le\\(_from._x, x\\) && safecomp::le\\(x, _to._x\\)' failed.*");
 
@@ -147,45 +147,241 @@ TEST(piecewise_function, in_range)
     ASSERT_TRUE(segment.y_in_range(1.0));
     ASSERT_FALSE(segment.y_in_range(2.0));
 }
-TEST(piecewise_function, get_intersection)
+
+TEST(piecewise_function, get_lowest_dot)
 {
-    // simple intersection
-    Piecewise_linear_function fn = {{0.0, 0.0}, {100.0, 100.0}};
-    Piecewise_linear_function expected = {{50.0, 50.0}};
-    Piecewise_linear_function result;
-    ASSERT_NO_THROW(result = get_intersection(fn, 50.0));
-    ASSERT_EQ(result, expected);
+    Piecewise_linear_function pwf = {{0.0, 100.0}, {10.0, 100.0}, {10.0, 150.0}, {20.0, 220.0}, {80.0, -220.0}, {80.0, 90.0}, {100.0, 180.0}, {100.0, 310.0}};
+    Dot res;
+    // on vertical segment
+    ASSERT_NO_THROW(res = get_lowest_dot(pwf, 0.0, 100.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 80.0));
+    ASSERT_TRUE(safecomp::eq(res._y, -220.0));
+    // on horizontal segment
+    ASSERT_NO_THROW(res = get_lowest_dot(pwf, 0.0, 10.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 00.0));
+    ASSERT_TRUE(safecomp::eq(res._y, 100.0));
+    // on random segment
+    ASSERT_NO_THROW(res = get_lowest_dot(pwf, 0.0, 79.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 79.0));
+    ASSERT_TRUE(safecomp::eq(res._y, -212.6666667));
+    // on exact dot
+    ASSERT_NO_THROW(res = get_lowest_dot(pwf, 15.0, 200.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 80.0));
+    ASSERT_TRUE(safecomp::eq(res._y, -220.0));
+    // out of range
+    ASSERT_NO_THROW(res = get_lowest_dot(pwf, 200.0, 300.0));
+    ASSERT_TRUE(std::isnan(res._x));
+    ASSERT_TRUE(std::isnan(res._y));
+    ASSERT_NO_THROW(res = get_lowest_dot(pwf, -200.0, -10.0));
+    ASSERT_TRUE(std::isnan(res._x));
+    ASSERT_TRUE(std::isnan(res._y));
+    // on bounds
+    ASSERT_NO_THROW(res = get_lowest_dot(pwf, -100.0, 0.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 0.0));
+    ASSERT_TRUE(safecomp::eq(res._y, 100.0));
+    ASSERT_NO_THROW(res = get_lowest_dot(pwf, 100.0, 300.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 100.0));
+    ASSERT_TRUE(safecomp::eq(res._y, 180.0));
+}
 
-    // simple non intersection
-    fn = {{0.0, 0.0}, {100.0, 100.0}};
-    expected = {};
-    ASSERT_NO_THROW(result = get_intersection(fn, 150.0));
-    ASSERT_EQ(result, expected);
+TEST(piecewise_function, get_highest_dot)
+{
+    Piecewise_linear_function pwf = {{0.0, 100.0}, {10.0, 100.0}, {10.0, 310.0}, {20.0, 220.0}, {21.0, 270.0}, {80.0, -220.0}, {80.0, 90.0}, {100.0, 180.0}, {100.0, 300.0}};
+    Dot res;
+    // on vertical segment
+    ASSERT_NO_THROW(res = get_highest_dot(pwf, 0.0, 100.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 10.0));
+    ASSERT_TRUE(safecomp::eq(res._y, 310.0));
+    // on horizontal segment
+    ASSERT_NO_THROW(res = get_highest_dot(pwf, 0.0, 8.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 0.0));
+    ASSERT_TRUE(safecomp::eq(res._y, 100.0));
+    // on random segment
+    ASSERT_NO_THROW(res = get_highest_dot(pwf, 15.0, 20.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 15.0));
+    ASSERT_TRUE(safecomp::eq(res._y, 265.));
+    // on exact dot
+    ASSERT_NO_THROW(res = get_highest_dot(pwf, 15.0, 80.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 21.0));
+    ASSERT_TRUE(safecomp::eq(res._y, 270.0));
+    // out of range
+    ASSERT_NO_THROW(res = get_highest_dot(pwf, 200.0, 300.0));
+    ASSERT_TRUE(std::isnan(res._x));
+    ASSERT_TRUE(std::isnan(res._y));
+    ASSERT_NO_THROW(res = get_highest_dot(pwf, -200.0, -10.0));
+    ASSERT_TRUE(std::isnan(res._x));
+    ASSERT_TRUE(std::isnan(res._y));
+    // on bounds
+    ASSERT_NO_THROW(res = get_highest_dot(pwf, -100.0, 0.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 0.0));
+    ASSERT_TRUE(safecomp::eq(res._y, 100.0));
+    ASSERT_NO_THROW(res = get_highest_dot(pwf, 100.0, 300.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 100.0));
+    ASSERT_TRUE(safecomp::eq(res._y, 300.0));
+}
 
-    // horizontal segment with intersection
-    fn = {{0.0, 100.0}, {100.0, 100.0}};
-    expected = {{{0.0, 100.0}, {100.0, 100.0}}};
-    ASSERT_NO_THROW(result = get_intersection(fn, 100.0));
-    ASSERT_EQ(result, expected);
+TEST(piecewise_function, get_first_dot_above)
+{
+    Piecewise_linear_function pwf =
+        {{0.0, 0.0}, {0.0, 100.0}, {5.0, 110.0}, {10.0, 110.0}, {10.0, 310.0},
+        {20.0, 220.0}, {21.0, 270.0}, {80.0, -220.0}, {80.0, 90.0}, {100.0, 180.0}, {100.0, 300.0}};
+    Dot res;
+    // on vertical segment
+    ASSERT_NO_THROW(res = get_first_dot_above(pwf, 50., 0.0, 100.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 0.0));
+    ASSERT_TRUE(safecomp::eq(res._y, 50.0));
+    // on horizontal segment
+    ASSERT_NO_THROW(res = get_first_dot_above(pwf, 110, 0.0, 20.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 5.0));
+    ASSERT_TRUE(safecomp::eq(res._y, 110.0));
+    // on random segment
+    ASSERT_NO_THROW(res = get_first_dot_above(pwf, 245., 20.0, 22.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 20.5));
+    ASSERT_TRUE(safecomp::eq(res._y, 245.));
+    // on exact dot
+    ASSERT_NO_THROW(res = get_first_dot_above(pwf, 310., .0, 120.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 10.0));
+    ASSERT_TRUE(safecomp::eq(res._y, 310.0));
+    // out of range
+    ASSERT_NO_THROW(res = get_first_dot_above(pwf, 10., 200.0, 300.0));
+    ASSERT_TRUE(std::isnan(res._x));
+    ASSERT_TRUE(std::isnan(res._y));
+    ASSERT_NO_THROW(res = get_first_dot_above(pwf, 30., -200.0, -10.0));
+    ASSERT_TRUE(std::isnan(res._x));
+    ASSERT_TRUE(std::isnan(res._y));
+    ASSERT_NO_THROW(res = get_first_dot_above(pwf, 400., -200.0, 400.0));
+    ASSERT_TRUE(std::isnan(res._x));
+    ASSERT_TRUE(std::isnan(res._y));
+    // on bounds
+    ASSERT_NO_THROW(res = get_first_dot_above(pwf, 0., -100.0, 0.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 0.0));
+    ASSERT_TRUE(safecomp::eq(res._y, 0.0));
+    ASSERT_NO_THROW(res = get_first_dot_above(pwf, 300., 100.0, 300.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 100.0));
+    ASSERT_TRUE(safecomp::eq(res._y, 300.0));
+}
 
-    // horizontal segment no intersection
-    fn = {{0.0, 100.0}, {100.0, 100.0}};
-    expected = {};
-    ASSERT_NO_THROW(result = get_intersection(fn, 150.0));
-    ASSERT_EQ(result, expected);
+TEST(piecewise_function, get_last_dot_above)
+{
+    Piecewise_linear_function pwf =
+        {{0.0, 0.0}, {0.0, 100.0}, {5.0, 320.0}, {10.0, 320.0}, {10.0, 310.0},
+        {20.0, 325.0}, {21.0, 270.0}, {80.0, -220.0}, {80.0, 90.0}, {100.0, 180.0}, {100.0, 300.0}};
+    Dot res;
+    // on vertical segment
+    ASSERT_NO_THROW(res = get_last_dot_above(pwf, 250., 0.0, 100.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 100.0));
+    ASSERT_TRUE(safecomp::eq(res._y, 300.0));
+    // on horizontal segment
+    ASSERT_NO_THROW(res = get_last_dot_above(pwf, 320, 0.0, 10.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 10.0));
+    ASSERT_TRUE(safecomp::eq(res._y, 320.0));
+    // on random segment
+    ASSERT_NO_THROW(res = get_last_dot_above(pwf, 317.5, 10.0, 15.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 15.));
+    ASSERT_TRUE(safecomp::eq(res._y, 317.5));
+    // on exact dot
+    ASSERT_NO_THROW(res = get_last_dot_above(pwf, 325., .0, 120.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 20.0));
+    ASSERT_TRUE(safecomp::eq(res._y, 325.0));
+    // out of range
+    ASSERT_NO_THROW(res = get_last_dot_above(pwf, 10., 200.0, 300.0));
+    ASSERT_TRUE(std::isnan(res._x));
+    ASSERT_TRUE(std::isnan(res._y));
+    ASSERT_NO_THROW(res = get_last_dot_above(pwf, 30., -200.0, -10.0));
+    ASSERT_TRUE(std::isnan(res._x));
+    ASSERT_TRUE(std::isnan(res._y));
+    ASSERT_NO_THROW(res = get_last_dot_above(pwf, 400., -200.0, 400.0));
+    ASSERT_TRUE(std::isnan(res._x));
+    ASSERT_TRUE(std::isnan(res._y));
+    // on bounds
+    ASSERT_NO_THROW(res = get_last_dot_above(pwf, 0., -100.0, 0.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 0.0));
+    ASSERT_TRUE(safecomp::eq(res._y, 100.0));
+    ASSERT_NO_THROW(res = get_last_dot_above(pwf, 300., 100.0, 300.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 100.0));
+    ASSERT_TRUE(safecomp::eq(res._y, 300.0));
+}
 
-    // full variations
-    fn = {{0.0, 100.0}, {10.0, 100.0}, {10.0, 150.0}, {20.0, 220.0}, {80.0, 220.0}, {80.0, 180.0}, {100.0, 180.0}, {100.0, 310.0}};
-    expected = {{0.0, 100.0}, {10.0, 100.0}};
-    ASSERT_NO_THROW(result = get_intersection(fn, 100.0));
-    ASSERT_EQ(result, expected);
+TEST(piecewise_function, get_first_dot_below)
+{
+    Piecewise_linear_function pwf =
+        {{0.0, 0.0}, {0.0, 100.0}, {5.0, 320.0}, {10.0, 320.0}, {10.0, 310.0},
+        {20.0, -180.0}, {21.0, -220.0}, {80.0, -220.0}, {80.0, 90.0}, {100.0, 180.0}, {100.0, 150.0}};
+    Dot res;
+    // on vertical segment
+    ASSERT_NO_THROW(res = get_first_dot_below(pwf, 250., 0.0, 100.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 0.0));
+    ASSERT_TRUE(safecomp::eq(res._y, 0.0));
+    // on horizontal segment
+    ASSERT_NO_THROW(res = get_first_dot_below(pwf, -220, 21.0, 100.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 21.0));
+    ASSERT_TRUE(safecomp::eq(res._y, -220.0));
+    // on random segment
+    ASSERT_NO_THROW(res = get_first_dot_below(pwf, -200., 20.0, 21.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 20.5));
+    ASSERT_TRUE(safecomp::eq(res._y, -200.));
+    // on exact dot
+    ASSERT_NO_THROW(res = get_first_dot_below(pwf, -220., .0, 120.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 21.0));
+    ASSERT_TRUE(safecomp::eq(res._y, -220.0));
+    // out of range
+    ASSERT_NO_THROW(res = get_first_dot_below(pwf, 10., 200.0, 300.0));
+    ASSERT_TRUE(std::isnan(res._x));
+    ASSERT_TRUE(std::isnan(res._y));
+    ASSERT_NO_THROW(res = get_first_dot_below(pwf, 30., -200.0, -10.0));
+    ASSERT_TRUE(std::isnan(res._x));
+    ASSERT_TRUE(std::isnan(res._y));
+    ASSERT_NO_THROW(res = get_first_dot_below(pwf, -400., -200.0, 400.0));
+    ASSERT_TRUE(std::isnan(res._x));
+    ASSERT_TRUE(std::isnan(res._y));
+    // on bounds
+    ASSERT_NO_THROW(res = get_first_dot_below(pwf, 0., -100.0, 0.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 0.0));
+    ASSERT_TRUE(safecomp::eq(res._y, 0.0));
+    ASSERT_NO_THROW(res = get_first_dot_below(pwf, 150., 100.0, 300.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 100.0));
+    ASSERT_TRUE(safecomp::eq(res._y, 150.0));
+}
 
-    expected = {{10.0, 115.0}};
-    ASSERT_NO_THROW(result = get_intersection(fn, 115.0));
-    ASSERT_EQ(result, expected);
-
-    expected = {{17.0, 199.0}, {80.0, 199.0}, {100.0, 199.0}};
-    ASSERT_NO_THROW(result = get_intersection(fn, 199.0));
-    ASSERT_EQ(result, expected);
-
+TEST(piecewise_function, get_last_dot_below)
+{
+    Piecewise_linear_function pwf =
+        {{0.0, 0.0}, {0.0, 100.0}, {5.0, 320.0}, {10.0, 320.0}, {10.0, 310.0},
+        {20.0, -180.0}, {21.0, -220.0}, {80.0, -220.0}, {80.0, 90.0}, {90.0, 90.0}, {100.0, 180.0}, {100.0, 150.0}};
+    Dot res;
+    // on vertical segment
+    ASSERT_NO_THROW(res = get_last_dot_below(pwf, 160., 0.0, 100.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 100.0));
+    ASSERT_TRUE(safecomp::eq(res._y, 150.0));
+    // on horizontal segment
+    ASSERT_NO_THROW(res = get_last_dot_below(pwf, 90, 0.0, 100.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 90.0));
+    ASSERT_TRUE(safecomp::eq(res._y, 90.0));
+    // on random segment
+    ASSERT_NO_THROW(res = get_last_dot_below(pwf, 135., 90.0, 100.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 95.));
+    ASSERT_TRUE(safecomp::eq(res._y, 135.));
+    // on exact dot
+    ASSERT_NO_THROW(res = get_last_dot_below(pwf, -220., .0, 120.0));
+    ASSERT_TRUE(safecomp::eq(res._x, 80.0));
+    ASSERT_TRUE(safecomp::eq(res._y, -220.0));
+    // out of range
+    ASSERT_NO_THROW(res = get_last_dot_below(pwf, 10., 200.0, 300.0));
+    ASSERT_TRUE(std::isnan(res._x));
+    ASSERT_TRUE(std::isnan(res._y));
+    ASSERT_NO_THROW(res = get_last_dot_below(pwf, 30., -200.0, -10.0));
+    ASSERT_TRUE(std::isnan(res._x));
+    ASSERT_TRUE(std::isnan(res._y));
+    ASSERT_NO_THROW(res = get_last_dot_below(pwf, -400., -200.0, 400.0));
+    ASSERT_TRUE(std::isnan(res._x));
+    ASSERT_TRUE(std::isnan(res._y));
+    // on bounds
+    ASSERT_NO_THROW(res = get_last_dot_below(pwf, 0., -100.0, 0.0));
+    std::cout << res << std::endl;
+    ASSERT_TRUE(safecomp::eq(res._x, 0.0));
+    ASSERT_TRUE(safecomp::eq(res._y, 0.0));
+    ASSERT_NO_THROW(res = get_last_dot_below(pwf, 150., 100.0, 300.0));
+    std::cout << res << std::endl;
+    ASSERT_TRUE(safecomp::eq(res._x, 100.0));
+    ASSERT_TRUE(safecomp::eq(res._y, 150.0));
 }
