@@ -287,17 +287,14 @@ Dot get_first_dot(Piecewise_linear_function const &pwf, double y, double x_start
     do
     {
         auto const segment = Segment{*std::prev(cur_it), *cur_it};
-        std::cerr << "on " << segment << std::endl;
         // segment fully before interval
         if(safecomp::lt(segment._to._x, x_start))
         {
-        std::cerr << "before interval" << std::endl;
             continue;
         }
         // segment fully after interval => not found
         if(safecomp::lt(x_end, segment._from._x))
         {
-            std::cerr << "after interval" << std::endl;
             return {std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN()};
         }
         // special case for vertical segment
@@ -329,15 +326,12 @@ Dot get_first_dot(Piecewise_linear_function const &pwf, double y, double x_start
             return intersection._from;
         }
         // if y is in the range => compute x
-        else if(intersection.y_in_range(y))
+        if(intersection.y_in_range(y))
         {
             return {intersection.get_x(y), y};
         }
         // the intersection is not valid => go on
-        else
-        {
-            continue;
-        }
+        continue;
 
     }while(++cur_it != pwf.end());
 
@@ -383,15 +377,11 @@ Dot get_last_dot(Piecewise_linear_function const &pwf, double y, double x_start,
                 return segment._to;
             }
             // second dot valid
-            else if(comp(segment._from._y, y))
+            if(comp(segment._from._y, y))
             {
                 return {segment._from._x, y};
             }
-            // invalid segment
-            else
-            {
-                continue;
-            }
+            continue;
         }
         //get the intersection in [x_start, x_end]
         double x1 = std::max(x_start, segment._from._x);
@@ -412,7 +402,7 @@ Dot get_last_dot(Piecewise_linear_function const &pwf, double y, double x_start,
         {
             continue;
         }
-    }while(++cur_it != pwf.rend());
+    }while(++cur_it != --pwf.rend());
 
     // out of bound => not found
     return {std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN()};

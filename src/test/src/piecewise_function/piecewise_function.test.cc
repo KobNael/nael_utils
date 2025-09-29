@@ -377,11 +377,9 @@ TEST(piecewise_function, get_last_dot_below)
     ASSERT_TRUE(std::isnan(res._y));
     // on bounds
     ASSERT_NO_THROW(res = get_last_dot_below(pwf, 0., -100.0, 0.0));
-    std::cout << res << std::endl;
     ASSERT_TRUE(safecomp::eq(res._x, 0.0));
     ASSERT_TRUE(safecomp::eq(res._y, 0.0));
     ASSERT_NO_THROW(res = get_last_dot_below(pwf, 150., 100.0, 300.0));
-    std::cout << res << std::endl;
     ASSERT_TRUE(safecomp::eq(res._x, 100.0));
     ASSERT_TRUE(safecomp::eq(res._y, 150.0));
 }
