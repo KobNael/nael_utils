@@ -21,7 +21,7 @@ double Segment::get_slope() const
 {
     if(safecomp::eq(_from._x, _to._x))
     {
-        return std::numeric_limits<long double>::quiet_NaN();
+        return std::numeric_limits<double>::quiet_NaN();
     }
     return (_to._y - _from._y) / (_to._x - _from._x);
 }
@@ -64,7 +64,7 @@ double Segment::get_x(double y) const
     // special case of horizontal segment
     if(safecomp::eq(_from._y, _to._y))
     {
-        return std::numeric_limits<long double>::quiet_NaN();
+        return std::numeric_limits<double>::quiet_NaN();
     }
     // special case for vertical segment
     if(safecomp::eq(_from._x, _to._x))
@@ -82,7 +82,7 @@ double Segment::get_y(double x) const
     // special case of vertical segment
     if(safecomp::eq(_from._x, _to._x))
     {
-        return std::numeric_limits<long double>::quiet_NaN();
+        return std::numeric_limits<double>::quiet_NaN();
     }
     // normal case: non vertical segment
     return _from._y + get_slope() * (x - _from._x);
@@ -234,7 +234,7 @@ template<typename Fun>
 Dot get_dot(Piecewise_linear_function const &pwf, double x_start, double x_end, Fun comp)
 {
     assert( pwf.size() > 1 );
-    Dot res({std::numeric_limits<long double>::quiet_NaN(), std::numeric_limits<long double>::quiet_NaN()});
+    Dot res({std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN()});
     auto cur_it = std::next(pwf.begin());
     do
     {
@@ -298,7 +298,7 @@ Dot get_first_dot(Piecewise_linear_function const &pwf, double y, double x_start
         if(safecomp::lt(x_end, segment._from._x))
         {
             std::cerr << "after interval" << std::endl;
-            return {std::numeric_limits<long double>::quiet_NaN(), std::numeric_limits<long double>::quiet_NaN()};
+            return {std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN()};
         }
         // special case for vertical segment
         if(std::isnan(segment.get_slope()))
@@ -342,7 +342,7 @@ Dot get_first_dot(Piecewise_linear_function const &pwf, double y, double x_start
     }while(++cur_it != pwf.end());
 
     // out of bound => not found
-    return {std::numeric_limits<long double>::quiet_NaN(), std::numeric_limits<long double>::quiet_NaN()};
+    return {std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN()};
 }
 // Analyse a piece-wise linear function and return the first dot above a given y in an interval
 Dot get_first_dot_above(Piecewise_linear_function const &pwf, double y, double x_start, double x_end)
@@ -372,7 +372,7 @@ Dot get_last_dot(Piecewise_linear_function const &pwf, double y, double x_start,
         // segment fully before interval => not found
         if(safecomp::gt(x_start, segment._to._x))
         {
-            return {std::numeric_limits<long double>::quiet_NaN(), std::numeric_limits<long double>::quiet_NaN()};
+            return {std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN()};
         }
         // special case for vertical segment
         if(std::isnan(segment.get_slope()))
@@ -415,7 +415,7 @@ Dot get_last_dot(Piecewise_linear_function const &pwf, double y, double x_start,
     }while(++cur_it != pwf.rend());
 
     // out of bound => not found
-    return {std::numeric_limits<long double>::quiet_NaN(), std::numeric_limits<long double>::quiet_NaN()};
+    return {std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN()};
 }
 // Analyse a piece-wise linear function and return the last dot above a given y in an interval
 Dot get_last_dot_above(Piecewise_linear_function const &pwf, double y, double x_start, double x_end)

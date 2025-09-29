@@ -125,7 +125,7 @@ Piecewise_linear_function get_intersection(Piecewise_linear_function const &pwf,
  * @param x_end the ending x coordinate of the interval (inclusive)
  * @return the corresponding dot, or (nan,nan) if none found
  */
-Dot get_lowest_dot(Piecewise_linear_function const &pwf, double x_start = -std::numeric_limits<long double>::infinity(), double x_end = std::numeric_limits<long double>::infinity());
+Dot get_lowest_dot(Piecewise_linear_function const &pwf, double x_start = -std::numeric_limits<double>::infinity(), double x_end = std::numeric_limits<double>::infinity());
 
 /**
  * @brief Analyse a piece-wise linear function and return the highest dot in an interval
@@ -134,7 +134,7 @@ Dot get_lowest_dot(Piecewise_linear_function const &pwf, double x_start = -std::
  * @param x_end the ending x coordinate of the interval (inclusive)
  * @return the corresponding dot, or (nan,nan) if none found
  */
-Dot get_highest_dot(Piecewise_linear_function const &pwf, double x_start = -std::numeric_limits<long double>::infinity(), double x_end = std::numeric_limits<long double>::infinity());
+Dot get_highest_dot(Piecewise_linear_function const &pwf, double x_start = -std::numeric_limits<double>::infinity(), double x_end = std::numeric_limits<double>::infinity());
 
 /**
  * @brief Analyse a piece-wise linear function and return the first dot above a given y in an interval
@@ -143,7 +143,7 @@ Dot get_highest_dot(Piecewise_linear_function const &pwf, double x_start = -std:
  * @param x_end the ending x coordinate of the interval (inclusive)
  * @return the corresponding dot, or (nan,nan) if none found
  */
-Dot get_first_dot_above(Piecewise_linear_function const &pwf, double y, double x_start = -std::numeric_limits<long double>::infinity(), double x_end = std::numeric_limits<long double>::infinity());
+Dot get_first_dot_above(Piecewise_linear_function const &pwf, double y, double x_start = -std::numeric_limits<double>::infinity(), double x_end = std::numeric_limits<double>::infinity());
 /**
  * @brief Analyse a piece-wise linear function and return the last dot above a given y in an interval
  * @param pwf The piece-wise linear function to analyze.
@@ -151,7 +151,7 @@ Dot get_first_dot_above(Piecewise_linear_function const &pwf, double y, double x
  * @param x_end the ending x coordinate of the interval (inclusive)
  * @return the corresponding dot, or (nan,nan) if none found
  */
-Dot get_last_dot_above(Piecewise_linear_function const &pwf, double y, double x_start = -std::numeric_limits<long double>::infinity(), double x_end = std::numeric_limits<long double>::infinity());
+Dot get_last_dot_above(Piecewise_linear_function const &pwf, double y, double x_start = -std::numeric_limits<double>::infinity(), double x_end = std::numeric_limits<double>::infinity());
 /**
  * @brief Analyse a piece-wise linear function and return the first dot below a given y in an interval
  * @param pwf The piece-wise linear function to analyze.
@@ -159,7 +159,7 @@ Dot get_last_dot_above(Piecewise_linear_function const &pwf, double y, double x_
  * @param x_end the ending x coordinate of the interval (inclusive)
  * @return the corresponding dot, or (nan,nan) if none found
  */
-Dot get_first_dot_below(Piecewise_linear_function const &pwf, double y, double x_start = -std::numeric_limits<long double>::infinity(), double x_end = std::numeric_limits<long double>::infinity());
+Dot get_first_dot_below(Piecewise_linear_function const &pwf, double y, double x_start = -std::numeric_limits<double>::infinity(), double x_end = std::numeric_limits<double>::infinity());
 /**
  * @brief Analyse a piece-wise linear function and return the last dot below a given y in an interval
  * @param pwf The piece-wise linear function to analyze.
@@ -167,4 +167,4 @@ Dot get_first_dot_below(Piecewise_linear_function const &pwf, double y, double x
  * @param x_end the ending x coordinate of the interval (inclusive)
  * @return the corresponding dot, or (nan,nan) if none found
  */
-Dot get_last_dot_below(Piecewise_linear_function const &pwf, double y, double x_start = -std::numeric_limits<long double>::infinity(), double x_end = std::numeric_limits<long double>::infinity());
+Dot get_last_dot_below(Piecewise_linear_function const &pwf, double y, double x_start = -std::numeric_limits<double>::infinity(), double x_end = std::numeric_limits<double>::infinity());
