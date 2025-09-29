@@ -286,7 +286,7 @@ Dot get_first_dot(Piecewise_linear_function const &pwf, double y, double x_start
     auto cur_it = std::next(pwf.begin());
     do
     {
-        auto const &segment = Segment{*std::prev(cur_it), *cur_it};
+        auto const segment = Segment{*std::prev(cur_it), *cur_it};
         std::cerr << "on " << segment << std::endl;
         // segment fully before interval
         if(safecomp::lt(segment._to._x, x_start))
@@ -363,7 +363,7 @@ Dot get_last_dot(Piecewise_linear_function const &pwf, double y, double x_start,
     auto cur_it = pwf.rbegin();
     do
     {
-        auto const &segment = Segment{*std::next(cur_it), *cur_it};
+        auto const segment = Segment{*std::next(cur_it), *cur_it};
         // segment fully after interval
         if(safecomp::gt(segment._from._x, x_end))
         {
