@@ -55,7 +55,9 @@ namespace details
     {
         float ratio_1(p1 ? p1->_ratio : 0.);
         float ratio_2(p2 ? p2->_ratio : 0.);
-        return ratio_period(ratio_1 + ratio_2, from, to);
+        return (safecomp::isnull(ratio_1 + ratio_2)
+            ? std::optional<ratio_period>({})
+            : ratio_period(ratio_1 + ratio_2, from, to));
     }
 
     //------------------

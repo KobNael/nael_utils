@@ -60,7 +60,7 @@ TEST(ratio_periods, get_union)
     mylist2 = { ratio_period(1., bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)))
             , ratio_period(1., bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11)))
             , ratio_period(1., bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
-    expRes = { ratio_period(1., bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(12))) };
+    expRes = { ratio_period(2., bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(12))) };
     ASSERT_EQ(mylist1, mylist2);
     unionRes = get_union(mylist1, mylist2);
     ASSERT_EQ(unionRes, expRes);
@@ -83,7 +83,9 @@ TEST(ratio_periods, get_union)
             , ratio_period(.5, bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11)))
             , ratio_period(1., bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
     mylist2 = { ratio_period(2., bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11))) };
-    expRes = { ratio_period(1., bpt::ptime(d,bpt::hours( 9)) , bpt::ptime(d,bpt::hours(12))) };
+    expRes = { ratio_period(1., bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)))
+            , ratio_period(2.5, bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11)))
+            , ratio_period(1., bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
     unionRes = get_union(mylist1, mylist2);
     ASSERT_EQ(unionRes, expRes);
     unionRes = get_union(mylist2, mylist1);
@@ -127,9 +129,8 @@ TEST(ratio_periods, get_union)
     mylist1 = { ratio_period(2., bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10))) };
     mylist2 = { ratio_period(0., bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::time_duration(9,30,0)))
             , ratio_period(-2., bpt::ptime(d,bpt::time_duration(9,30,0)) , bpt::ptime(d,bpt::hours(10))) };
-    expRes = { ratio_period(0., bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::time_duration(9,30,0)))
-            , ratio_period(-4., bpt::ptime(d,bpt::time_duration(9,30,0)) , bpt::ptime(d,bpt::hours(10))) };
-    unionRes = get_union(mylist2, mylist1, false);
+    expRes = { ratio_period(2., bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::time_duration(9,30,0))) };
+        unionRes = get_union(mylist2, mylist1, false);
     ASSERT_EQ(unionRes, expRes);
     unionRes = get_union(mylist1, mylist2, false);
     ASSERT_EQ(unionRes, expRes);
@@ -197,7 +198,7 @@ TEST(ratio_periods, conversion)
     bg::date d = bg::day_clock::local_day();
 
     //----------------
-    // Period => Capa
+    // Period => Ratio
     //----------------
     LRatioPeriod myRatioList { ratio_period(10., bpt::ptime(d,bpt::hours(10)), bpt::ptime(d,bpt::hours(12)) ) };
     LTimePeriod mylist {

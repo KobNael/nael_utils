@@ -425,8 +425,6 @@ TEST(capa_periods, conversion)
     //----------------
     // Period => Capa
     //----------------
-
-
     LCapaPeriod myCapaList { capa_period(10, bpt::ptime(d,bpt::hours(10)), bpt::ptime(d,bpt::hours(12)) ) };
     LTimePeriod mylist {
         time_period( bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(11)) )
