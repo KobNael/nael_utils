@@ -140,10 +140,16 @@ TEST(ratio_periods, get_inter)
 {
     bg::date d = bg::day_clock::local_day();
     //Declarations
-    LRatioPeriod myRatioList, interRes, expRes;
+    LRatioPeriod myRatioList, myRatioList2, interRes, expRes;
+
     LTimePeriod mylist;
 
     //empty lists
+    interRes = get_inter(myRatioList, myRatioList2);
+    ASSERT_EQ(interRes, myRatioList);
+    interRes = get_inter(myRatioList2, myRatioList);
+    ASSERT_EQ(interRes, expRes);
+
     interRes = get_inter(myRatioList, mylist);
     ASSERT_EQ(interRes, expRes);
     //Forbidden : do not compile
@@ -153,6 +159,12 @@ TEST(ratio_periods, get_inter)
     myRatioList = {ratio_period(1.,  bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)) )};
     interRes = get_inter(myRatioList, mylist);
     ASSERT_EQ(interRes, expRes);
+    //one empty list
+    myRatioList = {ratio_period(1,  bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)) )};
+    interRes = get_inter(myRatioList, myRatioList2);
+    ASSERT_EQ(interRes, expRes);
+    interRes = get_inter(myRatioList2, myRatioList);
+    ASSERT_EQ(interRes, expRes);
 
     //list are identical (period wise)
     myRatioList = { ratio_period(.7, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)))
@@ -160,6 +172,16 @@ TEST(ratio_periods, get_inter)
     mylist = { time_period(bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)))
             , time_period(bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
     interRes = get_inter(myRatioList, mylist);
+    ASSERT_EQ(interRes, myRatioList);
+
+    myRatioList = { ratio_period(1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)))
+            , ratio_period(1, bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
+    myRatioList2 = { ratio_period(1, bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)))
+            , ratio_period(1, bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
+    ASSERT_EQ(myRatioList, myRatioList2);
+    interRes = get_inter(myRatioList, myRatioList2);
+    ASSERT_EQ(interRes, myRatioList);
+    interRes = get_inter(myRatioList2, myRatioList);
     ASSERT_EQ(interRes, myRatioList);
 
     //Invalid list
@@ -218,6 +240,15 @@ TEST(ratio_periods, conversion)
     ASSERT_EQ( get_inter( myRatioList, mylist )
             , expCapaRes );
 
+    ASSERT_EQ( get_diff( myRatioList, time_period( bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(13)) ) )
+            , LRatioPeriod() );
+    expCapaRes = { ratio_period(10., bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
+    ASSERT_EQ( get_diff( myRatioList, mylist )
+            , expCapaRes );
+    ASSERT_EQ( get_diff(
+                ratio_period(10., bpt::ptime(d,bpt::hours(10)), bpt::ptime(d,bpt::hours(12)))
+                , time_period(bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(12))) )
+            , LRatioPeriod() );
     //----------------
     // Ratio => Period
     //----------------
@@ -262,5 +293,4 @@ TEST(ratio_periods, conversion)
                 time_period(bpt::ptime(d,bpt::hours(10)), bpt::ptime(d,bpt::hours(12)))
                 , ratio_period(10, bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(12))) )
             , LTimePeriod() );
-
 }
