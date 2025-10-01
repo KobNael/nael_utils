@@ -8,30 +8,53 @@
  * @brief Toolbox for manipulation of time period.
  * Two types of time period are proposed, along with shortcuts for list of periods:
  * - #time_period : shortcut for boost::posix_time::time_period
+ * - extended_period : abstract #time_period with an additional attribute
  * - capa_period : #time_period with capacity (long)
  * - ratio_period : #time_period with a ratio (float)
  *
  * One can then compute the union, the intersection or the difference between list of periods:
- *  - Union of capa_periods : compute the sum of the capacity
- *    - the union of {[a, b, 2]} and {[b, c, 3]}, with a<b<c is {[a, b, 2], [b, c, 3]}
- *    - the union of {[a, b, 2]} and {[a, b, 3]} is {[a, b, 5]}
- *    - the union of {[a, c, 2]} and {[a, b, 3]}, with a<b<c, is {[a, b, 5], [b, c, 2]}
- *  - Union of ratio_periods : compute the product of the ratios (the default value being 1.)
- *    - the union of {[a, b, 2.]} and {[a, b, 3.]} is {[a, b, 5.]}
- *    - the union of {[a, c, 2.]} and {[a, b, 3.]}, with a<b<c, is {[a, b, 6.], [b, c, 3.]}
- *  - Intersection of capa_periods : limit to the intersection with minimal capacity
- *    - the intersection of {[a, b, 2]} and {[a, b, 3]} is {[a, b, 2]}
- *    - the intersection of {[a, c, 2]} and {[a, b, 3]}, with a<b<c, is {[a, b, 2]}
- *  - Intersection of ratio_periods and periods : limit the ratio_periods to the other periods
- *    - the intersection of {[a, c, 2.]} and {[a, b]}, with a<b<c, is {[a, b, 2.]}
- *  - Difference of capa_periods : compute the difference of the overlapping capacities
- *    - the difference of {[a, b, 2]} and {[b, c, 3]}, with a<b<c is {[a, b, 2], [b, c, -3]}
- *    - the difference of {[a, b, 2]} and {[a, b, 3]} is {[a, b, -1]}
- *    - the difference of {[a, c, 2]} and {[a, b, 3]}, with a<b<c, is {[a, b, -1], [b, c, 2]}
+ * - Time_periods : basic interval arithmetic
+ * - Capa_periods :
+ *     - Union of capa_periods : compute the sum of the capacity (default value being 0)
+ *       - the union of {[a, b, 2]} and {[b, c, 3]}, with a<b<c is {[a, b, 2], [b, c, 3]}
+ *       - the union of {[a, b, 2]} and {[a, b, 3]} is {[a, b, 5]}
+ *       - the union of {[a, c, 2]} and {[a, b, 3]}, with a<b<c, is {[a, b, 5], [b, c, 2]}
+ *    - Difference of capa_periods : compute the difference of the capacity (default value being 0)
+ *       - the difference of {[a, b, 3]} and {[a, b, 2]} is {[a, b, 1]}
+ *       - the difference of {[a, c, 3]} and {[a, b, 1]}, with a<b<c, is {[a, b, 1], [b, c, 3]}
+ *    - Intersection of capa_periods : limit to the intersection with minimal capacity (default value being 0)
+ *       - the intersection of {[a, b, 2]} and {[a, b, 3]} is {[a, b, 2]}
+ *       - the intersection of {[a, c, 2]} and {[a, b, 3]}, with a<b<c, is {[a, b, 2]}
+ * - Ratio_periods :
+ *     - Union of ratio_periods : compute the sum of the ratios (the default value being 0.)
+ *       - the union of {[a, b, 2.]} and {[a, b, 3.]} is {[a, b, 5.]}
+ *       - the union of {[a, c, 2.]} and {[a, b, 3.]}, with a<b<c, is {[a, b, 5.], [b, c, 2.]}
+ *    - Intersection of ratio_periods : limit to the intersection with minimal ratio (default value being 0.)
+ *       - the intersection of {[a, b, 2]} and {[a, b, 3]} is {[a, b, 2.]}
+ *       - the intersection of {[a, c, 2]} and {[a, b, 3]}, with a<b<c, is {[a, b, 2.]}
+ *
+ * - Mixing time_period and extended_periods :
+ *     - Union / Difference / Intersection of time_period and extended_period : works as if both were time_periods
+ *     - Difference between a capa_period and a time_period : remove the whole capacity during the time_period
+ *       - the difference between {[a, c, 2]} and {[a, b]}, with a<b<c, is {[b, c, 2]}
+ *       - the difference between {[a, b, 2]} and {[b, c]}, with a<b<c, is {[a, b, 2]}
+ *     - Intersection between a capa_period and a time_period : limit the capa_period to the time_period
+ *       - the intersection between {[a, c, 2]} and {[a, b]}, with a<b<c, is {[a, b, 2]}
+ *       - the intersection between {[a, b, 2]} and {[b, c]}, with a<b<c, is {}
+
+ *     - Union between a ratio_period and a time_period : during time_period, set the ratio to 1. if no ratio is defined
+ *       - the union between {[a, c, 2.]} and {[a, b]}, with a<b<c, is {[a, c, 2.]}
+ *       - the union between {[a, b, 2.]} and {[b, c]}, with a<b<c, is {[a, b, 2.], [b, c, 1.]}
+ *     - Difference between a ratio_period and a time_period : remove the whole ratio during the time_period
+ *       - the difference between {[a, c, 2.]} and {[a, b]}, with a<b<c, is {[b, c, 2.]}
+ *       - the difference between {[a, b, 2.]} and {[b, c]}, with a<b<c, is {[a, b, 2.]}
+ *     - Intersection between a ratio_period and a time_period : limit the ratio_period to the time_period
+ *       - the intersection between {[a, c, 2.]} and {[a, b]}, with a<b<c, is {[a, b, 2.]}
+ *       - the intersection between {[a, b, 2.]} and {[b, c]}, with a<b<c, is {}
  *
  * @remark Each method has an optional parameter merge_adjacent telling if one should merge the adjacent periods (with the same capacity or ratio)
  * @remark Every capa_period with a capacity of 0 will be removed
- * @remark In some case, one may need to keep 'empty' periods (eg. to compute some ending times)
+ * @remark In some case, one may need to keep 'empty' periods st. start == end (eg. to compute some ending times)
  * @warning Every list must contain sorted and disjoint (or adjacent) periods
  */
 
