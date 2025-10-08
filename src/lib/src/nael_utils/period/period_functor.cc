@@ -59,6 +59,19 @@ namespace details
             ? std::optional<ratio_period>({})
             : ratio_period(ratio_1 + ratio_2, from, to));
     }
+    // Compute the union between two optional ratio_period(from, to)s on a given period
+    std::optional<ratio_period> MakeUnion::operator()(std::optional<ratio_period> const &p1, std::optional<time_period> const &p2, boost::posix_time::ptime const &from, boost::posix_time::ptime const &to) const
+    {
+        if(p1)
+        {
+            return ratio_period(p1->_ratio, from, to);
+        }
+        else if(p2)
+        {
+            return ratio_period(1., from, to);
+        }
+        return {};
+    }
 
     //------------------
     // struct MakeDiff

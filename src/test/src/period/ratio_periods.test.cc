@@ -225,11 +225,17 @@ TEST(ratio_periods, conversion)
     LRatioPeriod myRatioList { ratio_period(10., bpt::ptime(d,bpt::hours(10)), bpt::ptime(d,bpt::hours(12)) ) };
     LTimePeriod mylist {
         time_period( bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(11)) )
-        , time_period( bpt::ptime(d,bpt::hours(13)), bpt::ptime(d,bpt::hours(14)) ) };
-    LRatioPeriod expCapaRes { ratio_period(10., bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(12))) };
+        , time_period( bpt::ptime(d,bpt::hours(11)), bpt::ptime(d,bpt::hours(14)) ) };
+    LRatioPeriod expCapaRes {
+        ratio_period(1., bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(11))),
+        ratio_period(10., bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(12))),
+        ratio_period(1., bpt::ptime(d,bpt::hours(12)), bpt::ptime(d,bpt::hours(14))) };
     //No union since it make non sense
+    ASSERT_EQ( get_union( myRatioList, time_period( bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(13)) ) )
+            ,  expCapaRes );
 
     //Intersection
+    expCapaRes = { ratio_period(10., bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(12))) };
     ASSERT_EQ( get_inter( myRatioList, time_period( bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(13)) ) )
             ,  expCapaRes );
     ASSERT_EQ( get_inter(
