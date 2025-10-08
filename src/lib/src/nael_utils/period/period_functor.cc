@@ -220,7 +220,14 @@ namespace details
         // if both periods
         if (p1 && p2)
         {
-            return capa_period(p1->_capa, from, to);
+            if (is_same(from, to) && _keep_empty)
+            {
+                return capa_period(p1->_capa, make_empty_period(from));
+            }
+            else if (!is_same(from, to))
+            {
+                return capa_period(p1->_capa, from, to);
+            }
         }
         return {};
     }
@@ -230,7 +237,14 @@ namespace details
         // if both periods
         if (p1 && p2)
         {
-            return ratio_period(p1->_ratio, from, to);
+            if (is_same(from, to) && _keep_empty)
+            {
+                return ratio_period(p1->_ratio, make_empty_period(from));
+            }
+            else if (!is_same(from, to))
+            {
+                return ratio_period(p1->_ratio, from, to);
+            }
         }
         return {};
     }
