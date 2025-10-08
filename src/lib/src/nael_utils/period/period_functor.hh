@@ -57,6 +57,15 @@ namespace details
          * @return a ratio_period with the sum of the ratios (the default value being 0.)
          */
         std::optional<ratio_period> operator()(std::optional<ratio_period> const &p1, std::optional<ratio_period> const &p2, boost::posix_time::ptime const &from, boost::posix_time::ptime const &to) const;
+        /**
+         * @brief Compute the union between an optional ratio_period and an optional time_period on a given period
+         * @param p1 the first ratio_period
+         * @param p2 the second time_period
+         * @param from the starting ptime of the period to consider
+         * @param to the ending ptime of the period to consider
+         * @return a ratio_period with the ratio of p1 if defined, a ratio_period with ratio 1. if p2 is defined, else nothing
+         */
+        std::optional<ratio_period> operator()(std::optional<ratio_period> const &p1, std::optional<time_period> const &p2, boost::posix_time::ptime const &from, boost::posix_time::ptime const &to) const;
     };
 
     /**

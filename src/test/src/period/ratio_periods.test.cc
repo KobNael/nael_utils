@@ -225,30 +225,54 @@ TEST(ratio_periods, conversion)
     LRatioPeriod myRatioList { ratio_period(10., bpt::ptime(d,bpt::hours(10)), bpt::ptime(d,bpt::hours(12)) ) };
     LTimePeriod mylist {
         time_period( bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(11)) )
-        , time_period( bpt::ptime(d,bpt::hours(13)), bpt::ptime(d,bpt::hours(14)) ) };
-    LRatioPeriod expCapaRes { ratio_period(10., bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(12))) };
-    //No union since it make non sense
+        , time_period( bpt::ptime(d,bpt::hours(12)), bpt::ptime(d,bpt::hours(14)) ) };
+    LRatioPeriod expRatioRes {
+        ratio_period(1., bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(10))),
+        ratio_period(10., bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(12))),
+        ratio_period(1., bpt::ptime(d,bpt::hours(12)), bpt::ptime(d,bpt::hours(14))) };
+    //Union (fill gaps with ratio 1)
+    ASSERT_EQ( get_union( myRatioList, mylist ) ,  expRatioRes );
 
     //Intersection
+    expRatioRes = { ratio_period(10., bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(12))) };
     ASSERT_EQ( get_inter( myRatioList, time_period( bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(13)) ) )
-            ,  expCapaRes );
+            ,  expRatioRes );
     ASSERT_EQ( get_inter(
                 ratio_period(10, bpt::ptime(d,bpt::hours(10)), bpt::ptime(d,bpt::hours(12)))
                 , time_period(bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(12))) )
-            ,  expCapaRes );
-    expCapaRes = { ratio_period(10, bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11))) };
+            ,  expRatioRes );
+    expRatioRes = { ratio_period(10, bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11))) };
     ASSERT_EQ( get_inter( myRatioList, mylist )
-            , expCapaRes );
+            , expRatioRes );
 
     ASSERT_EQ( get_diff( myRatioList, time_period( bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(13)) ) )
             , LRatioPeriod() );
-    expCapaRes = { ratio_period(10., bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
+    expRatioRes = { ratio_period(10., bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
     ASSERT_EQ( get_diff( myRatioList, mylist )
-            , expCapaRes );
+            , expRatioRes );
     ASSERT_EQ( get_diff(
                 ratio_period(10., bpt::ptime(d,bpt::hours(10)), bpt::ptime(d,bpt::hours(12)))
                 , time_period(bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(12))) )
             , LRatioPeriod() );
+    //Inter with empty
+    myRatioList = { ratio_period(10., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10)) )
+             , ratio_period(10., bpt::ptime(d, bpt::hours(10)) , bpt::ptime(d, bpt::hours(11)) )
+             , ratio_period(10., bpt::ptime(d, bpt::hours(11)) , bpt::ptime(d, bpt::hours(12)) ) };
+    mylist = { time_period( bpt::ptime(d, bpt::hours(10)) , bpt::ptime(d, bpt::hours(11)) ) };
+    expRatioRes = { ratio_period(10., bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11))) };
+    ASSERT_EQ(get_inter_with_empty(myRatioList, mylist), expRatioRes);
+
+    myRatioList = { ratio_period(10., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10)) ) };
+    mylist = { time_period( bpt::ptime(d, bpt::hours(10)) , bpt::ptime(d, bpt::hours(11)) ) };
+    expRatioRes = { ratio_period(10., make_empty_period( bpt::ptime(d, bpt::hours(10)) )) };
+    ASSERT_EQ(get_inter_with_empty(myRatioList, mylist), expRatioRes);
+
+    myRatioList = { ratio_period(10., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10)) ),
+                ratio_period(10., bpt::ptime(d, bpt::hours(11)) , bpt::ptime(d, bpt::hours(12)) ) };
+    mylist = { time_period(bpt::ptime(d, bpt::hours(10)) , bpt::ptime(d, bpt::hours(11)) ) };
+    expRatioRes = { ratio_period(10., make_empty_period( bpt::ptime(d, bpt::hours(10)) )), ratio_period(10., make_empty_period( bpt::ptime(d, bpt::hours(11)) )) };
+    ASSERT_EQ(get_inter_with_empty(myRatioList, mylist), expRatioRes);
+
     //----------------
     // Ratio => Period
     //----------------
