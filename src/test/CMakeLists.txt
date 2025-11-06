@@ -12,6 +12,8 @@ target_sources (unit_tests
     #--------
     # dedicated exception
     src/exception/dedicated_exception.test.cc
+    # containers
+    src/containers/add_remove_duration.test.cc
     # json utils
     src/json/stream_io.test.cc
     # log utils
@@ -23,6 +25,7 @@ target_sources (unit_tests
     src/period/period_utils.test.cc
     src/period/capa_periods.test.cc
     src/period/periods.test.cc
+    src/period/generate_periods.test.cc
     src/period/ratio_periods.test.cc
     src/piecewise_function/piecewise_function.test.cc
     # safe_comp utils
