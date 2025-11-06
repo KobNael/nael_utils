@@ -5,6 +5,8 @@
 #pragma once
 
 #include <list>
+#include <algorithm>
+#include <ranges>
 
 /**
  * @brief Add an element in a sorted list

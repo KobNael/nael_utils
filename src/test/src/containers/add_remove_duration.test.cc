@@ -1,7 +1,10 @@
 #include <gtest/gtest.h>
 
 #include <nael_utils/containers/sorted_list.hh>
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/date_time/posix_time/posix_time_duration.hpp>
 
+namespace bpt = boost::posix_time;
 
 TEST(add_remove_duration, tests)
 {
