@@ -19,7 +19,7 @@
  * @pre 00:00:00 <= end_period <= 23:59:59
  */
 LTimePeriod
-generate_periods(bpt::ptime const &start_horizon, bpt::ptime const &end_horizon, bpt::time_duration const &start_period, bpt::time_duration const &end_period);
+generate_periods(boost::posix_time::ptime const &start_horizon, boost::posix_time::ptime const &end_horizon, boost::posix_time::time_duration const &start_period, boost::posix_time::time_duration const &end_period);
 
 /**
  * @brief Generate the time period defined by a couple start/end on an horizon
@@ -29,7 +29,7 @@ generate_periods(bpt::ptime const &start_horizon, bpt::ptime const &end_horizon,
  * @pre end_horizon > start_horizon
  */
 LTimePeriod
-generate_periods(bpt::ptime const &start_horizon, bpt::ptime const &end_horizon, TemporalMesh const &temporal_mesh);
+generate_periods(boost::posix_time::ptime const &start_horizon, boost::posix_time::ptime const &end_horizon, TemporalMesh const &temporal_mesh);
 
 /**
  * @brief Generate the capacitated time period defined by a couple start/end on an horizon
@@ -44,5 +44,5 @@ generate_periods(bpt::ptime const &start_horizon, bpt::ptime const &end_horizon,
  * @pre 00:00:00 <= end_period <= 23:59:59
  */
 LCapaPeriod
-generate_periods(bpt::ptime const &start_horizon, bpt::ptime const &end_horizon, bpt::time_duration const &start_period, bpt::time_duration const &end_period, long capa);
+generate_periods(boost::posix_time::ptime const &start_horizon, boost::posix_time::ptime const &end_horizon, boost::posix_time::time_duration const &start_period, boost::posix_time::time_duration const &end_period, long capa);
 

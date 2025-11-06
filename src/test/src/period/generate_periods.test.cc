@@ -57,7 +57,7 @@ namespace
             EXPECT_EQ(p.begin().time_of_day(), start_period);
             EXPECT_EQ(p.begin().date(), today + bg::days(counter));
             //Last period has been reduced to match end_horizon
-            if(10 == counter)
+            if(9 == counter)
             {
                 EXPECT_EQ(p.end(), end_horizon);
             }
@@ -211,7 +211,8 @@ TEST(generate_periods, temporal_mesh)
         {
             EXPECT_EQ(elt.begin(), bpt::ptime(bg::date(2025, 2, 1), bpt::hours(0)));
             EXPECT_EQ(elt.end(), bpt::ptime(bg::date(2025, 2, 28), bpt::time_duration(23, 59, 59)));
-        }else
+        }
+        else
         {
             EXPECT_EQ(elt.begin(), bpt::ptime(bg::date(2025, 3, 1), bpt::hours(0)));
             EXPECT_EQ(elt.end(), end_horizon);
