@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <ps/opt/tools/details/tool_box.hh>
+#include <nael_utils/period/period_generation.hh>
 #include <nael_utils/log/log.hh>
 
 namespace
@@ -54,18 +54,14 @@ namespace
         int counter (0);
         for(PeriodT const &p : periods)
         {
-            EXPECT_EQ(p.begin().time_of_day(), start_period);
-            EXPECT_EQ(p.begin().date(), today + bg::days(counter));
-            //Last period has been reduced to match end_horizon
             if(9 == counter)
             {
-                EXPECT_EQ(p.end(), end_horizon);
+                EXPECT_TRUE(p.end() <= end_horizon);
             }
-            else
-            {
-                EXPECT_EQ(p.end().time_of_day(), end_period);
-                EXPECT_EQ(p.end().date(), today + bg::days(counter + 1));
-            }
+            EXPECT_EQ(p.begin().time_of_day(), start_period);
+            EXPECT_EQ(p.begin().date(), today + bg::days(counter));
+            EXPECT_EQ(p.end().time_of_day(), end_period);
+            EXPECT_EQ(p.end().date(), today + bg::days(counter + 1));
             ++counter;
         }
     }
@@ -79,23 +75,23 @@ TEST(generate_periods, assertions)
 
     GTEST_FLAG_SET(death_test_style, "threadsafe");
     EXPECT_DEBUG_DEATH(
-        opt::details::generate_periods(end_horizon, start_horizon, bpt::hours(8), bpt::hours(22)),
+        generate_periods(end_horizon, start_horizon, bpt::hours(8), bpt::hours(22)),
         ".*Assertion `start_horizon < end_horizon' failed.*" );
     EXPECT_DEBUG_DEATH(
-        opt::details::generate_periods(start_horizon, end_horizon, bpt::hours(-2), bpt::hours(22)),
+        generate_periods(start_horizon, end_horizon, bpt::hours(-2), bpt::hours(22)),
         ".*Assertion .*start_period && start_period.* failed.*" );
     EXPECT_DEBUG_DEATH(
-        opt::details::generate_periods(start_horizon, end_horizon, bpt::hours(8), bpt::hours(32)),
+        generate_periods(start_horizon, end_horizon, bpt::hours(8), bpt::hours(32)),
         ".*Assertion .*end_period && end_period.* failed.*" );
 
     EXPECT_DEBUG_DEATH(
-        opt::details::generate_periods(bpt::not_a_date_time, end_horizon, bpt::hours(8), bpt::hours(16)),
+        generate_periods(bpt::not_a_date_time, end_horizon, bpt::hours(8), bpt::hours(16)),
         ".*Assertion .*start_horizon\\.is_not_a_date_time.* failed.*" );
     EXPECT_DEBUG_DEATH(
-        opt::details::generate_periods(start_horizon, bpt::not_a_date_time, bpt::hours(8), bpt::hours(16)),
+        generate_periods(start_horizon, bpt::not_a_date_time, bpt::hours(8), bpt::hours(16)),
         ".*Assertion .*end_horizon\\.is_not_a_date_time.* failed.*" );
     EXPECT_DEBUG_DEATH(
-        opt::details::generate_periods(end_horizon, start_horizon, bpt::hours(8), bpt::hours(16)),
+        generate_periods(end_horizon, start_horizon, bpt::hours(8), bpt::hours(16)),
         ".*Assertion .*start_horizon < end_horizon.* failed.*" );
 }
 #endif
@@ -106,11 +102,11 @@ TEST(generate_periods, time_periods)
     bpt::ptime end_horizon = bpt::ptime(today + bg::days(10), bpt::hours(20));
 
     //Basic period morning / evening
-    LTimePeriod generated_periods = opt::details::generate_periods(start_horizon, end_horizon, bpt::hours(8), bpt::hours(22));
+    LTimePeriod generated_periods = generate_periods(start_horizon, end_horizon, bpt::hours(8), bpt::hours(22));
     test_basic_lperiod(generated_periods, start_horizon, end_horizon, bpt::hours(8), bpt::hours(22));
 
     //Overlaping period evening / morning
-    generated_periods = opt::details::generate_periods(start_horizon, end_horizon, bpt::hours(22), bpt::hours(8));
+    generated_periods = generate_periods(start_horizon, end_horizon, bpt::hours(22), bpt::hours(8));
     test_overlap_lperiod(generated_periods, end_horizon, bpt::hours(22), bpt::hours(8));
 }
 
@@ -120,7 +116,7 @@ TEST(generate_periods, capa_periods)
     bpt::ptime end_horizon = bpt::ptime(today + bg::days(10), bpt::hours(20));
 
     //Basic period morning / evening
-    LCapaPeriod generated_periods = opt::details::generate_periods(start_horizon, end_horizon, bpt::hours(8), bpt::hours(22), 100u);
+    LCapaPeriod generated_periods = generate_periods(start_horizon, end_horizon, bpt::hours(8), bpt::hours(22), 100u);
     test_basic_lperiod(generated_periods, start_horizon, end_horizon, bpt::hours(8), bpt::hours(22));
     for(capa_period const &p : generated_periods)
     {
@@ -128,7 +124,7 @@ TEST(generate_periods, capa_periods)
     }
 
     //Overlaping period evening / morning
-    generated_periods = opt::details::generate_periods(start_horizon, end_horizon, bpt::hours(22), bpt::hours(8), 100u);
+    generated_periods = generate_periods(start_horizon, end_horizon, bpt::hours(22), bpt::hours(8), 100u);
     test_overlap_lperiod(generated_periods, end_horizon, bpt::hours(22), bpt::hours(8));
     for(capa_period const &p : generated_periods)
     {
@@ -144,13 +140,13 @@ TEST(generate_periods, temporal_mesh)
     bpt::ptime end_horizon = bpt::ptime(bg::date(2025, 3, 20), bpt::hours(20));
 
     //HORIZON generation
-    LTimePeriod generated_periods = opt::details::generate_periods(start_horizon, end_horizon, TemporalMesh::HORIZON);
+    LTimePeriod generated_periods = generate_periods(start_horizon, end_horizon, TemporalMesh::HORIZON);
     EXPECT_EQ(generated_periods.size(), 1ul);
     EXPECT_EQ(generated_periods.front().begin(), start_horizon);
     EXPECT_EQ(generated_periods.front().end(), end_horizon);
 
     //DAY generation
-    generated_periods = opt::details::generate_periods(start_horizon, end_horizon, TemporalMesh::DAY);
+    generated_periods = generate_periods(start_horizon, end_horizon, TemporalMesh::DAY);
     EXPECT_EQ(generated_periods.size(), 60ul);
     for(int i(1); i <= 60; ++i)
     {
@@ -173,7 +169,7 @@ TEST(generate_periods, temporal_mesh)
         }
     }
     //WEEK generation
-    generated_periods = opt::details::generate_periods(start_horizon, end_horizon, TemporalMesh::WEEK);
+    generated_periods = generate_periods(start_horizon, end_horizon, TemporalMesh::WEEK);
     EXPECT_EQ(generated_periods.size(), 9ul);
     for(int i(1); i <= 9; ++i)
     {
@@ -196,7 +192,7 @@ TEST(generate_periods, temporal_mesh)
         }
     }
     //MONTH generation
-    generated_periods = opt::details::generate_periods(start_horizon, end_horizon, TemporalMesh::MONTH);
+    generated_periods = generate_periods(start_horizon, end_horizon, TemporalMesh::MONTH);
     EXPECT_EQ(generated_periods.size(), 3ul);
     for(int i(1); i <= 3; ++i)
     {
