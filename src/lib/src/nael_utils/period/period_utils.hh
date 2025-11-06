@@ -1,8 +1,3 @@
-#pragma once
-
-#include <list>
-#include <nael_utils/period/period_typedef.hh>
-
 /**
  * @file period_utils.hh
  * @brief Toolbox for manipulation of time period.
@@ -57,6 +52,22 @@
  * @remark In some case, one may need to keep 'empty' periods st. start == end (eg. to compute some ending times)
  * @warning Every list must contain sorted and disjoint (or adjacent) periods
  */
+#pragma once
+
+#include <list>
+#include <nael_utils/period/period_typedef.hh>
+#include <nael_utils/model/model_desc.hh>
+
+
+/**
+ * @enum TemporalMesh
+ * @brief Eligible type of temporal mesh
+ */
+MAKE_DTO_ENUM(
+    // Name
+    TemporalMesh,
+    // Values
+    DAY, WEEK, MONTH, HORIZON)
 
 ///////////
 // Union //
