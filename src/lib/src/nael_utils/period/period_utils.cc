@@ -122,6 +122,69 @@ boost::posix_time::time_duration compute_theoretical_duration(boost::posix_time:
                 double(duration.total_milliseconds()) / ratio)));
 }
 
+// Reduce a list of periods from the left by a given duration taking into account the ratio of each period
+LRatioPeriod reduce_left(LRatioPeriod const &periods, boost::posix_time::time_duration const &duration)
+{
+    LRatioPeriod result;
+    // iterate over the periods and search for the cut point
+    auto it = periods.begin();
+    boost::posix_time::time_duration remaining_duration = duration;
+    while(it != periods.end() && remaining_duration > bpt::time_duration(0,0,0))
+    {
+        boost::posix_time::time_duration rel_dur = it->get_relative_duration();
+        // not enough time, go on
+        if(rel_dur <= remaining_duration)
+        {
+            remaining_duration -= rel_dur;
+            ++it;
+            continue;
+        }
+        // cut in this period and insert it
+        bpt::time_duration absolute_reduction = compute_theoretical_duration(remaining_duration, it->_ratio);
+        result.emplace_back(
+            it->_ratio,
+            it->begin() + absolute_reduction,
+            it->end());
+        ++it;
+        break;
+    }
+    // copy the remaining periods
+    result.insert(result.end(), it, periods.end());
+    return result;
+}
+
+// Reduce a list of periods from the right by a given duration taking into account the ratio of each period
+LRatioPeriod reduce_right(LRatioPeriod const &periods, boost::posix_time::time_duration const &duration)
+{
+    LRatioPeriod result;
+    // iterate over the periods and search for the cut point
+    auto it = periods.rbegin();
+    boost::posix_time::time_duration remaining_duration = duration;
+    while(it != periods.rend() && remaining_duration > bpt::time_duration(0,0,0))
+    {
+        boost::posix_time::time_duration rel_dur = it->get_relative_duration();
+        // not enough time, go on
+        if(rel_dur <= remaining_duration)
+        {
+            remaining_duration -= rel_dur;
+            ++it;
+            continue;
+        }
+        // cut in this period and insert it
+        bpt::time_duration absolute_reduction = compute_theoretical_duration(remaining_duration, it->_ratio);
+        result.emplace_back(
+            it->_ratio,
+            it->begin(),
+            it->end() - absolute_reduction);
+        ++it;
+        break;
+    }
+    // copy the remaining periods
+    result.insert(result.end(), it, periods.rend());
+    std::ranges::reverse(result);
+    return result;
+}
+
 // Compute the relative duration of a list of periods
 bpt::time_duration get_relative_duration(LRatioPeriod const &periods)
 {

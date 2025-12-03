@@ -311,7 +311,7 @@ std::list<PeriodT> get_inter_with_empty(PeriodT const &period1, PeriodU const &p
     return get_inter_with_empty(std::list<PeriodT>(1, period1), std::list<PeriodU>(1, period2), merge_adjacent);
 }
 /**
- * @brief Compute a relative duration
+ * @brief Compute a relative duration (duration multiplied by ratio)
  * @param duration the absolute duration
  * @param ratio the ratio to apply
  * @return the relative duration
@@ -319,7 +319,7 @@ std::list<PeriodT> get_inter_with_empty(PeriodT const &period1, PeriodU const &p
 boost::posix_time::time_duration compute_relative_duration(boost::posix_time::time_duration duration, float ratio);
 
 /**
- * @brief Compute an absolute duration
+ * @brief Compute an absolute duration (duration divided by ratio)
  * @param duration the relative duration
  * @param ratio the ratio to apply
  * @return the absolute duration
@@ -341,6 +341,24 @@ boost::posix_time::time_duration get_total_duration(std::list<PeriodT> const &pe
  * @return the relative duration
  */
 boost::posix_time::time_duration get_relative_duration(LRatioPeriod const &periods);
+
+/**
+ * @brief Reduce a list of periods from the left by a given duration
+ * taking into account the ratio of each period
+ * @param periods the list of ratio_periods
+ * @param duration the duration
+ * @return the corresponding ratio_periods
+ */
+LRatioPeriod reduce_left(LRatioPeriod const &periods, boost::posix_time::time_duration const &duration);
+
+/**
+ * @brief Reduce a list of periods from the right by a given duration
+ * taking into account the ratio of each period
+ * @param periods the list of ratio_periods
+ * @param duration the duration
+ * @return the corresponding ratio_periods
+ */
+LRatioPeriod reduce_right(LRatioPeriod const &periods, boost::posix_time::time_duration const &duration);
 
 /**
  * @brief Collect the capa_period with enough capacity and return them as time_period
