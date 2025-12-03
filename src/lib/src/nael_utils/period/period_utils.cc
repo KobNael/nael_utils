@@ -131,9 +131,8 @@ LRatioPeriod reduce_left(LRatioPeriod const &periods, boost::posix_time::time_du
     boost::posix_time::time_duration remaining_duration = duration;
     while(it != periods.end() && remaining_duration > bpt::time_duration(0,0,0))
     {
-        boost::posix_time::time_duration rel_dur = it->get_relative_duration();
         // not enough time, go on
-        if(rel_dur <= remaining_duration)
+        if(auto rel_dur = it->get_relative_duration(); rel_dur <= remaining_duration)
         {
             remaining_duration -= rel_dur;
             ++it;
@@ -162,9 +161,8 @@ LRatioPeriod reduce_right(LRatioPeriod const &periods, boost::posix_time::time_d
     boost::posix_time::time_duration remaining_duration = duration;
     while(it != periods.rend() && remaining_duration > bpt::time_duration(0,0,0))
     {
-        boost::posix_time::time_duration rel_dur = it->get_relative_duration();
         // not enough time, go on
-        if(rel_dur <= remaining_duration)
+        if(auto rel_dur = it->get_relative_duration(); rel_dur <= remaining_duration)
         {
             remaining_duration -= rel_dur;
             ++it;
