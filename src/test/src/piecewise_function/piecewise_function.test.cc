@@ -335,12 +335,17 @@ TEST(piecewise_function, get_first_dot_below)
     ASSERT_TRUE(std::isnan(res._x));
     ASSERT_TRUE(std::isnan(res._y));
     // on bounds
-    ASSERT_NO_THROW(res = get_first_dot_below(pwf, 0., -100.0, 0.0));
-    ASSERT_TRUE(safecomp::eq(res._x, 0.0));
-    ASSERT_TRUE(safecomp::eq(res._y, 0.0));
+    ASSERT_NO_THROW(res = get_first_dot_below(pwf, 10., -100.0, 0.0));
+    ASSERT_TRUE(std::isnan(res._x));
+    ASSERT_TRUE(std::isnan(res._y));
     ASSERT_NO_THROW(res = get_first_dot_below(pwf, 150., 100.0, 300.0));
     ASSERT_TRUE(safecomp::eq(res._x, 100.0));
     ASSERT_TRUE(safecomp::eq(res._y, 150.0));
+    // special case : vertical segment invalid
+    ASSERT_NO_THROW(res = get_first_dot_below(pwf, 0., -100.0, 150.0));
+    Segment segment{{10.0, 310.0}, {20.0, -180.0}};
+    ASSERT_TRUE(safecomp::eq(res._x, segment.get_x(0.0)));
+    ASSERT_TRUE(safecomp::eq(res._y, 0.0));
 }
 
 TEST(piecewise_function, get_last_dot_below)
