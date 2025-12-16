@@ -70,6 +70,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv428compute_theoretical_durationN5boost10posix_time13time_durationEf"><code class="docutils literal notranslate"><span class="pre">compute_theoretical_duration()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv4I0E18get_total_durationN5boost10posix_time13time_durationERKNSt4listI7PeriodTEE"><code class="docutils literal notranslate"><span class="pre">get_total_duration()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv421get_relative_durationRK12LRatioPeriod"><code class="docutils literal notranslate"><span class="pre">get_relative_duration()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv411reduce_leftRK12LRatioPeriodRKN5boost10posix_time13time_durationE"><code class="docutils literal notranslate"><span class="pre">reduce_left()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv412reduce_rightRK12LRatioPeriodRKN5boost10posix_time13time_durationE"><code class="docutils literal notranslate"><span class="pre">reduce_right()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv420get_eligible_periodsRK11LCapaPeriodj"><code class="docutils literal notranslate"><span class="pre">get_eligible_periods()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv47convertRK11LTimePeriodx"><code class="docutils literal notranslate"><span class="pre">convert()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv417make_empty_periodN5boost10posix_time5ptimeE"><code class="docutils literal notranslate"><span class="pre">make_empty_period()</span></code></a></li>
@@ -647,7 +649,7 @@ For the computation details see <a class="reference internal" href="period_funct
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv425compute_relative_durationN5boost10posix_time13time_durationEf">
 <span id="_CPPv325compute_relative_durationN5boost10posix_time13time_durationEf"></span><span id="_CPPv225compute_relative_durationN5boost10posix_time13time_durationEf"></span><span id="compute_relative_duration__boost::posix_time::time_duration.float"></span><span class="target" id="period__utils_8hh_1a2d298cfd94c55d35a0976ef93e3556c3"></span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">time_duration</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">compute_relative_duration</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">time_duration</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">duration</span></span>, <span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">ratio</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv425compute_relative_durationN5boost10posix_time13time_durationEf" title="Link to this definition"></a><br /></dt>
-<dd><p>Compute a relative duration. </p>
+<dd><p>Compute a relative duration (duration multiplied by ratio) </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -664,7 +666,7 @@ For the computation details see <a class="reference internal" href="period_funct
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv428compute_theoretical_durationN5boost10posix_time13time_durationEf">
 <span id="_CPPv328compute_theoretical_durationN5boost10posix_time13time_durationEf"></span><span id="_CPPv228compute_theoretical_durationN5boost10posix_time13time_durationEf"></span><span id="compute_theoretical_duration__boost::posix_time::time_duration.float"></span><span class="target" id="period__utils_8hh_1ac8754c502a7e75d859c38fbc80ad072f"></span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">time_duration</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">compute_theoretical_duration</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">time_duration</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">duration</span></span>, <span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">ratio</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv428compute_theoretical_durationN5boost10posix_time13time_durationEf" title="Link to this definition"></a><br /></dt>
-<dd><p>Compute an absolute duration. </p>
+<dd><p>Compute an absolute duration (duration divided by ratio) </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -705,6 +707,40 @@ For the computation details see <a class="reference internal" href="period_funct
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the relative duration </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv411reduce_leftRK12LRatioPeriodRKN5boost10posix_time13time_durationE">
+<span id="_CPPv311reduce_leftRK12LRatioPeriodRKN5boost10posix_time13time_durationE"></span><span id="_CPPv211reduce_leftRK12LRatioPeriodRKN5boost10posix_time13time_durationE"></span><span id="reduce_left__LRatioPeriodCR.boost::posix_time::time_durationCR"></span><span class="target" id="period__utils_8hh_1a115f180d2ae11842acdc4e29f97f0ca7"></span><span class="n"><span class="pre">LRatioPeriod</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">reduce_left</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">LRatioPeriod</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">periods</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">time_duration</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">duration</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv411reduce_leftRK12LRatioPeriodRKN5boost10posix_time13time_durationE" title="Link to this definition"></a><br /></dt>
+<dd><p>Reduce a list of periods from the left by a given duration taking into account the ratio of each period. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>periods</strong> – the list of ratio_periods </p></li>
+<li><p><strong>duration</strong> – the duration </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the corresponding ratio_periods </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv412reduce_rightRK12LRatioPeriodRKN5boost10posix_time13time_durationE">
+<span id="_CPPv312reduce_rightRK12LRatioPeriodRKN5boost10posix_time13time_durationE"></span><span id="_CPPv212reduce_rightRK12LRatioPeriodRKN5boost10posix_time13time_durationE"></span><span id="reduce_right__LRatioPeriodCR.boost::posix_time::time_durationCR"></span><span class="target" id="period__utils_8hh_1ad279f68d65af9479df28e04feba8a8bb"></span><span class="n"><span class="pre">LRatioPeriod</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">reduce_right</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">LRatioPeriod</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">periods</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">time_duration</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">duration</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv412reduce_rightRK12LRatioPeriodRKN5boost10posix_time13time_durationE" title="Link to this definition"></a><br /></dt>
+<dd><p>Reduce a list of periods from the right by a given duration taking into account the ratio of each period. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>periods</strong> – the list of ratio_periods </p></li>
+<li><p><strong>duration</strong> – the duration </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the corresponding ratio_periods </p>
 </dd>
 </dl>
 </dd></dl>
