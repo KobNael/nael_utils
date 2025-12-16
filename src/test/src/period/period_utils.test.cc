@@ -51,6 +51,73 @@ TEST(ratio_periods, relative_duration)
     EXPECT_EQ( get_relative_duration(mylist), bpt::time_duration(0, 31, 2) );
 }
 
+TEST(ratio_periods, reduce_left)
+{
+    bg::date d = bg::day_clock::local_day();
+    // empty list
+    LRatioPeriod mylist;
+    LRatioPeriod expRes;
+    EXPECT_EQ( reduce_left(mylist, bpt::hours(1)), expRes );
+    // too short list
+    mylist = { ratio_period(1., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))) };
+    EXPECT_EQ( reduce_left(mylist, bpt::hours(2)), expRes );
+    // cut first period : 1 hour at ratio 2 => 30'
+    mylist = {  ratio_period(2., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))),
+                ratio_period(2., bpt::ptime(d, bpt::hours(11)) , bpt::ptime(d, bpt::hours(12))) };
+    expRes = {  ratio_period(2., bpt::ptime(d, bpt::time_duration(9,30,0)) , bpt::ptime(d, bpt::hours(10))),
+                ratio_period(2., bpt::ptime(d, bpt::hours(11)) , bpt::ptime(d, bpt::hours(12))) };
+    EXPECT_EQ( reduce_left(mylist, bpt::hours(1)), expRes );
+    // cut second period : 3 hour at ratio 2 => 1'30'
+    mylist = {  ratio_period(2., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))),
+                ratio_period(2., bpt::ptime(d, bpt::hours(11)) , bpt::ptime(d, bpt::hours(12))),
+                ratio_period(2., bpt::ptime(d, bpt::hours(13)) , bpt::ptime(d, bpt::hours(14))),
+                ratio_period(2., bpt::ptime(d, bpt::hours(15)) , bpt::ptime(d, bpt::hours(17))) };
+    expRes = {  ratio_period(2., bpt::ptime(d, bpt::time_duration(11,30,0)) , bpt::ptime(d, bpt::hours(12))),
+                ratio_period(2., bpt::ptime(d, bpt::hours(13)) , bpt::ptime(d, bpt::hours(14))),
+                ratio_period(2., bpt::ptime(d, bpt::hours(15)) , bpt::ptime(d, bpt::hours(17))) };
+    EXPECT_EQ( reduce_left(mylist, bpt::hours(3)), expRes );
+    // cut last period : 4 hour 30 at ratio 2 => 2'15'
+    mylist = {  ratio_period(2., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))),
+                ratio_period(2., bpt::ptime(d, bpt::hours(11)) , bpt::ptime(d, bpt::hours(12))),
+                ratio_period(2., bpt::ptime(d, bpt::hours(13)) , bpt::ptime(d, bpt::hours(14))) };
+    expRes = {  ratio_period(2., bpt::ptime(d, bpt::time_duration(13,15,0)) , bpt::ptime(d, bpt::hours(14))) };
+    EXPECT_EQ( reduce_left(mylist, bpt::time_duration(4,30,0)), expRes );
+}
+
+TEST(ratio_periods, reduce_right)
+{
+    bg::date d = bg::day_clock::local_day();
+    // empty list
+    LRatioPeriod mylist;
+    LRatioPeriod expRes;
+    EXPECT_EQ( reduce_right(mylist, bpt::hours(1)), expRes );
+    // too short list
+    mylist = { ratio_period(1., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))) };
+    EXPECT_EQ( reduce_right(mylist, bpt::hours(2)), expRes );
+
+    // cut last period : 1 hour at ratio 2 => 30'
+    mylist = {  ratio_period(2., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))),
+                ratio_period(2., bpt::ptime(d, bpt::hours(11)) , bpt::ptime(d, bpt::hours(12))) };
+    expRes = {  ratio_period(2., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))),
+                ratio_period(2., bpt::ptime(d, bpt::hours(11)) , bpt::ptime(d, bpt::time_duration(11,30,0))) };
+    EXPECT_EQ( reduce_right(mylist, bpt::hours(1)), expRes );
+    // cut second to last period : 3 hour at ratio 2 => 1'30'
+    mylist = {  ratio_period(2., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))),
+                ratio_period(2., bpt::ptime(d, bpt::hours(11)) , bpt::ptime(d, bpt::hours(12))),
+                ratio_period(2., bpt::ptime(d, bpt::hours(13)) , bpt::ptime(d, bpt::hours(14))),
+                ratio_period(2., bpt::ptime(d, bpt::hours(15)) , bpt::ptime(d, bpt::hours(16))) };
+    expRes = {  ratio_period(2., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))),
+                ratio_period(2., bpt::ptime(d, bpt::hours(11)) , bpt::ptime(d, bpt::hours(12))),
+                ratio_period(2., bpt::ptime(d, bpt::hours(13)) , bpt::ptime(d, bpt::time_duration(13,30,0))) };
+    EXPECT_EQ( reduce_right(mylist, bpt::hours(3)), expRes );
+    // cut last period : 4 hour 30 at ratio 2 => 2'15'
+    mylist = {  ratio_period(2., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))),
+                ratio_period(2., bpt::ptime(d, bpt::hours(11)) , bpt::ptime(d, bpt::hours(12))),
+                ratio_period(2., bpt::ptime(d, bpt::hours(13)) , bpt::ptime(d, bpt::hours(14))) };
+    expRes = {  ratio_period(2., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::time_duration(9,45,0))) };
+    EXPECT_EQ( reduce_right(mylist, bpt::time_duration(4,30,0)), expRes );
+}
+
 TEST(capa_periods, total_duration)
 {
     bg::date d = bg::day_clock::local_day();

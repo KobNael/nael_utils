@@ -152,7 +152,7 @@ public:
     ~ratio_period() override = default;
 
     /**
-     * @return the relative duration
+     * @return the relative duration, ie the duration multiplied by the ratio
      */
     boost::posix_time::time_duration get_relative_duration() const;
 

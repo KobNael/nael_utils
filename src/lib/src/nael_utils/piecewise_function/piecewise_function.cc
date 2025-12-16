@@ -297,17 +297,24 @@ Dot get_first_dot(Piecewise_linear_function const &pwf, double y, double x_start
         {
             return {std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN()};
         }
+        // limit case : check next segment
+        if(!std::isnan(segment.get_slope()) && safecomp::eq(segment._to._x, x_start))
+        {
+            continue;
+        }
         // special case for vertical segment
         if(std::isnan(segment.get_slope()))
         {
-            // first dot valid
-            if(comp(segment._from._y, y))
+            // to be valid, the segment must follow the tendancy
+            // hence just check the to dot
+            if(comp(segment._to._y, y))
             {
-                return segment._from;
-            }
-            // second dot valid
-            else if(comp(segment._to._y, y))
-            {
+                // if the from dot is also valid, return it
+                if(comp(segment._from._y, y))
+                {
+                    return segment._from;
+                }
+                // otherwise return the intersection
                 return {segment._to._x, y};
             }
             // invalid segment
