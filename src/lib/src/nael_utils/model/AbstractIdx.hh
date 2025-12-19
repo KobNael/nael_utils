@@ -24,10 +24,10 @@
     struct class_name : public details::streamable                             \
     {                                                                          \
     public:                                                                    \
-        size_t _val;                                                           \
-        explicit class_name() : _val(std::numeric_limits<size_t>::max()) {}    \
+        size_t _val{std::numeric_limits<size_t>::max()};                       \
+        explicit class_name() = default;                                       \
         explicit class_name(const size_t &val_p) : _val(val_p) {}              \
-        bool is_unsetted() const { return _val == class_name()._val; }          \
+        bool is_unsetted() const { return _val == class_name()._val; }         \
         std::ostream &stream(std::ostream &os) const override                  \
         {                                                                      \
             return os << BOOST_PP_STRINGIZE(class_name) << "(" << _val << ")"; \
