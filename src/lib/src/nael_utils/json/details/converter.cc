@@ -49,6 +49,10 @@ namespace boost
          */
         time_duration tag_invoke(const json::value_to_tag<time_duration> &, json::value const &jv)
         {
+            std::string str = boost::json::value_to<std::string>(jv);
+            if (str == "+infinity") return pos_infin;
+            if (str == "-infinity") return neg_infin;
+            if (str == "not-a-date-time") return not_a_date_time;
             return duration_from_string(boost::json::value_to<std::string>(jv));
         }
 
