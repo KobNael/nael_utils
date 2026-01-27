@@ -20,6 +20,10 @@ namespace bg = boost::gregorian;
  * @brief Constant equals to the number of seconds in an hour
  */
 #define N_SEC_IN_HOUR 3600
+/**
+ * @brief Constant equals to the number of seconds in an hour
+ */
+#define N_MILLISEC_IN_HOUR 3600000
 
 /**
  * @brief Create an operator< based on a list of attributes.<br/>
