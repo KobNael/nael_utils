@@ -219,3 +219,9 @@ bool is_same(boost::posix_time::time_duration const &lhs, boost::posix_time::tim
     boost::posix_time::time_duration diff = (lhs > rhs) ? lhs - rhs : rhs - lhs;
     return diff <= tol;
 }
+
+// Checks that two periods are the same (with a tolerance)
+bool is_same(boost::posix_time::time_period const &lhs, boost::posix_time::time_period const &rhs, boost::posix_time::time_duration const &tol)
+{
+    return is_same(lhs.begin(), rhs.begin(), tol) && is_same(lhs.end(), rhs.end(), tol);
+}

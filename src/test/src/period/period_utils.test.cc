@@ -200,6 +200,26 @@ TEST(date_time, is_same)
     EXPECT_TRUE( is_same(lhs, rhs, boost::posix_time::milliseconds(30)) ) << lhs << " == " << rhs << " with a tolerance of " << boost::posix_time::milliseconds(30);
 }
 
+TEST(time_period, is_same)
+{
+    bg::date d = bg::day_clock::local_day();
+
+    bpt::ptime from(d, bpt::time_duration(1, 2, 3, 4));
+    bpt::ptime to = from;
+    bpt::time_period lhs(from, to);
+    bpt::time_period rhs = lhs;
+    EXPECT_TRUE( is_same(lhs, rhs) );
+
+    to = bpt::ptime(d, bpt::time_duration(1, 2, 3, 1000));
+    rhs = bpt::time_period(from, to);
+    EXPECT_TRUE( is_same(lhs, rhs) ) << lhs << " == " << rhs << " with a default tolerance";
+
+    to = bpt::ptime(d, bpt::time_duration(1, 2, 3, 30000));
+    rhs = bpt::time_period(from, to);
+    EXPECT_FALSE( is_same(lhs, rhs) ) << lhs << " != " << rhs << " with a default tolerance";
+    EXPECT_TRUE( is_same(lhs, rhs, boost::posix_time::milliseconds(30)) ) << lhs << " == " << rhs << " with a tolerance of " << boost::posix_time::milliseconds(30);
+}
+
 TEST(time_duration, is_same)
 {
     bpt::time_duration lhs(1, 2, 3, 4);
