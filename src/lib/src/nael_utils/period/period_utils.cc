@@ -202,14 +202,9 @@ time_period make_empty_period(boost::posix_time::ptime ptime)
 // Checks that two ptime are the same (with a tolerance)
 bool is_same(bpt::ptime const &lhs, bpt::ptime const &rhs, bpt::time_duration const &tol)
 {
-    if (lhs.date() != rhs.date())
-    {
-        return false;
-    }
     bpt::time_duration diff = (lhs > rhs)
                                   ? lhs - rhs
                                   : rhs - lhs;
-
     return diff <= tol;
 }
 
