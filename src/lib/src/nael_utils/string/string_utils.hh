@@ -43,8 +43,12 @@ namespace str
 
     /**
      * @brief Read a boolean from a string
-     * @return the value
-     * @throw bad_lexical_cast if the value can not be parsed
+     *
+     * Accepted values for \c true are "1", "true", "True", and "TRUE".
+     * Accepted values for \c false are "0", "false", "False", and "FALSE".
+     *
+     * @return the parsed boolean value
+     * @throw bad_lexical_cast if the value can not be parsed as a boolean
      */
     template <>
     bool get_val_from_str<bool>(const std::string &str_val);
