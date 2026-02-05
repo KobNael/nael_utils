@@ -73,11 +73,13 @@ namespace str
         {
             return bg::date_from_iso_string(str_val);
         }
+        // date_from_iso_string can throw either boost::bad_lexical_cast if the format is invalid
         catch(boost::bad_lexical_cast const&e)
         {
             throw bad_lexical_cast(
                 std::format("Cannot parse value {}: {} ", str_val, std::string(e.what())));
         }
+        // or std::out_of_range if the date is out of range (e.g. month > 12)
         catch(std::out_of_range const &e)
         {
             throw bad_lexical_cast(
@@ -92,11 +94,13 @@ namespace str
         {
             return bpt::from_iso_extended_string(str_val);
         }
+        // from_iso_extended_string can throw either boost::bad_lexical_cast if the format is invalid
         catch(boost::bad_lexical_cast const&e)
         {
             throw bad_lexical_cast(
                 std::format("Cannot parse value {}: {} ", str_val, std::string(e.what())));
         }
+        // or std::out_of_range if the date is out of range (e.g. month > 12)
         catch(std::out_of_range const &e)
         {
             throw bad_lexical_cast(
@@ -111,11 +115,13 @@ namespace str
         {
             return bpt::duration_from_string(str_val);
         }
+        // duration_from_string can throw either boost::bad_lexical_cast if the format is invalid
         catch(boost::bad_lexical_cast const&e)
         {
             throw bad_lexical_cast(
                 std::format("Cannot parse value {}: {} ", str_val, std::string(e.what())));
         }
+        // or std::out_of_range on empty strings
         catch(std::out_of_range const &e)
         {
             throw bad_lexical_cast(
