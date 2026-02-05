@@ -78,8 +78,8 @@ LTimePeriod
 {
     switch (temporal_mesh)
     {
-    case TemporalMesh::PERIOD:
-        return LTimePeriod(1, time_period(start_horizon, end_horizon));
+    case TemporalMesh::NONE:
+        return LTimePeriod();
     case TemporalMesh::HORIZON:
         return LTimePeriod(1, time_period(start_horizon, end_horizon));
     case TemporalMesh::DAY:

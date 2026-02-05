@@ -67,7 +67,7 @@ MAKE_DTO_ENUM(
     // Name
     TemporalMesh,
     // Values
-    PERIOD, DAY, WEEK, MONTH, HORIZON)
+    NONE, DAY, WEEK, MONTH, HORIZON)
 
 ///////////
 // Union //
