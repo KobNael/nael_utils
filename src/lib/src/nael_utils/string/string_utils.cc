@@ -63,7 +63,7 @@ namespace str
         else if(std::ranges::find(false_values, str_val) != false_values.end())
             return false;
         else
-            throw bad_lexical_cast("Cannot parse value : " + str_val);
+            throw bad_lexical_cast(std::format("Cannot parse value {}", str_val));
     }
 
     template <>
@@ -77,13 +77,13 @@ namespace str
         catch(boost::bad_lexical_cast const&e)
         {
             throw bad_lexical_cast(
-                std::format("Cannot parse value {}: {} ", str_val, std::string(e.what())));
+                std::format("Cannot parse value {} : {}", str_val, e.what()));
         }
         // or std::out_of_range if the date is out of range (e.g. month > 12)
         catch(std::out_of_range const &e)
         {
             throw bad_lexical_cast(
-                std::format("Cannot parse value {}: {} ", str_val, std::string(e.what())));
+                std::format("Cannot parse value {} : {}", str_val, e.what()));
         }
     }
 
@@ -98,13 +98,13 @@ namespace str
         catch(boost::bad_lexical_cast const&e)
         {
             throw bad_lexical_cast(
-                std::format("Cannot parse value {}: {} ", str_val, std::string(e.what())));
+                std::format("Cannot parse value {} : {}", str_val, e.what()));
         }
         // or std::out_of_range if the date is out of range (e.g. month > 12)
         catch(std::out_of_range const &e)
         {
             throw bad_lexical_cast(
-                std::format("Cannot parse value {}: {} ", str_val, std::string(e.what())));
+                std::format("Cannot parse value {} : {}", str_val, e.what()));
         }
     }
 
@@ -119,13 +119,13 @@ namespace str
         catch(boost::bad_lexical_cast const&e)
         {
             throw bad_lexical_cast(
-                std::format("Cannot parse value {}: {} ", str_val, std::string(e.what())));
+                std::format("Cannot parse value {} : {}", str_val, e.what()));
         }
         // or std::out_of_range on empty strings
         catch(std::out_of_range const &e)
         {
             throw bad_lexical_cast(
-                std::format("Cannot parse value {}: {} ", str_val, std::string(e.what())));
+                std::format("Cannot parse value {} : {}", str_val, e.what()));
         }
     }
 

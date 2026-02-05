@@ -62,8 +62,12 @@ TEST(string_utils, get_val_from_str_boolean)
 {
     ASSERT_TRUE(str::get_val_from_str<bool>("1"));
     ASSERT_TRUE(str::get_val_from_str<bool>("true"));
+    ASSERT_TRUE(str::get_val_from_str<bool>("True"));
+    ASSERT_TRUE(str::get_val_from_str<bool>("TRUE"));
     ASSERT_FALSE(str::get_val_from_str<bool>("0"));
     ASSERT_FALSE(str::get_val_from_str<bool>("false"));
+    ASSERT_FALSE(str::get_val_from_str<bool>("False"));
+    ASSERT_FALSE(str::get_val_from_str<bool>("FALSE"));
 
     // Invalid boolean strings should throw
     ASSERT_THROW(str::get_val_from_str<bool>("yes"), str::bad_lexical_cast);
