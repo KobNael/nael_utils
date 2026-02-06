@@ -214,4 +214,7 @@ TEST(generate_periods, temporal_mesh)
             EXPECT_EQ(elt.end(), end_horizon);
         }
     }
+    //NONE generation
+    generated_periods = generate_periods(start_horizon, end_horizon, TemporalMesh::NONE);
+    EXPECT_EQ(generated_periods.size(), 0ul);
 }
