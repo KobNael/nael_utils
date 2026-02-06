@@ -10,6 +10,13 @@ For the computation details see :ref:`period_functor`.
 
 .. doxygenfile:: period_utils.hh
 
+--------------------------------------
+
+Period generation
+-----------------
+
+.. doxygenfile:: period_generation.hh
+
 
 
 .. toctree::
