@@ -42,19 +42,37 @@ namespace str
     }
 
     /**
-     * @brief Read a value from a string (using boost::lexical_cast)
+     * @brief Read a boolean from a string
+     *
+     * Accepted values for \c true are "1", "true", "True", and "TRUE".
+     * Accepted values for \c false are "0", "false", "False", and "FALSE".
+     *
+     * @return the parsed boolean value
+     * @throw bad_lexical_cast if the value can not be parsed as a boolean
+     */
+    template <>
+    bool get_val_from_str<bool>(const std::string &str_val);
+    /**
+     * @brief Read a value from a string (using boost::gregorian::date_from_iso_string)
      * @return the value
      * @throw bad_lexical_cast if the value can not be parsed
      */
     template <>
     bg::date get_val_from_str<bg::date>(const std::string &str_val);
     /**
-     * @brief Read a value from a string (using boost::lexical_cast)
+     * @brief Read a value from a string (using boost::posix_time::from_iso_extended_string)
      * @return the value
      * @throw bad_lexical_cast if the value can not be parsed
      */
     template <>
     bpt::ptime get_val_from_str<bpt::ptime>(const std::string &str_val);
+    /**
+     * @brief Read a value from a string (using boost::posix_time::duration_from_string)
+     * @return the value
+     * @throw bad_lexical_cast if the value can not be parsed
+     */
+    template <>
+    bpt::time_duration get_val_from_str<bpt::time_duration>(const std::string &str_val);
 
     /**
      * @brief Trim a string from both ends
