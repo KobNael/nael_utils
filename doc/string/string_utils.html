@@ -50,8 +50,10 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">String utilities</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv43str"><code class="docutils literal notranslate"><span class="pre">str</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4N3str4trimENSt6stringE"><code class="docutils literal notranslate"><span class="pre">str::trim()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4IEN3str16get_val_from_strIbEEbRKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">str::get_val_from_str()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4IEN3str16get_val_from_strIN2bg4dateEEEN2bg4dateERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">str::get_val_from_str()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4IEN3str16get_val_from_strIN3bpt5ptimeEEEN3bpt5ptimeERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">str::get_val_from_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4IEN3str16get_val_from_strIN3bpt13time_durationEEEN3bpt13time_durationERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">str::get_val_from_str()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4I0EN3str16get_val_from_strE1TRKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">str::get_val_from_str()</span></code></a></li>
 </ul>
 </li>
@@ -113,9 +115,24 @@
 </dd></dl>
 
 <dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4IEN3str16get_val_from_strIbEEbRKNSt6stringE">
+<span id="_CPPv3IEN3str16get_val_from_strIbEERKNSt6stringE"></span><span id="_CPPv2IEN3str16get_val_from_strIbEERKNSt6stringE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespacestr_1aa9ec914b38ed9f381d73503fc6ce3478"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_val_from_str</span></span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">bool</span></span><span class="p"><span class="pre">&gt;</span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str_val</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4IEN3str16get_val_from_strIbEEbRKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Read a boolean from a string. </p>
+<p>Accepted values for <code class="docutils literal notranslate"><span class="pre">true</span></code> are “1”, “true”, “True”, and “TRUE”. Accepted values for <code class="docutils literal notranslate"><span class="pre">false</span></code> are “0”, “false”, “False”, and “FALSE”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Throws<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><span class="cpp-expr sig sig-inline cpp"><span class="n">bad_lexical_cast</span></span></span> – if the value can not be parsed as a boolean </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the parsed boolean value </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4IEN3str16get_val_from_strIN2bg4dateEEEN2bg4dateERKNSt6stringE">
 <span id="_CPPv3IEN3str16get_val_from_strIN2bg4dateEEERKNSt6stringE"></span><span id="_CPPv2IEN3str16get_val_from_strIN2bg4dateEEERKNSt6stringE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespacestr_1abe103d83818a574bb852086a7768a8a3"></span><span class="n"><span class="pre">bg</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">date</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_val_from_str</span></span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">bg</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">date</span></span><span class="p"><span class="pre">&gt;</span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str_val</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4IEN3str16get_val_from_strIN2bg4dateEEEN2bg4dateERKNSt6stringE" title="Link to this definition"></a><br /></dt>
-<dd><p>Read a value from a string (using boost::lexical_cast) </p>
+<dd><p>Read a value from a string (using boost::gregorian::date_from_iso_string) </p>
 <dl class="field-list simple">
 <dt class="field-odd">Throws<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><span class="cpp-expr sig sig-inline cpp"><span class="n">bad_lexical_cast</span></span></span> – if the value can not be parsed </p>
@@ -129,7 +146,21 @@
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4IEN3str16get_val_from_strIN3bpt5ptimeEEEN3bpt5ptimeERKNSt6stringE">
 <span id="_CPPv3IEN3str16get_val_from_strIN3bpt5ptimeEEERKNSt6stringE"></span><span id="_CPPv2IEN3str16get_val_from_strIN3bpt5ptimeEEERKNSt6stringE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespacestr_1ad830125861966745e0c30a26513a6625"></span><span class="n"><span class="pre">bpt</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_val_from_str</span></span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">bpt</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="p"><span class="pre">&gt;</span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str_val</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4IEN3str16get_val_from_strIN3bpt5ptimeEEEN3bpt5ptimeERKNSt6stringE" title="Link to this definition"></a><br /></dt>
-<dd><p>Read a value from a string (using boost::lexical_cast) </p>
+<dd><p>Read a value from a string (using boost::posix_time::from_iso_extended_string) </p>
+<dl class="field-list simple">
+<dt class="field-odd">Throws<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><span class="cpp-expr sig sig-inline cpp"><span class="n">bad_lexical_cast</span></span></span> – if the value can not be parsed </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the value </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4IEN3str16get_val_from_strIN3bpt13time_durationEEEN3bpt13time_durationERKNSt6stringE">
+<span id="_CPPv3IEN3str16get_val_from_strIN3bpt13time_durationEEERKNSt6stringE"></span><span id="_CPPv2IEN3str16get_val_from_strIN3bpt13time_durationEEERKNSt6stringE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespacestr_1ae2565304035ef2774db78f4f1cc9a044"></span><span class="n"><span class="pre">bpt</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">time_duration</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_val_from_str</span></span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">bpt</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">time_duration</span></span><span class="p"><span class="pre">&gt;</span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str_val</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4IEN3str16get_val_from_strIN3bpt13time_durationEEEN3bpt13time_durationERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Read a value from a string (using boost::posix_time::duration_from_string) </p>
 <dl class="field-list simple">
 <dt class="field-odd">Throws<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><span class="cpp-expr sig sig-inline cpp"><span class="n">bad_lexical_cast</span></span></span> – if the value can not be parsed </p>
@@ -157,8 +188,23 @@
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp">
+<span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespacestr_1aa9ec914b38ed9f381d73503fc6ce3478"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_val_from_str</span></span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">bool</span></span><span class="p"><span class="pre">&gt;</span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str_val</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Read a boolean from a string. </p>
+<p>Accepted values for <code class="docutils literal notranslate"><span class="pre">true</span></code> are “1”, “true”, “True”, and “TRUE”. Accepted values for <code class="docutils literal notranslate"><span class="pre">false</span></code> are “0”, “false”, “False”, and “FALSE”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Throws<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><span class="cpp-expr sig sig-inline cpp"><span class="n">bad_lexical_cast</span></span></span> – if the value can not be parsed as a boolean </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the parsed boolean value </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp">
 <span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespacestr_1abe103d83818a574bb852086a7768a8a3"></span><span class="n"><span class="pre">bg</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">date</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_val_from_str</span></span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">bg</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">date</span></span><span class="p"><span class="pre">&gt;</span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str_val</span></span><span class="sig-paren">)</span><br /></dt>
-<dd><p>Read a value from a string (using boost::lexical_cast) </p>
+<dd><p>Read a value from a string (using boost::gregorian::date_from_iso_string) </p>
 <dl class="field-list simple">
 <dt class="field-odd">Throws<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><span class="cpp-expr sig sig-inline cpp"><span class="n">bad_lexical_cast</span></span></span> – if the value can not be parsed </p>
@@ -172,7 +218,21 @@
 <dl class="cpp function">
 <dt class="sig sig-object cpp">
 <span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespacestr_1ad830125861966745e0c30a26513a6625"></span><span class="n"><span class="pre">bpt</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_val_from_str</span></span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">bpt</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="p"><span class="pre">&gt;</span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str_val</span></span><span class="sig-paren">)</span><br /></dt>
-<dd><p>Read a value from a string (using boost::lexical_cast) </p>
+<dd><p>Read a value from a string (using boost::posix_time::from_iso_extended_string) </p>
+<dl class="field-list simple">
+<dt class="field-odd">Throws<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><span class="cpp-expr sig sig-inline cpp"><span class="n">bad_lexical_cast</span></span></span> – if the value can not be parsed </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the value </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp">
+<span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespacestr_1ae2565304035ef2774db78f4f1cc9a044"></span><span class="n"><span class="pre">bpt</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">time_duration</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_val_from_str</span></span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">bpt</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">time_duration</span></span><span class="p"><span class="pre">&gt;</span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str_val</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Read a value from a string (using boost::posix_time::duration_from_string) </p>
 <dl class="field-list simple">
 <dt class="field-odd">Throws<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><span class="cpp-expr sig sig-inline cpp"><span class="n">bad_lexical_cast</span></span></span> – if the value can not be parsed </p>
