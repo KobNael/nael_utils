@@ -155,7 +155,7 @@ TEST(generate_periods, temporal_mesh)
         if(1 == i)
         {
             EXPECT_EQ(elt.begin(), start_horizon);
-            EXPECT_EQ(elt.end(), bpt::ptime(bg::date(2025, 1, 20), bpt::time_duration(23, 59, 59)));
+            EXPECT_EQ(elt.end(), bpt::ptime(bg::date(2025, 1, 21), bpt::hours(0)));
         }
         else if(60 == i)
         {
@@ -165,7 +165,7 @@ TEST(generate_periods, temporal_mesh)
         else
         {
             EXPECT_EQ(elt.begin(), bpt::ptime(bg::date(2025, 1, 20) + bg::days(i-1), bpt::hours(0)));
-            EXPECT_EQ(elt.end(), bpt::ptime(bg::date(2025, 1, 20) + bg::days(i-1), bpt::time_duration(23, 59, 59)));
+            EXPECT_EQ(elt.end(), bpt::ptime(bg::date(2025, 1, 20) + bg::days(i), bpt::hours(0)));
         }
     }
     //WEEK generation
@@ -178,7 +178,7 @@ TEST(generate_periods, temporal_mesh)
         if(1 == i)
         {
             EXPECT_EQ(elt.begin(), start_horizon);
-            EXPECT_EQ(elt.end(), bpt::ptime(bg::date(2025, 1, 26), bpt::time_duration(23, 59, 59)));
+            EXPECT_EQ(elt.end(), bpt::ptime(bg::date(2025, 1, 27), bpt::hours(0)));
         }
         else if(9 == i)
         {
@@ -188,7 +188,7 @@ TEST(generate_periods, temporal_mesh)
         else
         {
             EXPECT_EQ(elt.begin(), bpt::ptime(bg::date(2025, 1, 27) + bg::days((i-2)*7), bpt::hours(0)));
-            EXPECT_EQ(elt.end(), bpt::ptime(bg::date(2025, 2, 2) + bg::days((i-2)*7), bpt::time_duration(23, 59, 59)));
+            EXPECT_EQ(elt.end(), bpt::ptime(bg::date(2025, 2, 3) + bg::days((i-2)*7), bpt::hours(0)));
         }
     }
     //MONTH generation
@@ -201,12 +201,12 @@ TEST(generate_periods, temporal_mesh)
         if(1 == i)
         {
             EXPECT_EQ(elt.begin(), start_horizon);
-            EXPECT_EQ(elt.end(), bpt::ptime(bg::date(2025, 1, 31), bpt::time_duration(23, 59, 59)));
+            EXPECT_EQ(elt.end(), bpt::ptime(bg::date(2025, 2, 1), bpt::hours(0)));
         }
         else if(2 == i)
         {
             EXPECT_EQ(elt.begin(), bpt::ptime(bg::date(2025, 2, 1), bpt::hours(0)));
-            EXPECT_EQ(elt.end(), bpt::ptime(bg::date(2025, 2, 28), bpt::time_duration(23, 59, 59)));
+            EXPECT_EQ(elt.end(), bpt::ptime(bg::date(2025, 3, 1), bpt::hours(0)));
         }
         else
         {

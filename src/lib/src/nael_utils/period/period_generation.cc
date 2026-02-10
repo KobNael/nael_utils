@@ -23,8 +23,8 @@ namespace
      * @param fun the functor
      * @pre end_horizon > start_horizon
      * @pre end_horizon and start_horizon are valid date times
-     * @pre 00:00:00 <= start_period <= 23:59:59
-     * @pre 00:00:00 <= end_period <= 23:59:59
+     * @pre 00:00:00 <= start_period <= 24:00:00
+     * @pre 00:00:00 <= end_period <= 24:00:00
      */
     template <class PeriodT, class FunT>
     std::list<PeriodT> generate_periods(boost::posix_time::ptime const &start_horizon, boost::posix_time::ptime const &end_horizon, boost::posix_time::time_duration const &start_period, boost::posix_time::time_duration const &end_period, FunT fun)
@@ -32,8 +32,8 @@ namespace
         // Pre conditions
         assert(!start_horizon.is_not_a_date_time() && !end_horizon.is_not_a_date_time());
         assert(start_horizon < end_horizon);
-        assert(boost::posix_time::seconds(0) <= start_period && start_period <= boost::posix_time::time_duration(23, 59, 59));
-        assert(boost::posix_time::seconds(0) <= end_period && end_period <= boost::posix_time::time_duration(23, 59, 59));
+        assert(boost::posix_time::seconds(0) <= start_period && start_period <= boost::posix_time::time_duration(24, 0, 0));
+        assert(boost::posix_time::seconds(0) <= end_period && end_period <= boost::posix_time::time_duration(24, 0, 0));
 
         // Init the result
         std::list<PeriodT> result;
@@ -65,10 +65,10 @@ namespace
             ++it;
             result.push_back(
                 time_period(
-                    boost::posix_time::ptime(cur_date, boost::posix_time::hours(0)), boost::posix_time::ptime(*it - boost::gregorian::days(1), boost::posix_time::time_duration(23, 59, 59))));
+                    boost::posix_time::ptime(cur_date, boost::posix_time::hours(0)), boost::posix_time::ptime(*it, boost::posix_time::hours(0))));
             cur_date = *it;
         } while (cur_date <= end_horizon.date());
-        return get_inter(result, time_period(start_horizon, end_horizon));
+        return get_inter(result, time_period(start_horizon, end_horizon), false);
     }
 } // anonymous namespace
 
