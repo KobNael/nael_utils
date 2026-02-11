@@ -4,6 +4,8 @@
 #include <nael_utils/log/Logger.hh>
 #include <nael_utils/exception/exception.hh>
 
+#include <format>
+
 namespace io
 {
 
@@ -19,7 +21,7 @@ namespace io
                 stream.open(file.c_str(), std::ios::out);
                 if (stream.fail())
                 {
-                    throw io::access_error("Could not create log file " + file);
+                    throw io::access_error(std::format("Could not create log file {}", file));
                 }
                 else
                 {

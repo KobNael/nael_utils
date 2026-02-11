@@ -5,7 +5,9 @@
 
 #include <nael_utils/json/details/converter.hh>
 #include <nael_utils/exception/exception.hh>
+
 #include <fstream>
+#include <format>
 
 namespace json
 {
@@ -36,7 +38,7 @@ namespace json
         std::ifstream istream(filePath, std::ios::in);
         if (!istream.is_open() || istream.eof())
         {
-            throw io::access_error("Could not open file " + filePath);
+            throw io::access_error(std::format("Could not open file {}", filePath));
         }
         import_from_stream(istream, context);
         istream.close();

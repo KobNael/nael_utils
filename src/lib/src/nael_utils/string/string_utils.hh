@@ -6,9 +6,12 @@
 #pragma once
 
 #include <nael_utils/exception/exception.hh>
+
 #include <boost/lexical_cast.hpp>
 #include <boost/date_time/gregorian/gregorian_types.hpp>
 #include <boost/date_time/posix_time/posix_time_types.hpp>
+
+#include <format>
 #include <string>
 
 namespace bg = boost::gregorian;
@@ -37,7 +40,7 @@ namespace str
         }
         catch (const boost::bad_lexical_cast &)
         {
-            throw bad_lexical_cast("Cannot parse value : " + str_val);
+            throw bad_lexical_cast(std::format("Cannot parse value : {}", str_val));
         }
     }
 
