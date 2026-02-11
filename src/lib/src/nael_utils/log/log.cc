@@ -3,6 +3,8 @@
  */
 #include <nael_utils/log/log.hh>
 
+#include <ranges>
+
 namespace io
 {
 
@@ -49,11 +51,11 @@ namespace io
 
     void LoggerManager::ClearAllLoggers()
     {
-        for (auto const &[name, _] : _tee_loggers)
+        for (auto const &name : std::views::keys(_tee_loggers))
         {
             ClearLogger(name);
         }
-        for (auto const &[name, _] : _file_loggers)
+        for (auto const &name : std::views::keys(_file_loggers))
         {
             ClearFileLogger(name);
         }
