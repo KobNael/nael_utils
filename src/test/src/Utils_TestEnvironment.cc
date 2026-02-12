@@ -9,7 +9,7 @@ class Utils_TestEnvironment : public ::testing::Environment
 
         // Override this to define how to set up the environment.
         void SetUp() override {
-            io::LoggerManager::SetDefaultLogLevel( io::OFF );
+            io::LoggerManager::SetDefaultLogLevel( io::LogLevel::OFF );
         }
 
         // Override this to define how to tear down the environment.

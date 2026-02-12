@@ -16,6 +16,11 @@ namespace details
     {
     public:
         /**
+         * @brief Destructor
+         */
+        virtual ~streamable() = default;
+
+        /**
          * @brief Print the structure description in a stream
          * @param os the stream
          */

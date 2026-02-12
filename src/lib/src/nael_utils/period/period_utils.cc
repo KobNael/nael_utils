@@ -81,8 +81,8 @@ ratio_period merge(ratio_period const &rp1, ratio_period const &rp2)
 LTimePeriod get_eligible_periods(LCapaPeriod const &periods, int64_t min)
 {
     LTimePeriod result;
-    std::for_each(
-        periods.cbegin(), periods.cend(),
+    std::ranges::for_each(
+        periods,
         [min, &result](capa_period const &cp)
         {
             if (cp._capa >= min)
