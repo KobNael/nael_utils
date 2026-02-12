@@ -36,7 +36,7 @@ namespace dto
         ((bool)(bool_att))
         ((unsigned)(unsigned_att))
         ((int)(int_att))
-        ((long)(long_att))
+        ((int64_t)(long_att))
         ((double)(double_att))
         ((EnumDto)(enum_att))
         ((std::string)(string_att))

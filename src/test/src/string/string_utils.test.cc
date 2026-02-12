@@ -30,7 +30,7 @@ TEST(string_utils, get_val_from_str_integer)
     ASSERT_EQ(0, str::get_val_from_str<int>("0"));
 
     // Long integers
-    ASSERT_EQ(1234567890L, str::get_val_from_str<long>("1234567890"));
+    ASSERT_EQ(1234567890L, str::get_val_from_str<int64_t>("1234567890"));
 
     // Invalid integer strings should throw
     ASSERT_THROW(str::get_val_from_str<int>("abc"), str::bad_lexical_cast);
