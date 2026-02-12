@@ -47,6 +47,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../exception/exception.html">Exception</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="model.html">Data Model Utils</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Data Model Description</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv412N_SEC_IN_DAY"><code class="docutils literal notranslate"><span class="pre">N_SEC_IN_DAY</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv413N_SEC_IN_HOUR"><code class="docutils literal notranslate"><span class="pre">N_SEC_IN_HOUR</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv418N_MILLISEC_IN_HOUR"><code class="docutils literal notranslate"><span class="pre">N_MILLISEC_IN_HOUR</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv411string_hash"><code class="docutils literal notranslate"><span class="pre">string_hash</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N11string_hash14is_transparentE"><code class="docutils literal notranslate"><span class="pre">string_hash::is_transparent</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK11string_hashclEPKc"><code class="docutils literal notranslate"><span class="pre">string_hash::operator()()</span></code></a></li>
@@ -101,24 +104,6 @@
 <span id="model-desc"></span><h1>Data Model Description<a class="headerlink" href="#data-model-description" title="Link to this heading"></a></h1>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-defines">Defines</p>
-<dl class="cpp macro">
-<dt class="sig sig-object cpp" id="c.N_SEC_IN_DAY">
-<span class="target" id="model__desc_8hh_1ab791fe831f50f9859b888f61a8b3e773"></span><span class="sig-name descname"><span class="n"><span class="pre">N_SEC_IN_DAY</span></span></span><a class="headerlink" href="#c.N_SEC_IN_DAY" title="Link to this definition"></a><br /></dt>
-<dd><p>Constant equals to the number of seconds in a day. </p>
-</dd></dl>
-
-<dl class="cpp macro">
-<dt class="sig sig-object cpp" id="c.N_SEC_IN_HOUR">
-<span class="target" id="model__desc_8hh_1a5c4e3a7eeaeee086063d3cfc78b21b92"></span><span class="sig-name descname"><span class="n"><span class="pre">N_SEC_IN_HOUR</span></span></span><a class="headerlink" href="#c.N_SEC_IN_HOUR" title="Link to this definition"></a><br /></dt>
-<dd><p>Constant equals to the number of seconds in an hour. </p>
-</dd></dl>
-
-<dl class="cpp macro">
-<dt class="sig sig-object cpp" id="c.N_MILLISEC_IN_HOUR">
-<span class="target" id="model__desc_8hh_1a858b738c2645e8bd578e92f70e3ceb74"></span><span class="sig-name descname"><span class="n"><span class="pre">N_MILLISEC_IN_HOUR</span></span></span><a class="headerlink" href="#c.N_MILLISEC_IN_HOUR" title="Link to this definition"></a><br /></dt>
-<dd><p>Constant equals to the number of seconds in an hour. </p>
-</dd></dl>
-
 <dl class="cpp macro">
 <dt class="sig sig-object cpp" id="c.MAKE_CLASS_SORT">
 <span class="target" id="model__desc_8hh_1add118b6d8457b20ee9f095c40136180f"></span><span class="sig-name descname"><span class="n"><span class="pre">MAKE_CLASS_SORT</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">class_name</span></span>, <span class="n"><span class="pre">att_list</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.MAKE_CLASS_SORT" title="Link to this definition"></a><br /></dt>
@@ -491,6 +476,27 @@
 </ul>
 </dd>
 </dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-variables">Variables</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv412N_SEC_IN_DAY">
+<span id="_CPPv312N_SEC_IN_DAY"></span><span id="_CPPv212N_SEC_IN_DAY"></span><span id="N_SEC_IN_DAY__i"></span><span class="target" id="model__desc_8hh_1ac74e8ee3110e813c431d45d7ccd8e442"></span><span class="k"><span class="pre">constexpr</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">N_SEC_IN_DAY</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">86400</span></span><a class="headerlink" href="#_CPPv412N_SEC_IN_DAY" title="Link to this definition"></a><br /></dt>
+<dd><p>Constant equals to the number of seconds in a day. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv413N_SEC_IN_HOUR">
+<span id="_CPPv313N_SEC_IN_HOUR"></span><span id="_CPPv213N_SEC_IN_HOUR"></span><span id="N_SEC_IN_HOUR__i"></span><span class="target" id="model__desc_8hh_1a56184a23ba153b7a1a23160f94d3be77"></span><span class="k"><span class="pre">constexpr</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">N_SEC_IN_HOUR</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">3600</span></span><a class="headerlink" href="#_CPPv413N_SEC_IN_HOUR" title="Link to this definition"></a><br /></dt>
+<dd><p>Constant equals to the number of seconds in an hour. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv418N_MILLISEC_IN_HOUR">
+<span id="_CPPv318N_MILLISEC_IN_HOUR"></span><span id="_CPPv218N_MILLISEC_IN_HOUR"></span><span id="N_MILLISEC_IN_HOUR__i"></span><span class="target" id="model__desc_8hh_1a237e73f54e2f7fcb08fe294364959a18"></span><span class="k"><span class="pre">constexpr</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">N_MILLISEC_IN_HOUR</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">3600000</span></span><a class="headerlink" href="#_CPPv418N_MILLISEC_IN_HOUR" title="Link to this definition"></a><br /></dt>
+<dd><p>Constant equals to the number of seconds in an hour. </p>
 </dd></dl>
 
 </div>
