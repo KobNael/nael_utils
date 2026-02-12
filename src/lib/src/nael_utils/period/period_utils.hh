@@ -4,7 +4,7 @@
  * Two types of time period are proposed, along with shortcuts for list of periods:
  * - #time_period : shortcut for boost::posix_time::time_period
  * - extended_period : abstract #time_period with an additional attribute
- * - capa_period : #time_period with capacity (long)
+ * - capa_period : #time_period with capacity (int64_t)
  * - ratio_period : #time_period with a ratio (float)
  *
  * One can then compute the union, the intersection or the difference between list of periods:
@@ -366,7 +366,7 @@ LRatioPeriod reduce_right(LRatioPeriod const &periods, boost::posix_time::time_d
  * @param min the minimal capacity
  * @return the corresponding time_periods
  */
-LTimePeriod get_eligible_periods(LCapaPeriod const &periods, unsigned min);
+LTimePeriod get_eligible_periods(LCapaPeriod const &periods, int64_t min);
 
 /**
  * @brief Convert a list of time_period into a list of capa_period with a given capacity
@@ -374,7 +374,7 @@ LTimePeriod get_eligible_periods(LCapaPeriod const &periods, unsigned min);
  * @param capa the capacity
  * @return the corresponding capa_periods
  */
-LCapaPeriod convert(LTimePeriod const &periods, long long capa);
+LCapaPeriod convert(LTimePeriod const &periods, int64_t capa);
 
 /**
  * @brief Create an artificial empty period

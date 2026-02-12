@@ -44,7 +44,7 @@ namespace details
     std::optional<capa_period> MakeUnion::operator()(std::optional<capa_period> const &p1, std::optional<capa_period> const &p2, boost::posix_time::ptime const &from, boost::posix_time::ptime const &to) const
     {
         // compute the capacity
-        if (long capa((p1 ? p1->_capa : 0) + (p2 ? p2->_capa : 0)); 0 != capa)
+        if (int64_t capa((p1 ? p1->_capa : 0) + (p2 ? p2->_capa : 0)); 0 != capa)
         {
             return capa_period(capa, from, to);
         }
@@ -110,7 +110,7 @@ namespace details
     std::optional<capa_period> MakeDiff::operator()(std::optional<capa_period> const &p1, std::optional<capa_period> const &p2, boost::posix_time::ptime const &from, boost::posix_time::ptime const &to) const
     {
         // compute the remaining capacity
-        if (long capa((p1 ? p1->_capa : 0) - (p2 ? p2->_capa : 0)); 0 != capa)
+        if (int64_t capa((p1 ? p1->_capa : 0) - (p2 ? p2->_capa : 0)); 0 != capa)
         {
             return capa_period(capa, from, to);
         }
@@ -193,7 +193,7 @@ namespace details
         if (p1 && p2)
         {
             // If there is a valid capacity
-            if (long capa(std::min((*p1)._capa, (*p2)._capa)); 0 != capa)
+            if (int64_t capa(std::min((*p1)._capa, (*p2)._capa)); 0 != capa)
             {
                 return capa_period(capa, from, to);
             }

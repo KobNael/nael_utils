@@ -2,7 +2,7 @@
  * @file period_typedef.hh
  * @brief Definition of the basics periods available :
  * - #time_period : shortcut for boost::posix_time::time_period
- * - capa_period : #time_period with capacity (long long)
+ * - capa_period : #time_period with capacity (int64_t)
  * - ratio_period : #time_period with a ratio (float)
  */
 #pragma once
@@ -82,7 +82,7 @@ public:
      * @param capa the capacity
      * @param period the time_period
      */
-    capa_period(long long capa, time_period const &period)
+    capa_period(int64_t capa, time_period const &period)
         : extended_period(period), _capa(capa)
     {
     }
@@ -92,7 +92,7 @@ public:
      * @param start the starting date time
      * @param end the ending date time
      */
-    capa_period(long long capa, boost::posix_time::ptime const &start, boost::posix_time::ptime const &end)
+    capa_period(int64_t capa, boost::posix_time::ptime const &start, boost::posix_time::ptime const &end)
         : extended_period(start, end), _capa(capa)
     {
     }
@@ -102,7 +102,7 @@ public:
     ~capa_period() override = default;
 
     /** @brief the capacity */
-    long long _capa;
+    int64_t _capa;
 
     /** @brief equality operator */
     bool operator==(capa_period const &cp) const = default;
