@@ -7,7 +7,9 @@
  */
 #pragma once
 
+#include <cstdint>
 #include <list>
+
 #include <boost/date_time/posix_time/posix_time.hpp>
 
 ///////////
