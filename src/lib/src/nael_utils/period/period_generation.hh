@@ -44,5 +44,5 @@ generate_periods(boost::posix_time::ptime const &start_horizon, boost::posix_tim
  * @pre 00:00:00 <= end_period <= 23:59:59
  */
 LCapaPeriod
-generate_periods(boost::posix_time::ptime const &start_horizon, boost::posix_time::ptime const &end_horizon, boost::posix_time::time_duration const &start_period, boost::posix_time::time_duration const &end_period, long capa);
+generate_periods(boost::posix_time::ptime const &start_horizon, boost::posix_time::ptime const &end_horizon, boost::posix_time::time_duration const &start_period, boost::posix_time::time_duration const &end_period, int64_t capa);
 

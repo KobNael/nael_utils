@@ -117,7 +117,7 @@ LTimePeriod generate_periods(boost::posix_time::ptime const &start_horizon, boos
 }
 
 // Generate the capacitated time period defined by a couple start/end on an horizon
-LCapaPeriod generate_periods(boost::posix_time::ptime const &start_horizon, boost::posix_time::ptime const &end_horizon, boost::posix_time::time_duration const &start_period, boost::posix_time::time_duration const &end_period, long capa)
+LCapaPeriod generate_periods(boost::posix_time::ptime const &start_horizon, boost::posix_time::ptime const &end_horizon, boost::posix_time::time_duration const &start_period, boost::posix_time::time_duration const &end_period, int64_t capa)
 {
     return generate_periods<capa_period>(
         start_horizon, end_horizon, start_period, end_period,

@@ -78,7 +78,7 @@ ratio_period merge(ratio_period const &rp1, ratio_period const &rp2)
 }
 
 // Collect the capa_period with enough capacity and return them as time_period
-LTimePeriod get_eligible_periods(LCapaPeriod const &periods, unsigned min)
+LTimePeriod get_eligible_periods(LCapaPeriod const &periods, int64_t min)
 {
     LTimePeriod result;
     std::for_each(
@@ -94,7 +94,7 @@ LTimePeriod get_eligible_periods(LCapaPeriod const &periods, unsigned min)
 }
 
 // Convert a list of time_period into a list of capa_period with a given capacity
-LCapaPeriod convert(LTimePeriod const &periods, long long capa)
+LCapaPeriod convert(LTimePeriod const &periods, int64_t capa)
 {
     LCapaPeriod result;
     std::ranges::transform(
@@ -108,7 +108,7 @@ LCapaPeriod convert(LTimePeriod const &periods, long long capa)
 boost::posix_time::time_duration compute_relative_duration(boost::posix_time::time_duration duration, float ratio)
 {
     return bpt::milliseconds(
-        long(
+        int64_t(
             std::round(
                 double(duration.total_milliseconds()) * ratio)));
 }
@@ -117,7 +117,7 @@ boost::posix_time::time_duration compute_relative_duration(boost::posix_time::ti
 boost::posix_time::time_duration compute_theoretical_duration(boost::posix_time::time_duration duration, float ratio)
 {
     return bpt::milliseconds(
-        long(
+        int64_t(
             std::round(
                 double(duration.total_milliseconds()) / ratio)));
 }
