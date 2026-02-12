@@ -18,7 +18,7 @@ namespace io
      * @see Logger::setLogLevel
      * @see io::SetLogLevel
      */
-    enum LogLevel
+    enum class LogLevel
     {
         OFF,      ///< No log at all
         ERROR,    ///< Only Error messages
@@ -43,7 +43,7 @@ namespace io
          * @param file path to the log file
          * @param level initial verbosity
          */
-        Logger(std::string const &file, LogLevel level = io::LogLevel::INFO)
+        explicit Logger(std::string const &file, LogLevel level = io::LogLevel::INFO)
             : _filePath(file), _level(level)
         {
         }
@@ -93,11 +93,9 @@ namespace io
             _stream = &stream;
         }
 
-    protected:
+    private:
         /** @brief Path to the log file */
         std::string _filePath = {""};
-
-    private:
         /** @brief Verbosity */
         LogLevel _level = {LogLevel::INFO};
         /** @brief the stream */
@@ -117,7 +115,7 @@ namespace io
          * @param level initial verbosity
          * @throw if the file can not be open
          */
-        FileLogger(std::string const &file, LogLevel level = LogLevel::INFO);
+        explicit FileLogger(std::string const &file, LogLevel level = LogLevel::INFO);
 
         /**
          * @brief Destructor
@@ -149,7 +147,7 @@ namespace io
          * @param file path to the log file
          * @param level verbosity
          */
-        TeeLogger(std::string const &file, LogLevel level = LogLevel::INFO);
+        explicit TeeLogger(std::string const &file, LogLevel level = LogLevel::INFO);
 
         /**
          * @brief Destructor

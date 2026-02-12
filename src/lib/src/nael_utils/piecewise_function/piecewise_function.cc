@@ -104,7 +104,7 @@ void merge(Piecewise_linear_function &pwf)
     while(to != pwf.end())
     {
         // on vertical segments, remove the intermediate point to clean yoyo effects
-        if(safecomp::eq(from->_x, to->_x) || Segment(*from, *to).contains(*dot))
+        if(safecomp::eq(from->_x, to->_x) || Segment{*from, *to}.contains(*dot))
         {
             // remove it
             dot = pwf.erase(dot);
@@ -253,7 +253,7 @@ Dot get_dot(Piecewise_linear_function const &pwf, double x_start, double x_end, 
         // spercial case: vertical segment
         Segment intersection = (safecomp::eq(segment._from._x, segment._to._x))
             ? segment
-            : Segment( {std::max(segment._from._x, x_start), segment.get_y(std::max(segment._from._x, x_start))}, {std::min(segment._to._x, x_end), segment.get_y(std::min(segment._to._x, x_end))} );
+            : Segment{ {std::max(segment._from._x, x_start), segment.get_y(std::max(segment._from._x, x_start))}, {std::min(segment._to._x, x_end), segment.get_y(std::min(segment._to._x, x_end))} };
         // get the best dot among the segment bounds
         if(comp(res, intersection._from))
         {

@@ -89,8 +89,6 @@ namespace io
          */
         static void SetFileLogLevel(LogLevel level, std::string_view name);
 
-        // Common
-    public:
         /**
          * @brief Clear every logger (file or tee)
          */

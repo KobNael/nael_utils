@@ -2,7 +2,7 @@
 
 namespace bpt = boost::posix_time;
 
-extended_period::~extended_period() {}
+extended_period::~extended_period() = default;
 
 extern boost::posix_time::time_duration compute_relative_duration(boost::posix_time::time_duration duration, float ratio);
 

@@ -34,7 +34,7 @@ public:
      * @brief constructor
      * @param period the time_period
      */
-    extended_period(time_period const &period)
+    explicit extended_period(time_period const &period)
         : _period(period)
     {
     }
