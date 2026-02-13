@@ -83,28 +83,34 @@ void extract(boost::json::object const &obj, char const *name, T &value)
 
 namespace dto
 {
+    /**
+     * @brief Concept to check if a type is suitable for JSON conversion
+     * @tparam T the type to check
+     */
+    template<typename T>
+    concept JsonConvertible = !std::is_union_v<T> && 
+                             boost::mp11::mp_empty<boost::describe::describe_members<T, boost::describe::mod_private>>::value &&
+                             std::is_constructible_v<T>;
 
     /**
      * @brief Convert a json value to an object T
      * @tparam T the type of object
-     * @param v
+     * @param v the json value
+     * @return T the converted object
      */
-    template <class T,
-              class D1 = boost::describe::describe_members<T,
-                                                           boost::describe::mod_public | boost::describe::mod_protected>,
-              class D2 = boost::describe::describe_members<T, boost::describe::mod_private>,
-              class En = std::enable_if_t<boost::mp11::mp_empty<D2>::value && !std::is_union<T>::value>>
-
+    template <JsonConvertible T>
     T tag_invoke(boost::json::value_to_tag<T> const &, boost::json::value const &v)
     {
         auto const &obj = v.as_object();
 
         T t{};
 
-        boost::mp11::mp_for_each<D1>([&](auto D)
-                                     {
-                                         extract(obj, D.name, t.*D.pointer);
-                                     });
+        using members_t = boost::describe::describe_members<T, boost::describe::mod_public | boost::describe::mod_protected>;
+
+        boost::mp11::mp_for_each<members_t>([&](auto member_descriptor)
+        {
+            extract(obj, member_descriptor.name, t.*member_descriptor.pointer);
+        });
 
         return t;
     }
