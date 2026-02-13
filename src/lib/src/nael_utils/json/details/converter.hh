@@ -88,9 +88,9 @@ namespace dto
      * @tparam T the type to check
      */
     template<typename T>
-    concept JsonConvertible = !std::is_union_v<T> && 
-                             boost::mp11::mp_empty<boost::describe::describe_members<T, boost::describe::mod_private>>::value &&
-                             std::is_constructible_v<T>;
+    concept JsonConvertible = !std::is_union_v<T> && // Type must not be a union
+                             boost::mp11::mp_empty<boost::describe::describe_members<T, boost::describe::mod_private>>::value && // Type must have no private members described by boost::describe
+                             std::is_constructible_v<T>; // Type must be constructible
 
     /**
      * @brief Convert a json value to an object T
@@ -107,7 +107,7 @@ namespace dto
 
         using members_t = boost::describe::describe_members<T, boost::describe::mod_public | boost::describe::mod_protected>;
 
-        boost::mp11::mp_for_each<members_t>([&](auto member_descriptor)
+        boost::mp11::mp_for_each<members_t>([&t](auto member_descriptor)
         {
             extract(obj, member_descriptor.name, t.*member_descriptor.pointer);
         });
