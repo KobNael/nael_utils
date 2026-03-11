@@ -93,11 +93,10 @@ Tested on Ubuntu 24.04.1 LTS (native or through wsl2).
 > $ cd build_directory/ && make doc
 
 ### Usage in project
-One can include this repository as a git submodule and init it : 
-> git submodule add git@github.com:KobNael/nael_utils.git nael_utils
-> git submodule update --init
+One can include this repository as a git submodule and init it :
+> git submodule add git@github.com:KobNael/nael_utils.git nael_utils && git submodule update --init
 
-Then, in your own CMakeFile just add it :  
+Then, in your own CMakeFile just add it :
 ```
 # ============================================================================
 # Submodules
@@ -107,4 +106,4 @@ list (PREPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/nael_utils/cmake-mod
 
 add_subdirectory (nael_utils)
 ```
- 
+
