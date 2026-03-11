@@ -255,7 +255,26 @@
 <dl class="cpp macro">
 <dt class="sig sig-object cpp" id="c.MAKE_NON_COPYABLE_ATT">
 <span class="target" id="model__desc_8hh_1a758426adaf741077099e97b02eef9858"></span><span class="sig-name descname"><span class="n"><span class="pre">MAKE_NON_COPYABLE_ATT</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">att_desc</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.MAKE_NON_COPYABLE_ATT" title="Link to this definition"></a><br /></dt>
-<dd></dd></dl>
+<dd><p>Generate the declaration and every set / get for basic attribute. </p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MAKE_NON_COPYABLE_ATT</span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="n">MyClass</span><span class="p">)(</span><span class="n">my_class</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+</pre></div>
+</div>
+ expands to <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">private</span><span class="o">:</span>
+<span class="w">    </span><span class="n">MyClass</span><span class="w"> </span><span class="n">_my_class</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">MyClass</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="n">get_my_class</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">_my_class</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="n">MyClass</span><span class="w"> </span><span class="o">&amp;</span><span class="n">get_my_class</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">_my_class</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</pre></div>
+</div>
+ </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>att_desc</strong> – sequence describing the attribute : (type)(name)[(default_value)] </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="cpp macro">
 <dt class="sig sig-object cpp" id="c.MAKE_CONST_ATT">
