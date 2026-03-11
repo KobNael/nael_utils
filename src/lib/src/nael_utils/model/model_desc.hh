@@ -157,6 +157,21 @@ public:                                        \
     MAKE_ATT_GETTER_VARIABLE(, 1, att_desc)    \
     MAKE_ATT_SETTER_VARIABLE(, , att_desc)
 
+/**
+ * @brief Generate the declaration and every set / get for basic attribute
+ * @code{cpp}
+ *     MAKE_NON_COPYABLE_ATT( (MyClass)(my_class) )
+ * @endcode
+ *   expands to
+ * @code{cpp}
+ *   private:
+ *       MyClass _my_class;
+ *   public:
+ *       MyClass const &get_my_class() const { return _my_class; }
+ *       MyClass &get_my_class() { return _my_class; }
+ * @endcode
+ * @param att_desc sequence describing the attribute : (type)(name)[(default_value)]
+ */
 #define MAKE_NON_COPYABLE_ATT(att_desc)        \
 private:                                       \
     MAKE_CLASS_ATT_DECL_VARIABLE(, , att_desc) \
