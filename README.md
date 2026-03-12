@@ -1,7 +1,7 @@
 # Nael Utils
 
 Tools for C++ application.
-See the [documentation ](https://github.com/KobNael/nael_utils/) for details.
+See the [documentation](https://kobnael.github.io/nael_utils/) for details.
 
 This library is mainly designed to be added as a submodule in other git repository.   
 For a minimalist example of C++ project doing so, please refer to [Nael Toy Cpp](https://github.com/KobNael/nael_toy_cpp).
