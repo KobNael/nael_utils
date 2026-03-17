@@ -90,6 +90,7 @@ LTimePeriod get_eligible_periods(LCapaPeriod const &periods, int64_t min)
                 result.push_back(cp._period);
             }
         });
+    merge_adjacent_periods(result);
     return result;
 }
 
