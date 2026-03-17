@@ -355,6 +355,16 @@ Dot get_first_dot_below(Piecewise_linear_function const &pwf, double y, double x
 {
     return get_first_dot(pwf, y, x_start, x_end, [](double y_cand, double y_ref){return safecomp::le(y_cand, y_ref);});
 }
+// Analyse a piece-wise linear function and return the first dot strictly above a given y in an interval
+Dot get_first_dot_strictly_above(Piecewise_linear_function const &pwf, double y, double x_start, double x_end)
+{
+    return get_first_dot(pwf, y, x_start, x_end, [](double y_cand, double y_ref){return safecomp::gt(y_cand, y_ref);});
+}
+// Analyse a piece-wise linear function and return the first dot strictly below a given y in an interval
+Dot get_first_dot_strictly_below(Piecewise_linear_function const &pwf, double y, double x_start, double x_end)
+{
+    return get_first_dot(pwf, y, x_start, x_end, [](double y_cand, double y_ref){return safecomp::lt(y_cand, y_ref);});
+}
 
 // Analyse a piece-wise linear function and return the last dot satisfying a condition in an interval
 template<typename Fun>
@@ -423,4 +433,13 @@ Dot get_last_dot_above(Piecewise_linear_function const &pwf, double y, double x_
 Dot get_last_dot_below(Piecewise_linear_function const &pwf, double y, double x_start, double x_end )
 {
     return get_last_dot(pwf, y, x_start, x_end, [](double y_cand, double y_ref){return safecomp::le(y_cand, y_ref);});
+}
+Dot get_last_dot_strictly_above(Piecewise_linear_function const &pwf, double y, double x_start, double x_end)
+{
+    return get_last_dot(pwf, y, x_start, x_end, [](double y_cand, double y_ref){return safecomp::gt(y_cand, y_ref);});
+}
+// Analyse a piece-wise linear function and return the last dot below a given y in an interval
+Dot get_last_dot_strictly_below(Piecewise_linear_function const &pwf, double y, double x_start, double x_end )
+{
+    return get_last_dot(pwf, y, x_start, x_end, [](double y_cand, double y_ref){return safecomp::lt(y_cand, y_ref);});
 }
