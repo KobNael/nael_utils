@@ -25,7 +25,7 @@ TEST(periods, order)
     ASSERT_TRUE(bpt::ptime(d, bpt::hours(9)) < bpt::not_a_date_time);
     ASSERT_TRUE(bpt::not_a_date_time > bpt::ptime(d, bpt::hours(9)) );
     ASSERT_FALSE(bpt::ptime(d, bpt::hours(9)) > bpt::not_a_date_time);
-//    ASSERT_FALSE(bpt::not_a_date_time < bpt::ptime(d, bpt::hours(9)) ); do not compile
+//    ASSERT_FALSE(bpt::not_a_date_time < bpt::ptime(d, bpt::hours(9)) ); does not compile
 }
 
 TEST(periods, get_inter)
