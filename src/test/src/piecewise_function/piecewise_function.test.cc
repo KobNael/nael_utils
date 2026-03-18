@@ -105,6 +105,25 @@ TEST(piecewise_function, in_range)
     EXPECT_FALSE(segment.x_in_range(2.0));
     EXPECT_FALSE(segment.y_in_range(-2.0));
     EXPECT_FALSE(segment.y_in_range(2.0));
+    // vertical segment
+    segment = {{-1.0, 1.0}, {-1.0, 3.0}};
+    EXPECT_FALSE(segment.x_in_range(-2.0));
+    EXPECT_FALSE(segment.x_in_range(-1.0));
+    EXPECT_FALSE(segment.x_in_range(2.0));
+    EXPECT_FALSE(segment.y_in_range(0.0));
+    EXPECT_TRUE(segment.y_in_range(2.0));
+    EXPECT_FALSE(segment.y_in_range(3.0));
+    EXPECT_FALSE(segment.y_in_range(4.0));
+    // horizontal segment
+    segment = {{-1.0, 1.0}, {1.0, 1.0}};
+    EXPECT_FALSE(segment.x_in_range(-2.0));
+    EXPECT_TRUE(segment.x_in_range(-1.0));
+    EXPECT_FALSE(segment.x_in_range(1.0));
+    EXPECT_FALSE(segment.x_in_range(2.0));
+    EXPECT_FALSE(segment.y_in_range(0.0));
+    EXPECT_FALSE(segment.y_in_range(1.0));
+    EXPECT_FALSE(segment.y_in_range(3.0));
+    EXPECT_FALSE(segment.y_in_range(4.0));
 }
 
 extern void merge(Piecewise_linear_function &pwf);

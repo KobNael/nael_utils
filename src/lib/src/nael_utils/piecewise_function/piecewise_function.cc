@@ -66,7 +66,7 @@ bool Segment::contains(Dot const &dot) const
 bool Segment::x_in_range(double x) const
 {
         // horizontal segment on the good value
-    return (is_horizontal() && safecomp::eq(_from._y, x))
+    return (is_horizontal() && safecomp::eq(_from._x, x))
         // or x in the bounds of the segment
         || (safecomp::le(_from._x, x) && safecomp::lt(x, _to._x));
 }
@@ -75,7 +75,7 @@ bool Segment::x_in_range(double x) const
 bool Segment::y_in_range(double y) const
 {
         // vertical segment on the good value
-    return (is_vertical() && safecomp::eq(_from._x, y))
+    return (is_vertical() && safecomp::eq(_from._y, y))
         // or y in the bounds of the increasing segment
         || (safecomp::le(_from._y, y) && safecomp::lt(y, _to._y))
         // or y in the bounds of thedecreasing segment
