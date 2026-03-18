@@ -2,7 +2,6 @@
 
 #include <nael_utils/piecewise_function/piecewise_function.hh>
 #include <nael_utils/safe_comp/safe_comp.hh>
-#include <nael_utils/log/log.hh>
 
 TEST(piecewise_function, segment_utils)
 {

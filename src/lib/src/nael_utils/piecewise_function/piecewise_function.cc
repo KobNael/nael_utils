@@ -78,7 +78,7 @@ bool Segment::y_in_range(double y) const
     return (is_vertical() && safecomp::eq(_from._y, y))
         // or y in the bounds of the increasing segment
         || (safecomp::le(_from._y, y) && safecomp::lt(y, _to._y))
-        // or y in the bounds of thedecreasing segment
+        // or y in the bounds of the decreasing segment
         || (safecomp::ge(_from._y, y) && safecomp::gt(y, _to._y));
 }
 
@@ -302,19 +302,17 @@ Dot get_dot(Piecewise_linear_function const &pwf, double x_start, double x_end, 
         }
         else
         {
-            // always test the from dot
             double x1 = std::max(x_start, segment._from._x);
-            Dot intersection_from = {x1, segment.get_y(x1)};
-            if(comp(res, intersection_from))
+            // always test the from dot
+            if(Dot intersection_from = {x1, segment.get_y(x1)};comp(res, intersection_from))
             {
                 res = intersection_from;
             }
             // test the to dot only if it is strictly contained in the current segment
+            double x2 = std::min(x_end, segment._to._x);
             if(safecomp::lt(x_end, segment._to._x))
             {
-                double x2 = std::min(x_end, segment._to._x);
-                Dot intersection_to = {x2, segment.get_y(x2)};
-                if(comp(res, intersection_to))
+                if(Dot intersection_to = {x2, segment.get_y(x2)};comp(res, intersection_to))
                 {
                     res = intersection_to;
                 }

@@ -128,7 +128,8 @@ Piecewise_linear_function add_variation(Piecewise_linear_function const &pwf, st
 Piecewise_linear_function get_intersection(Piecewise_linear_function const &pwf, double y);
 
 /**
- * @brief Analyse a piece-wise linear function and return the lowest dot in an interval
+ * @brief Analyse a piece-wise linear function and return the lowest dot in an interval [x_start, x_end]
+ * @remark if x_start and x_end are not specified, the whole function is analyzed
  * @param pwf The piece-wise linear function to analyze.
  * @param x_start the starting x coordinate of the interval (inclusive)
  * @param x_end the ending x coordinate of the interval (inclusive)
@@ -137,7 +138,8 @@ Piecewise_linear_function get_intersection(Piecewise_linear_function const &pwf,
 Dot get_lowest_dot(Piecewise_linear_function const &pwf, double x_start = -std::numeric_limits<double>::infinity(), double x_end = std::numeric_limits<double>::infinity());
 
 /**
- * @brief Analyse a piece-wise linear function and return the highest dot in an interval
+ * @brief Analyse a piece-wise linear function and return the highest dot in an interval [x_start, x_end]
+ * @remark if x_start and x_end are not specified, the whole function is analyzed
  * @param pwf The piece-wise linear function to analyze.
  * @param x_start the starting x coordinate of the interval (inclusive)
  * @param x_end the ending x coordinate of the interval (inclusive)
@@ -146,7 +148,8 @@ Dot get_lowest_dot(Piecewise_linear_function const &pwf, double x_start = -std::
 Dot get_highest_dot(Piecewise_linear_function const &pwf, double x_start = -std::numeric_limits<double>::infinity(), double x_end = std::numeric_limits<double>::infinity());
 
 /**
- * @brief Analyse a piece-wise linear function and return the first dot above a given y in an interval
+ * @brief Analyse a piece-wise linear function and return the first dot above a given y in an interval [x_start, x_end]
+ * @remark if x_start and x_end are not specified, the whole function is analyzed
  * @param pwf The piece-wise linear function to analyze.
  * @param x_start the starting x coordinate of the interval (inclusive)
  * @param x_end the ending x coordinate of the interval (inclusive)
@@ -154,7 +157,8 @@ Dot get_highest_dot(Piecewise_linear_function const &pwf, double x_start = -std:
  */
 Dot get_first_dot_above(Piecewise_linear_function const &pwf, double y, double x_start = -std::numeric_limits<double>::infinity(), double x_end = std::numeric_limits<double>::infinity());
 /**
- * @brief Analyse a piece-wise linear function and return the first dot above a given y in an interval
+ * @brief Analyse a piece-wise linear function and return the first dot above a given y in an interval [x_start, x_end]
+ * @remark if x_start and x_end are not specified, the whole function is analyzed
  * st. every dot after is still above y
  * @param pwf The piece-wise linear function to analyze.
  * @param x_start the starting x coordinate of the interval (inclusive)
@@ -163,7 +167,8 @@ Dot get_first_dot_above(Piecewise_linear_function const &pwf, double y, double x
  */
 Dot get_first_dot_of_last_piece_above(Piecewise_linear_function const &pwf, double y, double x_start = -std::numeric_limits<double>::infinity(), double x_end = std::numeric_limits<double>::infinity());
 /**
- * @brief Analyse a piece-wise linear function and return the first dot below a given y in an interval
+ * @brief Analyse a piece-wise linear function and return the first dot below a given y in an interval [x_start, x_end]
+ * @remark if x_start and x_end are not specified, the whole function is analyzed
  * st. every dot after is still below y
  * @param pwf The piece-wise linear function to analyze.
  * @param x_start the starting x coordinate of the interval (inclusive)
@@ -172,7 +177,8 @@ Dot get_first_dot_of_last_piece_above(Piecewise_linear_function const &pwf, doub
  */
 Dot get_first_dot_of_last_piece_below(Piecewise_linear_function const &pwf, double y, double x_start = -std::numeric_limits<double>::infinity(), double x_end = std::numeric_limits<double>::infinity());
 /**
- * @brief Analyse a piece-wise linear function and return the first dot below a given y in an interval
+ * @brief Analyse a piece-wise linear function and return the first dot below a given y in an interval [x_start, x_end]
+ * @remark if x_start and x_end are not specified, the whole function is analyzed
  * @param pwf The piece-wise linear function to analyze.
  * @param x_start the starting x coordinate of the interval (inclusive)
  * @param x_end the ending x coordinate of the interval (inclusive)
@@ -180,7 +186,8 @@ Dot get_first_dot_of_last_piece_below(Piecewise_linear_function const &pwf, doub
  */
 Dot get_first_dot_below(Piecewise_linear_function const &pwf, double y, double x_start = -std::numeric_limits<double>::infinity(), double x_end = std::numeric_limits<double>::infinity());
 /**
- * @brief Analyse a piece-wise linear function and return the last dot above a given y in an interval
+ * @brief Analyse a piece-wise linear function and return the last dot above a given y in an interval [x_start, x_end]
+ * @remark if x_start and x_end are not specified, the whole function is analyzed
  * @param pwf The piece-wise linear function to analyze.
  * @param x_start the starting x coordinate of the interval (inclusive)
  * @param x_end the ending x coordinate of the interval (inclusive)
@@ -188,7 +195,8 @@ Dot get_first_dot_below(Piecewise_linear_function const &pwf, double y, double x
  */
 Dot get_last_dot_above(Piecewise_linear_function const &pwf, double y, double x_start = -std::numeric_limits<double>::infinity(), double x_end = std::numeric_limits<double>::infinity());
 /**
- * @brief Analyse a piece-wise linear function and return the last dot below a given y in an interval
+ * @brief Analyse a piece-wise linear function and return the last dot below a given y in an interval [x_start, x_end]
+ * @remark if x_start and x_end are not specified, the whole function is analyzed
  * @param pwf The piece-wise linear function to analyze.
  * @param x_start the starting x coordinate of the interval (inclusive)
  * @param x_end the ending x coordinate of the interval (inclusive)
