@@ -756,6 +756,11 @@ For the computation details see <a class="reference internal" href="period_funct
 <dt class="sig sig-object cpp" id="_CPPv420get_eligible_periodsRK11LCapaPeriod7int64_t">
 <span id="_CPPv320get_eligible_periodsRK11LCapaPeriod7int64_t"></span><span id="_CPPv220get_eligible_periodsRK11LCapaPeriod7int64_t"></span><span id="get_eligible_periods__LCapaPeriodCR.int64_t"></span><span class="target" id="period__utils_8hh_1af83fc6322b6ad82ddd28d6e04f282802"></span><span class="n"><span class="pre">LTimePeriod</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_eligible_periods</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">LCapaPeriod</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">periods</span></span>, <span class="n"><span class="pre">int64_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">min</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv420get_eligible_periodsRK11LCapaPeriod7int64_t" title="Link to this definition"></a><br /></dt>
 <dd><p>Collect the capa_period with enough capacity and return them as time_period. </p>
+<p><div class="remark admonition">
+<p class="admonition-title">Remark</p>
+<p>The adjacent periods with enough capacity will be merged together </p>
+</div>
+</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -765,6 +770,9 @@ For the computation details see <a class="reference internal" href="period_funct
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the corresponding time_periods </p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the lists must be sorted and contain disjoint periods </p>
 </dd>
 </dl>
 </dd></dl>
