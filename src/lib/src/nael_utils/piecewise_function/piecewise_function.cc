@@ -10,12 +10,17 @@
 #include <ranges>
 #include <iostream>
 
+//================//
+// Dot definition //
+//================//
 bool Dot::operator==(const Dot& rhs) const
 {
     return safecomp::eq(_x, rhs._x) && safecomp::eq(_y, rhs._y);
 }
 
-
+//====================//
+// Segment definition //
+//====================//
 // Return the slope of a linear segment
 double Segment::get_slope() const
 {
@@ -26,49 +31,69 @@ double Segment::get_slope() const
     return (_to._y - _from._y) / (_to._x - _from._x);
 }
 
+// Check if a segment is vertical
+bool Segment::is_vertical() const
+{
+    return std::isnan(get_slope());
+}
+
+// Check if a segment is horizontal
+bool Segment::is_horizontal() const
+{
+    return safecomp::eq(_from._y, _to._y);
+}
+
 // Check if a dot is on the segment
 bool Segment::contains(Dot const &dot) const
 {
     // special case of vertical segment
-    if(safecomp::eq(_from._x, _to._x))
+    if(is_vertical())
     {
             // x must be equal to the segment x
         return safecomp::eq(dot._x, _from._x)
             // and y within segment bounds
-            && safecomp::le(_from._y, dot._y) && safecomp::le(dot._y, _to._y);
+            && y_in_range(dot._y);
     }
-    // normal case: non vertical segment
-    assert(!safecomp::eq(_from._x, _to._x));
+
+    // non vertical segment
         // x within segment bounds
-    return safecomp::le(_from._x, dot._x) && safecomp::le(dot._x, _to._x)
+    return x_in_range(dot._x)
         // and y on the line defined by the segment
-        && safecomp::eq(dot._y, _from._y + get_slope() * (dot._x - _from._x));
+        && safecomp::eq(dot._y, get_y(dot._x));
 }
 
 // Check if a x coordinate is within the segment bounds
 bool Segment::x_in_range(double x) const
 {
-    return safecomp::le(_from._x, x) && safecomp::le(x, _to._x);
+        // horizontal segment on the good value
+    return (is_horizontal() && safecomp::eq(_from._x, x))
+        // or x in the bounds of the segment
+        || (safecomp::le(_from._x, x) && safecomp::lt(x, _to._x));
 }
 
 // Check if a y coordinate is within the segment bounds
 bool Segment::y_in_range(double y) const
 {
-    return (safecomp::le(_from._y, y) && safecomp::le(y, _to._y)) || (safecomp::le(_to._y, y) && safecomp::le(y, _from._y));
+        // vertical segment on the good value
+    return (is_vertical() && safecomp::eq(_from._y, y))
+        // or y in the bounds of the increasing segment
+        || (safecomp::le(_from._y, y) && safecomp::lt(y, _to._y))
+        // or y in the bounds of the decreasing segment
+        || (safecomp::ge(_from._y, y) && safecomp::gt(y, _to._y));
 }
 
 // Compute the x coordinate for a given y coordinate on the segment
 double Segment::get_x(double y) const
 {
-    assert(y_in_range(y));
-    // special case of horizontal segment
-    if(safecomp::eq(_from._y, _to._y))
+    // out of bounds or horizontal segment
+    if(is_horizontal())
     {
         return std::numeric_limits<double>::quiet_NaN();
     }
     // special case for vertical segment
-    if(safecomp::eq(_from._x, _to._x))
+    if(is_vertical())
     {
+        // return the origin of the segment, as all x coordinates are the same
         return _from._x;
     }
     // normal case: non vertical segment
@@ -78,16 +103,24 @@ double Segment::get_x(double y) const
 // Compute the y coordinate for a given x coordinate on the segment
 double Segment::get_y(double x) const
 {
-    assert(safecomp::le(_from._x, x) && safecomp::le(x, _to._x));
     // special case of vertical segment
-    if(safecomp::eq(_from._x, _to._x))
+    if(is_vertical())
     {
         return std::numeric_limits<double>::quiet_NaN();
+    }
+    // special case for horizontal segment
+    if(is_horizontal())
+    {
+        // return the origin of the segment, as all y coordinates are the same
+        return _from._y;
     }
     // normal case: non vertical segment
     return _from._y + get_slope() * (x - _from._x);
 }
 
+//======================//
+// Segment manipulation //
+//======================//
 /**
  * @brief Merges consecutive segments with the same slope in a piece-wise linear function.
  * @param[out] pwf The piece-wise linear function to merge.
@@ -128,15 +161,13 @@ void merge(Piecewise_linear_function &pwf)
  */
 Piecewise_linear_function sum_segments(Segment const &segment, Segment const &variation)
 {
-    double variation_slope{ variation.get_slope() };
-    double segment_slope{ segment.get_slope() };
     double variation_delta_y{ variation._to._y - variation._from._y };
 
-    // if on vertial variation
-    if(std::isnan(variation_slope))
+    // if on vertical variation
+    if(variation.is_vertical())
     {
         // if on a vertical segment move the target point
-        if(std::isnan(segment_slope))
+        if(segment.is_vertical())
         {
             assert(safecomp::eq(segment._from._x, variation._from._x));
             return Piecewise_linear_function{{segment._from._x, segment._from._y},
@@ -229,6 +260,9 @@ Piecewise_linear_function add_variation(Piecewise_linear_function const &pwf, st
     return result;
 }
 
+//===================//
+// Function Analysis //
+//===================//
 // Analyse a piece-wise linear function and return the first dot with the highest priority according to a comparison function in an interval
 template<typename Fun>
 Dot get_dot(Piecewise_linear_function const &pwf, double x_start, double x_end, Fun comp)
@@ -240,7 +274,7 @@ Dot get_dot(Piecewise_linear_function const &pwf, double x_start, double x_end, 
     {
         auto const &segment = Segment{*std::prev(cur_it), *cur_it};
         // segment fully before interval
-        if(safecomp::lt(segment._to._x, x_start))
+        if(safecomp::le(segment._to._x, x_start) && safecomp::lt(segment._from._x, x_start))
         {
             continue;
         }
@@ -250,18 +284,39 @@ Dot get_dot(Piecewise_linear_function const &pwf, double x_start, double x_end, 
             break;
         }
 
-        // spercial case: vertical segment
-        Segment intersection = (safecomp::eq(segment._from._x, segment._to._x))
-            ? segment
-            : Segment{ {std::max(segment._from._x, x_start), segment.get_y(std::max(segment._from._x, x_start))}, {std::min(segment._to._x, x_end), segment.get_y(std::min(segment._to._x, x_end))} };
-        // get the best dot among the segment bounds
-        if(comp(res, intersection._from))
+        // special case: vertical segment : just look at the from dot (the to dot will be processed in the next segment if any)
+        if(segment.is_vertical())
         {
-            res = intersection._from;
+            //if the from dot is ok
+            if(comp(res, segment._from))
+            {
+                // limit case : if we are on the x_start, we should check the to dot to take the tendancy into account
+                if(safecomp::eq(segment._from._x, x_start))
+                {
+                    continue;
+                }
+                // otherwise, take the from dot
+                res = segment._from;
+            }
+            continue;
         }
-        if(comp(res, intersection._to))
+        else
         {
-            res = intersection._to;
+            double x1 = std::max(x_start, segment._from._x);
+            // always test the from dot
+            if(Dot intersection_from = {x1, segment.get_y(x1)};comp(res, intersection_from))
+            {
+                res = intersection_from;
+            }
+            // test the to dot only if it is strictly contained in the current segment
+            double x2 = std::min(x_end, segment._to._x);
+            if(safecomp::lt(x_end, segment._to._x))
+            {
+                if(Dot intersection_to = {x2, segment.get_y(x2)};comp(res, intersection_to))
+                {
+                    res = intersection_to;
+                }
+            }
         }
     }while(++cur_it != pwf.end());
 
@@ -288,7 +343,7 @@ Dot get_first_dot(Piecewise_linear_function const &pwf, double y, double x_start
     {
         auto const segment = Segment{*std::prev(cur_it), *cur_it};
         // segment fully before interval
-        if(safecomp::lt(segment._to._x, x_start))
+        if(safecomp::le(segment._to._x, x_start) && safecomp::lt(segment._from._x, x_start))
         {
             continue;
         }
@@ -297,45 +352,32 @@ Dot get_first_dot(Piecewise_linear_function const &pwf, double y, double x_start
         {
             return {std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN()};
         }
-        // limit case : check next segment
-        if(!std::isnan(segment.get_slope()) && safecomp::eq(segment._to._x, x_start))
-        {
-            continue;
-        }
         // special case for vertical segment
-        if(std::isnan(segment.get_slope()))
+        if(segment.is_vertical())
         {
             // to be valid, the segment must follow the tendancy
-            // hence just check the to dot
-            if(comp(segment._to._y, y))
-            {
-                // if the from dot is also valid, return it
-                if(comp(segment._from._y, y))
-                {
-                    return segment._from;
-                }
-                // otherwise return the intersection
-                return {segment._to._x, y};
-            }
-            // invalid segment
-            else
-            {
-                continue;
-            }
+            // hence we should check the to dot, it will be processed in the next iteration
+            continue;
         }
-        //get the intersection in [x_start, x_end]
+        //get the intersection in [x_start, x_end[
         double x1 = std::max(x_start, segment._from._x);
         double x2 = std::min(x_end, segment._to._x);
         Segment intersection = {{x1, segment.get_y(x1)}, {x2, segment.get_y(x2)}};
-        // if first point is valid => ok
+        // always test the from dot
         if(comp(intersection._from._y, y))
         {
             return intersection._from;
         }
-        // if y is in the range => compute x
-        if(intersection.y_in_range(y))
+        // if y is in the range of the segment
+        if(segment.y_in_range(y))
         {
-            return {intersection.get_x(y), y};
+            // compute the corresponding x coordinate
+            double x = intersection.get_x(y);
+            // if it's a valid value for the segment, return it
+            if(segment.x_in_range(x))
+            {
+                return {x, y};
+            }
         }
         // the intersection is not valid => go on
         continue;
@@ -356,6 +398,59 @@ Dot get_first_dot_below(Piecewise_linear_function const &pwf, double y, double x
     return get_first_dot(pwf, y, x_start, x_end, [](double y_cand, double y_ref){return safecomp::le(y_cand, y_ref);});
 }
 
+// Analyse a piece-wise linear function and return the first dot of the last piece fully above a given y in an interval
+Dot get_first_dot_of_last_piece_above(Piecewise_linear_function const &pwf, double y, double x_start, double x_end)
+{
+    double cur_x_start = x_start;
+    do
+    {
+        // search the first dot satisfying the condition
+        Dot dot = get_first_dot_above(pwf, y, cur_x_start, x_end);
+        // if not found, return (nan,nan)
+        if(std::isnan(dot._x))
+        {
+            return dot;
+        }
+        // search the lowest dot in the interval [dot._x, x_end]
+        Dot lowest_dot = get_lowest_dot(pwf, dot._x, x_end);
+        // if the lowest dot is still above y, we are in the last piece above y => return the first dot of this piece
+        if(safecomp::ge(lowest_dot._y, y))
+        {
+            // if the lowest dot is still above y, we are in the last piece above y => return the first dot of this piece
+            return dot;
+        }
+        // otherwise, try again after the lowest dot
+        // if the whole segment after the dot is satisfying the condition, return it
+        cur_x_start = lowest_dot._x;
+    } while (true);
+}
+// Analyse a piece-wise linear function and return the first dot of the last piece fully below a given y in an interval
+Dot get_first_dot_of_last_piece_below(Piecewise_linear_function const &pwf, double y, double x_start, double x_end)
+{
+    double cur_x_start = x_start;
+    do
+    {
+        // search the first dot satisfying the condition
+        Dot dot = get_first_dot_below(pwf, y, cur_x_start, x_end);
+        // if not found, return (nan,nan)
+        if(std::isnan(dot._x))
+        {
+            return dot;
+        }
+        // search the highest dot in the interval [dot._x, x_end]
+        Dot highest_dot = get_highest_dot(pwf, dot._x, x_end);
+        // if the highest dot is still below y, we are in the last piece below y => return the first dot of this piece
+        if(safecomp::le(highest_dot._y, y))
+        {
+            // if the highest dot is still below y, we are in the last piece below y => return the first dot of this piece
+            return dot;
+        }
+        // otherwise, try again after the highest dot
+        // if the whole segment after the dot is satisfying the condition, return it
+        cur_x_start = highest_dot._x;
+    } while (true);
+}
+
 // Analyse a piece-wise linear function and return the last dot satisfying a condition in an interval
 template<typename Fun>
 Dot get_last_dot(Piecewise_linear_function const &pwf, double y, double x_start, double x_end, Fun comp)
@@ -365,50 +460,39 @@ Dot get_last_dot(Piecewise_linear_function const &pwf, double y, double x_start,
     do
     {
         auto const segment = Segment{*std::next(cur_it), *cur_it};
-        // segment fully after interval
-        if(safecomp::gt(segment._from._x, x_end))
-        {
-            continue;
-        }
         // segment fully before interval => not found
-        if(safecomp::gt(x_start, segment._to._x))
+        if(safecomp::le(segment._to._x, x_start) && safecomp::lt(segment._from._x, x_start))
         {
             return {std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN()};
         }
-        // special case for vertical segment
-        if(std::isnan(segment.get_slope()))
+        // segment fully after interval => not found
+        if(safecomp::lt(x_end, segment._from._x))
         {
-            // last dot valid
-            if(comp(segment._to._y, y))
-            {
-                return segment._to;
-            }
-            // second dot valid
-            if(comp(segment._from._y, y))
-            {
-                return {segment._from._x, y};
-            }
             continue;
         }
-        //get the intersection in [x_start, x_end]
+        // special case for vertical segment
+        if(segment.is_vertical())
+        {
+            // to be valid, the segment must follow the tendancy
+            // hence we should have check the to dot in the previous iteration
+            continue;
+        }
+        //get the intersection in [x_start, x_end[
         double x1 = std::max(x_start, segment._from._x);
         double x2 = std::min(x_end, segment._to._x);
         Segment intersection = {{x1, segment.get_y(x1)}, {x2, segment.get_y(x2)}};
-        // if last point is valid => ok
-        if(comp(intersection._to._y, y))
+        // test the 'to' dot only if it is strictly contained in the current segment
+        if(segment.x_in_range(intersection._to._x) && comp(intersection._to._y, y))
         {
             return intersection._to;
         }
-        // if y is in the range => compute x
-        else if(intersection.y_in_range(y))
+        // if first point is valid => ok
+        if(comp(intersection._from._y, y))
         {
-            return {intersection.get_x(y), y};
+            return intersection._from;
         }
         // the intersection is not valid => go on
-        else
-        {
-            continue;
-        }
+        continue;
     }while(++cur_it != --pwf.rend());
 
     // out of bound => not found

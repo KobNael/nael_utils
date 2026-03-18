@@ -152,7 +152,7 @@ TEST(ratio_periods, get_inter)
 
     interRes = get_inter(myRatioList, mylist);
     ASSERT_EQ(interRes, expRes);
-    //Forbidden : do not compile
+    //Forbidden : does not compile
     //interRes = get_inter(mylist, myRatioList);
 
     //one empty LTimePeriod

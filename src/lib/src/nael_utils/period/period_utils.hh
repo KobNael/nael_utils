@@ -362,9 +362,11 @@ LRatioPeriod reduce_right(LRatioPeriod const &periods, boost::posix_time::time_d
 
 /**
  * @brief Collect the capa_period with enough capacity and return them as time_period
+ * @remark The adjacent periods with enough capacity will be merged together
  * @param periods the list of capa_periods
  * @param min the minimal capacity
  * @return the corresponding time_periods
+ * @pre the lists must be sorted and contain disjoint periods
  */
 LTimePeriod get_eligible_periods(LCapaPeriod const &periods, int64_t min);
 
