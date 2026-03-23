@@ -14,7 +14,7 @@
 class stream_io: public ::testing::Test {
 protected:
     //SetUp (fill a basic context)
-	virtual void SetUp()
+	void SetUp() override
     {
         //Fill the context
         _context.bool_att=false;
