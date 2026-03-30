@@ -359,7 +359,7 @@ Dot get_first_dot(Piecewise_linear_function const &pwf, double y, double x_start
             // hence we should check the to dot, it will be processed in the next iteration
             continue;
         }
-        //get the intersection in [x_start, x_end[
+        //get the intersection in [x_start, x_end]
         double x1 = std::max(x_start, segment._from._x);
         double x2 = std::min(x_end, segment._to._x);
         Segment intersection = {{x1, segment.get_y(x1)}, {x2, segment.get_y(x2)}};
@@ -397,10 +397,10 @@ Dot get_first_dot_below(Piecewise_linear_function const &pwf, double y, double x
 {
     return get_first_dot(pwf, y, x_start, x_end, [](double y_cand, double y_ref){return safecomp::le(y_cand, y_ref);});
 }
-
-// Analyse a piece-wise linear function and return the first dot of the last piece fully above a given y in an interval
+// Analyse a piece-wise linear function and return the first dot of the last piece fully above a given y in an interval st. every dot after is still above y
 Dot get_first_dot_of_last_piece_above(Piecewise_linear_function const &pwf, double y, double x_start, double x_end)
 {
+    assert( pwf.size() > 1 );
     double cur_x_start = x_start;
     do
     {
@@ -424,9 +424,10 @@ Dot get_first_dot_of_last_piece_above(Piecewise_linear_function const &pwf, doub
         cur_x_start = lowest_dot._x;
     } while (true);
 }
-// Analyse a piece-wise linear function and return the first dot of the last piece fully below a given y in an interval
+// Analyse a piece-wise linear function and return the first dot of the last piece fully below a given y in an interval st. every dot after is still below y
 Dot get_first_dot_of_last_piece_below(Piecewise_linear_function const &pwf, double y, double x_start, double x_end)
 {
+    assert( pwf.size() > 1 );
     double cur_x_start = x_start;
     do
     {
@@ -477,7 +478,7 @@ Dot get_last_dot(Piecewise_linear_function const &pwf, double y, double x_start,
             // hence we should have check the to dot in the previous iteration
             continue;
         }
-        //get the intersection in [x_start, x_end[
+        //get the intersection in [x_start, x_end]
         double x1 = std::max(x_start, segment._from._x);
         double x2 = std::min(x_end, segment._to._x);
         Segment intersection = {{x1, segment.get_y(x1)}, {x2, segment.get_y(x2)}};
@@ -507,4 +508,78 @@ Dot get_last_dot_above(Piecewise_linear_function const &pwf, double y, double x_
 Dot get_last_dot_below(Piecewise_linear_function const &pwf, double y, double x_start, double x_end )
 {
     return get_last_dot(pwf, y, x_start, x_end, [](double y_cand, double y_ref){return safecomp::le(y_cand, y_ref);});
+}
+// Analyse a piece-wise linear function and return the last dot satisfying a condition in an interval
+template<typename Fun>
+Dot get_last_dot_of_first_piece(Piecewise_linear_function const &pwf, double y, double x_start, double x_end, Fun comp)
+{
+    assert( pwf.size() > 1 );
+    // Init the result with (nan,nan) to be able to detect if we found a valid dot or not
+    Dot res({std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN()});
+    // Iterate on segments
+    auto cur_it = std::next(pwf.begin());
+    do
+    {
+        auto const segment = Segment{*std::prev(cur_it), *cur_it};
+        // segment fully before interval
+        if(safecomp::le(segment._to._x, x_start) && safecomp::lt(segment._from._x, x_start))
+        {
+            continue;
+        }
+        // segment fully after interval => exit
+        if(safecomp::lt(x_end, segment._from._x))
+        {
+            break;
+        }
+        // special case for vertical segment
+        if(segment.is_vertical())
+        {
+            // since we are looking for the last dot of the first piece, if we are on a vertical segment
+            // we may consider the from dot as a candidate if it is valid, but we should not consider the to dot as it may be on the next piece
+            if(comp(segment._from._y))
+            {
+                res = segment._from;
+            }
+            continue;
+        }
+        //get the intersection in [x_start, x_end]
+        double x1 = std::max(x_start, segment._from._x);
+        double x2 = std::min(x_end, segment._to._x);
+        Segment intersection = {{x1, segment.get_y(x1)}, {x2, segment.get_y(x2)}};
+        // if the from dot is not valid, break
+        if(!comp(intersection._from._y))
+        {
+            break;
+        }
+        // the from dot is valid, take it as a candidate
+        res = intersection._from;
+        // if the to dot is ok
+        if(comp(intersection._to._y))
+        {
+            // if the dot is strictly contained in the segment, take it as a candidate
+            if(safecomp::lt(intersection._to._x, segment._to._x))
+            {
+                res = intersection._to;
+            }
+            // otherwise, we may take the dot into account on the next iteration if it is valid
+            continue;
+        }
+        // the to dot is not valid, but the from dot is valid => search the intersection as the last valid dot
+        assert(intersection.y_in_range(y));
+        res = {intersection.get_x(y), y};
+        break;
+    }while(++cur_it != pwf.end());
+
+    // out of bound => not found
+    return res;
+}
+// Analyse a piece-wise linear function and return the last dot below a given y in an interval [x_start, x_end] st. every dot before is below y
+Dot get_last_dot_of_first_piece_below(Piecewise_linear_function const &pwf, double y, double x_start, double x_end)
+{
+    return get_last_dot_of_first_piece(pwf, y, x_start, x_end, [y](double y_cand){return safecomp::le(y_cand, y);});
+}
+// Analyse a piece-wise linear function and return the last dot above a given y in an interval [x_start, x_end] st. every dot before is above y
+Dot get_last_dot_of_first_piece_above(Piecewise_linear_function const &pwf, double y, double x_start, double x_end)
+{
+    return get_last_dot_of_first_piece(pwf, y, x_start, x_end, [y](double y_cand){return safecomp::ge(y_cand, y);});
 }
