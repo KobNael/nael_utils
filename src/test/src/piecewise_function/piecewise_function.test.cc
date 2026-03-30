@@ -600,7 +600,7 @@ TEST(piecewise_function, get_last_dot_of_first_piece_below)
     // Test with horizontal segment at threshold
     Piecewise_linear_function pwf_horizontal = {{0.0, 100.0}, {10.0, 50.0}, {50.0, 50.0}, {50.0, 150.0}};
     ASSERT_NO_THROW(res = get_last_dot_of_first_piece_below(pwf_horizontal, 50.0, 0.0, 40.0));
-    EXPECT_TRUE(std::isnan(res._x)) << res; // never goes below since horizontal at threshold
+    EXPECT_TRUE(std::isnan(res._x)) << res; // starts above threshold and search is limited to the first piece from x_start, where it never goes below the threshold
     EXPECT_TRUE(std::isnan(res._y)) << res;
     // Test with horizontal segment at threshold
     pwf_horizontal = {{0.0, 30.0}, {10.0, 50.0}, {50.0, 50.0}};
@@ -675,7 +675,7 @@ TEST(piecewise_function, get_last_dot_of_first_piece_above)
     // Test with horizontal segment at threshold
     Piecewise_linear_function pwf_horizontal = {{0.0, -100.0}, {10.0, -50.0}, {50.0, -50.0}, {50.0, -150.0}};
     ASSERT_NO_THROW(res = get_last_dot_of_first_piece_above(pwf_horizontal, -50.0, 0.0, 40.0));
-    EXPECT_TRUE(std::isnan(res._x)) << res; // never goes below since horizontal at threshold
+    EXPECT_TRUE(std::isnan(res._x)) << res; // starts above threshold and search is limited to the first piece from x_start, where it never goes below the threshold
     EXPECT_TRUE(std::isnan(res._y)) << res;
     // Test with horizontal segment at threshold
     pwf_horizontal = {{0.0, -30.0}, {10.0, -50.0}, {50.0, -50.0}};

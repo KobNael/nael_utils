@@ -359,7 +359,7 @@ Dot get_first_dot(Piecewise_linear_function const &pwf, double y, double x_start
             // hence we should check the to dot, it will be processed in the next iteration
             continue;
         }
-        //get the intersection in [x_start, x_end[
+        //get the intersection in [x_start, x_end]
         double x1 = std::max(x_start, segment._from._x);
         double x2 = std::min(x_end, segment._to._x);
         Segment intersection = {{x1, segment.get_y(x1)}, {x2, segment.get_y(x2)}};
@@ -400,6 +400,7 @@ Dot get_first_dot_below(Piecewise_linear_function const &pwf, double y, double x
 // Analyse a piece-wise linear function and return the first dot of the last piece fully above a given y in an interval st. every dot after is still above y
 Dot get_first_dot_of_last_piece_above(Piecewise_linear_function const &pwf, double y, double x_start, double x_end)
 {
+    assert( pwf.size() > 1 );
     double cur_x_start = x_start;
     do
     {
@@ -426,6 +427,7 @@ Dot get_first_dot_of_last_piece_above(Piecewise_linear_function const &pwf, doub
 // Analyse a piece-wise linear function and return the first dot of the last piece fully below a given y in an interval st. every dot after is still below y
 Dot get_first_dot_of_last_piece_below(Piecewise_linear_function const &pwf, double y, double x_start, double x_end)
 {
+    assert( pwf.size() > 1 );
     double cur_x_start = x_start;
     do
     {
@@ -476,7 +478,7 @@ Dot get_last_dot(Piecewise_linear_function const &pwf, double y, double x_start,
             // hence we should have check the to dot in the previous iteration
             continue;
         }
-        //get the intersection in [x_start, x_end[
+        //get the intersection in [x_start, x_end]
         double x1 = std::max(x_start, segment._from._x);
         double x2 = std::min(x_end, segment._to._x);
         Segment intersection = {{x1, segment.get_y(x1)}, {x2, segment.get_y(x2)}};
@@ -511,6 +513,7 @@ Dot get_last_dot_below(Piecewise_linear_function const &pwf, double y, double x_
 template<typename Fun>
 Dot get_last_dot_of_first_piece(Piecewise_linear_function const &pwf, double y, double x_start, double x_end, Fun comp)
 {
+    assert( pwf.size() > 1 );
     // Init the result with (nan,nan) to be able to detect if we found a valid dot or not
     Dot res({std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN()});
     // Iterate on segments
@@ -539,7 +542,7 @@ Dot get_last_dot_of_first_piece(Piecewise_linear_function const &pwf, double y, 
             }
             continue;
         }
-        //get the intersection in [x_start, x_end[
+        //get the intersection in [x_start, x_end]
         double x1 = std::max(x_start, segment._from._x);
         double x2 = std::min(x_end, segment._to._x);
         Segment intersection = {{x1, segment.get_y(x1)}, {x2, segment.get_y(x2)}};
@@ -557,9 +560,6 @@ Dot get_last_dot_of_first_piece(Piecewise_linear_function const &pwf, double y, 
             if(safecomp::lt(intersection._to._x, segment._to._x))
             {
                 res = intersection._to;
-            }
-            else
-            {
             }
             // otherwise, we may take the dot into account on the next iteration if it is valid
             continue;
