@@ -531,8 +531,12 @@ Dot get_last_dot_of_first_piece(Piecewise_linear_function const &pwf, double y, 
         // special case for vertical segment
         if(segment.is_vertical())
         {
-            // to be valid, the segment must follow the tendancy
-            // hence we should check the to dot, it will be processed in the next iteration
+            // since we are looking for the last dot of the first piece, if we are on a vertical segment
+            // we may consider the from dot as a candidate if it is valid, but we should not consider the to dot as it may be on the next piece
+            if(comp(segment._from._y))
+            {
+                res = segment._from;
+            }
             continue;
         }
         //get the intersection in [x_start, x_end[
@@ -544,10 +548,20 @@ Dot get_last_dot_of_first_piece(Piecewise_linear_function const &pwf, double y, 
         {
             break;
         }
-        // if the to dot is ok, store it as a potential 'last dot' and go on
+        // the from dot is valid, take it as a candidate
+        res = intersection._from;
+        // if the to dot is ok
         if(comp(intersection._to._y))
         {
-            res = intersection._to;
+            // if the dot is strictly contained in the segment, take it as a candidate
+            if(safecomp::lt(intersection._to._x, segment._to._x))
+            {
+                res = intersection._to;
+            }
+            else
+            {
+            }
+            // otherwise, we may take the dot into account on the next iteration if it is valid
             continue;
         }
         // the to dot is not valid, but the from dot is valid => search the intersection as the last valid dot

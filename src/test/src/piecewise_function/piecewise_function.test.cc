@@ -549,7 +549,7 @@ TEST(piecewise_function, get_last_dot_below)
 TEST(piecewise_function, get_last_dot_of_first_piece_below)
 {
     // Function with transitions from below to above threshold
-    Piecewise_linear_function pwf = {{0.0, 10.0}, {10.0, 50.0}, {20.0, 150.0}, {30.0, 200.0}, {40.0, 100.0}, {50.0, 80.0}, {60.0, 120.0}};
+    Piecewise_linear_function pwf = {{0.0, 10.0}, {10.0, 50.0}, {20.0, 150.0}, {30.0, 200.0}, {40.0, 100.0}, {50.0, 80.0}, {60.0, 120.0}, {61.0, 120.0}};
     Dot res;
 
     // Normal case: function starts below threshold and crosses above
@@ -605,7 +605,7 @@ TEST(piecewise_function, get_last_dot_of_first_piece_below)
     // Test with horizontal segment at threshold
     pwf_horizontal = {{0.0, 30.0}, {10.0, 50.0}, {50.0, 50.0}};
     ASSERT_NO_THROW(res = get_last_dot_of_first_piece_below(pwf_horizontal, 51.0, 0.0, 60.0));
-    EXPECT_TRUE(safecomp::eq(res._x, 50.0)) << res;  // Function reaches threshold and stays there
+    EXPECT_TRUE(safecomp::eq(res._x, 10.0)) << res;  // Function reaches threshold and stays there
     EXPECT_TRUE(safecomp::eq(res._y, 50.0)) << res;
 
     // Test with horizontal segment below threshold followed by vertical jump
@@ -617,14 +617,14 @@ TEST(piecewise_function, get_last_dot_of_first_piece_below)
     // Test with function starting with vertical segment above threshold
     Piecewise_linear_function pwf_start_vertical = {{0.0, 50.0}, {0.0, 150.0}, {10.0, 200.0}};
     ASSERT_NO_THROW(res = get_last_dot_of_first_piece_below(pwf_start_vertical, 100.0, 0.0, 20.0));
-    EXPECT_TRUE(std::isnan(res._x)) << res; // never goes below since horizontal at threshold
-    EXPECT_TRUE(std::isnan(res._y)) << res;
+    EXPECT_TRUE(safecomp::eq(res._x, 0.0)) << res;  // Vertical jump crosses threshold
+    EXPECT_TRUE(safecomp::eq(res._y, 50.0)) << res; // but first dot is ok
 }
 
 TEST(piecewise_function, get_last_dot_of_first_piece_above)
 {
     // Function with transitions from above to below threshold (inverted from get_last_dot_of_first_piece_below)
-    Piecewise_linear_function pwf = {{0.0, -10.0}, {10.0, -50.0}, {20.0, -150.0}, {30.0, -200.0}, {40.0, -100.0}, {50.0, -80.0}, {60.0, -120.0}};
+    Piecewise_linear_function pwf = {{0.0, -10.0}, {10.0, -50.0}, {20.0, -150.0}, {30.0, -200.0}, {40.0, -100.0}, {50.0, -80.0}, {60.0, -120.0},  {61.0, -120.0}};
     Dot res;
 
     // Normal case: function starts above threshold and crosses below
@@ -680,7 +680,7 @@ TEST(piecewise_function, get_last_dot_of_first_piece_above)
     // Test with horizontal segment at threshold
     pwf_horizontal = {{0.0, -30.0}, {10.0, -50.0}, {50.0, -50.0}};
     ASSERT_NO_THROW(res = get_last_dot_of_first_piece_above(pwf_horizontal, -51.0, 0.0, 60.0));
-    EXPECT_TRUE(safecomp::eq(res._x, 50.0)) << res;  // Function reaches threshold and stays there
+    EXPECT_TRUE(safecomp::eq(res._x, 10.0)) << res;  // Function reaches threshold and stays there
     EXPECT_TRUE(safecomp::eq(res._y, -50.0)) << res;
 
     // Test with horizontal segment above threshold followed by vertical drop
@@ -692,6 +692,6 @@ TEST(piecewise_function, get_last_dot_of_first_piece_above)
     // Test with function starting with vertical segment below threshold
     Piecewise_linear_function pwf_start_vertical = {{0.0, -50.0}, {0.0, -150.0}, {10.0, -200.0}};
     ASSERT_NO_THROW(res = get_last_dot_of_first_piece_above(pwf_start_vertical, -100.0, 0.0, 20.0));
-    EXPECT_TRUE(std::isnan(res._x)) << res; // never goes below since horizontal at threshold
-    EXPECT_TRUE(std::isnan(res._y)) << res;
+    EXPECT_TRUE(safecomp::eq(res._x, 0.0)) << res;  // Vertical jump crosses threshold
+    EXPECT_TRUE(safecomp::eq(res._y, -50.0)) << res; // but first dot is ok
 }
