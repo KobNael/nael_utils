@@ -545,3 +545,153 @@ TEST(piecewise_function, get_last_dot_below)
     EXPECT_TRUE(std::isnan(res._x)) << res;
     EXPECT_TRUE(std::isnan(res._y)) << res;
 }
+
+TEST(piecewise_function, get_last_dot_of_first_piece_below)
+{
+    // Function with transitions from below to above threshold
+    Piecewise_linear_function pwf = {{0.0, 10.0}, {10.0, 50.0}, {20.0, 150.0}, {30.0, 200.0}, {40.0, 100.0}, {50.0, 80.0}, {60.0, 120.0}};
+    Dot res;
+
+    // Normal case: function starts below threshold and crosses above
+    ASSERT_NO_THROW(res = get_last_dot_of_first_piece_below(pwf, 100.0, 0.0, 60.0));
+    EXPECT_TRUE(safecomp::eq(res._x, 15.0)) << res;  // Intersection point where function crosses y=100
+    EXPECT_TRUE(safecomp::eq(res._y, 100.0)) << res;
+
+    // Function starts above threshold immediately
+    ASSERT_NO_THROW(res = get_last_dot_of_first_piece_below(pwf, 5.0, 0.0, 60.0));
+    EXPECT_TRUE(std::isnan(res._x)) << res; // no dot below
+    EXPECT_TRUE(std::isnan(res._y)) << res;
+
+    // Function never goes above threshold in given interval
+    ASSERT_NO_THROW(res = get_last_dot_of_first_piece_below(pwf, 300.0, 0.0, 60.0));
+    EXPECT_TRUE(safecomp::eq(res._x, 60.0)) << res;  // Get the last dot
+    EXPECT_TRUE(safecomp::eq(res._y, 120.0)) << res;
+
+    // Function crosses exactly on a dot
+    ASSERT_NO_THROW(res = get_last_dot_of_first_piece_below(pwf, 50.0, 0.0, 60.0));
+    EXPECT_TRUE(safecomp::eq(res._x, 10.0)) << res;  // Exact match on dot
+    EXPECT_TRUE(safecomp::eq(res._y, 50.0)) << res;
+
+    // Test with limited interval
+    ASSERT_NO_THROW(res = get_last_dot_of_first_piece_below(pwf, 75.0, 35.0, 60.0));
+    EXPECT_TRUE(std::isnan(res._x)) << res; // no dot below
+    EXPECT_TRUE(std::isnan(res._y)) << res;
+
+    ASSERT_NO_THROW(res = get_last_dot_of_first_piece_below(pwf, 100.0, 40.0, 60.0));
+    EXPECT_TRUE(safecomp::eq(res._x, 55.0)) << res;  // Starts at the limit, goes above at 55.
+    EXPECT_TRUE(safecomp::eq(res._y, 100.0)) << res;
+
+    // Out of bounds - completely before function range
+    ASSERT_NO_THROW(res = get_last_dot_of_first_piece_below(pwf, 100.0, -20.0, -10.0));
+    EXPECT_TRUE(std::isnan(res._x)) << res;
+    EXPECT_TRUE(std::isnan(res._y)) << res;
+
+    // Out of bounds - completely after function range
+    ASSERT_NO_THROW(res = get_last_dot_of_first_piece_below(pwf, 100.0, 70.0, 80.0));
+    EXPECT_TRUE(std::isnan(res._x)) << res;
+    EXPECT_TRUE(std::isnan(res._y)) << res;
+
+    // Test with vertical segment at threshold
+    Piecewise_linear_function pwf_vertical = {{0.0, 50.0}, {10.0, 50.0}, {10.0, 150.0}, {20.0, 200.0}};
+    ASSERT_NO_THROW(res = get_last_dot_of_first_piece_below(pwf_vertical, 100.0, 0.0, 30.0));
+    EXPECT_TRUE(safecomp::eq(res._x, 10.0)) << res;  // Vertical segment crosses threshold
+    EXPECT_TRUE(safecomp::eq(res._y, 50.0)) << res;
+
+    // Test with horizontal segment at threshold
+    Piecewise_linear_function pwf_horizontal = {{0.0, 100.0}, {10.0, 50.0}, {50.0, 50.0}, {50.0, 150.0}};
+    ASSERT_NO_THROW(res = get_last_dot_of_first_piece_below(pwf_horizontal, 50.0, 0.0, 40.0));
+    EXPECT_TRUE(std::isnan(res._x)) << res; // never goes below since horizontal at threshold
+    EXPECT_TRUE(std::isnan(res._y)) << res;
+    // Test with horizontal segment at threshold
+    pwf_horizontal = {{0.0, 30.0}, {10.0, 50.0}, {50.0, 50.0}};
+    ASSERT_NO_THROW(res = get_last_dot_of_first_piece_below(pwf_horizontal, 51.0, 0.0, 60.0));
+    EXPECT_TRUE(safecomp::eq(res._x, 50.0)) << res;  // Function reaches threshold and stays there
+    EXPECT_TRUE(safecomp::eq(res._y, 50.0)) << res;
+
+    // Test with horizontal segment below threshold followed by vertical jump
+    Piecewise_linear_function pwf_horizontal_vertical = {{0.0, 80.0}, {10.0, 80.0}, {10.0, 120.0}, {20.0, 120.0}};
+    ASSERT_NO_THROW(res = get_last_dot_of_first_piece_below(pwf_horizontal_vertical, 100.0, 0.0, 30.0));
+    EXPECT_TRUE(safecomp::eq(res._x, 10.0)) << res;  // Vertical jump crosses threshold
+    EXPECT_TRUE(safecomp::eq(res._y, 80.0)) << res;
+
+    // Test with function starting with vertical segment above threshold
+    Piecewise_linear_function pwf_start_vertical = {{0.0, 50.0}, {0.0, 150.0}, {10.0, 200.0}};
+    ASSERT_NO_THROW(res = get_last_dot_of_first_piece_below(pwf_start_vertical, 100.0, 0.0, 20.0));
+    EXPECT_TRUE(std::isnan(res._x)) << res; // never goes below since horizontal at threshold
+    EXPECT_TRUE(std::isnan(res._y)) << res;
+}
+
+TEST(piecewise_function, get_last_dot_of_first_piece_above)
+{
+    // Function with transitions from above to below threshold (inverted from get_last_dot_of_first_piece_below)
+    Piecewise_linear_function pwf = {{0.0, -10.0}, {10.0, -50.0}, {20.0, -150.0}, {30.0, -200.0}, {40.0, -100.0}, {50.0, -80.0}, {60.0, -120.0}};
+    Dot res;
+
+    // Normal case: function starts above threshold and crosses below
+    ASSERT_NO_THROW(res = get_last_dot_of_first_piece_above(pwf, -100.0, 0.0, 60.0));
+    EXPECT_TRUE(safecomp::eq(res._x, 15.0)) << res;  // Intersection point where function crosses y=-100
+    EXPECT_TRUE(safecomp::eq(res._y, -100.0)) << res;
+
+    // Function starts below threshold immediately
+    ASSERT_NO_THROW(res = get_last_dot_of_first_piece_above(pwf, -5.0, 0.0, 60.0));
+    EXPECT_TRUE(std::isnan(res._x)) << res; // no dot above
+    EXPECT_TRUE(std::isnan(res._y)) << res;
+
+    // Function never goes below threshold in given interval
+    ASSERT_NO_THROW(res = get_last_dot_of_first_piece_above(pwf, -300.0, 0.0, 60.0));
+    EXPECT_TRUE(safecomp::eq(res._x, 60.0)) << res;  // Get the last dot
+    EXPECT_TRUE(safecomp::eq(res._y, -120.0)) << res;
+
+    // Function crosses exactly on a dot
+    ASSERT_NO_THROW(res = get_last_dot_of_first_piece_above(pwf, -50.0, 0.0, 60.0));
+    EXPECT_TRUE(safecomp::eq(res._x, 10.0)) << res;  // Exact match on dot
+    EXPECT_TRUE(safecomp::eq(res._y, -50.0)) << res;
+
+    // Test with limited interval
+    ASSERT_NO_THROW(res = get_last_dot_of_first_piece_above(pwf, -75.0, 35.0, 60.0));
+    EXPECT_TRUE(std::isnan(res._x)) << res; // no dot above
+    EXPECT_TRUE(std::isnan(res._y)) << res;
+
+    ASSERT_NO_THROW(res = get_last_dot_of_first_piece_above(pwf, -100.0, 40.0, 60.0));
+    EXPECT_TRUE(safecomp::eq(res._x, 55.0)) << res;  // Starts at the limit, goes below at 55.
+    EXPECT_TRUE(safecomp::eq(res._y, -100.0)) << res;
+
+    // Out of bounds - completely before function range
+    ASSERT_NO_THROW(res = get_last_dot_of_first_piece_above(pwf, -100.0, -20.0, -10.0));
+    EXPECT_TRUE(std::isnan(res._x)) << res;
+    EXPECT_TRUE(std::isnan(res._y)) << res;
+
+    // Out of bounds - completely after function range
+    ASSERT_NO_THROW(res = get_last_dot_of_first_piece_above(pwf, -100.0, 70.0, 80.0));
+    EXPECT_TRUE(std::isnan(res._x)) << res;
+    EXPECT_TRUE(std::isnan(res._y)) << res;
+
+    // Test with vertical segment at threshold
+    Piecewise_linear_function pwf_vertical = {{0.0, -50.0}, {10.0, -50.0}, {10.0, -150.0}, {20.0, -200.0}};
+    ASSERT_NO_THROW(res = get_last_dot_of_first_piece_above(pwf_vertical, -100.0, 0.0, 30.0));
+    EXPECT_TRUE(safecomp::eq(res._x, 10.0)) << res;  // Vertical segment crosses threshold
+    EXPECT_TRUE(safecomp::eq(res._y, -50.0)) << res;
+
+    // Test with horizontal segment at threshold
+    Piecewise_linear_function pwf_horizontal = {{0.0, -100.0}, {10.0, -50.0}, {50.0, -50.0}, {50.0, -150.0}};
+    ASSERT_NO_THROW(res = get_last_dot_of_first_piece_above(pwf_horizontal, -50.0, 0.0, 40.0));
+    EXPECT_TRUE(std::isnan(res._x)) << res; // never goes below since horizontal at threshold
+    EXPECT_TRUE(std::isnan(res._y)) << res;
+    // Test with horizontal segment at threshold
+    pwf_horizontal = {{0.0, -30.0}, {10.0, -50.0}, {50.0, -50.0}};
+    ASSERT_NO_THROW(res = get_last_dot_of_first_piece_above(pwf_horizontal, -51.0, 0.0, 60.0));
+    EXPECT_TRUE(safecomp::eq(res._x, 50.0)) << res;  // Function reaches threshold and stays there
+    EXPECT_TRUE(safecomp::eq(res._y, -50.0)) << res;
+
+    // Test with horizontal segment above threshold followed by vertical drop
+    Piecewise_linear_function pwf_horizontal_vertical = {{0.0, -80.0}, {10.0, -80.0}, {10.0, -120.0}, {20.0, -120.0}};
+    ASSERT_NO_THROW(res = get_last_dot_of_first_piece_above(pwf_horizontal_vertical, -100.0, 0.0, 30.0));
+    EXPECT_TRUE(safecomp::eq(res._x, 10.0)) << res;  // Vertical drop crosses threshold
+    EXPECT_TRUE(safecomp::eq(res._y, -80.0)) << res;
+
+    // Test with function starting with vertical segment below threshold
+    Piecewise_linear_function pwf_start_vertical = {{0.0, -50.0}, {0.0, -150.0}, {10.0, -200.0}};
+    ASSERT_NO_THROW(res = get_last_dot_of_first_piece_above(pwf_start_vertical, -100.0, 0.0, 20.0));
+    EXPECT_TRUE(std::isnan(res._x)) << res; // never goes below since horizontal at threshold
+    EXPECT_TRUE(std::isnan(res._y)) << res;
+}
