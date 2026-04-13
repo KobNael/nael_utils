@@ -210,6 +210,21 @@ Piecewise_linear_function sum_segments(Segment const &segment, Segment const &va
     return result;
 }
 
+// Apply a factor to a piece-wise linear function
+Piecewise_linear_function multiply(Piecewise_linear_function const &pwf, double factor)
+{
+    if(safecomp::isnull(factor))
+    {
+        throw std::invalid_argument("Factor must be non null");
+    }
+    Piecewise_linear_function result;
+    for(auto const &dot : pwf)
+    {
+        result.emplace_back(dot._x, dot._y * factor);
+    }
+    return result;
+}
+
 // Adds a non vertical variation to a piece-wise linear function
 Piecewise_linear_function add_variation(Piecewise_linear_function const &pwf, Segment const &variation)
 {

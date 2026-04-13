@@ -85,6 +85,22 @@ TEST(piecewise_function, segment_utils)
     EXPECT_TRUE(safecomp::eq(segment.get_y(-12.0), 1.0));
 }
 
+TEST(piecewise_function, multiply)
+{
+    Piecewise_linear_function fn = {{0.0, 100.0}, {100.0, 100.0}};
+    Piecewise_linear_function expected = {{0.0, 200.0}, {100.0, 200.0}};
+    Piecewise_linear_function result;
+    ASSERT_NO_THROW(result = multiply(fn, 2.0));
+    ASSERT_EQ(result, expected);
+
+    expected = {{0.0, 50.0}, {100.0, 50.0}};
+    ASSERT_NO_THROW(result = multiply(fn, 0.5));
+    ASSERT_EQ(result, expected);
+
+    // factor must be non null
+    ASSERT_THROW(multiply(fn, 0.0), std::invalid_argument);
+}
+
 
 TEST(piecewise_function, in_range)
 {

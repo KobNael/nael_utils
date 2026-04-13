@@ -100,6 +100,14 @@ struct Segment
 using Piecewise_linear_function = std::list<Dot>;
 
 /**
+ * @brief Apply a factor to a piece-wise linear function
+ * @param pwf The original piece-wise linear function.
+ * @param factor The factor to apply.
+ * @return A new piece-wise linear function with the applied factor.
+ */
+Piecewise_linear_function multiply(Piecewise_linear_function const &pwf, double factor);
+
+/**
  * @brief Adds a variation to a piece-wise linear function
  * @param pwf The original piece-wise linear function.
  * @param variation The variation to add.
