@@ -118,6 +118,14 @@ std::pair<double, double> get_y(Piecewise_linear_function const &pwf, double x);
 Piecewise_linear_function multiply(Piecewise_linear_function const &pwf, double factor);
 
 /**
+ * @brief Compute the upper convex envelope of two piece-wise linear functions
+ * @param lhs The first piece-wise linear function.
+ * @param rhs The second piece-wise linear function.
+ * @return A new piece-wise linear function representing the upper convex envelope of the two input functions.
+ */
+Piecewise_linear_function get_upper_convex_envelope(Piecewise_linear_function const &lhs, Piecewise_linear_function const &rhs);
+
+/**
  * @brief Adds a variation to a piece-wise linear function
  * @param pwf The original piece-wise linear function.
  * @param variation The variation to add.

@@ -3,11 +3,13 @@
  */
 #include <nael_utils/piecewise_function/piecewise_function.hh>
 
+#include <nael_utils/log/log.hh>
 #include <nael_utils/safe_comp/safe_comp.hh>
 
 #include <algorithm>
 #include <cassert>
 #include <ranges>
+#include <set>
 #include <iostream>
 
 //================//
@@ -229,6 +231,11 @@ std::pair<double, double> get_y(Piecewise_linear_function const &pwf, double x)
         {
             return {segment.get_y(x), std::numeric_limits<double>::quiet_NaN()};
         }
+        // exactly last dot
+        if(std::next(cur_it) == pwf.end() && safecomp::eq(cur_it->_x, x))
+        {
+            return {cur_it->_y, std::numeric_limits<double>::quiet_NaN()};
+        }
     }while(++cur_it != pwf.end());
     // not found, x is out of bounds
     return std::make_pair(std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN());
@@ -248,6 +255,58 @@ Piecewise_linear_function multiply(Piecewise_linear_function const &pwf, double 
     }
     return result;
 }
+
+// Compute the upper convex envelope of two piece-wise linear functions
+Piecewise_linear_function get_upper_convex_envelope(Piecewise_linear_function const &lhs, Piecewise_linear_function const &rhs)
+{
+    Piecewise_linear_function upper_convex_envelope;
+    // collect every x coordinate of the two functions
+    std::set<double> x_coords;
+    std::ranges::for_each(lhs, [&x_coords](Dot const &dot){x_coords.insert(dot._x);});
+    std::ranges::for_each(rhs, [&x_coords](Dot const &dot){x_coords.insert(dot._x);});
+    // get the minimal value for each x value
+    for(auto const &x : x_coords)
+    {
+        auto [y_lhs, y_lhs_second] = get_y(lhs, x);
+        auto [y_rhs, y_rhs_second] = get_y(rhs, x);
+        std::cerr << "x=" << x << ", y_lhs=" << y_lhs << ", y_rhs=" << y_rhs << std::endl;
+        assert(!std::isnan(y_lhs) || !std::isnan(y_rhs));
+        // only one value
+        if(std::isnan(y_lhs))
+        {
+            std::cerr << "min=" << std::min(y_lhs, y_rhs) << std::endl;
+            upper_convex_envelope.emplace_back(x, y_rhs);
+        }
+        else if(std::isnan(y_rhs))
+        {
+            std::cerr << "min=" << std::min(y_lhs, y_rhs) << std::endl;
+            upper_convex_envelope.emplace_back(x, y_lhs);
+        }
+        // none are vertical
+        else if(std::isnan(y_lhs_second) && std::isnan(y_rhs_second))
+        {
+            // take the minimum value
+            upper_convex_envelope.emplace_back(x, std::min(y_lhs, y_rhs));
+        }
+        // both are vertical segments
+        else if(!std::isnan(y_lhs_second) && !std::isnan(y_rhs_second))
+        {
+            // take both minimum values
+            upper_convex_envelope.emplace_back(x, std::min(y_lhs, y_rhs));
+            upper_convex_envelope.emplace_back(x, std::min(y_lhs_second, y_rhs_second));
+        }
+        else // only one vertical segment, take the minimal value
+        {
+            auto values = {y_lhs, y_lhs_second, y_rhs, y_rhs_second};
+            io::print_range( std::cerr << "values: ", values) << std::endl;
+            std::cerr << "min=" << *std::ranges::min_element(values) << std::endl;
+            upper_convex_envelope.emplace_back(x, *std::ranges::min_element(values));
+        }
+    }
+
+    return upper_convex_envelope;
+}
+
 
 // Adds a non vertical variation to a piece-wise linear function
 Piecewise_linear_function add_variation(Piecewise_linear_function const &pwf, Segment const &variation)
