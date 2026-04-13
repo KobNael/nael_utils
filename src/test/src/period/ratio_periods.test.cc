@@ -31,6 +31,8 @@ TEST(ratio_periods, basics)
     ASSERT_EQ(rp1._ratio, 1.);
     ASSERT_EQ(rp1.begin(), p.begin());
     ASSERT_EQ(rp1.end(), p.end());
+
+    ASSERT_EQ(rp1.last(), rp1._period.last());
 }
 
 TEST(ratio_periods, get_union)

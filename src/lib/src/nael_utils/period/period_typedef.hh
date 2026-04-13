@@ -56,6 +56,8 @@ public:
     boost::posix_time::ptime begin() const { return _period.begin(); }
     /** @return the end of the period */
     boost::posix_time::ptime end() const { return _period.end(); }
+    /** @return the last ptime in the period */
+    boost::posix_time::ptime last() const { return _period.last(); }
     /** @return the period duration */
     boost::posix_time::time_duration length() const { return _period.length(); }
     /** @brief Add duration to both begin and end. */
