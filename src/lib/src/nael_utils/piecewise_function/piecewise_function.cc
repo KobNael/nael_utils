@@ -210,6 +210,30 @@ Piecewise_linear_function sum_segments(Segment const &segment, Segment const &va
     return result;
 }
 
+// Get the y coordinate of a piece-wise linear function for a given x coordinate
+std::pair<double, double> get_y(Piecewise_linear_function const &pwf, double x)
+{
+    assert( pwf.size() > 1 );
+    // search first segment containing x
+    auto cur_it = std::next(pwf.begin());
+    do
+    {
+        auto const &segment = Segment{*std::prev(cur_it), *cur_it};
+        // special case for vertical segment
+        if(segment.is_vertical() && safecomp::eq(segment._from._x, x))
+        {
+            return {segment._from._y, segment._to._y};
+        }
+        // if x is in the segment bounds
+        if(segment.x_in_range(x))
+        {
+            return {segment.get_y(x), std::numeric_limits<double>::quiet_NaN()};
+        }
+    }while(++cur_it != pwf.end());
+    // not found, x is out of bounds
+    return std::make_pair(std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN());
+}
+
 // Apply a factor to a piece-wise linear function
 Piecewise_linear_function multiply(Piecewise_linear_function const &pwf, double factor)
 {

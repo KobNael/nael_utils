@@ -101,6 +101,31 @@ TEST(piecewise_function, multiply)
     ASSERT_THROW(multiply(fn, 0.0), std::invalid_argument);
 }
 
+TEST(piecewise_function, get_y)
+{
+    Piecewise_linear_function fn = {{0.0, 100.0}, {10.0, 200.0}, {20.0, 150.0}};
+    // in the bounds
+    auto [y, y_second] = get_y(fn, 5.0);
+    EXPECT_TRUE(safecomp::eq(y, 150.0));
+    EXPECT_TRUE(std::isnan(y_second));
+    // on a dot
+    std::tie(y, y_second) = get_y(fn, 10.0);
+    EXPECT_TRUE(safecomp::eq(y, 200.0));
+    EXPECT_TRUE(std::isnan(y_second));
+    // out of bounds
+    std::tie(y, y_second) = get_y(fn, -1.0);
+    EXPECT_TRUE(std::isnan(y));
+    EXPECT_TRUE(std::isnan(y_second));
+    std::tie(y, y_second) = get_y(fn, 21.0);
+    EXPECT_TRUE(std::isnan(y));
+    EXPECT_TRUE(std::isnan(y_second));
+
+    // vertical segment
+    fn = {{0.0, 100.0}, {10.0, 100.0}, {10.0, 200.0}, {20.0, 150.0}};
+    std::tie(y, y_second) = get_y(fn, 10.0);
+    EXPECT_TRUE(safecomp::eq(y, 100.0)) << y;
+    EXPECT_TRUE(safecomp::eq(y_second, 200.0)) << y_second;
+}
 
 TEST(piecewise_function, in_range)
 {
