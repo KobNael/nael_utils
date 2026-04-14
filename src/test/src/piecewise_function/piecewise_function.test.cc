@@ -145,110 +145,228 @@ TEST(piecewise_function, get_upper_convex_envelope_with_vertical_segments)
 
     // Test case 1: First function has vertical segment, second doesn't
     {
-        Piecewise_linear_function fn1 = {{0.0, 50.0}, {10.0, 100.0}, {10.0, 200.0}, {20.0, 150.0}};
-        Piecewise_linear_function fn2 = {{0.0, 80.0}, {10.0, 120.0}, {20.0, 160.0}};
-        Piecewise_linear_function expected = {{0.0, 50.0}, {10.0, 100.0}, {20.0, 150.0}};
+        Piecewise_linear_function fn1 = {
+            {0.0, 50.0},
+            {10.0, 100.0}, {10.0, 200.0},
+            {20.0, 150.0}};
+        Piecewise_linear_function fn2 = {
+            {0.0, 80.0},
+            {10.0, 120.0},
+            {20.0, 160.0}};
+        Piecewise_linear_function expected = {
+            {0.0, 50.0},
+            {10.0, 100.0}, {10.0, 120.0},
+            {20.0, 150.0}};
         EXPECT_NO_THROW(result = get_upper_convex_envelope(fn1, fn2));
         EXPECT_EQ(result, expected);
     }
 
     // Test case 2: Second function has vertical segment, first doesn't
     {
-        Piecewise_linear_function fn1 = {{0.0, 80.0}, {10.0, 120.0}, {20.0, 160.0}};
-        Piecewise_linear_function fn2 = {{0.0, 50.0}, {10.0, 100.0}, {10.0, 200.0}, {20.0, 150.0}};
-        Piecewise_linear_function expected = {{0.0, 50.0}, {10.0, 100.0}, {20.0, 150.0}};
+        Piecewise_linear_function fn1 = {
+            {0.0, 80.0},
+            {10.0, 120.0},
+            {20.0, 160.0}};
+        Piecewise_linear_function fn2 = {
+            {0.0, 50.0},
+            {10.0, 100.0}, {10.0, 200.0},
+            {20.0, 150.0}};
+        Piecewise_linear_function expected = {
+            {0.0, 50.0},
+            {10.0, 100.0}, {10.0, 120.0},
+            {20.0, 150.0}};
         EXPECT_NO_THROW(result = get_upper_convex_envelope(fn1, fn2));
         EXPECT_EQ(result, expected);
     }
 
     // Test case 3: Both functions have vertical segments at same x-coordinate
     {
-        Piecewise_linear_function fn1 = {{0.0, 50.0}, {10.0, 80.0}, {10.0, 120.0}, {20.0, 150.0}};
-        Piecewise_linear_function fn2 = {{0.0, 60.0}, {10.0, 90.0}, {10.0, 110.0}, {20.0, 140.0}};
-        Piecewise_linear_function expected = {{0.0, 50.0}, {10.0, 80.0}, {10.0, 110.0}, {20.0, 140.0}};
+        Piecewise_linear_function fn1 = {
+            {0.0, 50.0},
+            {10.0, 80.0}, {10.0, 120.0},
+            {20.0, 150.0}};
+        Piecewise_linear_function fn2 = {
+            {0.0, 60.0},
+            {10.0, 90.0}, {10.0, 110.0},
+            {20.0, 140.0}};
+        Piecewise_linear_function expected = {
+            {0.0, 50.0},
+            {10.0, 80.0}, {10.0, 110.0},
+            {20.0, 140.0}};
         EXPECT_NO_THROW(result = get_upper_convex_envelope(fn1, fn2));
         EXPECT_EQ(result, expected);
     }
 
     // Test case 4: Both functions have vertical segments at different x-coordinates
     {
-        Piecewise_linear_function fn1 = {{0.0, 50.0}, {5.0, 60.0}, {5.0, 120.0}, {15.0, 130.0}, {20.0, 140.0}};
-        Piecewise_linear_function fn2 = {{0.0, 70.0}, {10.0, 80.0}, {10.0, 110.0}, {15.0, 115.0}, {20.0, 120.0}};
-        Piecewise_linear_function expected = {{0.0, 50.0}, {5.0, 60.0}, {10.0, 80.0}, {15.0, 115.0}, {20.0, 120.0}};
+        Piecewise_linear_function fn1 = {
+            {0.0, 50.0},
+            {5.0, 60.0}, {5.0, 120.0},
+            {15.0, 130.0},
+            {20.0, 140.0}};
+        Piecewise_linear_function fn2 = {
+            {0.0, 70.0},
+            {10.0, 80.0}, {10.0, 110.0},
+            {15.0, 115.0},
+            {20.0, 120.0}};
+        Piecewise_linear_function expected = {
+            {0.0, 50.0},
+            {5.0, 60.0}, {5.0, 75.0},
+            {10.0, 80.0}, {10.0, 110.0},
+            {15.0, 115.0},
+            {20.0, 120.0}};
         EXPECT_NO_THROW(result = get_upper_convex_envelope(fn1, fn2));
         EXPECT_EQ(result, expected);
     }
 
     // Test case 5: Vertical segment at the beginning
     {
-        Piecewise_linear_function fn1 = {{0.0, 80.0}, {0.0, 120.0}, {10.0, 150.0}, {20.0, 180.0}};
-        Piecewise_linear_function fn2 = {{0.0, 100.0}, {10.0, 130.0}, {20.0, 160.0}};
-        Piecewise_linear_function expected = {{0.0, 80.0}, {10.0, 130.0}, {20.0, 160.0}};
+        Piecewise_linear_function fn1 = {
+            {0.0, 80.0}, {0.0, 120.0},
+            {10.0, 150.0},
+            {20.0, 180.0}};
+        Piecewise_linear_function fn2 = {
+            {0.0, 100.0},
+            {10.0, 130.0},
+            {20.0, 160.0}};
+        Piecewise_linear_function expected = {
+            {0.0, 80.0}, {0.0, 100.0},
+            {10.0, 130.0},
+            {20.0, 160.0}};
         EXPECT_NO_THROW(result = get_upper_convex_envelope(fn1, fn2));
         EXPECT_EQ(result, expected);
     }
 
     // Test case 6: Vertical segment at the end
     {
-        Piecewise_linear_function fn1 = {{0.0, 100.0}, {10.0, 120.0}, {20.0, 140.0}, {20.0, 200.0}};
-        Piecewise_linear_function fn2 = {{0.0, 90.0}, {10.0, 110.0}, {20.0, 130.0}};
-        Piecewise_linear_function expected = {{0.0, 90.0}, {10.0, 110.0}, {20.0, 130.0}};
+        Piecewise_linear_function fn1 = {
+            {0.0, 100.0},
+            {10.0, 120.0},
+            {20.0, 140.0},
+            {20.0, 200.0}};
+        Piecewise_linear_function fn2 = {
+            {0.0, 90.0},
+            {10.0, 110.0},
+            {20.0, 130.0}};
+        Piecewise_linear_function expected = {
+            {0.0, 90.0},
+            {10.0, 110.0},
+            {20.0, 130.0}};
         EXPECT_NO_THROW(result = get_upper_convex_envelope(fn1, fn2));
         EXPECT_EQ(result, expected);
     }
 
     // Test case 7: Multiple vertical segments in both functions
     {
-        Piecewise_linear_function fn1 = {{0.0, 60.0}, {0.0, 80.0}, {5.0, 90.0}, {5.0, 110.0}, {15.0, 120.0}, {15.0, 140.0}, {20.0, 150.0}};
-        Piecewise_linear_function fn2 = {{0.0, 70.0}, {5.0, 85.0}, {5.0, 95.0}, {10.0, 100.0}, {10.0, 130.0}, {15.0, 135.0}, {20.0, 145.0}};
-        Piecewise_linear_function expected = {{0.0, 60.0}, {5.0, 85.0}, {10.0, 100.0}, {15.0, 120.0}, {20.0, 145.0}};
+        Piecewise_linear_function fn1 = {
+            {0.0, 60.0}, {0.0, 80.0},
+            {5.0, 90.0}, {5.0, 110.0},
+            {15.0, 120.0}, {15.0, 140.0},
+            {20.0, 150.0}};
+        Piecewise_linear_function fn2 = {
+            {0.0, 70.0},
+            {5.0, 85.0}, {5.0, 95.0},
+            {10.0, 100.0}, {10.0, 130.0},
+            {15.0, 135.0},
+            {20.0, 145.0}};
+        Piecewise_linear_function expected = {
+            {0.0, 60.0}, {0.0, 70.0},
+            {5.0, 85.0}, {5.0, 95.0},
+            {10.0, 100.0}, {10.0, 115.0},
+            {15.0, 120.0}, {15.0, 135.0},
+            {20.0, 145.0}};
         EXPECT_NO_THROW(result = get_upper_convex_envelope(fn1, fn2));
-        io::print_range(std::cerr << "expected: ", expected) << std::endl;
-        io::print_range(std::cerr << "result: ", result) << std::endl;
         EXPECT_EQ(result, expected);
     }
 
     // Test case 8: Vertical segments with different orientations (up and down)
     {
-        Piecewise_linear_function fn1 = {{0.0, 100.0}, {10.0, 150.0}, {10.0, 80.0}, {20.0, 120.0}};  // Drop at x=10
-        Piecewise_linear_function fn2 = {{0.0, 90.0}, {10.0, 70.0}, {10.0, 140.0}, {20.0, 160.0}};   // Jump at x=10
-        Piecewise_linear_function expected = {{0.0, 90.0}, {10.0, 70.0}, {10.0, 80.0}, {20.0, 120.0}};
+        Piecewise_linear_function fn1 = {
+            {0.0, 100.0},
+            {10.0, 150.0}, {10.0, 80.0},
+            {20.0, 120.0}};  // Drop at x=10
+        Piecewise_linear_function fn2 = {
+            {0.0, 90.0},
+            {10.0, 70.0}, {10.0, 140.0},
+            {20.0, 160.0}};   // Jump at x=10
+        Piecewise_linear_function expected = {
+            {0.0, 90.0},
+            {10.0, 70.0}, {10.0, 80.0},
+            {20.0, 120.0}};
         EXPECT_NO_THROW(result = get_upper_convex_envelope(fn1, fn2));
         EXPECT_EQ(result, expected);
     }
 
     // Test case 9: Overlapping vertical segments with same x but different y ranges
     {
-        Piecewise_linear_function fn1 = {{0.0, 50.0}, {10.0, 100.0}, {10.0, 200.0}, {20.0, 150.0}};  // Vertical from 100 to 200
-        Piecewise_linear_function fn2 = {{0.0, 60.0}, {10.0, 120.0}, {10.0, 180.0}, {20.0, 160.0}};  // Vertical from 120 to 180
-        Piecewise_linear_function expected = {{0.0, 50.0}, {10.0, 100.0}, {10.0, 180.0}, {20.0, 150.0}};
+        Piecewise_linear_function fn1 = {
+            {0.0, 50.0},
+            {10.0, 100.0}, {10.0, 200.0},
+            {20.0, 150.0}};  // Vertical from 100 to 200
+        Piecewise_linear_function fn2 = {
+            {0.0, 60.0},
+            {10.0, 120.0}, {10.0, 180.0},
+            {20.0, 160.0}};  // Vertical from 120 to 180
+        Piecewise_linear_function expected = {
+            {0.0, 50.0},
+            {10.0, 100.0}, {10.0, 180.0},
+            {20.0, 150.0}};
         EXPECT_NO_THROW(result = get_upper_convex_envelope(fn1, fn2));
         EXPECT_EQ(result, expected);
     }
 
     // Test case 10: One function entirely vertical, other normal
     {
-        Piecewise_linear_function fn1 = {{10.0, 50.0}, {10.0, 150.0}};  // Entirely vertical
-        Piecewise_linear_function fn2 = {{0.0, 80.0}, {10.0, 120.0}, {20.0, 160.0}};
-        Piecewise_linear_function expected = {{10.0, 50.0}};  // Only the intersection point
+        Piecewise_linear_function fn1 = {
+            {10.0, 50.0},
+            {10.0, 150.0}};  // Entirely vertical
+        Piecewise_linear_function fn2 = {
+            {0.0, 80.0},
+            {10.0, 120.0},
+            {20.0, 160.0}};
+        Piecewise_linear_function expected = {
+            {0.0, 80.0},
+            {10.0, 50.0}, {10.0, 120.0},
+            {20.0, 160.0}};  // Only the intersection point
         EXPECT_NO_THROW(result = get_upper_convex_envelope(fn1, fn2));
         EXPECT_EQ(result, expected);
     }
 
     // Test case 11: Vertical segments creating discontinuities
     {
-        Piecewise_linear_function fn1 = {{0.0, 100.0}, {5.0, 50.0}, {5.0, 150.0}, {10.0, 200.0}};   // Jump up at x=5
-        Piecewise_linear_function fn2 = {{0.0, 80.0}, {5.0, 120.0}, {5.0, 60.0}, {10.0, 110.0}};    // Jump down at x=5
-        Piecewise_linear_function expected = {{0.0, 80.0}, {5.0, 50.0}, {10.0, 110.0}};
+        Piecewise_linear_function fn1 = {
+            {0.0, 100.0},
+            {5.0, 50.0}, {5.0, 150.0},
+            {10.0, 200.0}};   // Jump up at x=5
+        Piecewise_linear_function fn2 = {
+            {0.0, 80.0},
+            {5.0, 120.0}, {5.0, 60.0},
+            {10.0, 110.0}};    // Jump down at x=5
+        Piecewise_linear_function expected = {
+            {0.0, 80.0},
+            {5.0, 50.0}, {5.0, 60.0},
+            {10.0, 110.0}};
         EXPECT_NO_THROW(result = get_upper_convex_envelope(fn1, fn2));
         EXPECT_EQ(result, expected);
     }
 
     // Test case 12: Adjacent vertical segments
     {
-        Piecewise_linear_function fn1 = {{0.0, 60.0}, {5.0, 80.0}, {5.0, 120.0}, {6.0, 125.0}, {6.0, 135.0}, {10.0, 140.0}};
-        Piecewise_linear_function fn2 = {{0.0, 70.0}, {5.0, 90.0}, {6.0, 95.0}, {10.0, 130.0}};
-        Piecewise_linear_function expected = {{0.0, 60.0}, {5.0, 80.0}, {6.0, 95.0}, {10.0, 130.0}};
+        Piecewise_linear_function fn1 = {
+            {0.0, 60.0},
+            {5.0, 80.0}, {5.0, 120.0},
+            {6.0, 125.0}, {6.0, 135.0},
+            {10.0, 140.0}};
+        Piecewise_linear_function fn2 = {
+            {0.0, 70.0},
+            {5.0, 90.0},
+            {6.0, 95.0},
+            {10.0, 130.0}};
+        Piecewise_linear_function expected = {
+            {0.0, 60.0},
+            {5.0, 80.0}, {5.0, 90.0},
+            {6.0, 95.0},
+            {10.0, 130.0}};
         EXPECT_NO_THROW(result = get_upper_convex_envelope(fn1, fn2));
         EXPECT_EQ(result, expected);
     }

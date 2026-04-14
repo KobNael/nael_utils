@@ -269,20 +269,14 @@ Piecewise_linear_function get_upper_convex_envelope(Piecewise_linear_function co
     {
         auto [y_lhs, y_lhs_second] = get_y(lhs, x);
         auto [y_rhs, y_rhs_second] = get_y(rhs, x);
-        std::cerr << "x=" << x << ", y_lhs=" << y_lhs << ", y_rhs=" << y_rhs << std::endl;
         assert(!std::isnan(y_lhs) || !std::isnan(y_rhs));
-        // only one value
-        if(std::isnan(y_lhs))
+        // x out of bounds for one of the functions, take the other one
+        if(std::isnan(y_lhs) || std::isnan(y_rhs))
         {
-            std::cerr << "min=" << std::min(y_lhs, y_rhs) << std::endl;
-            upper_convex_envelope.emplace_back(x, y_rhs);
+            // take the maximum value
+            double value = std::isnan(y_lhs) ? y_rhs : y_lhs;
+            upper_convex_envelope.emplace_back(x, value);
         }
-        else if(std::isnan(y_rhs))
-        {
-            std::cerr << "min=" << std::min(y_lhs, y_rhs) << std::endl;
-            upper_convex_envelope.emplace_back(x, y_lhs);
-        }
-        // none are vertical
         else if(std::isnan(y_lhs_second) && std::isnan(y_rhs_second))
         {
             // take the minimum value
@@ -295,12 +289,20 @@ Piecewise_linear_function get_upper_convex_envelope(Piecewise_linear_function co
             upper_convex_envelope.emplace_back(x, std::min(y_lhs, y_rhs));
             upper_convex_envelope.emplace_back(x, std::min(y_lhs_second, y_rhs_second));
         }
-        else // only one vertical segment, take the minimal value
+        // only one is vertical
+        else
         {
-            auto values = {y_lhs, y_lhs_second, y_rhs, y_rhs_second};
-            io::print_range( std::cerr << "values: ", values) << std::endl;
-            std::cerr << "min=" << *std::ranges::min_element(values) << std::endl;
-            upper_convex_envelope.emplace_back(x, *std::ranges::min_element(values));
+            double first_value = std::min(y_lhs, y_rhs);
+            double second_value = std::isnan(y_rhs_second)
+            ? std::min(y_lhs_second, y_rhs)
+            : std::min(y_rhs_second, y_lhs);
+            // add the first dot in any case
+            upper_convex_envelope.emplace_back(x, first_value);
+            // add the second dot only if it is different from the first one
+            if(!safecomp::eq(first_value, second_value))
+            {
+                upper_convex_envelope.emplace_back(x, second_value);
+            }
         }
     }
 
