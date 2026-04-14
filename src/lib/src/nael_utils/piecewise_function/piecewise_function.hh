@@ -100,6 +100,32 @@ struct Segment
 using Piecewise_linear_function = std::list<Dot>;
 
 /**
+ * @brief Get the y coordinate of a piece-wise linear function for a given x coordinate
+ * @param pwf The piece-wise linear function.
+ * @param x The x coordinate.
+ * @return The corresponding y coordinate, or nan if x is out of bounds.
+ * @remark this function returns two values in case of vertical segment,
+ * the second value will be nan in case of non vertical segment
+ */
+std::pair<double, double> get_y(Piecewise_linear_function const &pwf, double x);
+
+/**
+ * @brief Apply a factor to a piece-wise linear function
+ * @param pwf The original piece-wise linear function.
+ * @param factor The factor to apply.
+ * @return A new piece-wise linear function with the applied factor.
+ */
+Piecewise_linear_function multiply(Piecewise_linear_function const &pwf, double factor);
+
+/**
+ * @brief Compute the upper convex envelope of two piece-wise linear functions
+ * @param lhs The first piece-wise linear function.
+ * @param rhs The second piece-wise linear function.
+ * @return A new piece-wise linear function representing the upper convex envelope of the two input functions.
+ */
+Piecewise_linear_function get_lower_envelope(Piecewise_linear_function const &lhs, Piecewise_linear_function const &rhs);
+
+/**
  * @brief Adds a variation to a piece-wise linear function
  * @param pwf The original piece-wise linear function.
  * @param variation The variation to add.

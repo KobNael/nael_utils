@@ -3,11 +3,13 @@
  */
 #include <nael_utils/piecewise_function/piecewise_function.hh>
 
+#include <nael_utils/log/log.hh>
 #include <nael_utils/safe_comp/safe_comp.hh>
 
 #include <algorithm>
 #include <cassert>
 #include <ranges>
+#include <set>
 #include <iostream>
 
 //================//
@@ -209,6 +211,104 @@ Piecewise_linear_function sum_segments(Segment const &segment, Segment const &va
 
     return result;
 }
+
+// Get the y coordinate of a piece-wise linear function for a given x coordinate
+std::pair<double, double> get_y(Piecewise_linear_function const &pwf, double x)
+{
+    assert( pwf.size() > 1 );
+    // search first segment containing x
+    auto cur_it = std::next(pwf.begin());
+    do
+    {
+        auto const &segment = Segment{*std::prev(cur_it), *cur_it};
+        // special case for vertical segment
+        if(segment.is_vertical() && safecomp::eq(segment._from._x, x))
+        {
+            return {segment._from._y, segment._to._y};
+        }
+        // if x is in the segment bounds
+        if(segment.x_in_range(x))
+        {
+            return {segment.get_y(x), std::numeric_limits<double>::quiet_NaN()};
+        }
+        // exactly last dot
+        if(std::next(cur_it) == pwf.end() && safecomp::eq(cur_it->_x, x))
+        {
+            return {cur_it->_y, std::numeric_limits<double>::quiet_NaN()};
+        }
+    }while(++cur_it != pwf.end());
+    // not found, x is out of bounds
+    return std::make_pair(std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN());
+}
+
+// Apply a factor to a piece-wise linear function
+Piecewise_linear_function multiply(Piecewise_linear_function const &pwf, double factor)
+{
+    if(safecomp::isnull(factor) || std::isnan(factor))
+    {
+        throw std::invalid_argument("Factor must be a valid non null number");
+    }
+    Piecewise_linear_function result;
+    for(auto const &dot : pwf)
+    {
+        result.emplace_back(dot._x, dot._y * factor);
+    }
+    return result;
+}
+
+// Compute the upper convex envelope of two piece-wise linear functions
+Piecewise_linear_function get_lower_envelope(Piecewise_linear_function const &lhs, Piecewise_linear_function const &rhs)
+{
+    Piecewise_linear_function upper_convex_envelope;
+    // collect every x coordinate of the two functions
+    std::set<double> x_coords;
+    std::ranges::for_each(lhs, [&x_coords](Dot const &dot){x_coords.insert(dot._x);});
+    std::ranges::for_each(rhs, [&x_coords](Dot const &dot){x_coords.insert(dot._x);});
+    // get the minimal value for each x value
+    for(auto const &x : x_coords)
+    {
+        auto [y_lhs, y_lhs_second] = get_y(lhs, x);
+        auto [y_rhs, y_rhs_second] = get_y(rhs, x);
+        assert(!std::isnan(y_lhs) || !std::isnan(y_rhs));
+        // x out of bounds for one of the functions, take the other one
+        if(std::isnan(y_lhs) || std::isnan(y_rhs))
+        {
+            // take the maximum value
+            double value = std::isnan(y_lhs) ? y_rhs : y_lhs;
+            upper_convex_envelope.emplace_back(x, value);
+        }
+        else if(std::isnan(y_lhs_second) && std::isnan(y_rhs_second))
+        {
+            // take the minimum value
+            upper_convex_envelope.emplace_back(x, std::min(y_lhs, y_rhs));
+        }
+        // both are vertical segments
+        else if(!std::isnan(y_lhs_second) && !std::isnan(y_rhs_second))
+        {
+            // take both minimum values
+            upper_convex_envelope.emplace_back(x, std::min(y_lhs, y_rhs));
+            upper_convex_envelope.emplace_back(x, std::min(y_lhs_second, y_rhs_second));
+        }
+        // only one is vertical
+        else
+        {
+            double first_value = std::min(y_lhs, y_rhs);
+            double second_value = std::isnan(y_rhs_second)
+            ? std::min(y_lhs_second, y_rhs)
+            : std::min(y_rhs_second, y_lhs);
+            // add the first dot in any case
+            upper_convex_envelope.emplace_back(x, first_value);
+            // add the second dot only if it is different from the first one
+            if(!safecomp::eq(first_value, second_value))
+            {
+                upper_convex_envelope.emplace_back(x, second_value);
+            }
+        }
+    }
+
+    return upper_convex_envelope;
+}
+
 
 // Adds a non vertical variation to a piece-wise linear function
 Piecewise_linear_function add_variation(Piecewise_linear_function const &pwf, Segment const &variation)
