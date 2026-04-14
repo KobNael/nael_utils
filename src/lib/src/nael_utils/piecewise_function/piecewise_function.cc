@@ -244,9 +244,9 @@ std::pair<double, double> get_y(Piecewise_linear_function const &pwf, double x)
 // Apply a factor to a piece-wise linear function
 Piecewise_linear_function multiply(Piecewise_linear_function const &pwf, double factor)
 {
-    if(safecomp::isnull(factor))
+    if(safecomp::isnull(factor) || std::isnan(factor))
     {
-        throw std::invalid_argument("Factor must be non null");
+        throw std::invalid_argument("Factor must be a valid non null number");
     }
     Piecewise_linear_function result;
     for(auto const &dot : pwf)
@@ -257,7 +257,7 @@ Piecewise_linear_function multiply(Piecewise_linear_function const &pwf, double 
 }
 
 // Compute the upper convex envelope of two piece-wise linear functions
-Piecewise_linear_function get_upper_convex_envelope(Piecewise_linear_function const &lhs, Piecewise_linear_function const &rhs)
+Piecewise_linear_function get_lower_envelope(Piecewise_linear_function const &lhs, Piecewise_linear_function const &rhs)
 {
     Piecewise_linear_function upper_convex_envelope;
     // collect every x coordinate of the two functions

@@ -128,18 +128,18 @@ TEST(piecewise_function, get_y)
     EXPECT_TRUE(safecomp::eq(y_second, 200.0)) << y_second;
 }
 
-TEST(piecewise_function, get_upper_convex_envelope)
+TEST(piecewise_function, get_lower_envelope)
 {
     Piecewise_linear_function fn1 = {{0.0, 100.0}, {10.0, 200.0}, {20.0, 150.0}};
     Piecewise_linear_function fn2 = {{0.0, 150.0}, {10.0, 150.0}, {20.0, 150.0}};
     Piecewise_linear_function expected = {{0.0, 100.0}, {10.0, 150.0}, {20.0, 150.0}};
     Piecewise_linear_function result;
-    EXPECT_NO_THROW(result = get_upper_convex_envelope(fn1, fn2));
+    EXPECT_NO_THROW(result = get_lower_envelope(fn1, fn2));
     EXPECT_EQ(result, expected);
 
 }
 
-TEST(piecewise_function, get_upper_convex_envelope_with_vertical_segments)
+TEST(piecewise_function, get_lower_envelope_with_vertical_segments)
 {
     Piecewise_linear_function result;
 
@@ -157,7 +157,7 @@ TEST(piecewise_function, get_upper_convex_envelope_with_vertical_segments)
             {0.0, 50.0},
             {10.0, 100.0}, {10.0, 120.0},
             {20.0, 150.0}};
-        EXPECT_NO_THROW(result = get_upper_convex_envelope(fn1, fn2));
+        EXPECT_NO_THROW(result = get_lower_envelope(fn1, fn2));
         EXPECT_EQ(result, expected);
     }
 
@@ -175,7 +175,7 @@ TEST(piecewise_function, get_upper_convex_envelope_with_vertical_segments)
             {0.0, 50.0},
             {10.0, 100.0}, {10.0, 120.0},
             {20.0, 150.0}};
-        EXPECT_NO_THROW(result = get_upper_convex_envelope(fn1, fn2));
+        EXPECT_NO_THROW(result = get_lower_envelope(fn1, fn2));
         EXPECT_EQ(result, expected);
     }
 
@@ -193,7 +193,7 @@ TEST(piecewise_function, get_upper_convex_envelope_with_vertical_segments)
             {0.0, 50.0},
             {10.0, 80.0}, {10.0, 110.0},
             {20.0, 140.0}};
-        EXPECT_NO_THROW(result = get_upper_convex_envelope(fn1, fn2));
+        EXPECT_NO_THROW(result = get_lower_envelope(fn1, fn2));
         EXPECT_EQ(result, expected);
     }
 
@@ -215,7 +215,7 @@ TEST(piecewise_function, get_upper_convex_envelope_with_vertical_segments)
             {10.0, 80.0}, {10.0, 110.0},
             {15.0, 115.0},
             {20.0, 120.0}};
-        EXPECT_NO_THROW(result = get_upper_convex_envelope(fn1, fn2));
+        EXPECT_NO_THROW(result = get_lower_envelope(fn1, fn2));
         EXPECT_EQ(result, expected);
     }
 
@@ -233,7 +233,7 @@ TEST(piecewise_function, get_upper_convex_envelope_with_vertical_segments)
             {0.0, 80.0}, {0.0, 100.0},
             {10.0, 130.0},
             {20.0, 160.0}};
-        EXPECT_NO_THROW(result = get_upper_convex_envelope(fn1, fn2));
+        EXPECT_NO_THROW(result = get_lower_envelope(fn1, fn2));
         EXPECT_EQ(result, expected);
     }
 
@@ -252,7 +252,7 @@ TEST(piecewise_function, get_upper_convex_envelope_with_vertical_segments)
             {0.0, 90.0},
             {10.0, 110.0},
             {20.0, 130.0}};
-        EXPECT_NO_THROW(result = get_upper_convex_envelope(fn1, fn2));
+        EXPECT_NO_THROW(result = get_lower_envelope(fn1, fn2));
         EXPECT_EQ(result, expected);
     }
 
@@ -275,7 +275,7 @@ TEST(piecewise_function, get_upper_convex_envelope_with_vertical_segments)
             {10.0, 100.0}, {10.0, 115.0},
             {15.0, 120.0}, {15.0, 135.0},
             {20.0, 145.0}};
-        EXPECT_NO_THROW(result = get_upper_convex_envelope(fn1, fn2));
+        EXPECT_NO_THROW(result = get_lower_envelope(fn1, fn2));
         EXPECT_EQ(result, expected);
     }
 
@@ -293,7 +293,7 @@ TEST(piecewise_function, get_upper_convex_envelope_with_vertical_segments)
             {0.0, 90.0},
             {10.0, 70.0}, {10.0, 80.0},
             {20.0, 120.0}};
-        EXPECT_NO_THROW(result = get_upper_convex_envelope(fn1, fn2));
+        EXPECT_NO_THROW(result = get_lower_envelope(fn1, fn2));
         EXPECT_EQ(result, expected);
     }
 
@@ -311,7 +311,7 @@ TEST(piecewise_function, get_upper_convex_envelope_with_vertical_segments)
             {0.0, 50.0},
             {10.0, 100.0}, {10.0, 180.0},
             {20.0, 150.0}};
-        EXPECT_NO_THROW(result = get_upper_convex_envelope(fn1, fn2));
+        EXPECT_NO_THROW(result = get_lower_envelope(fn1, fn2));
         EXPECT_EQ(result, expected);
     }
 
@@ -328,7 +328,7 @@ TEST(piecewise_function, get_upper_convex_envelope_with_vertical_segments)
             {0.0, 80.0},
             {10.0, 50.0}, {10.0, 120.0},
             {20.0, 160.0}};  // Only the intersection point
-        EXPECT_NO_THROW(result = get_upper_convex_envelope(fn1, fn2));
+        EXPECT_NO_THROW(result = get_lower_envelope(fn1, fn2));
         EXPECT_EQ(result, expected);
     }
 
@@ -346,7 +346,7 @@ TEST(piecewise_function, get_upper_convex_envelope_with_vertical_segments)
             {0.0, 80.0},
             {5.0, 50.0}, {5.0, 60.0},
             {10.0, 110.0}};
-        EXPECT_NO_THROW(result = get_upper_convex_envelope(fn1, fn2));
+        EXPECT_NO_THROW(result = get_lower_envelope(fn1, fn2));
         EXPECT_EQ(result, expected);
     }
 
@@ -367,7 +367,7 @@ TEST(piecewise_function, get_upper_convex_envelope_with_vertical_segments)
             {5.0, 80.0}, {5.0, 90.0},
             {6.0, 95.0},
             {10.0, 130.0}};
-        EXPECT_NO_THROW(result = get_upper_convex_envelope(fn1, fn2));
+        EXPECT_NO_THROW(result = get_lower_envelope(fn1, fn2));
         EXPECT_EQ(result, expected);
     }
 }
