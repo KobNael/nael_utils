@@ -377,7 +377,7 @@ TEST(piecewise_function, get_right_side_minimum_projection)
 {
     // Test case 1: Basic increasing function
     // Input: [(0,10), (5,20), (10,30)]
-    // Expected: [(0,10), (5,10), (10,30)] - minimum from right side
+    // Expected: [(0,10), (5,20), (10,30)] - minimum from right side
     {
         Piecewise_linear_function fn = {{0.0, 10.0}, {5.0, 20.0}, {10.0, 30.0}};
         Piecewise_linear_function expected = {{0.0, 10.0}, {5.0, 20.0}, {10.0, 30.0}};
@@ -482,6 +482,16 @@ TEST(piecewise_function, get_right_side_minimum_projection)
         Piecewise_linear_function expected = {{5.0, 42.0}};
         EXPECT_EQ(get_right_side_minimum_projection(fn), expected);
     }
+
+    // Test case 13: Function with vertical segment
+    // Note: This test assumes the function works with single-point input.
+    // If the function requires at least 2 points, this test can be removed.
+    {
+        Piecewise_linear_function fn = {{0.0, 100.0}, {2.0, 80.0}, {4.0, 40.0}, {4.0, 100.0}, {8.0, 90.0}, {10.0, 50.0}};
+        Piecewise_linear_function expected = {{0.0, 40.0}, {2.0, 40.0}, {4.0, 40.0}, {4.0, 50.0}, {8.0, 50.0}, {10.0, 50.0}};
+        EXPECT_EQ(get_right_side_minimum_projection(fn), expected);
+    }
+
 }
 
 TEST(piecewise_function, in_range)
