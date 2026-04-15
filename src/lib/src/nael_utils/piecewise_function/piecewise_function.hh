@@ -126,6 +126,14 @@ Piecewise_linear_function multiply(Piecewise_linear_function const &pwf, double 
 Piecewise_linear_function get_lower_envelope(Piecewise_linear_function const &lhs, Piecewise_linear_function const &rhs);
 
 /**
+ * @brief Compute the right side minimum projection of a piece-wise linear function,
+ * i.e. the transformation of every dot (x,y) into (x, min_{x'>=x} f(x')).
+ * @param pwf The piece-wise linear function.
+ * @return A new piece-wise linear function representing the right side minimum projection.
+ */
+Piecewise_linear_function get_right_side_minimum_projection(Piecewise_linear_function const &pwf);
+
+/**
  * @brief Adds a variation to a piece-wise linear function
  * @param pwf The original piece-wise linear function.
  * @param variation The variation to add.

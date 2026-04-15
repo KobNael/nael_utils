@@ -98,8 +98,9 @@ TEST(piecewise_function, multiply)
     EXPECT_NO_THROW(result = multiply(fn, 0.5));
     EXPECT_EQ(result, expected);
 
-    // factor must be non null
+    // factor must be valid and non null
     EXPECT_THROW(multiply(fn, 0.0), std::invalid_argument);
+    EXPECT_THROW(multiply(fn, std::numeric_limits<double>::quiet_NaN()), std::invalid_argument);
 }
 
 TEST(piecewise_function, get_y)
@@ -369,6 +370,117 @@ TEST(piecewise_function, get_lower_envelope_with_vertical_segments)
             {10.0, 130.0}};
         EXPECT_NO_THROW(result = get_lower_envelope(fn1, fn2));
         EXPECT_EQ(result, expected);
+    }
+}
+
+TEST(piecewise_function, get_right_side_minimum_projection)
+{
+    // Test case 1: Basic increasing function
+    // Input: [(0,10), (5,20), (10,30)]
+    // Expected: [(0,10), (5,10), (10,30)] - minimum from right side
+    {
+        Piecewise_linear_function fn = {{0.0, 10.0}, {5.0, 20.0}, {10.0, 30.0}};
+        Piecewise_linear_function expected = {{0.0, 10.0}, {5.0, 20.0}, {10.0, 30.0}};
+        EXPECT_EQ(get_right_side_minimum_projection(fn), expected);
+    }
+
+    // Test case 2: Basic decreasing function
+    // Input: [(0,30), (5,20), (10,10)]
+    // Expected: [(0,10), (5,10), (10,10)] - all points get the rightmost minimum
+    {
+        Piecewise_linear_function fn = {{0.0, 30.0}, {5.0, 20.0}, {10.0, 10.0}};
+        Piecewise_linear_function expected = {{0.0, 10.0}, {5.0, 10.0}, {10.0, 10.0}};
+        EXPECT_EQ(get_right_side_minimum_projection(fn), expected);
+    }
+
+    // Test case 3: Function with local minimum in the middle
+    // Input: [(0,20), (5,10), (10,30)]
+    // Expected: [(0,10), (5,10), (10,30)] - points before minimum get the minimum value
+    {
+        Piecewise_linear_function fn = {{0.0, 20.0}, {5.0, 10.0}, {10.0, 30.0}};
+        Piecewise_linear_function expected = {{0.0, 10.0}, {5.0, 10.0}, {10.0, 30.0}};
+        EXPECT_EQ(get_right_side_minimum_projection(fn), expected);
+    }
+
+    // Test case 4: Function with multiple local minima
+    // Input: [(0,50), (2,10), (4,40), (6,5), (8,30)]
+    // Expected: [(0,5), (2,5), (4,5), (6,5), (8,30)] - global minimum propagates left
+    {
+        Piecewise_linear_function fn = {{0.0, 50.0}, {2.0, 10.0}, {4.0, 40.0}, {6.0, 5.0}, {8.0, 30.0}};
+        Piecewise_linear_function expected = {{0.0, 5.0}, {2.0, 5.0}, {4.0, 5.0}, {6.0, 5.0}, {8.0, 30.0}};
+        EXPECT_EQ(get_right_side_minimum_projection(fn), expected);
+    }
+
+    // Test case 5: Constant function
+    // Input: [(0,15), (5,15), (10,15)]
+    // Expected: [(0,15), (5,15), (10,15)] - no change for constant function
+    {
+        Piecewise_linear_function fn = {{0.0, 15.0}, {5.0, 15.0}, {10.0, 15.0}};
+        Piecewise_linear_function expected = {{0.0, 15.0}, {5.0, 15.0}, {10.0, 15.0}};
+        EXPECT_EQ(get_right_side_minimum_projection(fn), expected);
+    }
+
+    // Test case 6: Two-point function
+    // Input: [(0,25), (10,15)]
+    // Expected: [(0,15), (10,15)] - first point gets minimum value
+    {
+        Piecewise_linear_function fn = {{0.0, 25.0}, {10.0, 15.0}};
+        Piecewise_linear_function expected = {{0.0, 15.0}, {10.0, 15.0}};
+        EXPECT_EQ(get_right_side_minimum_projection(fn), expected);
+    }
+
+    // Test case 7: Function with negative values
+    // Input: [(0,-5), (5,10), (10,-15), (15,5)]
+    // Expected: [(0,-15), (5,-15), (10,-15), (15,5)] - global minimum -15 propagates
+    {
+        Piecewise_linear_function fn = {{0.0, -5.0}, {5.0, 10.0}, {10.0, -15.0}, {15.0, 5.0}};
+        Piecewise_linear_function expected = {{0.0, -15.0}, {5.0, -15.0}, {10.0, -15.0}, {15.0, 5.0}};
+        EXPECT_EQ(get_right_side_minimum_projection(fn), expected);
+    }
+
+    // Test case 8: Function with zero values
+    // Input: [(0,5), (3,0), (6,10), (9,0), (12,8)]
+    // Expected: [(0,0), (3,0), (6,0), (9,0), (12,8)] - zero minimum propagates
+    {
+        Piecewise_linear_function fn = {{0.0, 5.0}, {3.0, 0.0}, {6.0, 10.0}, {9.0, 0.0}, {12.0, 8.0}};
+        Piecewise_linear_function expected = {{0.0, 0.0}, {3.0, 0.0}, {6.0, 0.0}, {9.0, 0.0}, {12.0, 8.0}};
+        EXPECT_EQ(get_right_side_minimum_projection(fn), expected);
+    }
+
+    // Test case 9: Function that is already a right-side minimum projection
+    // Input: [(0,10), (5,10), (10,10), (15,20)]
+    // Expected: [(0,10), (5,10), (10,10), (15,20)] - no change needed
+    {
+        Piecewise_linear_function fn = {{0.0, 10.0}, {5.0, 10.0}, {10.0, 10.0}, {15.0, 20.0}};
+        Piecewise_linear_function expected = {{0.0, 10.0}, {5.0, 10.0}, {10.0, 10.0}, {15.0, 20.0}};
+        EXPECT_EQ(get_right_side_minimum_projection(fn), expected);
+    }
+
+    // Test case 10: Function with stepwise decreasing then increasing pattern
+    // Input: [(0,100), (2,80), (4,60), (6,40), (8,20), (10,50)]
+    // Expected: [(0,20), (2,20), (4,20), (6,20), (8,20), (10,50)]
+    {
+        Piecewise_linear_function fn = {{0.0, 100.0}, {2.0, 80.0}, {4.0, 60.0}, {6.0, 40.0}, {8.0, 20.0}, {10.0, 50.0}};
+        Piecewise_linear_function expected = {{0.0, 20.0}, {2.0, 20.0}, {4.0, 20.0}, {6.0, 20.0}, {8.0, 20.0}, {10.0, 50.0}};
+        EXPECT_EQ(get_right_side_minimum_projection(fn), expected);
+    }
+
+    // Test case 11: Function with large value differences
+    // Input: [(0,1000000), (5,1), (10,500000)]
+    // Expected: [(0,1), (5,1), (10,500000)] - handles large differences correctly
+    {
+        Piecewise_linear_function fn = {{0.0, 1000000.0}, {5.0, 1.0}, {10.0, 500000.0}};
+        Piecewise_linear_function expected = {{0.0, 1.0}, {5.0, 1.0}, {10.0, 500000.0}};
+        EXPECT_EQ(get_right_side_minimum_projection(fn), expected);
+    }
+
+    // Test case 12: Function with single point (edge case)
+    // Note: This test assumes the function works with single-point input.
+    // If the function requires at least 2 points, this test can be removed.
+    {
+        Piecewise_linear_function fn = {{5.0, 42.0}};
+        Piecewise_linear_function expected = {{5.0, 42.0}};
+        EXPECT_EQ(get_right_side_minimum_projection(fn), expected);
     }
 }
 
