@@ -309,6 +309,18 @@ Piecewise_linear_function get_lower_envelope(Piecewise_linear_function const &lh
     return upper_convex_envelope;
 }
 
+Piecewise_linear_function get_right_side_minimum_projection(Piecewise_linear_function const &pwf)
+{
+    // go backward to maintain the minimum value at each step
+    Piecewise_linear_function result;
+    double cur_value = std::numeric_limits<double>::infinity();
+    for(auto it = pwf.rbegin(); it != pwf.rend(); ++it)
+    {
+        cur_value = std::min(it->_y, cur_value);
+        result.push_front({it->_x, cur_value});
+    }
+    return result;
+}
 
 // Adds a non vertical variation to a piece-wise linear function
 Piecewise_linear_function add_variation(Piecewise_linear_function const &pwf, Segment const &variation)
