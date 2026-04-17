@@ -36,6 +36,14 @@ TEST(dedicated_exception, get_message)
 
 TEST(dedicated_exception, check_pre)
 {
-    ASSERT_THROW( CHECK_PRE(false, "check_pre error"), fatal_error );
+    try
+    {
+        CHECK_PRE(false, "check_pre error");
+        FAIL();
+    }
+    catch(const fatal_error& e)
+    {
+        ASSERT_NE(std::string(e.what()).find("check_pre error"), std::string::npos);
+    }
     ASSERT_NO_THROW( CHECK_PRE(true, "check_pre error") );
 }
