@@ -76,3 +76,13 @@ namespace opt
  * @brief Dedicated exception for irrecoverable error
  */
 MAKE_EXCEPTION(fatal_error)
+
+/**
+ * @brief Throw a fatal error if the condition is not verified
+ * @param cond the condition to verify
+ * @param message the error message to throw in case of failure
+ */
+#define CHECK_PRE(cond, message) \
+        if (!(cond)) { \
+            throw fatal_error(message); \
+        }
