@@ -83,8 +83,6 @@ MAKE_EXCEPTION(fatal_error)
  * @param message the error message to throw in case of failure
  */
 #define CHECK_PRE(cond, message) \
-        do { \
-            if (!(cond)) { \
-                throw fatal_error(message); \
-            } \
-        } while (0)
+    if (!(cond)) { \
+        throw fatal_error(message); \
+    }
