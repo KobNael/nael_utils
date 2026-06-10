@@ -96,8 +96,8 @@ class libreflectConan(ConanFile):
         self.cpp.build.builddirs = [os.path.join("install", f"{self.name}-{self.version}", cmake_config_path)]
 
     def requirements(self):
-        self.requires("boost/1.86.0", transitive_headers=True)
-        self.requires("gtest/1.15.0", transitive_headers=True)
+        self.requires("boost/1.91.0", transitive_headers=True)
+        self.requires("gtest/1.17.0", transitive_headers=True)
 
     def package_id(self):
         self.info.clear()
