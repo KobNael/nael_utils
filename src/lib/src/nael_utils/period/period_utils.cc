@@ -195,6 +195,59 @@ bpt::time_duration get_relative_duration(LRatioPeriod const &periods)
         });
 }
 
+// Compute the earliest end date such that the relative duration of the periods between the start date and this end date is equal to a given duration
+boost::posix_time::ptime get_earliest_end_date_from_duration(LRatioPeriod const &periods, boost::posix_time::time_duration const &duration)
+{
+    // check consistency
+    if(periods.empty())
+    {
+        return bpt::not_a_date_time;
+    }
+
+    // iterate over the periods and search for the cut point
+    bpt::time_duration remaining_duration = duration;
+    for(auto const &period : periods)
+    {
+        // not enough time, go on
+        if(auto rel_dur = period.get_relative_duration(); rel_dur < remaining_duration)
+        {
+            remaining_duration -= rel_dur;
+            continue;
+        }
+        // cut in this period and return the end date
+        bpt::time_duration absolute_missing_duration = compute_theoretical_duration(remaining_duration, period._ratio);
+        return period.begin() + absolute_missing_duration;
+    }
+    return bpt::not_a_date_time;
+}
+
+// Compute the earliest end date such that the relative duration (by multiplying the duration of each period by its capacity) of the periods between the start date and this end date is equal to a given duration
+boost::posix_time::ptime get_earliest_end_date_from_duration(LCapaPeriod const &periods, boost::posix_time::time_duration const &duration)
+{
+    // check consistency
+    if(periods.empty())
+    {
+        return bpt::not_a_date_time;
+    }
+
+    // iterate over the periods and search for the cut point
+    bpt::time_duration remaining_duration = duration;
+    for(auto const &period : periods)
+    {
+        // not enough time, go on
+        if(auto rel_dur = period.length()*period._capa; rel_dur < remaining_duration)
+        {
+            remaining_duration -= rel_dur;
+            continue;
+        }
+        // cut in this period and return the end date
+        bpt::time_duration absolute_missing_duration = remaining_duration / period._capa;
+        return period.begin() + absolute_missing_duration;
+    }
+    return bpt::not_a_date_time;
+}
+
+// Create an artificial empty period
 time_period make_empty_period(boost::posix_time::ptime ptime)
 {
     return time_period(ptime, ptime + bpt::milliseconds(10));

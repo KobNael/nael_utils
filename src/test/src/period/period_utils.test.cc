@@ -51,6 +51,72 @@ TEST(ratio_periods, relative_duration)
     EXPECT_EQ( get_relative_duration(mylist), bpt::time_duration(0, 31, 2) );
 }
 
+TEST(ratio_periods, get_earliest_end_date_from_duration)
+{
+    bg::date d = bg::day_clock::local_day();
+
+    // Empty input cannot satisfy any duration.
+    LRatioPeriod periods;
+    EXPECT_EQ(get_earliest_end_date_from_duration(periods, bpt::minutes(10)), bpt::not_a_date_time);
+
+    periods = {
+        ratio_period(2., bpt::ptime(d, bpt::hours(9)), bpt::ptime(d, bpt::hours(10))),
+        ratio_period(0.5, bpt::ptime(d, bpt::hours(11)), bpt::ptime(d, bpt::hours(13))),
+        ratio_period(1., bpt::ptime(d, bpt::hours(14)), bpt::ptime(d, bpt::hours(15)))
+    };
+
+    // Zero target duration returns the beginning of the first available period.
+    EXPECT_EQ(get_earliest_end_date_from_duration(periods, bpt::seconds(0)), bpt::ptime(d, bpt::hours(9)));
+
+    // Duration contained in first period (relative 30 min at ratio 2 => absolute 15 min).
+    EXPECT_EQ(get_earliest_end_date_from_duration(periods, bpt::minutes(30)), bpt::ptime(d, bpt::time_duration(9, 15, 0)));
+
+    // Exact boundary of first period (1h absolute * ratio 2 => 2h relative).
+    EXPECT_EQ(get_earliest_end_date_from_duration(periods, bpt::hours(2)), bpt::ptime(d, bpt::hours(10)));
+
+    // Cross-period cut: 2h in first period + 30 min relative in second => +1h absolute in second.
+    EXPECT_EQ(get_earliest_end_date_from_duration(periods, bpt::time_duration(2, 30, 0)), bpt::ptime(d, bpt::hours(12)));
+
+    // Exact total relative duration of all periods reaches end of the last period.
+    EXPECT_EQ(get_earliest_end_date_from_duration(periods, bpt::hours(4)), bpt::ptime(d, bpt::hours(15)));
+
+    // Target greater than available relative duration cannot be reached.
+    EXPECT_EQ(get_earliest_end_date_from_duration(periods, bpt::hours(5)), bpt::not_a_date_time);
+}
+
+TEST(capa_periods, get_earliest_end_date_from_duration)
+{
+    bg::date d = bg::day_clock::local_day();
+
+    // Empty input cannot satisfy any duration.
+    LCapaPeriod periods;
+    EXPECT_EQ(get_earliest_end_date_from_duration(periods, bpt::minutes(10)), bpt::not_a_date_time);
+
+    periods = {
+        capa_period(3, bpt::ptime(d, bpt::hours(9)), bpt::ptime(d, bpt::hours(10))),
+        capa_period(2, bpt::ptime(d, bpt::hours(11)), bpt::ptime(d, bpt::hours(13))),
+        capa_period(1, bpt::ptime(d, bpt::hours(14)), bpt::ptime(d, bpt::hours(15)))
+    };
+
+    // Zero target duration returns the beginning of the first available period.
+    EXPECT_EQ(get_earliest_end_date_from_duration(periods, bpt::seconds(0)), bpt::ptime(d, bpt::hours(9)));
+
+    // Duration contained in first period (30 min weighted duration at capa 3 => absolute 10 min).
+    EXPECT_EQ(get_earliest_end_date_from_duration(periods, bpt::minutes(30)), bpt::ptime(d, bpt::time_duration(9, 10, 0)));
+
+    // Exact boundary of first period (1h absolute * capa 3 => 3h weighted).
+    EXPECT_EQ(get_earliest_end_date_from_duration(periods, bpt::hours(3)), bpt::ptime(d, bpt::hours(10)));
+
+    // Cross-period cut: 3h in first period + 1h weighted in second => +30 min absolute in second.
+    EXPECT_EQ(get_earliest_end_date_from_duration(periods, bpt::hours(4)), bpt::ptime(d, bpt::time_duration(11, 30, 0)));
+
+    // Exact total weighted duration of all periods reaches end of the last period.
+    EXPECT_EQ(get_earliest_end_date_from_duration(periods, bpt::hours(8)), bpt::ptime(d, bpt::hours(15)));
+
+    // Target greater than available weighted duration cannot be reached.
+    EXPECT_EQ(get_earliest_end_date_from_duration(periods, bpt::hours(9)), bpt::not_a_date_time);
+}
+
 TEST(ratio_periods, reduce_left)
 {
     bg::date d = bg::day_clock::local_day();
