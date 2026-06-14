@@ -204,11 +204,22 @@ boost::posix_time::ptime get_earliest_end_date_from_duration(LRatioPeriod const 
         return bpt::not_a_date_time;
     }
 
+    // no duration
+    if(duration <= bpt::seconds(0))
+    {
+        return periods.front().begin();
+    }
+
     // iterate over the periods and search for the cut point
     bpt::time_duration remaining_duration = duration;
     for(auto const &period : periods)
     {
-        // not enough time, go on
+        // skip invalid ratio
+        if(safecomp::le(period._ratio, .0f))
+        {
+            continue;
+        }
+        // not enough time, reduce the target and go on
         if(auto rel_dur = period.get_relative_duration(); rel_dur < remaining_duration)
         {
             remaining_duration -= rel_dur;
@@ -230,10 +241,21 @@ boost::posix_time::ptime get_earliest_end_date_from_duration(LCapaPeriod const &
         return bpt::not_a_date_time;
     }
 
+    // no duration
+    if(duration <= bpt::seconds(0))
+    {
+        return periods.front().begin();
+    }
+
     // iterate over the periods and search for the cut point
     bpt::time_duration remaining_duration = duration;
     for(auto const &period : periods)
     {
+        // skip invalid capacity
+        if(period._capa <= 0)
+        {
+            continue;
+        }
         // not enough time, go on
         if(auto rel_dur = period.length()*period._capa; rel_dur < remaining_duration)
         {
