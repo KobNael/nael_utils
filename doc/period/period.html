@@ -70,6 +70,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv428compute_theoretical_durationN5boost10posix_time13time_durationEf"><code class="docutils literal notranslate"><span class="pre">compute_theoretical_duration()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv4I0E18get_total_durationN5boost10posix_time13time_durationERKNSt4listI7PeriodTEE"><code class="docutils literal notranslate"><span class="pre">get_total_duration()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv421get_relative_durationRK12LRatioPeriod"><code class="docutils literal notranslate"><span class="pre">get_relative_duration()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv435get_earliest_end_date_from_durationRK12LRatioPeriodRKN5boost10posix_time13time_durationE"><code class="docutils literal notranslate"><span class="pre">get_earliest_end_date_from_duration()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv435get_earliest_end_date_from_durationRK11LCapaPeriodRKN5boost10posix_time13time_durationE"><code class="docutils literal notranslate"><span class="pre">get_earliest_end_date_from_duration()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv411reduce_leftRK12LRatioPeriodRKN5boost10posix_time13time_durationE"><code class="docutils literal notranslate"><span class="pre">reduce_left()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv412reduce_rightRK12LRatioPeriodRKN5boost10posix_time13time_durationE"><code class="docutils literal notranslate"><span class="pre">reduce_right()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv420get_eligible_periodsRK11LCapaPeriod7int64_t"><code class="docutils literal notranslate"><span class="pre">get_eligible_periods()</span></code></a></li>
@@ -714,6 +716,40 @@ For the computation details see <a class="reference internal" href="period_funct
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the relative duration </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv435get_earliest_end_date_from_durationRK12LRatioPeriodRKN5boost10posix_time13time_durationE">
+<span id="_CPPv335get_earliest_end_date_from_durationRK12LRatioPeriodRKN5boost10posix_time13time_durationE"></span><span id="_CPPv235get_earliest_end_date_from_durationRK12LRatioPeriodRKN5boost10posix_time13time_durationE"></span><span id="get_earliest_end_date_from_duration__LRatioPeriodCR.boost::posix_time::time_durationCR"></span><span class="target" id="period__utils_8hh_1a0fab62faef0aaf8497e6a24be2447b66"></span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_earliest_end_date_from_duration</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">LRatioPeriod</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">periods</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">time_duration</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">duration</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv435get_earliest_end_date_from_durationRK12LRatioPeriodRKN5boost10posix_time13time_durationE" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the earliest end date such that the relative duration of the periods between the start date and this end date is equal to a given duration. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>periods</strong> – the periods with ratio </p></li>
+<li><p><strong>duration</strong> – the duration to reach </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the earliest end date </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv435get_earliest_end_date_from_durationRK11LCapaPeriodRKN5boost10posix_time13time_durationE">
+<span id="_CPPv335get_earliest_end_date_from_durationRK11LCapaPeriodRKN5boost10posix_time13time_durationE"></span><span id="_CPPv235get_earliest_end_date_from_durationRK11LCapaPeriodRKN5boost10posix_time13time_durationE"></span><span id="get_earliest_end_date_from_duration__LCapaPeriodCR.boost::posix_time::time_durationCR"></span><span class="target" id="period__utils_8hh_1af1f9bdc2006520110f222bc54c033448"></span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_earliest_end_date_from_duration</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">LCapaPeriod</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">periods</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">time_duration</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">duration</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv435get_earliest_end_date_from_durationRK11LCapaPeriodRKN5boost10posix_time13time_durationE" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the earliest end date such that the relative duration (by multiplying the duration of each period by its capacity) of the periods between the start date and this end date is equal to a given duration. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>periods</strong> – the periods with capacity </p></li>
+<li><p><strong>duration</strong> – the duration to reach </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the earliest end date </p>
 </dd>
 </dl>
 </dd></dl>
