@@ -343,6 +343,22 @@ boost::posix_time::time_duration get_total_duration(std::list<PeriodT> const &pe
 boost::posix_time::time_duration get_relative_duration(LRatioPeriod const &periods);
 
 /**
+ * @brief Compute the earliest end date such that the relative duration of the periods between the start date and this end date is equal to a given duration
+ * @param periods the periods with ratio
+ * @param duration the duration to reach
+ * @return the earliest end date
+ */
+boost::posix_time::ptime get_earliest_end_date_from_duration(LRatioPeriod const &periods, boost::posix_time::time_duration const &duration);
+
+/**
+ * @brief Compute the earliest end date such that the relative duration (by multiplying the duration of each period by its capacity) of the periods between the start date and this end date is equal to a given duration
+ * @param periods the periods with capacity
+ * @param duration the duration to reach
+ * @return the earliest end date
+ */
+boost::posix_time::ptime get_earliest_end_date_from_duration(LCapaPeriod const &periods, boost::posix_time::time_duration const &duration);
+
+/**
  * @brief Reduce a list of periods from the left by a given duration
  * taking into account the ratio of each period
  * @param periods the list of ratio_periods
