@@ -34,7 +34,7 @@ Tested on Ubuntu 24.04.1 LTS (native or through wsl2).
 
 ### Get source code
 
-:warning: In addition to this main repository, one should ask access to the following project :
+.. warning:: In addition to this main repository, one should ask access to the following project :
 
 - https://github.com/KobNael/nael_cpp_action : github action scripts and conan profiles
 
@@ -71,21 +71,21 @@ Tested on Ubuntu 24.04.1 LTS (native or through wsl2).
     > $ cd path_to_repo && conan build . -sbuild_type=Release  -pr:a=Linux-latest  --build missing
 
 ### Launch tests
-:warning: All the results can be found in the directory `path_to_repo/compilation-databases/(Debug|Release)`.
+.. warning:: All the results can be found in the directory `path_to_repo/compilation-databases/(Debug|Release)`.
 1. **Unit tests**
     > $ cd build_directory/ && make run_unit_tests
 
 1. **Valgrind Memcheck**
-    :warning:  Only available if the option `-o '&:valgrind=ON'` has been given to the `conan build` command.
+    .. warning::  Only available if the option `-o '&:valgrind=ON'` has been given to the `conan build` command.
 
     > $ cd build_directory/ && make run_memcheck
 
 1. **GCov|LCov Coverage**
-    :warning:  Only available in Debug, and if the option `-o '&:coverage=ON'` has been given to the `conan build` command.
+    .. warning::  Only available in Debug, and if the option `-o '&:coverage=ON'` has been given to the `conan build` command.
     > $ cd build_directory/ && make run_coverage
 
 1. **CppCheck Linter**
-    :warning:  Only available if the option `-o '&:cppcheck=ON'` has been given to the `conan build` command.
+    .. warning::  Only available if the option `-o '&:cppcheck=ON'` has been given to the `conan build` command.
     > $ cd build_directory/ && make run_cppcheck
 
 ### Generate the documentation
