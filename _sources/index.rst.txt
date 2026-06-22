@@ -10,6 +10,7 @@ This library regroup some usefull tools for c++ applications :
    - :ref:`string_utils`: Utils for string manipulation
    - :ref:`safe_comp` : Utils for safe numeric comparison
    - :ref:`lexical_sort` : Interface for lexical sort with tolerance
+   - :ref:`sorted_list` : Utils for sorted list manipulation
    - :ref:`period_utils`: Utils for period (with capacity) manipulation
    - :ref:`thread_pool` : Tool for parallel computation
 
@@ -24,6 +25,7 @@ This library regroup some usefull tools for c++ applications :
    doc/string/string_utils
    doc/safecomp/safecomp
    doc/sort/lexical_sort
+   doc/sorted_list/sorted_list
    doc/period/period
    doc/thread_pool/thread_pool
    doc/cmake-modules/cmake-modules
