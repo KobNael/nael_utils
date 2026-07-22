@@ -19,16 +19,16 @@ protected:
         //Fill the context
         _context.bool_att=false;
         //Push some simple object
-        _context.vec_id_obj.push_back( model_test::makeIdDto("idA") );
-        _context.vec_id_obj.push_back( model_test::makeIdDto("idB") );
+        _context.vec_id_obj.push_back( dto::makeIdDto("idA") );
+        _context.vec_id_obj.push_back( dto::makeIdDto("idB") );
         //Push some complex objects
-        _context.vec_basic_obj.push_back( model_test::makeBasicAttDto("obj1") );
-        _context.vec_basic_obj.push_back( model_test::makeBasicAttDto("obj2") );
-        _context.vec_basic_obj.push_back( model_test::makeBasicAttDto("obj3") );
+        _context.vec_basic_obj.push_back( dto::makeBasicAttDto("obj1") );
+        _context.vec_basic_obj.push_back( dto::makeBasicAttDto("obj2") );
+        _context.vec_basic_obj.push_back( dto::makeBasicAttDto("obj3") );
         //Push some param value
-        _context.vec_param_obj.push_back( model_test::makeParamDto( model_test::dto::PARAM_2, "val_PARAM_2") );
-        _context.vec_param_obj.push_back( model_test::makeParamDto( model_test::dto::PARAM_1, "val_PARAM_1") );
-        _context.vec_param_obj.push_back( model_test::makeParamDto( model_test::dto::PARAM_3, "val_PARAM_3") );
+        _context.vec_param_obj.push_back( dto::makeParamDto( dto::PARAM_2, "val_PARAM_2") );
+        _context.vec_param_obj.push_back( dto::makeParamDto( dto::PARAM_1, "val_PARAM_1") );
+        _context.vec_param_obj.push_back( dto::makeParamDto( dto::PARAM_3, "val_PARAM_3") );
     }
 
     //TearDown (do nothing)
@@ -36,7 +36,7 @@ protected:
     {}
 
     //Method of comparison
-    void compare_contexts(model_test::dto::BasicContextDto &c1, model_test::dto::BasicContextDto &c2)
+    void compare_contexts(dto::BasicContextDto &c1, dto::BasicContextDto &c2)
     {
         //They should be identical to the reference
         ASSERT_EQ(_context, c1);
@@ -49,7 +49,7 @@ protected:
         ASSERT_EQ(new_ids, ref_ids);
 
         //Modify the new contexts
-        c1.vec_basic_obj.push_back( model_test::makeBasicAttDto("new") );
+        c1.vec_basic_obj.push_back( dto::makeBasicAttDto("new") );
         c2.bool_att=true;
         //They should be different now
         ASSERT_NE(_context, c1);
@@ -57,7 +57,7 @@ protected:
     }
 
     //Reference context
-    model_test::dto::BasicContextDto _context;
+    dto::BasicContextDto _context;
 };
 
 TEST_F(stream_io, export_import)
@@ -68,7 +68,7 @@ TEST_F(stream_io, export_import)
     json::export_to_stream(oss, _context);
 
     //Reimport in a new contexts
-    model_test::dto::BasicContextDto new_context, new_context2;
+    dto::BasicContextDto new_context, new_context2;
     std::istringstream iss1(oss.str());
     json::import_from_stream(iss1, new_context);
     std::istringstream iss2(oss.str());
@@ -87,10 +87,26 @@ TEST_F(stream_io, export_import_file)
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
     //Reimport in a new contexts
-    model_test::dto::BasicContextDto new_context, new_context2;
+    dto::BasicContextDto new_context, new_context2;
     json::import_from_file("export.json", new_context);
     json::import_from_file("export.json", new_context2);
 
     //Test
     compare_contexts(new_context, new_context2);
+}
+
+TEST_F(stream_io, input_validity)
+{
+	//Import inconsistent dto (duplicate key)
+	dto::DtoContext dto_context;
+    const char* content =
+        "{"
+            "\"first_collec\": ["
+                "{\"id\":\"first_val_2\", \"value\": 2},"
+                "{\"id\": 2, \"value\": 10}"
+            "],"
+            "\"second_collec\": []"
+        "}";
+    std::istringstream iss(content);
+	ASSERT_THROW( json::import_from_stream(iss, dto_context), std::exception );
 }

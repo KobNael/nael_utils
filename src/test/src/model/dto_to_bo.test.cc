@@ -4,25 +4,25 @@
 
 namespace
 {
-    void parse_first(model_test::dto::DtoContext const& dto_context, model_test::bo::BoContext &bo_context)
+    void parse_first(dto::DtoContext const& dto_context, bo::BoContext &bo_context)
     {
         //Create Press
-        for(model_test::dto::FirstClassDto const &first : dto_context.first_collec)
+        for(dto::FirstClassDto const &first : dto_context.first_collec)
         {
             bo_context.addFirstClass(first.id, first.value);
         }
     }
 
-    void parse_second(model_test::dto::DtoContext const& dto_context , model_test::bo::BoContext &bo_context)
+    void parse_second(dto::DtoContext const& dto_context , bo::BoContext &bo_context)
     {
         //Create Second Class elements
-        for(model_test::dto::SecondClassDto const &second : dto_context.second_collec)
+        for(dto::SecondClassDto const &second : dto_context.second_collec)
         {
             bo_context.addSecondClass(second.id, second.first_id, second.value);
         }
     }
 
-    void dto_to_bo(model_test::dto::DtoContext const& dto_context , model_test::bo::BoContext &bo_context)
+    void dto_to_bo(dto::DtoContext const& dto_context , bo::BoContext &bo_context)
     {
         parse_first(dto_context, bo_context);
         parse_second(dto_context, bo_context);
@@ -32,7 +32,7 @@ namespace
 TEST(dto_handler, dto_to_bo)
 {
 	//Import dto
-	model_test::dto::DtoContext dto_context;
+	dto::DtoContext dto_context;
     const char* content =
         "{"
             "\"first_collec\": ["
@@ -50,7 +50,7 @@ TEST(dto_handler, dto_to_bo)
     std::istringstream iss(content);
 	json::import_from_stream(iss, dto_context);
 
-    model_test::bo::BoContext bo_context;
+    bo::BoContext bo_context;
     ::dto_to_bo(dto_context, bo_context);
 
     //===============
@@ -125,7 +125,7 @@ TEST(dto_handler, dto_to_bo)
 TEST(dto_handler, consistency)
 {
 	//Import inconsistent dto (duplicate key)
-	model_test::dto::DtoContext dto_context;
+	dto::DtoContext dto_context;
     const char* content =
         "{"
             "\"first_collec\": ["
@@ -137,7 +137,6 @@ TEST(dto_handler, consistency)
     std::istringstream iss(content);
 	json::import_from_stream(iss, dto_context);
 
-    model_test::bo::BoContext bo_context;
-    ASSERT_THROW( ::dto_to_bo(dto_context, bo_context), model_test::bo::consistency );
-
+    bo::BoContext bo_context;
+    ASSERT_THROW( ::dto_to_bo(dto_context, bo_context), bo::consistency );
 }

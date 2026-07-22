@@ -76,6 +76,7 @@ template <class T>
 void extract(boost::json::object const &obj, char const *name, T &value)
 {
     boost::json::value const *obj_val = obj.if_contains(name);
+    std::cerr << "parse " << std::string(name) << std::endl;
     if (nullptr != obj_val)
     {
         try
