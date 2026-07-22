@@ -3,6 +3,8 @@
  */
 #pragma once
 
+#include <nael_utils/exception/exception.hh>
+
 #include <boost/describe.hpp>
 #include <boost/mp11.hpp>
 #include <boost/json.hpp>
@@ -66,6 +68,12 @@ namespace boost
 } // boost
 
 /**
+ * @class json_parse_error
+ * @brief Dedicated exception for invalid json format
+ */
+MAKE_EXCEPTION(json_parse_error)
+
+/**
  * @brief Extract a type from a boost json object
  * @tparam T the type of of object to extract
  * @param obj the json object
@@ -76,7 +84,6 @@ template <class T>
 void extract(boost::json::object const &obj, char const *name, T &value)
 {
     boost::json::value const *obj_val = obj.if_contains(name);
-    std::cerr << "parse " << std::string(name) << std::endl;
     if (nullptr != obj_val)
     {
         try
@@ -85,7 +92,7 @@ void extract(boost::json::object const &obj, char const *name, T &value)
         }
         catch(boost::system::system_error& e)
         {
-            throw std::runtime_error("Could not parse attribute `" + std::string(name) + "`: " + std::string(e.what()));
+            throw json_parse_error("Could not parse attribute `" + std::string(name) + "`: " + std::string(e.what()));
         }
     }
 }

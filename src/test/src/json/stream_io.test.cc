@@ -108,5 +108,5 @@ TEST_F(stream_io, input_validity)
             "\"second_collec\": []"
         "}";
     std::istringstream iss(content);
-	ASSERT_THROW( json::import_from_stream(iss, dto_context), std::exception );
+	ASSERT_THROW( json::import_from_stream(iss, dto_context), json_parse_error );
 }
