@@ -9,6 +9,7 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/date_time/posix_time/posix_time_duration.hpp>
 #include <boost/date_time/gregorian/gregorian_types.hpp>
+#include <format>
 #include <type_traits>
 
 // Converteur for boost date / time
@@ -77,7 +78,14 @@ void extract(boost::json::object const &obj, char const *name, T &value)
     boost::json::value const *obj_val = obj.if_contains(name);
     if (nullptr != obj_val)
     {
-        value = boost::json::value_to<T>(*obj_val);
+        try
+        {
+            value = boost::json::value_to<T>(*obj_val);
+        }
+        catch(boost::system::system_error& e)
+        {
+            throw std::runtime_error("Could not parse attribute `" + std::string(name) + "`: " + std::string(e.what()));
+        }
     }
 }
 
