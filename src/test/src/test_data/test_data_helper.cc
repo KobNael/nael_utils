@@ -1,8 +1,7 @@
 #include "test_data_helper.hh"
 
-namespace model_test
+namespace dto
 {
-    using namespace dto;
     //helper
     BasicAttDto makeBasicAttDto(std::string const &id_p)
     {
@@ -45,4 +44,4 @@ namespace model_test
         return obj;
     }
 
-} //namespace model_test
+} //namespace dto

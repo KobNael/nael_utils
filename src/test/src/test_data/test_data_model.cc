@@ -1,9 +1,6 @@
 #include "test_data_model.hh"
 #include <format>
 
-namespace model_test
-{
-
 namespace bo
 {
 
@@ -44,5 +41,3 @@ SecondClass &BoContext::addSecondClass(std::string const &id, std::string const 
 }
 
 } //namespace bo
-
-} //namespace model_test

@@ -3,12 +3,15 @@
  */
 #pragma once
 
+#include <nael_utils/exception/exception.hh>
+
 #include <boost/describe.hpp>
 #include <boost/mp11.hpp>
 #include <boost/json.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/date_time/posix_time/posix_time_duration.hpp>
 #include <boost/date_time/gregorian/gregorian_types.hpp>
+#include <format>
 #include <type_traits>
 
 // Converteur for boost date / time
@@ -65,6 +68,12 @@ namespace boost
 } // boost
 
 /**
+ * @class json_parse_error
+ * @brief Dedicated exception for invalid json format
+ */
+MAKE_EXCEPTION(json_parse_error)
+
+/**
  * @brief Extract a type from a boost json object
  * @tparam T the type of of object to extract
  * @param obj the json object
@@ -77,7 +86,14 @@ void extract(boost::json::object const &obj, char const *name, T &value)
     boost::json::value const *obj_val = obj.if_contains(name);
     if (nullptr != obj_val)
     {
-        value = boost::json::value_to<T>(*obj_val);
+        try
+        {
+            value = boost::json::value_to<T>(*obj_val);
+        }
+        catch(boost::system::system_error& e)
+        {
+            throw json_parse_error("Could not parse attribute `" + std::string(name) + "`: " + std::string(e.what()));
+        }
     }
 }
 
