@@ -192,7 +192,7 @@ Piecewise_linear_function sum_segments(Segment const &segment, Segment const &va
     if(safecomp::lt(segment._from._x, variation._from._x))
     {
         result.emplace_back(segment._from._x, segment._from._y);
-        result.emplace_back(variation._from._x, segment.get_y(segment._from._x));
+        result.emplace_back(variation._from._x, segment.get_y(variation._from._x));
     }
     // common part
     double from_x = std::max(segment._from._x, variation._from._x);
