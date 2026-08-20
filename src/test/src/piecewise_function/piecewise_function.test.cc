@@ -558,6 +558,42 @@ TEST(piecewise_function, merge_segments)
     EXPECT_EQ(fn, expected);
 }
 
+TEST(piecewise_function, add_variation_basics)
+{
+    // init with a flat function (y=100)
+    Piecewise_linear_function fn = {{0.0, 900.0}, {1000.0, 900.0}};
+
+    // add a vertical variation + 100 at 0
+    Segment variation{{0.0, 0.0}, {0.0, 100.0}};
+    Piecewise_linear_function expected = {{0.0, 900.0}, {0.0, 1000.0}, {1000.0, 1000.0}};
+    Piecewise_linear_function result;
+    EXPECT_NO_THROW(result = add_variation(fn, variation));
+    EXPECT_EQ(result, expected);
+
+    // add a non vertical variation of 100 between 100 and 200
+    variation = {{100.0, 0.0}, {200.0, 100.0}};
+    expected = {{0.0, 900.0}, {100.0, 900.0}, {200.0, 1000.0}, {1000.0, 1000.0}};
+    EXPECT_NO_THROW(result = add_variation(fn, variation));
+    EXPECT_EQ(result, expected);
+
+    // add a non vertical variation of 100 between 0 and 200
+    variation = {{0.0, 0.0}, {200.0, 100.0}};
+    expected = {{0.0, 900.0}, {200.0, 1000.0}, {1000.0, 1000.0}};
+    fn = add_variation(fn, variation);
+    EXPECT_NO_THROW(result = fn);
+    EXPECT_EQ(result, expected);
+    // add a second one at the same time
+    variation = {{0.0, 0.0}, {200.0, 100.0}};
+    expected = {{0.0, 900.0}, {200.0, 1100.0}, {1000.0, 1100.0}};
+    EXPECT_NO_THROW(result = add_variation(fn, variation));
+    EXPECT_EQ(result, expected);
+    // add a second one just after {0.0, 900.0}, {200.0, 1000.0}, {1000.0, 1000.0}
+    variation = {{200.0, 0.0}, {300.0, 100.0}};
+    expected = {{0.0, 900.0}, {200.0, 1000.0}, {300.0, 1100.0}, {1000.0, 1100.0}};
+    EXPECT_NO_THROW(result = add_variation(fn, variation));
+    EXPECT_EQ(result, expected);
+}
+
 TEST(piecewise_function, add_variation)
 {
     // init with a flat function (y=100)
