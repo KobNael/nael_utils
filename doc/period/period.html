@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Period utilities &mdash; Utils 1.2.0 1.2.0 documentation</title>
+  <title>Period utilities &mdash; Utils 1.2.1 1.2.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=6efca38a"></script>
+      <script src="../../_static/documentation_options.js?v=ca842793"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -32,7 +32,7 @@
           
           
           <a href="../../index.html" class="icon icon-home">
-            Utils 1.2.0
+            Utils 1.2.1
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -82,9 +82,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv47is_sameRKN5boost10posix_time13time_durationERKN5boost10posix_time13time_durationERKN5boost10posix_time13time_durationE"><code class="docutils literal notranslate"><span class="pre">is_same()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv47is_sameRKN5boost10posix_time11time_periodERKN5boost10posix_time11time_periodERKN5boost10posix_time13time_durationE"><code class="docutils literal notranslate"><span class="pre">is_same()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#period-generation">Period generation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv416generate_periodsRKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeERKN5boost10posix_time13time_durationERKN5boost10posix_time13time_durationE"><code class="docutils literal notranslate"><span class="pre">generate_periods()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv416generate_periodsRKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeERK12TemporalMesh"><code class="docutils literal notranslate"><span class="pre">generate_periods()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv416generate_periodsRKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeERKN5boost10posix_time13time_durationERKN5boost10posix_time13time_durationE7int64_t"><code class="docutils literal notranslate"><span class="pre">generate_periods()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv416generate_periodsRKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeERK12TemporalMeshRKN5boost10posix_time13time_durationE"><code class="docutils literal notranslate"><span class="pre">generate_periods()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="period_functor.html">Period Functors</a></li>
 </ul>
 </li>
@@ -100,7 +98,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">Utils 1.2.0</a>
+          <a href="../../index.html">Utils 1.2.1</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -898,36 +896,8 @@ For the computation details see <a class="reference internal" href="period_funct
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv416generate_periodsRKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeERKN5boost10posix_time13time_durationERKN5boost10posix_time13time_durationE">
-<span id="_CPPv316generate_periodsRKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeERKN5boost10posix_time13time_durationERKN5boost10posix_time13time_durationE"></span><span id="_CPPv216generate_periodsRKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeERKN5boost10posix_time13time_durationERKN5boost10posix_time13time_durationE"></span><span id="generate_periods__boost::posix_time::ptimeCR.boost::posix_time::ptimeCR.boost::posix_time::time_durationCR.boost::posix_time::time_durationCR"></span><span class="target" id="period__generation_8hh_1ac8ff4581f0bc45b35e5eaf6e970f6dd2"></span><span class="n"><span class="pre">LTimePeriod</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">generate_periods</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">start_horizon</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">end_horizon</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">time_duration</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">start_period</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">time_duration</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">end_period</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv416generate_periodsRKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeERKN5boost10posix_time13time_durationERKN5boost10posix_time13time_durationE" title="Link to this definition"></a><br /></dt>
-<dd><p>Generate the time period defined by a couple start/end on an horizon. </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>start_horizon</strong> – the starting date time of the horizon </p></li>
-<li><p><strong>end_horizon</strong> – the ending date time of the horizon </p></li>
-<li><p><strong>start_period</strong> – the starting time of the period </p></li>
-<li><p><strong>end_period</strong> – the ending time of the period </p></li>
-</ul>
-</dd>
-<dt class="field-even">Pre<span class="colon">:</span></dt>
-<dd class="field-even"><p>end_horizon &gt; start_horizon </p>
-</dd>
-<dt class="field-odd">Pre<span class="colon">:</span></dt>
-<dd class="field-odd"><p>end_horizon and start_horizon are valid date times </p>
-</dd>
-<dt class="field-even">Pre<span class="colon">:</span></dt>
-<dd class="field-even"><p>00:00:00 &lt;= start_period &lt;= 23:59:59 </p>
-</dd>
-<dt class="field-odd">Pre<span class="colon">:</span></dt>
-<dd class="field-odd"><p>00:00:00 &lt;= end_period &lt;= 23:59:59 </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv416generate_periodsRKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeERK12TemporalMesh">
-<span id="_CPPv316generate_periodsRKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeERK12TemporalMesh"></span><span id="_CPPv216generate_periodsRKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeERK12TemporalMesh"></span><span id="generate_periods__boost::posix_time::ptimeCR.boost::posix_time::ptimeCR.TemporalMeshCR"></span><span class="target" id="period__generation_8hh_1affee0c08b8d8281e39070a225c1d0b74"></span><span class="n"><span class="pre">LTimePeriod</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">generate_periods</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">start_horizon</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">end_horizon</span></span>, <span class="n"><span class="pre">TemporalMesh</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">temporal_mesh</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv416generate_periodsRKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeERK12TemporalMesh" title="Link to this definition"></a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv416generate_periodsRKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeERK12TemporalMeshRKN5boost10posix_time13time_durationE">
+<span id="_CPPv316generate_periodsRKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeERK12TemporalMeshRKN5boost10posix_time13time_durationE"></span><span id="_CPPv216generate_periodsRKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeERK12TemporalMeshRKN5boost10posix_time13time_durationE"></span><span id="generate_periods__boost::posix_time::ptimeCR.boost::posix_time::ptimeCR.TemporalMeshCR.boost::posix_time::time_durationCR"></span><span class="target" id="period__generation_8hh_1a6ffcfca21aacbc460136faa58d80ac83"></span><span class="n"><span class="pre">LTimePeriod</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">generate_periods</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">start_horizon</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">end_horizon</span></span>, <span class="n"><span class="pre">TemporalMesh</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">temporal_mesh</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">time_duration</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">offset</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv416generate_periodsRKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeERK12TemporalMeshRKN5boost10posix_time13time_durationE" title="Link to this definition"></a><br /></dt>
 <dd><p>Generate the time period defined by a couple start/end on an horizon. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -935,39 +905,17 @@ For the computation details see <a class="reference internal" href="period_funct
 <li><p><strong>start_horizon</strong> – the starting date time of the horizon </p></li>
 <li><p><strong>end_horizon</strong> – the ending date time of the horizon </p></li>
 <li><p><strong>temporal_mesh</strong> – the corresponding mesh </p></li>
+<li><p><strong>offset</strong> – the offset to apply to the period </p></li>
 </ul>
 </dd>
 <dt class="field-even">Pre<span class="colon">:</span></dt>
 <dd class="field-even"><p>end_horizon &gt; start_horizon </p>
 </dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv416generate_periodsRKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeERKN5boost10posix_time13time_durationERKN5boost10posix_time13time_durationE7int64_t">
-<span id="_CPPv316generate_periodsRKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeERKN5boost10posix_time13time_durationERKN5boost10posix_time13time_durationE7int64_t"></span><span id="_CPPv216generate_periodsRKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeERKN5boost10posix_time13time_durationERKN5boost10posix_time13time_durationE7int64_t"></span><span id="generate_periods__boost::posix_time::ptimeCR.boost::posix_time::ptimeCR.boost::posix_time::time_durationCR.boost::posix_time::time_durationCR.int64_t"></span><span class="target" id="period__generation_8hh_1a16f7d36e87f622f97b96a3b06cb9c6ab"></span><span class="n"><span class="pre">LCapaPeriod</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">generate_periods</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">start_horizon</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptime</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">end_horizon</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">time_duration</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">start_period</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">time_duration</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">end_period</span></span>, <span class="n"><span class="pre">int64_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">capa</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv416generate_periodsRKN5boost10posix_time5ptimeERKN5boost10posix_time5ptimeERKN5boost10posix_time13time_durationERKN5boost10posix_time13time_durationE7int64_t" title="Link to this definition"></a><br /></dt>
-<dd><p>Generate the capacitated time period defined by a couple start/end on an horizon. </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>start_horizon</strong> – the starting date time of the horizon </p></li>
-<li><p><strong>end_horizon</strong> – the ending date time of the horizon </p></li>
-<li><p><strong>start_period</strong> – the starting time of the period </p></li>
-<li><p><strong>end_period</strong> – the ending time of the period </p></li>
-<li><p><strong>capa</strong> – the capacity of the periods </p></li>
-</ul>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>offset &gt; -12:00:00 </p>
 </dd>
 <dt class="field-even">Pre<span class="colon">:</span></dt>
-<dd class="field-even"><p>start_horizon &lt; end_horizon </p>
-</dd>
-<dt class="field-odd">Pre<span class="colon">:</span></dt>
-<dd class="field-odd"><p>end_horizon and start_horizon are valid date times </p>
-</dd>
-<dt class="field-even">Pre<span class="colon">:</span></dt>
-<dd class="field-even"><p>00:00:00 &lt;= start_period &lt;= 23:59:59 </p>
-</dd>
-<dt class="field-odd">Pre<span class="colon">:</span></dt>
-<dd class="field-odd"><p>00:00:00 &lt;= end_period &lt;= 23:59:59 </p>
+<dd class="field-even"><p>offset &lt; 12:00:00 </p>
 </dd>
 </dl>
 </dd></dl>
