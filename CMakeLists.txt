@@ -9,7 +9,7 @@ cmake_minimum_required (VERSION 3.26)
 # ============================================================================
 
 project (nael_utils
-	VERSION 1.2.0
+	VERSION 1.2.1
 	LANGUAGES CXX)
 
 option (${PROJECT_NAME}_AS_SUBMODULE "treat as submodule" ON)
