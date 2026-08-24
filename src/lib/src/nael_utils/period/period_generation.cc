@@ -39,7 +39,7 @@ LTimePeriod
     // Pre conditions
     assert(!start_horizon.is_not_a_date_time() && !end_horizon.is_not_a_date_time());
     assert(start_horizon < end_horizon);
-    assert(boost::posix_time::hours(-24) < offset && offset < boost::posix_time::hours(24));
+    assert(boost::posix_time::hours(-12) < offset && offset < boost::posix_time::hours(12));
     // Generation
     switch (temporal_mesh)
     {
