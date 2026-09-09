@@ -10,7 +10,7 @@
 #include <numeric>   // std::lcm
 
 // Compute the lowest common multiple of a list of integer values
-unsigned long compute_lcm(const std::vector<unsigned>& values)
+unsigned long compute_lcm(const std::set<unsigned, std::less<>>& values)
 {
     CHECK_PRE(!values.empty(), "compute_lcm : vector can not be empty.")
 
