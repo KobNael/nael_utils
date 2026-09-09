@@ -1,6 +1,5 @@
 /**
  *@file lcm.hh
- *@brief Compute the lowest common mutlipe of a list of integer values
  */
 #pragma once
 #include <vector>

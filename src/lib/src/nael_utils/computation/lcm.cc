@@ -1,7 +1,6 @@
 
 /**
  *@file lcm.hh
- *@brief Compute the lowest common mutlipe of a list of integer values
  */
 
 #include <nael_utils/computation/lcm.hh>
