@@ -30,6 +30,7 @@ set_target_properties (nael_utils
 
 target_sources (nael_utils
 	PRIVATE
+	src/nael_utils/computation/lcm.cc
 	src/nael_utils/exception/exception.cc
 	src/nael_utils/json/details/converter.cc
 	src/nael_utils/log/log.cc
