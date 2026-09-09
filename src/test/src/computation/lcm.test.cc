@@ -5,22 +5,22 @@
 
 TEST(lcm, two_values)
 {
-    EXPECT_EQ(compute_lcm(4UL, 6UL), 12UL);
-    EXPECT_EQ(compute_lcm(1UL, 1UL), 1UL);
-    EXPECT_EQ(compute_lcm(7UL, 13UL), 91UL);
+    EXPECT_EQ(compute_lcm(std::vector<unsigned>{4UL, 6UL}), 12UL);
+    EXPECT_EQ(compute_lcm(std::vector<unsigned>{1UL, 1UL}), 1UL);
+    EXPECT_EQ(compute_lcm(std::vector<unsigned>{7UL, 13UL}), 91UL);
 }
 
 TEST(lcm, two_values_one_multiple_of_the_other)
 {
-    EXPECT_EQ(compute_lcm(3UL, 9UL), 9UL);
-    EXPECT_EQ(compute_lcm(5UL, 5UL), 5UL);
+    EXPECT_EQ(compute_lcm(std::vector<unsigned>{3UL, 9UL}), 9UL);
+    EXPECT_EQ(compute_lcm(std::vector<unsigned>{5UL, 5UL}), 5UL);
 }
 
 TEST(lcm, two_values_throws_on_zero)
 {
-    EXPECT_THROW(compute_lcm(0UL, 5UL), fatal_error);
-    EXPECT_THROW(compute_lcm(5UL, 0UL), fatal_error);
-    EXPECT_THROW(compute_lcm(0UL, 0UL), fatal_error);
+    EXPECT_THROW(compute_lcm(std::vector<unsigned>{0UL, 5UL}), fatal_error);
+    EXPECT_THROW(compute_lcm(std::vector<unsigned>{5UL, 0UL}), fatal_error);
+    EXPECT_THROW(compute_lcm(std::vector<unsigned>{0UL, 0UL}), fatal_error);
 }
 
 TEST(lcm, vector_single_value)
