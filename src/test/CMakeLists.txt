@@ -10,6 +10,8 @@ target_sources (unit_tests
     #--------
     # utils
     #--------
+    # computation utils
+    src/computation/lcm.test.cc
     # dedicated exception
     src/exception/dedicated_exception.test.cc
     # containers
