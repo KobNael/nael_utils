@@ -55,6 +55,7 @@
 #pragma once
 
 #include <list>
+#include <vector>
 #include <nael_utils/period/period_typedef.hh>
 #include <nael_utils/model/model_desc.hh>
 

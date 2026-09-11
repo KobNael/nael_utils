@@ -127,7 +127,6 @@ TEST(ratio_periods, reduce_left)
     // too short list
     mylist = { ratio_period(1., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))) };
     EXPECT_EQ( reduce_left(mylist, bpt::hours(2)), expRes );
-    EXPECT_EQ( reduce_left(mylist, bpt::hours(2)), expRes );
     // cut first period : 1 hour at ratio 2 => 30'
     mylist = {  ratio_period(2., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))),
                 ratio_period(2., bpt::ptime(d, bpt::hours(11)) , bpt::ptime(d, bpt::hours(12))) };

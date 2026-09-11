@@ -176,7 +176,7 @@ LRatioPeriod reduce_right(LRatioPeriod const &periods, boost::posix_time::time_d
     {
         bool period_can_be_partially_reduced = can_be_partially_reduced.size() <= i || can_be_partially_reduced.at(i);
         --i;
-        // not enough time, go on
+        // not enough time or partial reduction not allowed, go on
         if(auto rel_dur = it->get_relative_duration(); rel_dur <= remaining_duration || !period_can_be_partially_reduced)
         {
             remaining_duration -= rel_dur;
