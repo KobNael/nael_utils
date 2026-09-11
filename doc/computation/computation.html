@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Data Model Stream &mdash; Utils 1.2.2 1.2.2 documentation</title>
+  <title>Basic computation &mdash; Utils 1.2.2 1.2.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
 
@@ -19,8 +19,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Data Model Generation" href="model_desc_att.html" />
-    <link rel="prev" title="Data Model Description" href="model_desc.html" /> 
+    <link rel="next" title="Lexical sort" href="../sort/lexical_sort.html" />
+    <link rel="prev" title="Safe numerical comparison" href="../safecomp/safecomp.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -45,16 +45,14 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../log/log.html">Log utilities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../exception/exception.html">Exception</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="model.html">Data Model Utils</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="model_desc.html">Data Model Description</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Data Model Stream</a></li>
-<li class="toctree-l2"><a class="reference internal" href="model_desc_att.html">Data Model Generation</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../model/model.html">Data Model Utils</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../json/json.html">Json utilities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../string/string_utils.html">String utilities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../safecomp/safecomp.html">Safe numerical comparison</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../computation/computation.html">Basic computation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Basic computation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv411compute_lcmRKNSt3setIjNSt4lessIEEEE"><code class="docutils literal notranslate"><span class="pre">compute_lcm()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../sort/lexical_sort.html">Lexical sort</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sorted_list/sorted_list.html">Sorted List Utilities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../period/period.html">Period utilities</a></li>
@@ -76,47 +74,39 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="model.html">Data Model Utils</a></li>
-      <li class="breadcrumb-item active">Data Model Stream</li>
+      <li class="breadcrumb-item active">Basic computation</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../_sources/doc/model/model_print.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/doc/computation/computation.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
-        <a href="model_desc.html" class="btn btn-neutral float-left" title="Data Model Description" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="model_desc_att.html" class="btn btn-neutral float-right" title="Data Model Generation" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../safecomp/safecomp.html" class="btn btn-neutral float-left" title="Safe numerical comparison" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../sort/lexical_sort.html" class="btn btn-neutral float-right" title="Lexical sort" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
   </div>
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="data-model-stream">
-<span id="model-print"></span><h1>Data Model Stream<a class="headerlink" href="#data-model-stream" title="Link to this heading"></a></h1>
+  <section id="basic-computation">
+<span id="computation"></span><h1>Basic computation<a class="headerlink" href="#basic-computation" title="Link to this heading"></a></h1>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric" id="breathe-section-title-defines">Defines</p>
-<dl class="cpp macro">
-<dt class="sig sig-object cpp" id="c.STREAM_DTO_ATT_VALUE_VARIABLE">
-<span class="target" id="model__desc__print_8hh_1ad4302d589171945d54f42103ac2fbfba"></span><span class="sig-name descname"><span class="n"><span class="pre">STREAM_DTO_ATT_VALUE_VARIABLE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">r</span></span>, <span class="n"><span class="pre">data</span></span>, <span class="n"><span class="pre">i</span></span>, <span class="n"><span class="pre">att_desc</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.STREAM_DTO_ATT_VALUE_VARIABLE" title="Link to this definition"></a><br /></dt>
-<dd><p>Generate the instruction needed to stream an attribute. </p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>This macro should not be called directly, it is used through <a class="reference internal" href="model_desc.html#model__desc_8hh_1a258a491864f3e6bdbcc3c0cae8f93ad7"><span class="std std-ref">MAKE_DTO_STRUCT</span></a></p>
-</div>
-</dd></dl>
-
-<dl class="cpp macro">
-<dt class="sig sig-object cpp" id="c.STREAM_DTO_ATT_VALUES">
-<span class="target" id="model__desc__print_8hh_1a9103d7850ef89cfb093a539a04202a18"></span><span class="sig-name descname"><span class="n"><span class="pre">STREAM_DTO_ATT_VALUES</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">att_seq</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.STREAM_DTO_ATT_VALUES" title="Link to this definition"></a><br /></dt>
-<dd><p>Generate the instructions needed to stream a sequence of attributes. </p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>This macro should not be called directly, it is used through <a class="reference internal" href="model_desc.html#model__desc_8hh_1a258a491864f3e6bdbcc3c0cae8f93ad7"><span class="std std-ref">MAKE_DTO_STRUCT</span></a></p>
-</div>
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv411compute_lcmRKNSt3setIjNSt4lessIEEEE">
+<span id="_CPPv311compute_lcmRKNSt3setIjNSt4lessIEEEE"></span><span id="_CPPv211compute_lcmRKNSt3setIjNSt4lessIEEEE"></span><span id="compute_lcm__std::set:unsigned.std::less:::CR"></span><span class="target" id="lcm_8hh_1aa4e5dba246ecf1bf86bcddb1d4bf3007"></span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">long</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">compute_lcm</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">set</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">unsigned</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">less</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">values</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv411compute_lcmRKNSt3setIjNSt4lessIEEEE" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the lowest common multiple of a list of integer values. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>att_seq</strong> – the sequence </p></li>
-</ul>
+<dd class="field-odd"><p><strong>values</strong> – the list of values </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the lowest common multiple of a list of integer values </p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>values is not empty </p>
+</dd>
+<dt class="field-even">Pre<span class="colon">:</span></dt>
+<dd class="field-even"><p>values does not contain 0 </p>
 </dd>
 </dl>
 </dd></dl>

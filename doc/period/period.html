@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Period utilities &mdash; Utils 1.2.1 1.2.1 documentation</title>
+  <title>Period utilities &mdash; Utils 1.2.2 1.2.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=ca842793"></script>
+      <script src="../../_static/documentation_options.js?v=fd7cadf9"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -32,7 +32,7 @@
           
           
           <a href="../../index.html" class="icon icon-home">
-            Utils 1.2.1
+            Utils 1.2.2
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -49,6 +49,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../json/json.html">Json utilities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../string/string_utils.html">String utilities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../safecomp/safecomp.html">Safe numerical comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computation/computation.html">Basic computation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sort/lexical_sort.html">Lexical sort</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sorted_list/sorted_list.html">Sorted List Utilities</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Period utilities</a><ul>
@@ -73,8 +74,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv421get_relative_durationRK12LRatioPeriod"><code class="docutils literal notranslate"><span class="pre">get_relative_duration()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv435get_earliest_end_date_from_durationRK12LRatioPeriodRKN5boost10posix_time13time_durationE"><code class="docutils literal notranslate"><span class="pre">get_earliest_end_date_from_duration()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv435get_earliest_end_date_from_durationRK11LCapaPeriodRKN5boost10posix_time13time_durationE"><code class="docutils literal notranslate"><span class="pre">get_earliest_end_date_from_duration()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv411reduce_leftRK12LRatioPeriodRKN5boost10posix_time13time_durationE"><code class="docutils literal notranslate"><span class="pre">reduce_left()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv412reduce_rightRK12LRatioPeriodRKN5boost10posix_time13time_durationE"><code class="docutils literal notranslate"><span class="pre">reduce_right()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv411reduce_leftRK12LRatioPeriodRKN5boost10posix_time13time_durationERKNSt6vectorIbEE"><code class="docutils literal notranslate"><span class="pre">reduce_left()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv412reduce_rightRK12LRatioPeriodRKN5boost10posix_time13time_durationERKNSt6vectorIbEE"><code class="docutils literal notranslate"><span class="pre">reduce_right()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv420get_eligible_periodsRK11LCapaPeriod7int64_t"><code class="docutils literal notranslate"><span class="pre">get_eligible_periods()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv47convertRK11LTimePeriod7int64_t"><code class="docutils literal notranslate"><span class="pre">convert()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv417make_empty_periodN5boost10posix_time5ptimeE"><code class="docutils literal notranslate"><span class="pre">make_empty_period()</span></code></a></li>
@@ -98,7 +99,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">Utils 1.2.1</a>
+          <a href="../../index.html">Utils 1.2.2</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -754,14 +755,15 @@ For the computation details see <a class="reference internal" href="period_funct
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv411reduce_leftRK12LRatioPeriodRKN5boost10posix_time13time_durationE">
-<span id="_CPPv311reduce_leftRK12LRatioPeriodRKN5boost10posix_time13time_durationE"></span><span id="_CPPv211reduce_leftRK12LRatioPeriodRKN5boost10posix_time13time_durationE"></span><span id="reduce_left__LRatioPeriodCR.boost::posix_time::time_durationCR"></span><span class="target" id="period__utils_8hh_1a115f180d2ae11842acdc4e29f97f0ca7"></span><span class="n"><span class="pre">LRatioPeriod</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">reduce_left</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">LRatioPeriod</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">periods</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">time_duration</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">duration</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv411reduce_leftRK12LRatioPeriodRKN5boost10posix_time13time_durationE" title="Link to this definition"></a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv411reduce_leftRK12LRatioPeriodRKN5boost10posix_time13time_durationERKNSt6vectorIbEE">
+<span id="_CPPv311reduce_leftRK12LRatioPeriodRKN5boost10posix_time13time_durationERKNSt6vectorIbEE"></span><span id="_CPPv211reduce_leftRK12LRatioPeriodRKN5boost10posix_time13time_durationERKNSt6vectorIbEE"></span><span id="reduce_left__LRatioPeriodCR.boost::posix_time::time_durationCR.std::vector:b:CR"></span><span class="target" id="period__utils_8hh_1a04150bc8307fd8bb694c7d87034f9de0"></span><span class="n"><span class="pre">LRatioPeriod</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">reduce_left</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">LRatioPeriod</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">periods</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">time_duration</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">duration</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">bool</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">can_be_partially_reduced</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv411reduce_leftRK12LRatioPeriodRKN5boost10posix_time13time_durationERKNSt6vectorIbEE" title="Link to this definition"></a><br /></dt>
 <dd><p>Reduce a list of periods from the left by a given duration taking into account the ratio of each period. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>periods</strong> – the list of ratio_periods </p></li>
 <li><p><strong>duration</strong> – the duration </p></li>
+<li><p><strong>can_be_partially_reduced</strong> – indicates if a period can be partially reduced or not (true by default) </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -771,14 +773,15 @@ For the computation details see <a class="reference internal" href="period_funct
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv412reduce_rightRK12LRatioPeriodRKN5boost10posix_time13time_durationE">
-<span id="_CPPv312reduce_rightRK12LRatioPeriodRKN5boost10posix_time13time_durationE"></span><span id="_CPPv212reduce_rightRK12LRatioPeriodRKN5boost10posix_time13time_durationE"></span><span id="reduce_right__LRatioPeriodCR.boost::posix_time::time_durationCR"></span><span class="target" id="period__utils_8hh_1ad279f68d65af9479df28e04feba8a8bb"></span><span class="n"><span class="pre">LRatioPeriod</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">reduce_right</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">LRatioPeriod</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">periods</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">time_duration</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">duration</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv412reduce_rightRK12LRatioPeriodRKN5boost10posix_time13time_durationE" title="Link to this definition"></a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv412reduce_rightRK12LRatioPeriodRKN5boost10posix_time13time_durationERKNSt6vectorIbEE">
+<span id="_CPPv312reduce_rightRK12LRatioPeriodRKN5boost10posix_time13time_durationERKNSt6vectorIbEE"></span><span id="_CPPv212reduce_rightRK12LRatioPeriodRKN5boost10posix_time13time_durationERKNSt6vectorIbEE"></span><span id="reduce_right__LRatioPeriodCR.boost::posix_time::time_durationCR.std::vector:b:CR"></span><span class="target" id="period__utils_8hh_1a34e02850518f348c631834e62ab9df7c"></span><span class="n"><span class="pre">LRatioPeriod</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">reduce_right</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">LRatioPeriod</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">periods</span></span>, <span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">posix_time</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">time_duration</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">duration</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">bool</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">can_be_partially_reduced</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv412reduce_rightRK12LRatioPeriodRKN5boost10posix_time13time_durationERKNSt6vectorIbEE" title="Link to this definition"></a><br /></dt>
 <dd><p>Reduce a list of periods from the right by a given duration taking into account the ratio of each period. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>periods</strong> – the list of ratio_periods </p></li>
 <li><p><strong>duration</strong> – the duration </p></li>
+<li><p><strong>can_be_partially_reduced</strong> – indicates if a period can be partially reduced or not (true by default) </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
