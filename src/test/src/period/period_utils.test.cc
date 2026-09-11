@@ -127,6 +127,7 @@ TEST(ratio_periods, reduce_left)
     // too short list
     mylist = { ratio_period(1., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))) };
     EXPECT_EQ( reduce_left(mylist, bpt::hours(2)), expRes );
+    EXPECT_EQ( reduce_left(mylist, bpt::hours(2)), expRes );
     // cut first period : 1 hour at ratio 2 => 30'
     mylist = {  ratio_period(2., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))),
                 ratio_period(2., bpt::ptime(d, bpt::hours(11)) , bpt::ptime(d, bpt::hours(12))) };
@@ -142,12 +143,19 @@ TEST(ratio_periods, reduce_left)
                 ratio_period(2., bpt::ptime(d, bpt::hours(13)) , bpt::ptime(d, bpt::hours(14))),
                 ratio_period(2., bpt::ptime(d, bpt::hours(15)) , bpt::ptime(d, bpt::hours(17))) };
     EXPECT_EQ( reduce_left(mylist, bpt::hours(3)), expRes );
+    // should cut second period but not allowed : full redution
+    expRes = {  ratio_period(2., bpt::ptime(d, bpt::hours(13)) , bpt::ptime(d, bpt::hours(14))),
+                ratio_period(2., bpt::ptime(d, bpt::hours(15)) , bpt::ptime(d, bpt::hours(17))) };
+    EXPECT_EQ( reduce_left(mylist, bpt::hours(3), {false, false, false, true}), expRes );
     // cut last period : 4 hour 30 at ratio 2 => 2'15'
     mylist = {  ratio_period(2., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))),
                 ratio_period(2., bpt::ptime(d, bpt::hours(11)) , bpt::ptime(d, bpt::hours(12))),
                 ratio_period(2., bpt::ptime(d, bpt::hours(13)) , bpt::ptime(d, bpt::hours(14))) };
     expRes = {  ratio_period(2., bpt::ptime(d, bpt::time_duration(13,15,0)) , bpt::ptime(d, bpt::hours(14))) };
     EXPECT_EQ( reduce_left(mylist, bpt::time_duration(4,30,0)), expRes );
+    // should cut last period but not allowed : full reduction
+    expRes = {};
+    EXPECT_EQ( reduce_left(mylist, bpt::time_duration(4,30,0), {true, true, false}), expRes );
 }
 
 TEST(ratio_periods, reduce_right)
@@ -176,12 +184,19 @@ TEST(ratio_periods, reduce_right)
                 ratio_period(2., bpt::ptime(d, bpt::hours(11)) , bpt::ptime(d, bpt::hours(12))),
                 ratio_period(2., bpt::ptime(d, bpt::hours(13)) , bpt::ptime(d, bpt::time_duration(13,30,0))) };
     EXPECT_EQ( reduce_right(mylist, bpt::hours(3)), expRes );
+    // should cut second period but not allowed : full redution
+    expRes = {  ratio_period(2., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))),
+                ratio_period(2., bpt::ptime(d, bpt::hours(11)) , bpt::ptime(d, bpt::hours(12))) };
+    EXPECT_EQ( reduce_right(mylist, bpt::hours(3), {true, true, false, true}), expRes );
     // cut last period : 4 hour 30 at ratio 2 => 2'15'
     mylist = {  ratio_period(2., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))),
                 ratio_period(2., bpt::ptime(d, bpt::hours(11)) , bpt::ptime(d, bpt::hours(12))),
                 ratio_period(2., bpt::ptime(d, bpt::hours(13)) , bpt::ptime(d, bpt::hours(14))) };
     expRes = {  ratio_period(2., bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::time_duration(9,45,0))) };
     EXPECT_EQ( reduce_right(mylist, bpt::time_duration(4,30,0)), expRes );
+    // should cut last period but not allowed : full reduction
+    expRes = {};
+    EXPECT_EQ( reduce_right(mylist, bpt::time_duration(4,30,0), {false, true, true}), expRes );
 }
 
 TEST(capa_periods, total_duration)
