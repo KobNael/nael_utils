@@ -55,6 +55,7 @@
 #pragma once
 
 #include <list>
+#include <vector>
 #include <nael_utils/period/period_typedef.hh>
 #include <nael_utils/model/model_desc.hh>
 
@@ -363,18 +364,20 @@ boost::posix_time::ptime get_earliest_end_date_from_duration(LCapaPeriod const &
  * taking into account the ratio of each period
  * @param periods the list of ratio_periods
  * @param duration the duration
+ * @param can_be_partially_reduced indicates if a period can be partially reduced or not (true by default)
  * @return the corresponding ratio_periods
  */
-LRatioPeriod reduce_left(LRatioPeriod const &periods, boost::posix_time::time_duration const &duration);
+LRatioPeriod reduce_left(LRatioPeriod const &periods, boost::posix_time::time_duration const &duration, std::vector<bool> const &can_be_partially_reduced = {});
 
 /**
  * @brief Reduce a list of periods from the right by a given duration
  * taking into account the ratio of each period
  * @param periods the list of ratio_periods
  * @param duration the duration
+ * @param can_be_partially_reduced indicates if a period can be partially reduced or not (true by default)
  * @return the corresponding ratio_periods
  */
-LRatioPeriod reduce_right(LRatioPeriod const &periods, boost::posix_time::time_duration const &duration);
+LRatioPeriod reduce_right(LRatioPeriod const &periods, boost::posix_time::time_duration const &duration, std::vector<bool> const &can_be_partially_reduced = {});
 
 /**
  * @brief Collect the capa_period with enough capacity and return them as time_period

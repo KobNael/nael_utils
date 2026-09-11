@@ -124,16 +124,23 @@ boost::posix_time::time_duration compute_theoretical_duration(boost::posix_time:
 }
 
 // Reduce a list of periods from the left by a given duration taking into account the ratio of each period
-LRatioPeriod reduce_left(LRatioPeriod const &periods, boost::posix_time::time_duration const &duration)
+LRatioPeriod reduce_left(LRatioPeriod const &periods, boost::posix_time::time_duration const &duration, std::vector<bool> const &can_be_partially_reduced)
 {
     LRatioPeriod result;
+    if(periods.empty())
+    {
+        return result;
+    }
     // iterate over the periods and search for the cut point
     auto it = periods.begin();
+    size_t i(0);
     boost::posix_time::time_duration remaining_duration = duration;
     while(it != periods.end() && remaining_duration > bpt::time_duration(0,0,0))
     {
-        // not enough time, go on
-        if(auto rel_dur = it->get_relative_duration(); rel_dur <= remaining_duration)
+        bool period_can_be_partially_reduced = can_be_partially_reduced.size() <= i || can_be_partially_reduced.at(i);
+        ++i;
+        // not enough time or partial reduction not allowed, go on
+        if(auto rel_dur = it->get_relative_duration(); rel_dur <= remaining_duration || !period_can_be_partially_reduced)
         {
             remaining_duration -= rel_dur;
             ++it;
@@ -154,16 +161,23 @@ LRatioPeriod reduce_left(LRatioPeriod const &periods, boost::posix_time::time_du
 }
 
 // Reduce a list of periods from the right by a given duration taking into account the ratio of each period
-LRatioPeriod reduce_right(LRatioPeriod const &periods, boost::posix_time::time_duration const &duration)
+LRatioPeriod reduce_right(LRatioPeriod const &periods, boost::posix_time::time_duration const &duration, std::vector<bool> const &can_be_partially_reduced)
 {
     LRatioPeriod result;
+    if(periods.empty())
+    {
+        return result;
+    }
     // iterate over the periods and search for the cut point
     auto it = periods.rbegin();
+    size_t i(periods.size() - 1);
     boost::posix_time::time_duration remaining_duration = duration;
     while(it != periods.rend() && remaining_duration > bpt::time_duration(0,0,0))
     {
-        // not enough time, go on
-        if(auto rel_dur = it->get_relative_duration(); rel_dur <= remaining_duration)
+        bool period_can_be_partially_reduced = can_be_partially_reduced.size() <= i || can_be_partially_reduced.at(i);
+        --i;
+        // not enough time or partial reduction not allowed, go on
+        if(auto rel_dur = it->get_relative_duration(); rel_dur <= remaining_duration || !period_can_be_partially_reduced)
         {
             remaining_duration -= rel_dur;
             ++it;
