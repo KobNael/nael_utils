@@ -124,12 +124,13 @@ boost::posix_time::time_duration compute_theoretical_duration(boost::posix_time:
 }
 
 // Reduce a list of periods from the left by a given duration taking into account the ratio of each period
-LRatioPeriod reduce_left(LRatioPeriod const &periods, boost::posix_time::time_duration const &duration, std::vector<bool> const &can_be_partially_reduced)
+std::pair<boost::posix_time::time_duration, LRatioPeriod>
+    reduce_left(LRatioPeriod const &periods, boost::posix_time::time_duration const &duration, std::vector<bool> const &can_be_partially_reduced)
 {
     LRatioPeriod result;
     if(periods.empty())
     {
-        return result;
+        return std::make_pair(bpt::seconds(0), result);
     }
     // iterate over the periods and search for the cut point
     auto it = periods.begin();
@@ -153,20 +154,22 @@ LRatioPeriod reduce_left(LRatioPeriod const &periods, boost::posix_time::time_du
             it->begin() + absolute_reduction,
             it->end());
         ++it;
+        remaining_duration = bpt::seconds(0);
         break;
     }
     // copy the remaining periods
     result.insert(result.end(), it, periods.end());
-    return result;
+    return std::make_pair(duration - remaining_duration, result);
 }
 
 // Reduce a list of periods from the right by a given duration taking into account the ratio of each period
-LRatioPeriod reduce_right(LRatioPeriod const &periods, boost::posix_time::time_duration const &duration, std::vector<bool> const &can_be_partially_reduced)
+std::pair<boost::posix_time::time_duration, LRatioPeriod>
+    reduce_right(LRatioPeriod const &periods, boost::posix_time::time_duration const &duration, std::vector<bool> const &can_be_partially_reduced)
 {
     LRatioPeriod result;
     if(periods.empty())
     {
-        return result;
+        return std::make_pair(bpt::seconds(0), result);
     }
     // iterate over the periods and search for the cut point
     auto it = periods.rbegin();
@@ -190,12 +193,13 @@ LRatioPeriod reduce_right(LRatioPeriod const &periods, boost::posix_time::time_d
             it->begin(),
             it->end() - absolute_reduction);
         ++it;
+        remaining_duration = bpt::seconds(0);
         break;
     }
     // copy the remaining periods
     result.insert(result.end(), it, periods.rend());
     std::ranges::reverse(result);
-    return result;
+    return std::make_pair(duration - remaining_duration, result);
 }
 
 // Compute the relative duration of a list of periods

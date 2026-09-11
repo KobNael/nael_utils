@@ -365,9 +365,11 @@ boost::posix_time::ptime get_earliest_end_date_from_duration(LCapaPeriod const &
  * @param periods the list of ratio_periods
  * @param duration the duration
  * @param can_be_partially_reduced indicates if a period can be partially reduced or not (true by default)
- * @return the corresponding ratio_periods
+ *  - the actual reduction duration
+ *  - the corresponding ratio_periods
  */
-LRatioPeriod reduce_left(LRatioPeriod const &periods, boost::posix_time::time_duration const &duration, std::vector<bool> const &can_be_partially_reduced = {});
+std::pair<boost::posix_time::time_duration, LRatioPeriod>
+    reduce_left(LRatioPeriod const &periods, boost::posix_time::time_duration const &duration, std::vector<bool> const &can_be_partially_reduced = {});
 
 /**
  * @brief Reduce a list of periods from the right by a given duration
@@ -375,9 +377,12 @@ LRatioPeriod reduce_left(LRatioPeriod const &periods, boost::posix_time::time_du
  * @param periods the list of ratio_periods
  * @param duration the duration
  * @param can_be_partially_reduced indicates if a period can be partially reduced or not (true by default)
- * @return the corresponding ratio_periods
+ * @return a pair with
+ *  - the actual reduction duration
+ *  - the corresponding ratio_periods
  */
-LRatioPeriod reduce_right(LRatioPeriod const &periods, boost::posix_time::time_duration const &duration, std::vector<bool> const &can_be_partially_reduced = {});
+std::pair<boost::posix_time::time_duration, LRatioPeriod>
+    reduce_right(LRatioPeriod const &periods, boost::posix_time::time_duration const &duration, std::vector<bool> const &can_be_partially_reduced = {});
 
 /**
  * @brief Collect the capa_period with enough capacity and return them as time_period
