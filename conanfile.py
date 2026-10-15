@@ -32,7 +32,9 @@ class libreflectConan(ConanFile):
             "fPIC": True,
             "coverage": "OFF",
             "cppcheck": "OFF",
-            "valgrind": "OFF"
+            "valgrind": "OFF",
+            # cobalt (unused) has an io_ssl sub-library that boost/1.91.0 fails to build without OpenSSL
+            "boost/*:without_cobalt": True
         }
 
     # folders and layout

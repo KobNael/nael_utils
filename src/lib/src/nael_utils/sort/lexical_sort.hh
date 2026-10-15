@@ -50,7 +50,7 @@ struct Comparator
     /**
      * @brief Constructor
      */
-    explicit Comparator<T>(LexicalComparator<T> const *cmp) : internal_cmp(cmp)
+    explicit Comparator(LexicalComparator<T> const *cmp) : internal_cmp(cmp)
     {
     }
 
