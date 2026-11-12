@@ -26,6 +26,32 @@ namespace json
     }
 
     /**
+     * @brief Load a context from a JSON text
+     * @tparam T the type of context
+     * @param text the JSON text
+     * @param context the context to fill
+     * @pre T has been declared using #MAKE_DTO_STRUCT
+     */
+    template <typename T>
+    void import_from_string(std::string_view text, T &context)
+    {
+        context = boost::json::value_to<T>(boost::json::parse(text));
+    }
+
+    /**
+     * @brief Export a context to a JSON text
+     * @tparam T the type of context
+     * @param context the context to export
+     * @return the JSON text
+     * @pre T has been declared using #MAKE_DTO_STRUCT
+     */
+    template <typename T>
+    std::string export_to_string(T const &context)
+    {
+        return boost::json::serialize(boost::json::value_from(context));
+    }
+
+    /**
      * @brief Load a context from a file
      * @tparam T the type of context
      * @param filePath path to the file

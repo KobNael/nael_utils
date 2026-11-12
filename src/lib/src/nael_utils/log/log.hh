@@ -9,7 +9,9 @@
 #include <nael_utils/exception/exception.hh>
 #include <nael_utils/hash/hash.hh>
 
+#include <filesystem>
 #include <iostream>
+#include <mutex>
 #include <unordered_map>
 #include <vector>
 #include <functional>
@@ -18,6 +20,100 @@
 
 namespace io
 {
+
+    /**
+     * @struct LogState
+     * @brief Loggers and settings used by the LoggerManager
+     */
+    struct LogState
+    {
+        /** @brief tee loggers by name */
+        std::unordered_map<std::string, TeeLogger, string_hash, std::equal_to<>> tee_loggers;
+        /** @brief file loggers by name */
+        std::unordered_map<std::string, FileLogger, string_hash, std::equal_to<>> file_loggers;
+        /** @brief default log file name */
+        std::string logfile_name = "default";
+        /** @brief default log level */
+        LogLevel log_level = LogLevel::INFO;
+        /** @brief directory of the log files (current directory if empty) */
+        std::filesystem::path directory;
+        /** @brief do the tee loggers also write to the standard output */
+        bool console = true;
+        /** @brief protects the loggers maps (threads of a pool share the state of their session) */
+        std::mutex mutex;
+
+        /** @return the path of the log file of a logger */
+        std::string file_path(std::string_view name) const;
+    };
+
+    /**
+     * @class LogSession
+     * @brief Give the current thread its own loggers and settings for its lifetime
+     *
+     * The LoggerManager uses a process wide LogState, unless a LogSession is alive on the calling thread.
+     * The loggers created during the session are closed when it ends.
+     * Sessions on different threads are independent, so several runs may log concurrently
+     * (in different directories, as the log files are named after the loggers).
+     * The jobs of a thread::Pool use the session of the thread which enqueued them;
+     * other threads may join a session with a LogSessionScope.
+     * @warning the session must outlive the threads using it
+     */
+    class LogSession
+    {
+    public:
+        /**
+         * @brief Start a session on the current thread
+         * @param directory directory of the log files (current directory if empty), created if needed
+         * @param level default log level
+         * @param name default log file name
+         * @param console do the tee loggers also write to the standard output
+         */
+        LogSession(std::filesystem::path directory, LogLevel level, std::string name, bool console);
+        /**
+         * @brief End the session: close its loggers, restore the previous state of the thread
+         */
+        ~LogSession();
+
+        LogSession(LogSession const &) = delete;
+        LogSession &operator=(LogSession const &) = delete;
+
+    private:
+        friend class LoggerManager;
+        /** @brief loggers and settings of the session */
+        LogState _state;
+        /** @brief state of the thread before the session */
+        LogState *_previous;
+    };
+
+    /**
+     * @class LogSessionScope
+     * @brief Make the current thread use the state of a session (of another thread) for its lifetime
+     *
+     * @code{cpp}
+     * io::LogState *session = io::LoggerManager::CurrentSession();
+     * std::thread worker([session]() {
+     *     io::LogSessionScope scope(session);
+     *     INFOLOG << "logged in the session of the parent thread" << std::endl;
+     * });
+     * @endcode
+     */
+    class LogSessionScope
+    {
+    public:
+        /**
+         * @param state the state of the session (from LoggerManager::CurrentSession()), null for the process wide state
+         */
+        explicit LogSessionScope(LogState *state);
+        /** @brief Restore the previous state of the thread */
+        ~LogSessionScope();
+
+        LogSessionScope(LogSessionScope const &) = delete;
+        LogSessionScope &operator=(LogSessionScope const &) = delete;
+
+    private:
+        /** @brief state of the thread before the scope */
+        LogState *_previous;
+    };
 
     /**
      * @class LoggerManager
@@ -50,7 +146,7 @@ namespace io
          */
         static void SetDefaultLogLevel(LogLevel level)
         {
-            _log_level = level;
+            state().log_level = level;
         }
         /**
          * @brief Set the default name
@@ -58,16 +154,27 @@ namespace io
          */
         static void SetDefaultName(std::string_view name)
         {
-            _logfile_name = name;
+            state().logfile_name = name;
+        }
+
+        /**
+         * @return the state of the session of the current thread, null if none (process wide state)
+         * @see LogSessionScope
+         */
+        static LogState *CurrentSession()
+        {
+            return _session_state;
         }
 
     private:
-        /** @brief static storage of the tee logger */
-        static std::unordered_map<std::string, TeeLogger, string_hash, std::equal_to<>> _tee_loggers;
-        /** @brief default log file name */
-        static std::string _logfile_name;
-        /** @brief default log level */
-        static LogLevel _log_level;
+        friend class LogSession;
+        friend class LogSessionScope;
+        /** @return the state of the session of the current thread, the process wide state if none */
+        static LogState &state();
+        /** @brief process wide state */
+        static LogState _global_state;
+        /** @brief state of the session of the current thread (null if none) */
+        static thread_local LogState *_session_state;
 
         // FileLoggers
     public:
@@ -93,10 +200,6 @@ namespace io
          * @brief Clear every logger (file or tee)
          */
         static void ClearAllLoggers();
-
-    private:
-        /** @brief static storage of the file logger */
-        static std::unordered_map<std::string, FileLogger, string_hash, std::equal_to<>> _file_loggers;
     };
 
     /*
