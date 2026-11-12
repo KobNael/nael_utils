@@ -1,7 +1,5 @@
 #include "test_data_model.hh"
-
-namespace model_test
-{
+#include <format>
 
 namespace bo
 {
@@ -32,7 +30,7 @@ SecondClass &BoContext::addSecondClass(std::string const &id, std::string const 
     auto first = _firsts.find(first_id);
     if(first == _firsts.end())
     {
-        throw consistency("Unknown first item " + first_id);
+        throw consistency(std::format("Unknown first item {}", first_id));
     }
     auto [iter, inserted] = _seconds.try_emplace(id, id, value, first->second);
     if(!inserted)
@@ -43,5 +41,3 @@ SecondClass &BoContext::addSecondClass(std::string const &id, std::string const 
 }
 
 } //namespace bo
-
-} //namespace model_test

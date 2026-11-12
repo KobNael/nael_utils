@@ -6,13 +6,13 @@
 TEST(model_desc, basics)
 {
     //access for simple attributes
-    model_test::dto::BasicAttDto basic_obj = model_test::makeBasicAttDto();
+    dto::BasicAttDto basic_obj = dto::makeBasicAttDto();
     ASSERT_EQ( basic_obj.bool_att, false );
     ASSERT_EQ( basic_obj.unsigned_att, 1u );
     ASSERT_EQ( basic_obj.int_att, 2 );
     ASSERT_EQ( basic_obj.long_att, 3l );
     ASSERT_EQ( basic_obj.double_att, 4.02 );
-    ASSERT_EQ( basic_obj.enum_att, model_test::dto::PARAM_2 );
+    ASSERT_EQ( basic_obj.enum_att, dto::PARAM_2 );
     ASSERT_EQ( basic_obj.string_att, "id" );
     ASSERT_EQ( basic_obj.time_duration_att, bpt::time_duration(1,2,3) );
     ASSERT_EQ( basic_obj.date_att, bg::day_clock::local_day() );
@@ -26,14 +26,14 @@ TEST(model_desc, basics)
     ASSERT_EQ( basic_obj.vec_obj_att.at(1).id_att, "o2" );
     //access for vector of simple values
     ASSERT_EQ( basic_obj.vec_enum_att.size(), 3u );
-    ASSERT_EQ( basic_obj.vec_enum_att.at(0), model_test::dto::PARAM_3 );
-    ASSERT_EQ( basic_obj.vec_enum_att.at(1), model_test::dto::PARAM_2 );
-    ASSERT_EQ( basic_obj.vec_enum_att.at(2), model_test::dto::PARAM_1 );
+    ASSERT_EQ( basic_obj.vec_enum_att.at(0), dto::PARAM_3 );
+    ASSERT_EQ( basic_obj.vec_enum_att.at(1), dto::PARAM_2 );
+    ASSERT_EQ( basic_obj.vec_enum_att.at(2), dto::PARAM_1 );
 }
 
 TEST(model_desc, print)
 {
-    model_test::dto::BasicAttDto basic_obj = model_test::makeBasicAttDto();
+    dto::BasicAttDto basic_obj = dto::makeBasicAttDto();
     std::ostringstream oss, oss_ref;
     oss << basic_obj;
     oss_ref << "BasicAttDto{"

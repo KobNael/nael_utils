@@ -33,3 +33,17 @@ TEST(dedicated_exception, get_message)
         ASSERT_EQ( std::string(e.what()), "dedicated error");
     }
 }
+
+TEST(dedicated_exception, check_pre)
+{
+    try
+    {
+        CHECK_PRE(false, "check_pre error");
+        FAIL();
+    }
+    catch(const fatal_error& e)
+    {
+        ASSERT_NE(std::string(e.what()).find("check_pre error"), std::string::npos);
+    }
+    ASSERT_NO_THROW( CHECK_PRE(true, "check_pre error") );
+}

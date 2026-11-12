@@ -2,8 +2,6 @@
 
 #include <nael_utils/period/period_utils.hh>
 
-#include <boost/assign/list_of.hpp>
-
 namespace bg = boost::gregorian;
 namespace bpt = boost::posix_time;
 
@@ -34,26 +32,6 @@ TEST(capa_periods, basics)
     ASSERT_EQ(cp1.begin(), p.begin());
     ASSERT_EQ(cp1.end(), p.end());
 }
-
-TEST(capa_periods, total_duration)
-{
-    bg::date d = bg::day_clock::local_day();
-
-    LCapaPeriod mylist;
-    ASSERT_EQ( get_total_duration(mylist), bpt::seconds(0) );
-
-    mylist = { capa_period(1, bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))) };
-    ASSERT_EQ( get_total_duration(mylist), bpt::hours(1) );
-
-    mylist = { capa_period(1, bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))),
-        capa_period(1, bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))) };
-    ASSERT_EQ( get_total_duration(mylist), bpt::hours(2) );
-
-    mylist = { capa_period(1, bpt::ptime(d, bpt::hours(9)) , bpt::ptime(d, bpt::hours(10))),
-        capa_period(1, bpt::ptime(d, bpt::time_duration(10, 20, 30)) , bpt::ptime(d, bpt::time_duration(10, 21, 32))) };
-    ASSERT_EQ( get_total_duration(mylist), bpt::time_duration(1, 1, 2) );
-}
-
 
 TEST(capa_periods, get_inter)
 {
@@ -451,7 +429,13 @@ TEST(capa_periods, conversion)
     LTimePeriod mylist {
         time_period( bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(11)) )
         , time_period( bpt::ptime(d,bpt::hours(13)), bpt::ptime(d,bpt::hours(14)) ) };
-    LCapaPeriod expCapaRes { capa_period(10, bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(12))) };
+    LCapaPeriod expCapaRes {
+        capa_period(5, bpt::ptime(d,bpt::hours(9)), bpt::ptime(d,bpt::hours(11)) )
+        , capa_period(5, bpt::ptime(d,bpt::hours(13)), bpt::ptime(d,bpt::hours(14)) )
+    };
+    ASSERT_EQ(expCapaRes, convert(mylist, 5L));
+
+    expCapaRes = { capa_period(10, bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(12))) };
     //No union since it make non sense
 
     //Intersection
@@ -531,17 +515,13 @@ TEST(capa_periods, get_eligible_periods)
         , capa_period(20, bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11)))
         , capa_period(30, bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
 
-    LTimePeriod expRes = {
-        time_period(bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(10)))
-        , time_period(bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11)))
-        , time_period(bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
+    LTimePeriod expRes = { time_period(bpt::ptime(d,bpt::hours(9)) , bpt::ptime(d,bpt::hours(12))) };
 
     EXPECT_EQ( get_eligible_periods(mylist, 1), expRes );
     EXPECT_EQ( get_eligible_periods(mylist, 10), expRes );
 
     expRes = {
-        time_period(bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(11)))
-        , time_period(bpt::ptime(d,bpt::hours(11)) , bpt::ptime(d,bpt::hours(12))) };
+        time_period(bpt::ptime(d,bpt::hours(10)) , bpt::ptime(d,bpt::hours(12))) };
     EXPECT_EQ( get_eligible_periods(mylist, 11), expRes );
     EXPECT_EQ( get_eligible_periods(mylist, 19), expRes );
     EXPECT_EQ( get_eligible_periods(mylist, 20), expRes );

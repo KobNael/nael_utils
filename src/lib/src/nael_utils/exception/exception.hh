@@ -9,15 +9,15 @@
 class NaelException : public std::exception
 {
 public:
-    explicit NaelException(const std::string& message)
+    explicit NaelException(const std::string &message)
         : _message(message) {}
 
-    const char* what() const noexcept override
+    const char *what() const noexcept override
     {
         return _message.c_str();
     }
 
-    ~NaelException() override = 0 ;
+    ~NaelException() override = 0;
 
 private:
     std::string _message;
@@ -39,15 +39,16 @@ private:
  * }
  * @endcode
  */
-#define MAKE_EXCEPTION(class_name) \
-class class_name : public NaelException \
-{ \
-public: \
-    class_name(const std::string& message)\
-    : NaelException(message)\
-    {}\
-    ~class_name() = default;\
-};\
+#define MAKE_EXCEPTION(class_name)             \
+    class class_name : public NaelException    \
+    {                                          \
+    public:                                    \
+        class_name(const std::string &message) \
+            : NaelException(message)           \
+        {                                      \
+        }                                      \
+        ~class_name() = default;               \
+    };
 
 namespace io
 {
@@ -76,3 +77,12 @@ namespace opt
  */
 MAKE_EXCEPTION(fatal_error)
 
+/**
+ * @brief Throw a fatal error if the condition is not verified
+ * @param cond the condition to verify
+ * @param message the error message to throw in case of failure
+ */
+#define CHECK_PRE(cond, message) \
+    if (!(cond)) { \
+        throw fatal_error(message); \
+    }

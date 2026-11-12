@@ -82,7 +82,7 @@ set_target_properties (unit_tests
 	EXCLUDE_FROM_ALL ON # avoid unnecessary build
 	#[[ end of list ]])
 
-set_default_warnings (TARGET unit_tests)
+#set_default_warnings (TARGET unit_tests)
 
 target_link_libraries (unit_tests
 	PRIVATE

@@ -32,7 +32,9 @@ class libreflectConan(ConanFile):
             "fPIC": True,
             "coverage": "OFF",
             "cppcheck": "OFF",
-            "valgrind": "OFF"
+            "valgrind": "OFF",
+            # cobalt (unused) has an io_ssl sub-library that boost/1.91.0 fails to build without OpenSSL
+            "boost/*:without_cobalt": True
         }
 
     # folders and layout
@@ -96,8 +98,8 @@ class libreflectConan(ConanFile):
         self.cpp.build.builddirs = [os.path.join("install", f"{self.name}-{self.version}", cmake_config_path)]
 
     def requirements(self):
-        self.requires("boost/1.86.0", transitive_headers=True)
-        self.requires("gtest/1.15.0", transitive_headers=True)
+        self.requires("boost/1.91.0", transitive_headers=True)
+        self.requires("gtest/1.17.0", transitive_headers=True)
 
     def package_id(self):
         self.info.clear()

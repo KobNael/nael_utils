@@ -9,7 +9,9 @@
 #include <nael_utils/exception/exception.hh>
 #include <nael_utils/hash/hash.hh>
 
+#include <filesystem>
 #include <iostream>
+#include <mutex>
 #include <unordered_map>
 #include <vector>
 #include <functional>
@@ -20,96 +22,190 @@ namespace io
 {
 
     /**
+     * @struct LogState
+     * @brief Loggers and settings used by the LoggerManager
+     */
+    struct LogState
+    {
+        /** @brief tee loggers by name */
+        std::unordered_map<std::string, TeeLogger, string_hash, std::equal_to<>> tee_loggers;
+        /** @brief file loggers by name */
+        std::unordered_map<std::string, FileLogger, string_hash, std::equal_to<>> file_loggers;
+        /** @brief default log file name */
+        std::string logfile_name = "default";
+        /** @brief default log level */
+        LogLevel log_level = LogLevel::INFO;
+        /** @brief directory of the log files (current directory if empty) */
+        std::filesystem::path directory;
+        /** @brief do the tee loggers also write to the standard output */
+        bool console = true;
+        /** @brief protects the loggers maps (threads of a pool share the state of their session) */
+        std::mutex mutex;
+
+        /** @return the path of the log file of a logger */
+        std::string file_path(std::string_view name) const;
+    };
+
+    /**
+     * @class LogSession
+     * @brief Give the current thread its own loggers and settings for its lifetime
+     *
+     * The LoggerManager uses a process wide LogState, unless a LogSession is alive on the calling thread.
+     * The loggers created during the session are closed when it ends.
+     * Sessions on different threads are independent, so several runs may log concurrently
+     * (in different directories, as the log files are named after the loggers).
+     * The jobs of a thread::Pool use the session of the thread which enqueued them;
+     * other threads may join a session with a LogSessionScope.
+     * @warning the session must outlive the threads using it
+     */
+    class LogSession
+    {
+    public:
+        /**
+         * @brief Start a session on the current thread
+         * @param directory directory of the log files (current directory if empty), created if needed
+         * @param level default log level
+         * @param name default log file name
+         * @param console do the tee loggers also write to the standard output
+         */
+        LogSession(std::filesystem::path directory, LogLevel level, std::string name, bool console);
+        /**
+         * @brief End the session: close its loggers, restore the previous state of the thread
+         */
+        ~LogSession();
+
+        LogSession(LogSession const &) = delete;
+        LogSession &operator=(LogSession const &) = delete;
+
+    private:
+        friend class LoggerManager;
+        /** @brief loggers and settings of the session */
+        LogState _state;
+        /** @brief state of the thread before the session */
+        LogState *_previous;
+    };
+
+    /**
+     * @class LogSessionScope
+     * @brief Make the current thread use the state of a session (of another thread) for its lifetime
+     *
+     * @code{cpp}
+     * io::LogState *session = io::LoggerManager::CurrentSession();
+     * std::thread worker([session]() {
+     *     io::LogSessionScope scope(session);
+     *     INFOLOG << "logged in the session of the parent thread" << std::endl;
+     * });
+     * @endcode
+     */
+    class LogSessionScope
+    {
+    public:
+        /**
+         * @param state the state of the session (from LoggerManager::CurrentSession()), null for the process wide state
+         */
+        explicit LogSessionScope(LogState *state);
+        /** @brief Restore the previous state of the thread */
+        ~LogSessionScope();
+
+        LogSessionScope(LogSessionScope const &) = delete;
+        LogSessionScope &operator=(LogSessionScope const &) = delete;
+
+    private:
+        /** @brief state of the thread before the scope */
+        LogState *_previous;
+    };
+
+    /**
      * @class LoggerManager
      * @brief Store and give access to TeeLoggers
      */
     class LoggerManager
     {
-        public:
-        //TeeLoggers
-            /**
-             * @brief Get or create a TeeLogger
-             * @param name name of the logger, empty string for default name
-             * @return A reference to the logger
-             */
-            static TeeLogger &GetLogger(std::string_view name="");
-            /**
-             * @brief Clear a logger
-             * @param name name of the logger, empty string for default name
-             */
-            static void ClearLogger(std::string_view name="");
-            /**
-             * @brief Set the loglevel of a TeeLogger
-             * @param name name of the logger, empty string for default name
-             * @param level the log level
-             */
-            static void SetLogLevel(LogLevel level, std::string_view name="");
-            /**
-             * @brief Set the default verbosity
-             * @param level the verbosity
-             */
-            static void SetDefaultLogLevel(LogLevel level)
-            {
-                _log_level = level;
-            }
-            /**
-             * @brief Set the default name
-             * @param name name of the logger
-             */
-            static void SetDefaultName(std::string_view name)
-            {
-                _logfile_name = name;
-            }
+    public:
+        // TeeLoggers
+        /**
+         * @brief Get or create a TeeLogger
+         * @param name name of the logger, empty string for default name
+         * @return A reference to the logger
+         */
+        static TeeLogger &GetLogger(std::string_view name = "");
+        /**
+         * @brief Clear a logger
+         * @param name name of the logger, empty string for default name
+         */
+        static void ClearLogger(std::string_view name = "");
+        /**
+         * @brief Set the loglevel of a TeeLogger
+         * @param name name of the logger, empty string for default name
+         * @param level the log level
+         */
+        static void SetLogLevel(LogLevel level, std::string_view name = "");
+        /**
+         * @brief Set the default verbosity
+         * @param level the verbosity
+         */
+        static void SetDefaultLogLevel(LogLevel level)
+        {
+            state().log_level = level;
+        }
+        /**
+         * @brief Set the default name
+         * @param name name of the logger
+         */
+        static void SetDefaultName(std::string_view name)
+        {
+            state().logfile_name = name;
+        }
 
-        private:
-            /** @brief static storage of the tee logger */
-            static std::unordered_map<std::string, TeeLogger, string_hash, std::equal_to<>> _tee_loggers;
-            /** @brief default log file name */
-            static std::string _logfile_name;
-            /** @brief default log level */
-            static LogLevel _log_level;
+        /**
+         * @return the state of the session of the current thread, null if none (process wide state)
+         * @see LogSessionScope
+         */
+        static LogState *CurrentSession()
+        {
+            return _session_state;
+        }
 
-        //FileLoggers
-        public:
-            /**
-             * @brief Get or create a FileLogger
-             * @param name name of the logger
-             * @return A reference to the logger
-             */
-            static FileLogger &GetFileLogger(std::string_view name);
-            /**
-             * @brief Clear a FileLogger
-             * @param name name of the logger
-             */
-            static void ClearFileLogger(std::string_view name);
-            /**
-             * @brief Set the loglevel of a FileLogger
-             * @param name name of the logger
-             * @param level the log level
-             */
-            static void SetFileLogLevel(LogLevel level, std::string_view name);
+    private:
+        friend class LogSession;
+        friend class LogSessionScope;
+        /** @return the state of the session of the current thread, the process wide state if none */
+        static LogState &state();
+        /** @brief process wide state */
+        static LogState _global_state;
+        /** @brief state of the session of the current thread (null if none) */
+        static thread_local LogState *_session_state;
 
-        //Common
-        public:
-            /**
-             * @brief Clear every logger (file or tee)
-             */
-            static void ClearAllLoggers();
-        private:
-            /** @brief static storage of the file logger */
-            static std::unordered_map<std::string, FileLogger, string_hash, std::equal_to<>> _file_loggers;
+        // FileLoggers
+    public:
+        /**
+         * @brief Get or create a FileLogger
+         * @param name name of the logger
+         * @return A reference to the logger
+         */
+        static FileLogger &GetFileLogger(std::string_view name);
+        /**
+         * @brief Clear a FileLogger
+         * @param name name of the logger
+         */
+        static void ClearFileLogger(std::string_view name);
+        /**
+         * @brief Set the loglevel of a FileLogger
+         * @param name name of the logger
+         * @param level the log level
+         */
+        static void SetFileLogLevel(LogLevel level, std::string_view name);
+
+        /**
+         * @brief Clear every logger (file or tee)
+         */
+        static void ClearAllLoggers();
     };
-
-    /**
-     * @brief Set the log level
-     * @param level the log level
-     */
-    void SetLogLevel(LogLevel level);
 
     /*
      * Forward declare of print_range.
      */
-    template<typename Range>
+    template <typename Range>
     std::ostream &print_range(std::ostream &os, Range const &range);
 
     /**
@@ -118,7 +214,7 @@ namespace io
      * @param os the ostream
      * @param obj the object
      */
-    template<typename T>
+    template <typename T>
     std::ostream &print(std::ostream &os, T const &obj)
     {
         return os << obj;
@@ -142,7 +238,7 @@ namespace io
      * @param os the ostream
      * @param obj the object
      */
-    template<typename T>
+    template <typename T>
     std::ostream &print(std::ostream &os, std::reference_wrapper<T> const &obj)
     {
         return print(os, obj.get());
@@ -155,7 +251,7 @@ namespace io
      * @param p the pair
      */
     template <typename U, typename V>
-    std::ostream &print(std::ostream &os, const std::pair<U,V> &p)
+    std::ostream &print(std::ostream &os, const std::pair<U, V> &p)
     {
         os << "(";
         print(os, p.first) << ", ";
@@ -168,20 +264,20 @@ namespace io
      * @param os the ostream
      * @param range the range of object
      */
-    template<typename Range>
+    template <typename Range>
     std::ostream &print_range(std::ostream &os, Range const &range)
     {
         os << "[";
         bool first{true};
-        for(auto obj : range)
+        for (auto obj : range)
         {
-            print(os << (first?"":","), obj);
+            print(os << (first ? "" : ","), obj);
             first = false;
         }
         return os << "]";
     }
 
-} //namespace io
+} // namespace io
 
 /**
  * @brief Execute the following instruction provided that a condition is satified
@@ -194,7 +290,11 @@ namespace io
  *  if(!cond){} else instruction
  * @endcode
  */
-#define COND_STATEMENT(cond) if(!cond) {} else
+#define COND_STATEMENT(cond) \
+    if (!cond)               \
+    {                        \
+    }                        \
+    else
 
 /**
  * @brief Log a message in a stream, provided that the log level is >= io::LogLevel::ERROR
@@ -254,45 +354,45 @@ namespace io
  * @param header the message
  * @param range the range
  */
-#define EROR_RANGE(log, header, range) \
+#define EROR_RANGE(log, header, range)                 \
     COND_STATEMENT(log.shouldLog(io::LogLevel::ERROR)) \
-        io::print_range(log.getLog() << header, range)
+    io::print_range(log.getLog() << header, range)
 /**
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::WARNING
  * @param log the log
  * @param header the message
  * @param range the range
  */
-#define WARN_RANGE(log, header, range) \
+#define WARN_RANGE(log, header, range)                   \
     COND_STATEMENT(log.shouldLog(io::LogLevel::WARNING)) \
-        io::print_range(log.getLog() << header, range)
+    io::print_range(log.getLog() << header, range)
 /**
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::INFO
  * @param log the log
  * @param header the message
  * @param range the range
  */
-#define INFO_RANGE(log, header, range) \
+#define INFO_RANGE(log, header, range)                \
     COND_STATEMENT(log.shouldLog(io::LogLevel::INFO)) \
-        io::print_range(log.getLog() << header, range)
+    io::print_range(log.getLog() << header, range)
 /**
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::EXTENDED
  * @param log the log
  * @param header the message
  * @param range the range
  */
-#define EXTD_RANGE(log, header, range) \
+#define EXTD_RANGE(log, header, range)                    \
     COND_STATEMENT(log.shouldLog(io::LogLevel::EXTENDED)) \
-        io::print_range(log.getLog() << header, range)
+    io::print_range(log.getLog() << header, range)
 /**
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::DEBUG
  * @param log the log
  * @param header the message
  * @param range the range
  */
-#define DBUG_RANGE(log, header, range) \
+#define DBUG_RANGE(log, header, range)                 \
     COND_STATEMENT(log.shouldLog(io::LogLevel::DEBUG)) \
-        io::print_range(log.getLog() << header, range)
+    io::print_range(log.getLog() << header, range)
 
 /**
  * @brief Log a range with a header message in the main io::TeeLogger, provided that the log level is >= io::LogLevel::ERROR

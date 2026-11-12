@@ -6,9 +6,12 @@
 #pragma once
 
 #include <nael_utils/exception/exception.hh>
+
 #include <boost/lexical_cast.hpp>
 #include <boost/date_time/gregorian/gregorian_types.hpp>
 #include <boost/date_time/posix_time/posix_time_types.hpp>
+
+#include <format>
 #include <string>
 
 namespace bg = boost::gregorian;
@@ -27,32 +30,52 @@ namespace str
      * @return the value
      * @throw bad_lexical_cast if the value can not be parsed
      */
-    template<typename T>
+    template <typename T>
     T get_val_from_str(const std::string &str_val)
     {
-        try{
-            T val_l = boost::lexical_cast<T>( str_val );
+        try
+        {
+            T val_l = boost::lexical_cast<T>(str_val);
             return val_l;
         }
-        catch ( const boost::bad_lexical_cast& ) {
-            throw bad_lexical_cast( "Cannot parse value : " + str_val);
+        catch (const boost::bad_lexical_cast &)
+        {
+            throw bad_lexical_cast(std::format("Cannot parse value : {}", str_val));
         }
     }
 
     /**
-     * @brief Read a value from a string (using boost::lexical_cast)
+     * @brief Read a boolean from a string
+     *
+     * Accepted values for \c true are "1", "true", "True", and "TRUE".
+     * Accepted values for \c false are "0", "false", "False", and "FALSE".
+     *
+     * @return the parsed boolean value
+     * @throw bad_lexical_cast if the value can not be parsed as a boolean
+     */
+    template <>
+    bool get_val_from_str<bool>(const std::string &str_val);
+    /**
+     * @brief Read a value from a string (using boost::gregorian::date_from_iso_string)
      * @return the value
      * @throw bad_lexical_cast if the value can not be parsed
      */
-    template<>
+    template <>
     bg::date get_val_from_str<bg::date>(const std::string &str_val);
     /**
-     * @brief Read a value from a string (using boost::lexical_cast)
+     * @brief Read a value from a string (using boost::posix_time::from_iso_extended_string)
      * @return the value
      * @throw bad_lexical_cast if the value can not be parsed
      */
-    template<>
+    template <>
     bpt::ptime get_val_from_str<bpt::ptime>(const std::string &str_val);
+    /**
+     * @brief Read a value from a string (using boost::posix_time::duration_from_string)
+     * @return the value
+     * @throw bad_lexical_cast if the value can not be parsed
+     */
+    template <>
+    bpt::time_duration get_val_from_str<bpt::time_duration>(const std::string &str_val);
 
     /**
      * @brief Trim a string from both ends

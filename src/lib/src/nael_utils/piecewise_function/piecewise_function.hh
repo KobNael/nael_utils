@@ -1,0 +1,269 @@
+/**
+ * @file piecewise_function.hh
+ * @brief Interface for piecewise function
+ */
+#pragma once
+
+#include <limits>
+#include <list>
+#include <ostream>
+
+/**
+ * @struct Dot
+ * @brief Structure defining a point (dot) in a piece-wise function
+ */
+struct Dot
+{
+    double _x= {0.};
+    double _y= {0.};
+
+    // default comparison operator
+    bool operator==(const Dot&) const;
+    // basic stream operator
+    friend std::ostream &operator<<(std::ostream &os, Dot const &obj)
+    {
+        return os << "(" << obj._x << "," << obj._y << ")";
+    }
+
+};
+
+/**
+ * @typedef segment
+ * @brief A segment defined by two dots [a, b[
+ */
+struct Segment
+{
+    Dot _from={0.,0.};
+    Dot _to={0.,0.};
+    /**
+     * @brief Check if a dot is on the segment
+     * @param dot The dot to check.
+     * @return True if the dot is on the segment, false otherwise.
+     */
+    bool contains(Dot const &dot) const;
+
+    /**
+     * @brief Check if a y coordinate is within the segment bounds
+     * @param y The y coordinate to check.
+     * @return True if the y coordinate is within the segment bounds, false otherwise.
+     */
+    bool y_in_range(double y) const;
+    /**
+     * @brief Check if a x coordinate is within the segment bounds
+     * @param x The x coordinate to check.
+     * @return True if the x coordinate is within the segment bounds, false otherwise.
+     */
+    bool x_in_range(double x) const;
+    /**
+     * @brief Compute the y coordinate for a given x coordinate on the straight line defined by the segment
+     * @param x The x coordinate.
+     * @return The corresponding y coordinate.
+     */
+    double get_y(double x) const;
+    /**
+     * @brief Compute the x coordinate for a given y coordinate on the straight line defined by the segment
+     * @param y The y coordinate.
+     * @return The corresponding x coordinate.
+     */
+    double get_x(double y) const;
+
+    /**
+     * @brief Returns the slope of the segment
+     * @return The slope of the segment (nan if vertical segment)
+     */
+    double get_slope() const;
+
+    /**
+     * @brief Check if the segment is vertical
+     * @return True if the segment is vertical, false otherwise.
+     */
+    bool is_vertical() const;
+    /**
+     * @brief Check if the segment is horizontal
+     * @return True if the segment is horizontal, false otherwise.
+     */
+    bool is_horizontal() const;
+
+    // default comparison operator
+    bool operator==(const Segment&) const = default;
+    // basic stream operator
+    friend std::ostream &operator<<(std::ostream &os, Segment const &obj)
+    {
+        return os << "[" << obj._from << " -> " << obj._to << "]";
+    }
+};
+
+/**
+ * @typedef piecewise_linear_function
+ * @brief list of segments defining a piece-wise linear function
+ */
+using Piecewise_linear_function = std::list<Dot>;
+
+/**
+ * @brief Get the y coordinate of a piece-wise linear function for a given x coordinate
+ * @param pwf The piece-wise linear function.
+ * @param x The x coordinate.
+ * @return The corresponding y coordinate, or nan if x is out of bounds.
+ * @remark this function returns two values in case of vertical segment,
+ * the second value will be nan in case of non vertical segment
+ */
+std::pair<double, double> get_y(Piecewise_linear_function const &pwf, double x);
+
+/**
+ * @brief Apply a factor to a piece-wise linear function
+ * @param pwf The original piece-wise linear function.
+ * @param factor The factor to apply.
+ * @return A new piece-wise linear function with the applied factor.
+ */
+Piecewise_linear_function multiply(Piecewise_linear_function const &pwf, double factor);
+
+/**
+ * @brief Compute the upper convex envelope of two piece-wise linear functions
+ * @param lhs The first piece-wise linear function.
+ * @param rhs The second piece-wise linear function.
+ * @return A new piece-wise linear function representing the upper convex envelope of the two input functions.
+ */
+Piecewise_linear_function get_lower_envelope(Piecewise_linear_function const &lhs, Piecewise_linear_function const &rhs);
+
+/**
+ * @brief Compute the right side minimum projection of a piece-wise linear function,
+ * i.e. the transformation of every dot (x,y) into (x, min_{x'>=x} f(x')).
+ * @param pwf The piece-wise linear function.
+ * @return A new piece-wise linear function representing the right side minimum projection.
+ */
+Piecewise_linear_function get_right_side_minimum_projection(Piecewise_linear_function const &pwf);
+
+/**
+ * @brief Adds a variation to a piece-wise linear function
+ * @param pwf The original piece-wise linear function.
+ * @param variation The variation to add.
+ * @pre the x coordinates of the variation must be within the bounds of the piece-wise function
+ * @pre the y coordinate of the variation start must be zero
+ * @return A new piece-wise linear function with the added segment.
+ */
+Piecewise_linear_function add_variation(Piecewise_linear_function const &pwf, Segment const &variation);
+
+/**
+ * @brief Adds a list of variation to a piece-wise linear function
+ * @param pwf The original piece-wise linear function.
+ * @param variations The list of variations to add.
+ * @pre the x coordinates of the variations must be within the bounds of the piece-wise function
+ * @pre the y coordinate of the variation start must be zero
+ * @return A new piece-wise linear function with the added segment.
+ */
+Piecewise_linear_function add_variation(Piecewise_linear_function const &pwf, std::list<Segment> const &variations);
+
+/**
+ * @brief Return the list of intersection points between a piece-wise linear function and an horizontal segment
+ * @param pwf The original piece-wise linear function.
+ * @param y the y coordinate of the horizontal segment.
+ * @return The list of intersection points.
+ */
+Piecewise_linear_function get_intersection(Piecewise_linear_function const &pwf, double y);
+
+/**
+ * @brief Analyse a piece-wise linear function and return the lowest dot in an interval [x_start, x_end]
+ * @remark if x_start and x_end are not specified, the whole function is analyzed
+ * @param pwf The piece-wise linear function to analyze.
+ * @param x_start the starting x coordinate of the interval (inclusive)
+ * @param x_end the ending x coordinate of the interval (inclusive)
+ * @return the corresponding dot, or (nan,nan) if none found
+ * @pre the piece-wise function must have at least 2 dots
+ */
+Dot get_lowest_dot(Piecewise_linear_function const &pwf, double x_start = -std::numeric_limits<double>::infinity(), double x_end = std::numeric_limits<double>::infinity());
+
+/**
+ * @brief Analyse a piece-wise linear function and return the highest dot in an interval [x_start, x_end]
+ * @remark if x_start and x_end are not specified, the whole function is analyzed
+ * @param pwf The piece-wise linear function to analyze.
+ * @param x_start the starting x coordinate of the interval (inclusive)
+ * @param x_end the ending x coordinate of the interval (inclusive)
+ * @return the corresponding dot, or (nan,nan) if none found
+ * @pre the piece-wise function must have at least 2 dots
+ */
+Dot get_highest_dot(Piecewise_linear_function const &pwf, double x_start = -std::numeric_limits<double>::infinity(), double x_end = std::numeric_limits<double>::infinity());
+
+/**
+ * @brief Analyse a piece-wise linear function and return the first dot above a given y in an interval [x_start, x_end]
+ * @remark if x_start and x_end are not specified, the whole function is analyzed
+ * @param pwf The piece-wise linear function to analyze.
+ * @param x_start the starting x coordinate of the interval (inclusive)
+ * @param x_end the ending x coordinate of the interval (inclusive)
+ * @return the corresponding dot, or (nan,nan) if none found
+ * @pre the piece-wise function must have at least 2 dots
+ */
+Dot get_first_dot_above(Piecewise_linear_function const &pwf, double y, double x_start = -std::numeric_limits<double>::infinity(), double x_end = std::numeric_limits<double>::infinity());
+/**
+ * @brief Analyse a piece-wise linear function and return the first dot below a given y in an interval [x_start, x_end]
+ * @remark if x_start and x_end are not specified, the whole function is analyzed
+ * @param pwf The piece-wise linear function to analyze.
+ * @param x_start the starting x coordinate of the interval (inclusive)
+ * @param x_end the ending x coordinate of the interval (inclusive)
+ * @return the corresponding dot, or (nan,nan) if none found
+ * @pre the piece-wise function must have at least 2 dots
+ */
+Dot get_first_dot_below(Piecewise_linear_function const &pwf, double y, double x_start = -std::numeric_limits<double>::infinity(), double x_end = std::numeric_limits<double>::infinity());
+/**
+ * @brief Analyse a piece-wise linear function and return the first dot above a given y in an interval [x_start, x_end]
+ * st. every dot after is still above y
+ * @remark if x_start and x_end are not specified, the whole function is analyzed
+ * @param pwf The piece-wise linear function to analyze.
+ * @param x_start the starting x coordinate of the interval (inclusive)
+ * @param x_end the ending x coordinate of the interval (inclusive)
+ * @return the corresponding dot, or (nan,nan) if none found
+ * @pre the piece-wise function must have at least 2 dots
+ */
+Dot get_first_dot_of_last_piece_above(Piecewise_linear_function const &pwf, double y, double x_start = -std::numeric_limits<double>::infinity(), double x_end = std::numeric_limits<double>::infinity());
+/**
+ * @brief Analyse a piece-wise linear function and return the first dot below a given y in an interval [x_start, x_end]
+ * st. every dot after is still below y
+ * @remark if x_start and x_end are not specified, the whole function is analyzed
+ * @param pwf The piece-wise linear function to analyze.
+ * @param x_start the starting x coordinate of the interval (inclusive)
+ * @param x_end the ending x coordinate of the interval (inclusive)
+ * @return the corresponding dot, or (nan,nan) if none found
+ * @pre the piece-wise function must have at least 2 dots
+ */
+Dot get_first_dot_of_last_piece_below(Piecewise_linear_function const &pwf, double y, double x_start = -std::numeric_limits<double>::infinity(), double x_end = std::numeric_limits<double>::infinity());
+/**
+ * @brief Analyse a piece-wise linear function and return the last dot above a given y in an interval [x_start, x_end]
+ * @remark if x_start and x_end are not specified, the whole function is analyzed
+ * @param pwf The piece-wise linear function to analyze.
+ * @param x_start the starting x coordinate of the interval (inclusive)
+ * @param x_end the ending x coordinate of the interval (inclusive)
+ * @return the corresponding dot, or (nan,nan) if none found
+ * @pre the piece-wise function must have at least 2 dots
+ */
+Dot get_last_dot_above(Piecewise_linear_function const &pwf, double y, double x_start = -std::numeric_limits<double>::infinity(), double x_end = std::numeric_limits<double>::infinity());
+/**
+ * @brief Analyse a piece-wise linear function and return the last dot below a given y in an interval [x_start, x_end]
+ * @remark if x_start and x_end are not specified, the whole function is analyzed
+ * @param pwf The piece-wise linear function to analyze.
+ * @param x_start the starting x coordinate of the interval (inclusive)
+ * @param x_end the ending x coordinate of the interval (inclusive)
+ * @return the corresponding dot, or (nan,nan) if none found
+ * @pre the piece-wise function must have at least 2 dots
+ */
+Dot get_last_dot_below(Piecewise_linear_function const &pwf, double y, double x_start = -std::numeric_limits<double>::infinity(), double x_end = std::numeric_limits<double>::infinity());
+/**
+ * @brief Analyse a piece-wise linear function and return the last dot below a given y in an interval [x_start, x_end]
+ * st. every dot before is below y
+ * @remark if x_start and x_end are not specified, the whole function is analyzed
+ * @param pwf The piece-wise linear function to analyze.
+ * @param x_start the starting x coordinate of the interval (inclusive)
+ * @param x_end the ending x coordinate of the interval (inclusive)
+ * @return the corresponding dot, or (nan,nan) if none found
+ * @pre the piece-wise function must have at least 2 dots
+ */
+Dot get_last_dot_of_first_piece_below(Piecewise_linear_function const &pwf, double y, double x_start = -std::numeric_limits<double>::infinity(), double x_end = std::numeric_limits<double>::infinity());
+/**
+ * @brief Analyse a piece-wise linear function and return the last dot above a given y in an interval [x_start, x_end]
+ * st. every dot before is above y
+ * @remark if x_start and x_end are not specified, the whole function is analyzed
+ * @param pwf The piece-wise linear function to analyze.
+ * @param x_start the starting x coordinate of the interval (inclusive)
+ * @param x_end the ending x coordinate of the interval (inclusive)
+ * @return the corresponding dot, or (nan,nan) if none found
+ * @pre the piece-wise function must have at least 2 dots
+ */
+Dot get_last_dot_of_first_piece_above(Piecewise_linear_function const &pwf, double y, double x_start = -std::numeric_limits<double>::infinity(), double x_end = std::numeric_limits<double>::infinity());

@@ -5,7 +5,9 @@
 
 #include <nael_utils/json/details/converter.hh>
 #include <nael_utils/exception/exception.hh>
+
 #include <fstream>
+#include <format>
 
 namespace json
 {
@@ -16,11 +18,37 @@ namespace json
      * @param context the context to fill
      * @pre T has been declared using #MAKE_DTO_STRUCT
      */
-    template<typename T>
+    template <typename T>
     void import_from_stream(std::istream &istream, T &context)
     {
         boost::json::value j = boost::json::parse(istream);
         context = boost::json::value_to<T>(j);
+    }
+
+    /**
+     * @brief Load a context from a JSON text
+     * @tparam T the type of context
+     * @param text the JSON text
+     * @param context the context to fill
+     * @pre T has been declared using #MAKE_DTO_STRUCT
+     */
+    template <typename T>
+    void import_from_string(std::string_view text, T &context)
+    {
+        context = boost::json::value_to<T>(boost::json::parse(text));
+    }
+
+    /**
+     * @brief Export a context to a JSON text
+     * @tparam T the type of context
+     * @param context the context to export
+     * @return the JSON text
+     * @pre T has been declared using #MAKE_DTO_STRUCT
+     */
+    template <typename T>
+    std::string export_to_string(T const &context)
+    {
+        return boost::json::serialize(boost::json::value_from(context));
     }
 
     /**
@@ -30,13 +58,13 @@ namespace json
      * @param context the context to fill
      * @pre T has been declared using #MAKE_DTO_STRUCT
      */
-    template<typename T>
+    template <typename T>
     void import_from_file(std::string const &filePath, T &context)
     {
         std::ifstream istream(filePath, std::ios::in);
         if (!istream.is_open() || istream.eof())
         {
-            throw io::access_error("Could not open file " + filePath);
+            throw io::access_error(std::format("Could not open file {}", filePath));
         }
         import_from_stream(istream, context);
         istream.close();
@@ -49,24 +77,24 @@ namespace json
      * @param context the context to export
      * @pre T has been declared using #MAKE_DTO_STRUCT
      */
-    template<typename T>
+    template <typename T>
     void export_to_stream(std::ostream &ostream, T const &context)
     {
-        ostream << boost::json::value_from( context );
+        ostream << boost::json::value_from(context);
     }
 
-     /**
+    /**
      * @brief Export a context to a file
      * @tparam T the type of context
      * @param filePath path to the file
      * @param context the context to export
      * @pre T has been declared using #MAKE_DTO_STRUCT
      */
-    template<typename T>
+    template <typename T>
     void export_to_file(std::string const &filePath, T const &context)
     {
         std::ofstream ostream(filePath, std::ios::out);
         export_to_stream(ostream, context);
         ostream.close();
     }
-} //namespace json
+} // namespace json

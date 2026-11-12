@@ -9,7 +9,7 @@ cmake_minimum_required (VERSION 3.26)
 # ============================================================================
 
 project (nael_utils
-	VERSION 1.2.0
+	VERSION 1.3.0
 	LANGUAGES CXX)
 
 option (${PROJECT_NAME}_AS_SUBMODULE "treat as submodule" ON)
@@ -135,5 +135,5 @@ add_subdirectory (src)
 # ============================================================================
 
 if( NOT ${PROJECT_NAME}_AS_SUBMODULE )
-    add_subdirectory (docs)
+    add_subdirectory (doc)
 endif()

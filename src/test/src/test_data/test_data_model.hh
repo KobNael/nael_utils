@@ -4,9 +4,6 @@
 //----------------------------------
 // Small but quite exhaustive dto
 //----------------------------------
-namespace model_test
-{
-
 namespace dto
 {
     //Enum
@@ -36,7 +33,7 @@ namespace dto
         ((bool)(bool_att))
         ((unsigned)(unsigned_att))
         ((int)(int_att))
-        ((long)(long_att))
+        ((int64_t)(long_att))
         ((double)(double_att))
         ((EnumDto)(enum_att))
         ((std::string)(string_att))
@@ -94,11 +91,6 @@ private:
     MAKE_CLASS_CONSTREF_ATT(FirstClass, const_first)
 };
 
-/**
- * @brief Dedicated exception for consistency
- */
-MAKE_EXCEPTION(consistency)
-
 class BoContext
 {
 public:
@@ -134,5 +126,3 @@ namespace dto
         ((std::vector<SecondClassDto>)(second_collec))
     )
 } //namespace dto
-
-} //namespace model_test

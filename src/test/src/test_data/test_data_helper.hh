@@ -4,26 +4,26 @@
 
 #include <string>
 
-namespace model_test
+namespace dto
 {
 
     /**
      * @brief Create and return a BasicAttDto object
      * @param id the value of the string attribute
      */
-    dto::BasicAttDto makeBasicAttDto(std::string const &id="id");
+    BasicAttDto makeBasicAttDto(std::string const &id="id");
 
     /**
      * @brief Create and return an IdDto object
      * @param id the value of the string attribute
      */
-    dto::IdDto makeIdDto(std::string const &id="id");
+    IdDto makeIdDto(std::string const &id="id");
 
     /**
      * @brief Create and return an ParamDto object
      * @param param the enum value corresponding to the parameter
      * @param val the value
      */
-    dto::ParamDto makeParamDto(dto::EnumDto param, std::string const &val);
+    ParamDto makeParamDto(dto::EnumDto param, std::string const &val);
 
-} //namespace model_test
+} //namespace dto

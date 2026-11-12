@@ -15,11 +15,15 @@ namespace bg = boost::gregorian;
 /**
  * @brief Constant equals to the number of seconds in a day
  */
-#define N_SEC_IN_DAY 86400
+constexpr int N_SEC_IN_DAY = 86400;
 /**
  * @brief Constant equals to the number of seconds in an hour
  */
-#define N_SEC_IN_HOUR 3600
+constexpr int N_SEC_IN_HOUR = 3600;
+/**
+ * @brief Constant equals to the number of seconds in an hour
+ */
+constexpr int N_MILLISEC_IN_HOUR = 3600000;
 
 /**
  * @brief Create an operator< based on a list of attributes.<br/>
@@ -58,14 +62,13 @@ namespace bg = boost::gregorian;
  * @param class_name the name of the class
  * @param att_list the list of attributes to sort on
  */
-#define MAKE_CLASS_SORT(class_name, att_list) \
-public: \
-    bool operator<(class_name const&other) const\
-    {\
-        COMPARE_ATT_LIST(BOOST_PP_TUPLE_TO_SEQ(att_list))\
-        return false;\
+#define MAKE_CLASS_SORT(class_name, att_list)             \
+public:                                                   \
+    bool operator<(class_name const &other) const         \
+    {                                                     \
+        COMPARE_ATT_LIST(BOOST_PP_TUPLE_TO_SEQ(att_list)) \
+        return false;                                     \
     }
-
 
 /**
  * @brief allow the declaration of a structure
@@ -90,19 +93,19 @@ public: \
  * @see  json::import_from_file() and json::export_to_file()
  * @see  details::streamable
  */
-#define MAKE_DTO_STRUCT(struct_name, att_seq) \
-    struct struct_name : public details::streamable\
-    {\
-        virtual ~struct_name(){} \
-        MAKE_ATT_DECLARATION(0, att_seq) \
-        std::ostream& stream(std::ostream& os) const override\
-        {\
-            os << BOOST_PP_STRINGIZE(struct_name) << "{";\
-            STREAM_DTO_ATT_VALUES(att_seq)\
-            return os << "}"; \
-        }\
-        bool operator==(struct_name const&) const = default;\
-    };\
+#define MAKE_DTO_STRUCT(struct_name, att_seq)                 \
+    struct struct_name : public details::streamable           \
+    {                                                         \
+        virtual ~struct_name() {}                             \
+        MAKE_ATT_DECLARATION(0, att_seq)                      \
+        std::ostream &stream(std::ostream &os) const override \
+        {                                                     \
+            os << BOOST_PP_STRINGIZE(struct_name) << "{";     \
+            STREAM_DTO_ATT_VALUES(att_seq)                    \
+            return os << "}";                                 \
+        }                                                     \
+        bool operator==(struct_name const &) const = default; \
+    };                                                        \
     BOOST_DESCRIBE_STRUCT(struct_name, (), (GET_DTO_ATT_NAMES(att_seq)))
 
 /**
@@ -122,6 +125,80 @@ public: \
  * @see  json::import_from_file() and json::export_to_file()
  */
 #define MAKE_DTO_ENUM BOOST_DEFINE_ENUM
+
+/**
+ * @brief Generate the declaration and every set / get for basic attribute
+ * @code{cpp}
+ *     MAKE_ATT( (std::string)(id)("default") )
+ *     MAKE_ATT( (float)(contribution) )
+ * @endcode
+ *   expands to
+ * @code{cpp}
+ *   private:
+ *       std::string _id={"default"};
+ *   public:
+ *       std::string const &get_id() const { return _id; }
+ *       std::string &get_id() { return _id; }
+ *       void set_id(std::string const &val) { _id = val; }
+ *   private:
+ *       float _contribution;
+ *   public:
+ *       float &get_contribution() { return _contribution; }
+ *       float const &get_contribution() const { return _contribution; }
+ *       void set_contribution(float const &val) { _contribution = val; }
+ * @endcode
+ * @param att_desc sequence describing the attribute : (type)(name)[(default_value)]
+ */
+#define MAKE_ATT(att_desc)                     \
+private:                                       \
+    MAKE_CLASS_ATT_DECL_VARIABLE(, , att_desc) \
+public:                                        \
+    MAKE_ATT_GETTER_VARIABLE(, 0, att_desc)    \
+    MAKE_ATT_GETTER_VARIABLE(, 1, att_desc)    \
+    MAKE_ATT_SETTER_VARIABLE(, , att_desc)
+
+/**
+ * @brief Generate the declaration and every set / get for basic attribute
+ * @code{cpp}
+ *     MAKE_NON_COPYABLE_ATT( (MyClass)(my_class) )
+ * @endcode
+ *   expands to
+ * @code{cpp}
+ *   private:
+ *       MyClass _my_class;
+ *   public:
+ *       MyClass const &get_my_class() const { return _my_class; }
+ *       MyClass &get_my_class() { return _my_class; }
+ * @endcode
+ * @param att_desc sequence describing the attribute : (type)(name)[(default_value)]
+ */
+#define MAKE_NON_COPYABLE_ATT(att_desc)        \
+private:                                       \
+    MAKE_CLASS_ATT_DECL_VARIABLE(, , att_desc) \
+public:                                        \
+    MAKE_ATT_GETTER_VARIABLE(, 0, att_desc)    \
+    MAKE_ATT_GETTER_VARIABLE(, 1, att_desc)
+
+/**
+ * @brief Generate the declaration and every get for basic non modifiable attribute
+ * @code{cpp}
+ *     MAKE_CONST_ATT( (std::vector<std::string>)(ids) )
+ * @endcode
+ *   expands to
+ * @code{cpp}
+ *   private:
+ *       std::vector<std::string> _ids;
+ *   public:
+ *       std::vector<std::string> const &get_ids() const { return _ids; }
+ * @endcode
+ * @param att_desc sequence describing the attribute : (type)(name)
+ */
+
+#define MAKE_CONST_ATT(att_desc)               \
+private:                                       \
+    MAKE_CLASS_ATT_DECL_VARIABLE(, , att_desc) \
+public:                                        \
+    MAKE_ATT_GETTER_VARIABLE(, 1, att_desc)
 
 /**
  * @brief Generate an editable attribute std::map<key, value> _name along with its getters
@@ -241,7 +318,6 @@ public: \
  */
 #define MAKE_CLASS_CONSTREF_ATT(type, name) MAKE_BASIC_CLASS_REF_ATT(type, name, 1)
 
-
 /**
  * @brief Generate every set / get for basic attributes
  * @code{cpp}
@@ -275,6 +351,6 @@ public: \
  * @param const_att_seq sequence of non editable attributes
  * @param editable_att_seq sequence of editable attributes
  */
-#define MAKE_CLASS_ATT( const_att_seq, editable_att_seq ) \
-    MAKE_CLASS_BASIC_ATT( const_att_seq, 1 ) \
-    MAKE_CLASS_BASIC_ATT( editable_att_seq, 0 )
+#define MAKE_CLASS_ATT(const_att_seq, editable_att_seq) \
+    MAKE_CLASS_BASIC_ATT(const_att_seq, 1)              \
+    MAKE_CLASS_BASIC_ATT(editable_att_seq, 0)

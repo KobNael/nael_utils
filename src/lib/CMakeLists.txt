@@ -30,12 +30,16 @@ set_target_properties (nael_utils
 
 target_sources (nael_utils
 	PRIVATE
+	src/nael_utils/computation/lcm.cc
 	src/nael_utils/exception/exception.cc
 	src/nael_utils/json/details/converter.cc
 	src/nael_utils/log/log.cc
 	src/nael_utils/log/Logger.cc
 	src/nael_utils/period/period_functor.cc
+	src/nael_utils/period/period_generation.cc
+	src/nael_utils/period/period_typedef.cc
 	src/nael_utils/period/period_utils.cc
+	src/nael_utils/piecewise_function/piecewise_function.cc
 	src/nael_utils/string/string_utils.cc
 	)
 
