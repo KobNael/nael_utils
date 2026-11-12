@@ -3,6 +3,8 @@
  */
 #pragma once
 
+#include <nael_utils/log/log.hh>
+
 #include <atomic>
 #include <condition_variable>
 #include <deque>
@@ -20,6 +22,7 @@ namespace thread
      *
      * This class allow the user to enqueue a list of jobs to process
      * and then to process them using as many subthreads as wanted.
+     * A job logs in the io::LogSession of the thread which enqueued it.
      *
      * @code{cpp}
      * //Increase the value of an int
@@ -68,14 +71,19 @@ namespace thread
     public:
         /**
          * @brief Add a job in the queue
-         * @param job the job
+         * @param job the job, run with the log session of the calling thread
          */
         void enqueue(job_t job)
         {
+            io::LogState *log_session = io::LoggerManager::CurrentSession();
             // Acquire lock
             std::unique_lock<std::mutex> lock(_mutex);
             // Add item
-            _queue.push_back(job);
+            _queue.push_back([job = std::move(job), log_session]()
+                             {
+                                 io::LogSessionScope scope(log_session);
+                                 job();
+                             });
             // Notify one thread that is waiting
             _cond.notify_one();
         }
