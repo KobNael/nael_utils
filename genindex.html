@@ -346,6 +346,8 @@
 </li>
       <li><a href="doc/log/log.html#_CPPv4I0EN2io6LoggerE">io::Logger (C++ class)</a>
 </li>
+      <li><a href="doc/log/log.html#_CPPv4N2io6Logger10ensureOpenEv">io::Logger::ensureOpen (C++ function)</a>
+</li>
       <li><a href="doc/log/log.html#_CPPv4N2io6Logger6getLogEv">io::Logger::getLog (C++ function)</a>
 </li>
       <li><a href="doc/log/log.html#_CPPv4NK2io6Logger11getLogLevelEv">io::Logger::getLogLevel (C++ function)</a>
@@ -362,21 +364,17 @@
 </li>
       <li><a href="doc/log/log.html#_CPPv4N2io13LoggerManagerE">io::LoggerManager (C++ class)</a>, <a href="doc/log/log.html#_CPPv4N2io13LoggerManagerE">[1]</a>
 </li>
-      <li><a href="doc/log/log.html#_CPPv4N2io13LoggerManager13_file_loggersE">io::LoggerManager::_file_loggers (C++ member)</a>
+      <li><a href="doc/log/log.html#_CPPv4N2io13LoggerManager13_global_stateE">io::LoggerManager::_global_state (C++ member)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="doc/log/log.html#_CPPv4N2io13LoggerManager10_log_levelE">io::LoggerManager::_log_level (C++ member)</a>
-</li>
-      <li><a href="doc/log/log.html#_CPPv4N2io13LoggerManager13_logfile_nameE">io::LoggerManager::_logfile_name (C++ member)</a>
-</li>
-      <li><a href="doc/log/log.html#_CPPv4N2io13LoggerManager12_tee_loggersE">io::LoggerManager::_tee_loggers (C++ member)</a>
+      <li><a href="doc/log/log.html#_CPPv4N2io13LoggerManager14_session_stateE">io::LoggerManager::_session_state (C++ member)</a>
 </li>
       <li><a href="doc/log/log.html#_CPPv4N2io13LoggerManager15ClearAllLoggersEv">io::LoggerManager::ClearAllLoggers (C++ function)</a>, <a href="doc/log/log.html#_CPPv4N2io13LoggerManager15ClearAllLoggersEv">[1]</a>
 </li>
       <li><a href="doc/log/log.html#_CPPv4N2io13LoggerManager15ClearFileLoggerENSt11string_viewE">io::LoggerManager::ClearFileLogger (C++ function)</a>, <a href="doc/log/log.html#_CPPv4N2io13LoggerManager15ClearFileLoggerENSt11string_viewE">[1]</a>
 </li>
       <li><a href="doc/log/log.html#_CPPv4N2io13LoggerManager11ClearLoggerENSt11string_viewE">io::LoggerManager::ClearLogger (C++ function)</a>, <a href="doc/log/log.html#_CPPv4N2io13LoggerManager11ClearLoggerENSt11string_viewE">[1]</a>
+</li>
+      <li><a href="doc/log/log.html#_CPPv4N2io13LoggerManager14CurrentSessionEv">io::LoggerManager::CurrentSession (C++ function)</a>, <a href="doc/log/log.html#_CPPv4N2io13LoggerManager14CurrentSessionEv">[1]</a>
 </li>
       <li><a href="doc/log/log.html#_CPPv4N2io13LoggerManager13GetFileLoggerENSt11string_viewE">io::LoggerManager::GetFileLogger (C++ function)</a>, <a href="doc/log/log.html#_CPPv4N2io13LoggerManager13GetFileLoggerENSt11string_viewE">[1]</a>
 </li>
@@ -388,7 +386,11 @@
 </li>
       <li><a href="doc/log/log.html#_CPPv4N2io13LoggerManager15SetFileLogLevelE8LogLevelNSt11string_viewE">io::LoggerManager::SetFileLogLevel (C++ function)</a>, <a href="doc/log/log.html#_CPPv4N2io13LoggerManager15SetFileLogLevelE8LogLevelNSt11string_viewE">[1]</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="doc/log/log.html#_CPPv4N2io13LoggerManager11SetLogLevelE8LogLevelNSt11string_viewE">io::LoggerManager::SetLogLevel (C++ function)</a>, <a href="doc/log/log.html#_CPPv4N2io13LoggerManager11SetLogLevelE8LogLevelNSt11string_viewE">[1]</a>
+</li>
+      <li><a href="doc/log/log.html#_CPPv4N2io13LoggerManager5stateEv">io::LoggerManager::state (C++ function)</a>
 </li>
       <li><a href="doc/log/log.html#_CPPv4N2io8LogLevelE">io::LogLevel (C++ enum)</a>
 </li>
@@ -404,13 +406,53 @@
 </li>
       <li><a href="doc/log/log.html#_CPPv4N2io8LogLevel7WARNINGE">io::LogLevel::WARNING (C++ enumerator)</a>
 </li>
+      <li><a href="doc/log/log.html#_CPPv4N2io10LogSessionE">io::LogSession (C++ class)</a>, <a href="doc/log/log.html#_CPPv4N2io10LogSessionE">[1]</a>
+</li>
+      <li><a href="doc/log/log.html#_CPPv4N2io10LogSession9_previousE">io::LogSession::_previous (C++ member)</a>
+</li>
+      <li><a href="doc/log/log.html#_CPPv4N2io10LogSession6_stateE">io::LogSession::_state (C++ member)</a>
+</li>
+      <li><a href="doc/log/log.html#_CPPv4N2io10LogSession10LogSessionENSt10filesystem4pathE8LogLevelNSt6stringEb">io::LogSession::LogSession (C++ function)</a>, <a href="doc/log/log.html#_CPPv4N2io10LogSession10LogSessionENSt10filesystem4pathE8LogLevelNSt6stringEb">[1]</a>, <a href="doc/log/log.html#_CPPv4N2io10LogSession10LogSessionERK10LogSession">[2]</a>
+</li>
+      <li><a href="doc/log/log.html#_CPPv4N2io10LogSessionaSERK10LogSession">io::LogSession::operator= (C++ function)</a>
+</li>
+      <li><a href="doc/log/log.html#_CPPv4N2io10LogSessionD0Ev">io::LogSession::~LogSession (C++ function)</a>, <a href="doc/log/log.html#_CPPv4N2io10LogSessionD0Ev">[1]</a>
+</li>
+      <li><a href="doc/log/log.html#_CPPv4N2io15LogSessionScopeE">io::LogSessionScope (C++ class)</a>, <a href="doc/log/log.html#_CPPv4N2io15LogSessionScopeE">[1]</a>
+</li>
+      <li><a href="doc/log/log.html#_CPPv4N2io15LogSessionScope9_previousE">io::LogSessionScope::_previous (C++ member)</a>
+</li>
+      <li><a href="doc/log/log.html#_CPPv4N2io15LogSessionScope15LogSessionScopeEP8LogState">io::LogSessionScope::LogSessionScope (C++ function)</a>, <a href="doc/log/log.html#_CPPv4N2io15LogSessionScope15LogSessionScopeEP8LogState">[1]</a>, <a href="doc/log/log.html#_CPPv4N2io15LogSessionScope15LogSessionScopeERK15LogSessionScope">[2]</a>
+</li>
+      <li><a href="doc/log/log.html#_CPPv4N2io15LogSessionScopeaSERK15LogSessionScope">io::LogSessionScope::operator= (C++ function)</a>
+</li>
+      <li><a href="doc/log/log.html#_CPPv4N2io15LogSessionScopeD0Ev">io::LogSessionScope::~LogSessionScope (C++ function)</a>, <a href="doc/log/log.html#_CPPv4N2io15LogSessionScopeD0Ev">[1]</a>
+</li>
+      <li><a href="doc/log/log.html#_CPPv4N2io8LogStateE">io::LogState (C++ struct)</a>, <a href="doc/log/log.html#_CPPv4N2io8LogStateE">[1]</a>
+</li>
+      <li><a href="doc/log/log.html#_CPPv4N2io8LogState7consoleE">io::LogState::console (C++ member)</a>, <a href="doc/log/log.html#_CPPv4N2io8LogState7consoleE">[1]</a>
+</li>
+      <li><a href="doc/log/log.html#_CPPv4N2io8LogState9directoryE">io::LogState::directory (C++ member)</a>, <a href="doc/log/log.html#_CPPv4N2io8LogState9directoryE">[1]</a>
+</li>
+      <li><a href="doc/log/log.html#_CPPv4N2io8LogState12file_loggersE">io::LogState::file_loggers (C++ member)</a>, <a href="doc/log/log.html#_CPPv4N2io8LogState12file_loggersE">[1]</a>
+</li>
+      <li><a href="doc/log/log.html#_CPPv4NK2io8LogState9file_pathENSt11string_viewE">io::LogState::file_path (C++ function)</a>, <a href="doc/log/log.html#_CPPv4NK2io8LogState9file_pathENSt11string_viewE">[1]</a>
+</li>
+      <li><a href="doc/log/log.html#_CPPv4N2io8LogState9log_levelE">io::LogState::log_level (C++ member)</a>, <a href="doc/log/log.html#_CPPv4N2io8LogState9log_levelE">[1]</a>
+</li>
+      <li><a href="doc/log/log.html#_CPPv4N2io8LogState12logfile_nameE">io::LogState::logfile_name (C++ member)</a>, <a href="doc/log/log.html#_CPPv4N2io8LogState12logfile_nameE">[1]</a>
+</li>
+      <li><a href="doc/log/log.html#_CPPv4N2io8LogState5mutexE">io::LogState::mutex (C++ member)</a>, <a href="doc/log/log.html#_CPPv4N2io8LogState5mutexE">[1]</a>
+</li>
+      <li><a href="doc/log/log.html#_CPPv4N2io8LogState11tee_loggersE">io::LogState::tee_loggers (C++ member)</a>, <a href="doc/log/log.html#_CPPv4N2io8LogState11tee_loggersE">[1]</a>
+</li>
       <li><a href="doc/log/log.html#_CPPv4I00EN2io5printERNSt7ostreamERNSt7ostreamERKNSt4pairI1U1VEE">io::print (C++ function)</a>, <a href="doc/log/log.html#_CPPv4I0EN2io5printERNSt7ostreamERNSt7ostreamERK1T">[1]</a>, <a href="doc/log/log.html#_CPPv4I0EN2io5printERNSt7ostreamERNSt7ostreamERKNSt17reference_wrapperI1TEE">[2]</a>, <a href="doc/log/log.html#_CPPv4I0EN2io5printERNSt7ostreamERNSt7ostreamERKNSt6vectorI1TEE">[3]</a>
 </li>
       <li><a href="doc/log/log.html#_CPPv4I0EN2io11print_rangeERNSt7ostreamERNSt7ostreamERK5Range">io::print_range (C++ function)</a>
 </li>
       <li><a href="doc/log/log.html#_CPPv4N2io9TeeLoggerE">io::TeeLogger (C++ class)</a>
 </li>
-      <li><a href="doc/log/log.html#_CPPv4N2io9TeeLogger9TeeLoggerERKNSt6stringE8LogLevel">io::TeeLogger::TeeLogger (C++ function)</a>
+      <li><a href="doc/log/log.html#_CPPv4N2io9TeeLogger9TeeLoggerERKNSt6stringE8LogLevelb">io::TeeLogger::TeeLogger (C++ function)</a>
 </li>
       <li><a href="doc/log/log.html#_CPPv4N2io9TeeLoggerD0Ev">io::TeeLogger::~TeeLogger (C++ function)</a>
 </li>
@@ -426,13 +468,17 @@
 </li>
       <li><a href="doc/json/json.html#_CPPv4I0EN4json14export_to_fileEvRKNSt6stringERK1T">json::export_to_file (C++ function)</a>
 </li>
+      <li><a href="doc/json/json.html#_CPPv4I0EN4json16export_to_streamEvRNSt7ostreamERK1T">json::export_to_stream (C++ function)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="doc/json/json.html#_CPPv4I0EN4json16export_to_streamEvRNSt7ostreamERK1T">json::export_to_stream (C++ function)</a>
+      <li><a href="doc/json/json.html#_CPPv4I0EN4json16export_to_stringENSt6stringERK1T">json::export_to_string (C++ function)</a>
 </li>
       <li><a href="doc/json/json.html#_CPPv4I0EN4json16import_from_fileEvRKNSt6stringER1T">json::import_from_file (C++ function)</a>
 </li>
       <li><a href="doc/json/json.html#_CPPv4I0EN4json18import_from_streamEvRNSt7istreamER1T">json::import_from_stream (C++ function)</a>
+</li>
+      <li><a href="doc/json/json.html#_CPPv4I0EN4json18import_from_stringEvNSt11string_viewER1T">json::import_from_string (C++ function)</a>
 </li>
   </ul></td>
 </tr></table>

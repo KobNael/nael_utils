@@ -95,11 +95,13 @@
              
   <section id="thread-pool">
 <span id="id1"></span><h1>Thread Pool<a class="headerlink" href="#thread-pool" title="Link to this heading"></a></h1>
+<p>A job runs with the <a class="reference internal" href="../log/log.html#log-session"><span class="std std-ref">log session</span></a> of the thread which enqueued it:
+its logs go to the directory and verbosity of that session, not to the process wide loggers.</p>
 <dl class="cpp class">
 <dt class="sig sig-object cpp" id="_CPPv4N6thread4PoolE">
 <span id="_CPPv3N6thread4PoolE"></span><span id="_CPPv2N6thread4PoolE"></span><span id="thread::Pool"></span><span class="target" id="classthread_1_1Pool"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Pool</span></span></span><a class="headerlink" href="#_CPPv4N6thread4PoolE" title="Link to this definition"></a><br /></dt>
 <dd><p>Utility for parallel computing. </p>
-<p>This class allow the user to enqueue a list of jobs to process and then to process them using as many subthreads as wanted.</p>
+<p>This class allow the user to enqueue a list of jobs to process and then to process them using as many subthreads as wanted. A job logs in the io::LogSession of the thread which enqueued it.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//Increase the value of an int</span>
 <span class="kt">void</span><span class="w"> </span><span class="nf">sumInt</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="o">&amp;</span><span class="n">val</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="w"> </span><span class="o">&amp;</span><span class="n">mtx</span><span class="p">)</span>
 <span class="p">{</span>
@@ -130,7 +132,7 @@
 <dd><p>Add a job in the queue. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>job</strong> – the job </p>
+<dd class="field-odd"><p><strong>job</strong> – the job, run with the log session of the calling thread </p>
 </dd>
 </dl>
 </dd></dl>

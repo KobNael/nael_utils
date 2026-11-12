@@ -69,6 +69,15 @@
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io13LoggerManagerE"><code class="docutils literal notranslate"><span class="pre">LoggerManager</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#log-session">Log session</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io10LogSessionE"><code class="docutils literal notranslate"><span class="pre">LogSession</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io15LogSessionScopeE"><code class="docutils literal notranslate"><span class="pre">LogSessionScope</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#log-state">Log state</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io8LogStateE"><code class="docutils literal notranslate"><span class="pre">LogState</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#logger">Logger</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4I0EN2io6LoggerE"><code class="docutils literal notranslate"><span class="pre">Logger</span></code></a></li>
 </ul>
@@ -87,10 +96,16 @@
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4I0EN2io5printERNSt7ostreamERNSt7ostreamERKNSt6vectorI1TEE"><code class="docutils literal notranslate"><span class="pre">io::print()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4I0EN2io5printERNSt7ostreamERNSt7ostreamERKNSt17reference_wrapperI1TEE"><code class="docutils literal notranslate"><span class="pre">io::print()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4I00EN2io5printERNSt7ostreamERNSt7ostreamERKNSt4pairI1U1VEE"><code class="docutils literal notranslate"><span class="pre">io::print()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io13LoggerManager12_tee_loggersE"><code class="docutils literal notranslate"><span class="pre">io::LoggerManager::_tee_loggers</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io13LoggerManager13_logfile_nameE"><code class="docutils literal notranslate"><span class="pre">io::LoggerManager::_logfile_name</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io13LoggerManager10_log_levelE"><code class="docutils literal notranslate"><span class="pre">io::LoggerManager::_log_level</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io13LoggerManager13_file_loggersE"><code class="docutils literal notranslate"><span class="pre">io::LoggerManager::_file_loggers</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io13LoggerManager5stateEv"><code class="docutils literal notranslate"><span class="pre">io::LoggerManager::state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io13LoggerManager13_global_stateE"><code class="docutils literal notranslate"><span class="pre">io::LoggerManager::_global_state</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io13LoggerManager14_session_stateE"><code class="docutils literal notranslate"><span class="pre">io::LoggerManager::_session_state</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io10LogSession10LogSessionERK10LogSession"><code class="docutils literal notranslate"><span class="pre">io::LogSession::LogSession()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io10LogSessionaSERK10LogSession"><code class="docutils literal notranslate"><span class="pre">io::LogSession::operator=()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io10LogSession6_stateE"><code class="docutils literal notranslate"><span class="pre">io::LogSession::_state</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io10LogSession9_previousE"><code class="docutils literal notranslate"><span class="pre">io::LogSession::_previous</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io15LogSessionScope15LogSessionScopeERK15LogSessionScope"><code class="docutils literal notranslate"><span class="pre">io::LogSessionScope::LogSessionScope()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io15LogSessionScopeaSERK15LogSessionScope"><code class="docutils literal notranslate"><span class="pre">io::LogSessionScope::operator=()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N2io15LogSessionScope9_previousE"><code class="docutils literal notranslate"><span class="pre">io::LogSessionScope::_previous</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -151,10 +166,14 @@
 </dl>
 </li>
 <li><p>A <a class="reference internal" href="#logger-manager"><span class="std std-ref">Logger Manager</span></a> is also provided</p></li>
+<li><p>A <a class="reference internal" href="#log-session"><span class="std std-ref">Log session</span></a> gives a thread its own loggers and settings (directory, verbosity, console), eg. for one run</p></li>
 <li><p><a class="reference internal" href="#macros"><span class="std std-ref">Macros</span></a> to log while taking the verbosity into account</p></li>
 </ul>
 </dd>
 </dl>
+<p>A log file is created (and truncated) with its logger, unless the logger is created at level <code class="docutils literal notranslate"><span class="pre">OFF</span></code>:
+any file left by a previous use is then removed, and the file is only created on the first write
+(eg. after the level is raised). A logger which never writes creates no file.</p>
 <hr class="docutils" />
 <section id="log-level">
 <span id="id1"></span><h2>Log level<a class="headerlink" href="#log-level" title="Link to this heading"></a></h2>
@@ -253,6 +272,8 @@
 </section>
 <section id="teelogger">
 <span id="tee-logger"></span><h3>TeeLogger<a class="headerlink" href="#teelogger" title="Link to this heading"></a></h3>
+<p>The echo to the standard output can be disabled (<code class="docutils literal notranslate"><span class="pre">console</span> <span class="pre">=</span> <span class="pre">false</span></code>), eg. when the library runs inside
+another process (a JVM) whose standard output must stay clean.</p>
 <dl class="cpp class">
 <dt class="sig sig-object cpp" id="_CPPv4N2io9TeeLoggerE">
 <span id="_CPPv3N2io9TeeLoggerE"></span><span id="_CPPv2N2io9TeeLoggerE"></span><span id="io::TeeLogger"></span><span class="target" id="classio_1_1TeeLogger"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TeeLogger</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="../exception/exception.html#_CPPv42io" title="io"><span class="n"><span class="pre">io</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4I0EN2io6LoggerE" title="io::Logger"><span class="n"><span class="pre">Logger</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">TeeStream</span></span><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4N2io9TeeLoggerE" title="Link to this definition"></a><br /></dt>
@@ -260,14 +281,15 @@
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N2io9TeeLogger9TeeLoggerERKNSt6stringE8LogLevel">
-<span id="_CPPv3N2io9TeeLogger9TeeLoggerERKNSt6stringE8LogLevel"></span><span id="_CPPv2N2io9TeeLogger9TeeLoggerERKNSt6stringE8LogLevel"></span><span id="io::TeeLogger::TeeLogger__ssCR.LogLevel"></span><span class="target" id="classio_1_1TeeLogger_1af47dc20fe064128a1a89996bbd125434"></span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TeeLogger</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">file</span></span>, <a class="reference internal" href="#_CPPv4N2io8LogLevelE" title="io::LogLevel"><span class="n"><span class="pre">LogLevel</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">level</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io8LogLevelE" title="io::LogLevel"><span class="n"><span class="pre">LogLevel</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N2io8LogLevel4INFOE" title="io::LogLevel::INFO"><span class="n"><span class="pre">INFO</span></span></a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2io9TeeLogger9TeeLoggerERKNSt6stringE8LogLevel" title="Link to this definition"></a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N2io9TeeLogger9TeeLoggerERKNSt6stringE8LogLevelb">
+<span id="_CPPv3N2io9TeeLogger9TeeLoggerERKNSt6stringE8LogLevelb"></span><span id="_CPPv2N2io9TeeLogger9TeeLoggerERKNSt6stringE8LogLevelb"></span><span id="io::TeeLogger::TeeLogger__ssCR.LogLevel.b"></span><span class="target" id="classio_1_1TeeLogger_1afa432d63918aeae4ce38eebbf807be17"></span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TeeLogger</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">file</span></span>, <a class="reference internal" href="#_CPPv4N2io8LogLevelE" title="io::LogLevel"><span class="n"><span class="pre">LogLevel</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">level</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io8LogLevelE" title="io::LogLevel"><span class="n"><span class="pre">LogLevel</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N2io8LogLevel4INFOE" title="io::LogLevel::INFO"><span class="n"><span class="pre">INFO</span></span></a>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">console</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2io9TeeLogger9TeeLoggerERKNSt6stringE8LogLevelb" title="Link to this definition"></a><br /></dt>
 <dd><p>Constructor. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>file</strong> – path to the log file </p></li>
 <li><p><strong>level</strong> – verbosity </p></li>
+<li><p><strong>console</strong> – also write to the standard output </p></li>
 </ul>
 </dd>
 </dl>
@@ -354,6 +376,21 @@
 </dd></dl>
 
 <dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io13LoggerManager14CurrentSessionEv">
+<span id="_CPPv3N2io13LoggerManager14CurrentSessionEv"></span><span id="_CPPv2N2io13LoggerManager14CurrentSessionEv"></span><span id="io::LoggerManager::CurrentSession"></span><span class="target" id="classio_1_1LoggerManager_1a22ae3ed1b03d9847c3b04cfbeb696e60"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io8LogStateE" title="io::LogState"><span class="n"><span class="pre">LogState</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">CurrentSession</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2io13LoggerManager14CurrentSessionEv" title="Link to this definition"></a><br /></dt>
+<dd><p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>LogSessionScope</p>
+</div>
+</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the state of the session of the current thread, null if none (process wide state) </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N2io13LoggerManager13GetFileLoggerENSt11string_viewE">
 <span id="_CPPv3N2io13LoggerManager13GetFileLoggerENSt11string_viewE"></span><span id="_CPPv2N2io13LoggerManager13GetFileLoggerENSt11string_viewE"></span><span id="io::LoggerManager::GetFileLogger__std::string_view"></span><span class="target" id="classio_1_1LoggerManager_1a70f558acf526ee1fdbf50e586d526124"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io10FileLoggerE" title="io::FileLogger"><span class="n"><span class="pre">FileLogger</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">GetFileLogger</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2io13LoggerManager13GetFileLoggerENSt11string_viewE" title="Link to this definition"></a><br /></dt>
 <dd><p>Get or create a <a class="reference internal" href="#classio_1_1FileLogger"><span class="std std-ref">FileLogger</span></a>. </p>
@@ -396,6 +433,178 @@
 <dt class="sig sig-object cpp" id="_CPPv4N2io13LoggerManager15ClearAllLoggersEv">
 <span id="_CPPv3N2io13LoggerManager15ClearAllLoggersEv"></span><span id="_CPPv2N2io13LoggerManager15ClearAllLoggersEv"></span><span id="io::LoggerManager::ClearAllLoggers"></span><span class="target" id="classio_1_1LoggerManager_1a0816d8d1fa3c75752fe929f9cc4b89e8"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ClearAllLoggers</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2io13LoggerManager15ClearAllLoggersEv" title="Link to this definition"></a><br /></dt>
 <dd><p>Clear every logger (file or tee) </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<p>The loggers and settings of the manager are stored in a <a class="reference internal" href="#log-state"><span class="std std-ref">Log state</span></a>: the process wide one,
+or the one of the <a class="reference internal" href="#log-session"><span class="std std-ref">Log session</span></a> alive on the calling thread.</p>
+</section>
+<section id="log-session">
+<span id="id5"></span><h3>Log session<a class="headerlink" href="#log-session" title="Link to this heading"></a></h3>
+<p>Without session, the <a class="reference internal" href="#logger-manager"><span class="std std-ref">Logger Manager</span></a> uses a process wide state: the log files are written in the current
+directory, and every thread shares the same loggers.</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">LogSession</span></code> gives the current thread its own state for its lifetime: log directory (created if needed),
+default verbosity, default log file name and console echo. Every call of the <a class="reference internal" href="#logger-manager"><span class="std std-ref">Logger Manager</span></a> and every
+<a class="reference internal" href="#macros"><span class="std std-ref">macro</span></a> made on this thread uses it; its log files are closed when it ends, and the previous
+state of the thread is restored (sessions may be nested).</p>
+<p>Sessions on different threads are independent, so several runs may log concurrently.
+As the log files are named after the loggers, give each run its own directory.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">filesystem</span><span class="o">::</span><span class="n">path</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="n">log_dir</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">io</span><span class="o">::</span><span class="n">LogSession</span><span class="w"> </span><span class="n">session</span><span class="p">(</span><span class="n">log_dir</span><span class="p">,</span><span class="w"> </span><span class="n">io</span><span class="o">::</span><span class="n">LogLevel</span><span class="o">::</span><span class="n">INFO</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;my_run&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span>
+<span class="w">    </span><span class="n">INFOLOG</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;written to &lt;log_dir&gt;/my_run.log, not to the console&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="n">INFO</span><span class="p">(</span><span class="n">io</span><span class="o">::</span><span class="n">LoggerManager</span><span class="o">::</span><span class="n">GetFileLogger</span><span class="p">(</span><span class="s">&quot;detail&quot;</span><span class="p">))</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;written to &lt;log_dir&gt;/detail.log&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="c1">// files closed, the thread is back to the process wide loggers</span>
+</pre></div>
+</div>
+<p>The jobs of a <a class="reference internal" href="../thread_pool/thread_pool.html#thread-pool"><span class="std std-ref">thread pool</span></a> run with the session of the thread which enqueued them.
+Another thread joins a session with a <code class="docutils literal notranslate"><span class="pre">LogSessionScope</span></code>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">io</span><span class="o">::</span><span class="n">LogState</span><span class="w"> </span><span class="o">*</span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">io</span><span class="o">::</span><span class="n">LoggerManager</span><span class="o">::</span><span class="n">CurrentSession</span><span class="p">();</span>
+<span class="n">std</span><span class="o">::</span><span class="kr">thread</span><span class="w"> </span><span class="nf">worker</span><span class="p">([</span><span class="n">session</span><span class="p">]()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">io</span><span class="o">::</span><span class="n">LogSessionScope</span><span class="w"> </span><span class="n">scope</span><span class="p">(</span><span class="n">session</span><span class="p">);</span>
+<span class="w">    </span><span class="n">INFOLOG</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;logged in the session of the parent thread&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>Creating, getting and clearing the loggers of a state is thread safe (the threads of a pool share their state).
+Writing to one logger from several threads at once is not: use one logger per thread or job.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>A thread started during a session without <code class="docutils literal notranslate"><span class="pre">LogSessionScope</span></code> uses the process wide state.
+The session must outlive the threads using it.</p>
+</div>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N2io10LogSessionE">
+<span id="_CPPv3N2io10LogSessionE"></span><span id="_CPPv2N2io10LogSessionE"></span><span id="io::LogSession"></span><span class="target" id="classio_1_1LogSession"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">LogSession</span></span></span><a class="headerlink" href="#_CPPv4N2io10LogSessionE" title="Link to this definition"></a><br /></dt>
+<dd><p>Give the current thread its own loggers and settings for its lifetime. </p>
+<p>The LoggerManager uses a process wide LogState, unless a LogSession is alive on the calling thread. The loggers created during the session are closed when it ends. Sessions on different threads are independent, so several runs may log concurrently (in different directories, as the log files are named after the loggers). The jobs of a <a class="reference internal" href="../thread_pool/thread_pool.html#classthread_1_1Pool"><span class="std std-ref">thread::Pool</span></a> use the session of the thread which enqueued them; other threads may join a session with a LogSessionScope. </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>the session must outlive the threads using it </p>
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io10LogSession10LogSessionENSt10filesystem4pathE8LogLevelNSt6stringEb">
+<span id="_CPPv3N2io10LogSession10LogSessionENSt10filesystem4pathE8LogLevelNSt6stringEb"></span><span id="_CPPv2N2io10LogSession10LogSessionENSt10filesystem4pathE8LogLevelNSt6stringEb"></span><span id="io::LogSession::LogSession__std::filesystem::path.LogLevel.ss.b"></span><span class="target" id="classio_1_1LogSession_1a796d80b61042137828b82df4c3e64faf"></span><span class="sig-name descname"><span class="n"><span class="pre">LogSession</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">filesystem</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">path</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">directory</span></span>, <a class="reference internal" href="#_CPPv4N2io8LogLevelE" title="io::LogLevel"><span class="n"><span class="pre">LogLevel</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">level</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">name</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">console</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2io10LogSession10LogSessionENSt10filesystem4pathE8LogLevelNSt6stringEb" title="Link to this definition"></a><br /></dt>
+<dd><p>Start a session on the current thread. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>directory</strong> – directory of the log files (current directory if empty), created if needed </p></li>
+<li><p><strong>level</strong> – default log level </p></li>
+<li><p><strong>name</strong> – default log file name </p></li>
+<li><p><strong>console</strong> – do the tee loggers also write to the standard output </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io10LogSessionD0Ev">
+<span id="_CPPv3N2io10LogSessionD0Ev"></span><span id="_CPPv2N2io10LogSessionD0Ev"></span><span id="io::LogSession::~LogSession"></span><span class="target" id="classio_1_1LogSession_1a1a4e56e1da543263f9782d2ab4207429"></span><span class="sig-name descname"><span class="n"><span class="pre">~LogSession</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2io10LogSessionD0Ev" title="Link to this definition"></a><br /></dt>
+<dd><p>End the session: close its loggers, restore the previous state of the thread. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N2io15LogSessionScopeE">
+<span id="_CPPv3N2io15LogSessionScopeE"></span><span id="_CPPv2N2io15LogSessionScopeE"></span><span id="io::LogSessionScope"></span><span class="target" id="classio_1_1LogSessionScope"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">LogSessionScope</span></span></span><a class="headerlink" href="#_CPPv4N2io15LogSessionScopeE" title="Link to this definition"></a><br /></dt>
+<dd><p>Make the current thread use the state of a session (of another thread) for its lifetime. </p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">io</span><span class="o">::</span><span class="n">LogState</span><span class="w"> </span><span class="o">*</span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">io</span><span class="o">::</span><span class="n">LoggerManager</span><span class="o">::</span><span class="n">CurrentSession</span><span class="p">();</span>
+<span class="n">std</span><span class="o">::</span><span class="kr">thread</span><span class="w"> </span><span class="nf">worker</span><span class="p">([</span><span class="n">session</span><span class="p">]()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">io</span><span class="o">::</span><span class="n">LogSessionScope</span><span class="w"> </span><span class="n">scope</span><span class="p">(</span><span class="n">session</span><span class="p">);</span>
+<span class="w">    </span><span class="n">INFOLOG</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;logged in the session of the parent thread&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io15LogSessionScope15LogSessionScopeEP8LogState">
+<span id="_CPPv3N2io15LogSessionScope15LogSessionScopeEP8LogState"></span><span id="_CPPv2N2io15LogSessionScope15LogSessionScopeEP8LogState"></span><span id="io::LogSessionScope::LogSessionScope__LogStateP"></span><span class="target" id="classio_1_1LogSessionScope_1aafa73ed4a2dc093724d77350c9fc97db"></span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">LogSessionScope</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N2io8LogStateE" title="io::LogState"><span class="n"><span class="pre">LogState</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">state</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2io15LogSessionScope15LogSessionScopeEP8LogState" title="Link to this definition"></a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>state</strong> – the state of the session (from LoggerManager::CurrentSession()), null for the process wide state </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io15LogSessionScopeD0Ev">
+<span id="_CPPv3N2io15LogSessionScopeD0Ev"></span><span id="_CPPv2N2io15LogSessionScopeD0Ev"></span><span id="io::LogSessionScope::~LogSessionScope"></span><span class="target" id="classio_1_1LogSessionScope_1a9fdca111946e752ea41639da801c72fa"></span><span class="sig-name descname"><span class="n"><span class="pre">~LogSessionScope</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2io15LogSessionScopeD0Ev" title="Link to this definition"></a><br /></dt>
+<dd><p>Restore the previous state of the thread. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+<section id="log-state">
+<span id="id6"></span><h3>Log state<a class="headerlink" href="#log-state" title="Link to this heading"></a></h3>
+<dl class="cpp struct">
+<dt class="sig sig-object cpp" id="_CPPv4N2io8LogStateE">
+<span id="_CPPv3N2io8LogStateE"></span><span id="_CPPv2N2io8LogStateE"></span><span id="io::LogState"></span><span class="target" id="structio_1_1LogState"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">LogState</span></span></span><a class="headerlink" href="#_CPPv4N2io8LogStateE" title="Link to this definition"></a><br /></dt>
+<dd><p>Loggers and settings used by the LoggerManager. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK2io8LogState9file_pathENSt11string_viewE">
+<span id="_CPPv3NK2io8LogState9file_pathENSt11string_viewE"></span><span id="_CPPv2NK2io8LogState9file_pathENSt11string_viewE"></span><span id="io::LogState::file_path__std::string_viewC"></span><span class="target" id="structio_1_1LogState_1a1ed6bee7d9554c451fd5a9081ee12669"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">file_path</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">name</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK2io8LogState9file_pathENSt11string_viewE" title="Link to this definition"></a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the path of the log file of a logger </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N2io8LogState11tee_loggersE">
+<span id="_CPPv3N2io8LogState11tee_loggersE"></span><span id="_CPPv2N2io8LogState11tee_loggersE"></span><span id="io::LogState::tee_loggers__std::unordered_map:ss.TeeLogger.string_hash.std::equal_to:::"></span><span class="target" id="structio_1_1LogState_1aeab8abb2c71ac3bf8e07e8a066f77b10"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">unordered_map</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io9TeeLoggerE" title="io::TeeLogger"><span class="n"><span class="pre">TeeLogger</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../model/model_desc.html#_CPPv411string_hash" title="string_hash"><span class="n"><span class="pre">string_hash</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">equal_to</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">tee_loggers</span></span></span><a class="headerlink" href="#_CPPv4N2io8LogState11tee_loggersE" title="Link to this definition"></a><br /></dt>
+<dd><p>tee loggers by name </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N2io8LogState12file_loggersE">
+<span id="_CPPv3N2io8LogState12file_loggersE"></span><span id="_CPPv2N2io8LogState12file_loggersE"></span><span id="io::LogState::file_loggers__std::unordered_map:ss.FileLogger.string_hash.std::equal_to:::"></span><span class="target" id="structio_1_1LogState_1a5a0c19714cb5bcdd5152c33056e1ee1e"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">unordered_map</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io10FileLoggerE" title="io::FileLogger"><span class="n"><span class="pre">FileLogger</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../model/model_desc.html#_CPPv411string_hash" title="string_hash"><span class="n"><span class="pre">string_hash</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">equal_to</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">file_loggers</span></span></span><a class="headerlink" href="#_CPPv4N2io8LogState12file_loggersE" title="Link to this definition"></a><br /></dt>
+<dd><p>file loggers by name </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N2io8LogState12logfile_nameE">
+<span id="_CPPv3N2io8LogState12logfile_nameE"></span><span id="_CPPv2N2io8LogState12logfile_nameE"></span><span id="io::LogState::logfile_name__ss"></span><span class="target" id="structio_1_1LogState_1a34ab405983ddfe6e5142d78074db8ace"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">logfile_name</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="s"><span class="pre">&quot;default&quot;</span></span><a class="headerlink" href="#_CPPv4N2io8LogState12logfile_nameE" title="Link to this definition"></a><br /></dt>
+<dd><p>default log file name </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N2io8LogState9log_levelE">
+<span id="_CPPv3N2io8LogState9log_levelE"></span><span id="_CPPv2N2io8LogState9log_levelE"></span><span id="io::LogState::log_level__LogLevel"></span><span class="target" id="structio_1_1LogState_1afad90082e2fd083f2bcf1ea6971bcfe3"></span><a class="reference internal" href="#_CPPv4N2io8LogLevelE" title="io::LogLevel"><span class="n"><span class="pre">LogLevel</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">log_level</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io8LogLevelE" title="io::LogLevel"><span class="n"><span class="pre">LogLevel</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N2io8LogLevel4INFOE" title="io::LogLevel::INFO"><span class="n"><span class="pre">INFO</span></span></a><a class="headerlink" href="#_CPPv4N2io8LogState9log_levelE" title="Link to this definition"></a><br /></dt>
+<dd><p>default log level </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N2io8LogState9directoryE">
+<span id="_CPPv3N2io8LogState9directoryE"></span><span id="_CPPv2N2io8LogState9directoryE"></span><span id="io::LogState::directory__std::filesystem::path"></span><span class="target" id="structio_1_1LogState_1a260dab34effb4073abbe7a9203f69939"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">filesystem</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">path</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">directory</span></span></span><a class="headerlink" href="#_CPPv4N2io8LogState9directoryE" title="Link to this definition"></a><br /></dt>
+<dd><p>directory of the log files (current directory if empty) </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N2io8LogState7consoleE">
+<span id="_CPPv3N2io8LogState7consoleE"></span><span id="_CPPv2N2io8LogState7consoleE"></span><span id="io::LogState::console__b"></span><span class="target" id="structio_1_1LogState_1ada254e39c0b8c32f693e3c85f79181d1"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">console</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><a class="headerlink" href="#_CPPv4N2io8LogState7consoleE" title="Link to this definition"></a><br /></dt>
+<dd><p>do the tee loggers also write to the standard output </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N2io8LogState5mutexE">
+<span id="_CPPv3N2io8LogState5mutexE"></span><span id="_CPPv2N2io8LogState5mutexE"></span><span id="io::LogState::mutex__std::mutex"></span><span class="target" id="structio_1_1LogState_1a127cc4ee2af29abe24228e45c21318df"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">mutex</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">mutex</span></span></span><a class="headerlink" href="#_CPPv4N2io8LogState5mutexE" title="Link to this definition"></a><br /></dt>
+<dd><p>protects the loggers maps (threads of a pool share the state of their session) </p>
 </dd></dl>
 
 </div>
@@ -463,7 +672,7 @@
 <span id="_CPPv3N2io6Logger6getLogEv"></span><span id="_CPPv2N2io6Logger6getLogEv"></span><span id="io::Logger::getLog"></span><span class="target" id="classio_1_1Logger_1a573d2a80297f4252888ae1488bb0fd65"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0EN2io6LoggerE" title="io::Logger::ostream"><span class="n"><span class="pre">ostream</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">getLog</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2io6Logger6getLogEv" title="Link to this definition"></a><br /></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>the ostream </p>
+<dd class="field-odd"><p>the ostream (the log file is opened on the first call if not yet done) </p>
 </dd>
 </dl>
 </dd></dl>
@@ -474,6 +683,17 @@
 <dd><p>set the stream </p>
 </dd></dl>
 
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io6Logger10ensureOpenEv">
+<span id="_CPPv3N2io6Logger10ensureOpenEv"></span><span id="_CPPv2N2io6Logger10ensureOpenEv"></span><span id="io::Logger::ensureOpen"></span><span class="target" id="classio_1_1Logger_1a0a3c84cdf3b8e2c6a98388bc1a9000cc"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ensureOpen</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2io6Logger10ensureOpenEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Open the log file if not yet done. </p>
+<p><div class="remark admonition">
+<p class="admonition-title">Remark</p>
+<p>the derived constructors open it at once, unless the level is OFF: a logger which never writes creates no file </p>
+</div>
+</p>
+</dd></dl>
+
 </div>
 </dd></dl>
 
@@ -481,7 +701,7 @@
 </section>
 </section>
 <section id="macros">
-<span id="id5"></span><h2>Macros<a class="headerlink" href="#macros" title="Link to this heading"></a></h2>
+<span id="id7"></span><h2>Macros<a class="headerlink" href="#macros" title="Link to this heading"></a></h2>
 <section id="main-macros-for-tee-logger-manipulation">
 <span id="tee-logger-macros"></span><h3>Main macros for <a class="reference internal" href="#tee-logger"><span class="std std-ref">TeeLogger</span></a> manipulation<a class="headerlink" href="#main-macros-for-tee-logger-manipulation" title="Link to this heading"></a></h3>
 <dl class="cpp macro">
@@ -1209,6 +1429,21 @@
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp">
+<span class="target" id="classio_1_1LoggerManager_1a22ae3ed1b03d9847c3b04cfbeb696e60"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io8LogStateE" title="io::LogState"><span class="n"><span class="pre">LogState</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">CurrentSession</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd><p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>LogSessionScope</p>
+</div>
+</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the state of the session of the current thread, null if none (process wide state) </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp">
 <span class="target" id="classio_1_1LoggerManager_1a70f558acf526ee1fdbf50e586d526124"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io10FileLoggerE" title="io::FileLogger"><span class="n"><span class="pre">FileLogger</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">GetFileLogger</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">name</span></span><span class="sig-paren">)</span><br /></dt>
 <dd><p>Get or create a <a class="reference internal" href="#classio_1_1FileLogger"><span class="std std-ref">FileLogger</span></a>. </p>
 <dl class="field-list simple">
@@ -1254,29 +1489,233 @@
 
 </div>
 <div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-static-functions">Private Static Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io13LoggerManager5stateEv">
+<span id="_CPPv3N2io13LoggerManager5stateEv"></span><span id="_CPPv2N2io13LoggerManager5stateEv"></span><span id="io::LoggerManager::state"></span><span class="target" id="classio_1_1LoggerManager_1a8d3a2e080bcfe03e53a466d7f5a74ead"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io8LogStateE" title="io::LogState"><span class="n"><span class="pre">LogState</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">state</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2io13LoggerManager5stateEv" title="Link to this definition"></a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the state of the session of the current thread, the process wide state if none </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-static-attributes">Private Static Attributes</p>
 <dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N2io13LoggerManager12_tee_loggersE">
-<span id="_CPPv3N2io13LoggerManager12_tee_loggersE"></span><span id="_CPPv2N2io13LoggerManager12_tee_loggersE"></span><span id="io::LoggerManager::_tee_loggers__std::unordered_map:ss.TeeLogger.string_hash.std::equal_to:::"></span><span class="target" id="classio_1_1LoggerManager_1a9824d9df8b49b95d028b13b939a3116e"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">unordered_map</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io9TeeLoggerE" title="io::TeeLogger"><span class="n"><span class="pre">TeeLogger</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../model/model_desc.html#_CPPv411string_hash" title="string_hash"><span class="n"><span class="pre">string_hash</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">equal_to</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_tee_loggers</span></span></span><a class="headerlink" href="#_CPPv4N2io13LoggerManager12_tee_loggersE" title="Link to this definition"></a><br /></dt>
-<dd><p>static storage of the tee logger </p>
+<dt class="sig sig-object cpp" id="_CPPv4N2io13LoggerManager13_global_stateE">
+<span id="_CPPv3N2io13LoggerManager13_global_stateE"></span><span id="_CPPv2N2io13LoggerManager13_global_stateE"></span><span id="io::LoggerManager::_global_state__LogState"></span><span class="target" id="classio_1_1LoggerManager_1a3098fcd74c75d5a5b967447dcbe2c1c0"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io8LogStateE" title="io::LogState"><span class="n"><span class="pre">LogState</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_global_state</span></span></span><a class="headerlink" href="#_CPPv4N2io13LoggerManager13_global_stateE" title="Link to this definition"></a><br /></dt>
+<dd><p>process wide state </p>
 </dd></dl>
 
 <dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N2io13LoggerManager13_logfile_nameE">
-<span id="_CPPv3N2io13LoggerManager13_logfile_nameE"></span><span id="_CPPv2N2io13LoggerManager13_logfile_nameE"></span><span id="io::LoggerManager::_logfile_name__ss"></span><span class="target" id="classio_1_1LoggerManager_1ac3798cdfce5928a685f715cd3c576a5a"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_logfile_name</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">(</span></span><span class="s"><span class="pre">&quot;default&quot;</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#_CPPv4N2io13LoggerManager13_logfile_nameE" title="Link to this definition"></a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N2io13LoggerManager14_session_stateE">
+<span id="_CPPv3N2io13LoggerManager14_session_stateE"></span><span id="_CPPv2N2io13LoggerManager14_session_stateE"></span><span id="io::LoggerManager::_session_state__LogStateP"></span><span class="target" id="classio_1_1LoggerManager_1a265740a15c96b2ed4dd5e3dc96484b90"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">thread_local</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io8LogStateE" title="io::LogState"><span class="n"><span class="pre">LogState</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_session_state</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">nullptr</span></span><a class="headerlink" href="#_CPPv4N2io13LoggerManager14_session_stateE" title="Link to this definition"></a><br /></dt>
+<dd><p>state of the session of the current thread (null if none) </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-friends">Friends</p>
+<dl>
+<dt class="sig sig-object cpp">
+<em class="property"><span class="pre">friend</span> <span class="pre">class</span></em> <span class="pre">LogSession</span></dt>
+</dl>
+
+<dl>
+<dt class="sig sig-object cpp">
+<em class="property"><span class="pre">friend</span> <span class="pre">class</span></em> <span class="pre">LogSessionScope</span></dt>
+</dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp">
+<span class="target" id="classio_1_1LogSession"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">LogSession</span></span></span><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;log.hh&gt;</em></div>
+<p>Give the current thread its own loggers and settings for its lifetime. </p>
+<p>The LoggerManager uses a process wide LogState, unless a LogSession is alive on the calling thread. The loggers created during the session are closed when it ends. Sessions on different threads are independent, so several runs may log concurrently (in different directories, as the log files are named after the loggers). The jobs of a <a class="reference internal" href="../thread_pool/thread_pool.html#classthread_1_1Pool"><span class="std std-ref">thread::Pool</span></a> use the session of the thread which enqueued them; other threads may join a session with a LogSessionScope. </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>the session must outlive the threads using it </p>
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp">
+<span class="target" id="classio_1_1LogSession_1a796d80b61042137828b82df4c3e64faf"></span><span class="sig-name descname"><span class="n"><span class="pre">LogSession</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">filesystem</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">path</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">directory</span></span>, <a class="reference internal" href="#_CPPv4N2io8LogLevelE" title="io::LogLevel"><span class="n"><span class="pre">LogLevel</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">level</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">name</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">console</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Start a session on the current thread. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>directory</strong> – directory of the log files (current directory if empty), created if needed </p></li>
+<li><p><strong>level</strong> – default log level </p></li>
+<li><p><strong>name</strong> – default log file name </p></li>
+<li><p><strong>console</strong> – do the tee loggers also write to the standard output </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp">
+<span class="target" id="classio_1_1LogSession_1a1a4e56e1da543263f9782d2ab4207429"></span><span class="sig-name descname"><span class="n"><span class="pre">~LogSession</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd><p>End the session: close its loggers, restore the previous state of the thread. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io10LogSession10LogSessionERK10LogSession">
+<span id="_CPPv3N2io10LogSession10LogSessionERK10LogSession"></span><span id="_CPPv2N2io10LogSession10LogSessionERK10LogSession"></span><span id="io::LogSession::LogSession__LogSessionCR"></span><span class="target" id="classio_1_1LogSession_1afa264366c39775afb86f18fdd449b406"></span><span class="sig-name descname"><span class="n"><span class="pre">LogSession</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N2io10LogSession10LogSessionERK10LogSession" title="io::LogSession::LogSession"><span class="n"><span class="pre">LogSession</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="p"><span class="pre">&amp;</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">delete</span></span><a class="headerlink" href="#_CPPv4N2io10LogSession10LogSessionERK10LogSession" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io10LogSessionaSERK10LogSession">
+<span id="_CPPv3N2io10LogSessionaSERK10LogSession"></span><span id="_CPPv2N2io10LogSessionaSERK10LogSession"></span><span id="io::LogSession::assign-operator__LogSessionCR"></span><span class="target" id="classio_1_1LogSession_1a48f88dc823307f83f83195ec3bee6422"></span><a class="reference internal" href="#_CPPv4N2io10LogSessionE" title="io::LogSession"><span class="n"><span class="pre">LogSession</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N2io10LogSessionE" title="io::LogSession"><span class="n"><span class="pre">LogSession</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="p"><span class="pre">&amp;</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">delete</span></span><a class="headerlink" href="#_CPPv4N2io10LogSessionaSERK10LogSession" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N2io10LogSession6_stateE">
+<span id="_CPPv3N2io10LogSession6_stateE"></span><span id="_CPPv2N2io10LogSession6_stateE"></span><span id="io::LogSession::_state__LogState"></span><span class="target" id="classio_1_1LogSession_1aac3c74ce2b827b2543043dc1d2afde67"></span><a class="reference internal" href="#_CPPv4N2io8LogStateE" title="io::LogState"><span class="n"><span class="pre">LogState</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_state</span></span></span><a class="headerlink" href="#_CPPv4N2io10LogSession6_stateE" title="Link to this definition"></a><br /></dt>
+<dd><p>loggers and settings of the session </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N2io10LogSession9_previousE">
+<span id="_CPPv3N2io10LogSession9_previousE"></span><span id="_CPPv2N2io10LogSession9_previousE"></span><span id="io::LogSession::_previous__LogStateP"></span><span class="target" id="classio_1_1LogSession_1ab4f3ab81230c50ccc9389b8ddd08d85a"></span><a class="reference internal" href="#_CPPv4N2io8LogStateE" title="io::LogState"><span class="n"><span class="pre">LogState</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_previous</span></span></span><a class="headerlink" href="#_CPPv4N2io10LogSession9_previousE" title="Link to this definition"></a><br /></dt>
+<dd><p>state of the thread before the session </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-friends">Friends</p>
+<dl>
+<dt class="sig sig-object cpp">
+<em class="property"><span class="pre">friend</span> <span class="pre">class</span></em> <span class="pre">LoggerManager</span></dt>
+</dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp">
+<span class="target" id="classio_1_1LogSessionScope"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">LogSessionScope</span></span></span><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;log.hh&gt;</em></div>
+<p>Make the current thread use the state of a session (of another thread) for its lifetime. </p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">io</span><span class="o">::</span><span class="n">LogState</span><span class="w"> </span><span class="o">*</span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">io</span><span class="o">::</span><span class="n">LoggerManager</span><span class="o">::</span><span class="n">CurrentSession</span><span class="p">();</span>
+<span class="n">std</span><span class="o">::</span><span class="kr">thread</span><span class="w"> </span><span class="nf">worker</span><span class="p">([</span><span class="n">session</span><span class="p">]()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">io</span><span class="o">::</span><span class="n">LogSessionScope</span><span class="w"> </span><span class="n">scope</span><span class="p">(</span><span class="n">session</span><span class="p">);</span>
+<span class="w">    </span><span class="n">INFOLOG</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;logged in the session of the parent thread&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp">
+<span class="target" id="classio_1_1LogSessionScope_1aafa73ed4a2dc093724d77350c9fc97db"></span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">LogSessionScope</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N2io8LogStateE" title="io::LogState"><span class="n"><span class="pre">LogState</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">state</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>state</strong> – the state of the session (from LoggerManager::CurrentSession()), null for the process wide state </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp">
+<span class="target" id="classio_1_1LogSessionScope_1a9fdca111946e752ea41639da801c72fa"></span><span class="sig-name descname"><span class="n"><span class="pre">~LogSessionScope</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Restore the previous state of the thread. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io15LogSessionScope15LogSessionScopeERK15LogSessionScope">
+<span id="_CPPv3N2io15LogSessionScope15LogSessionScopeERK15LogSessionScope"></span><span id="_CPPv2N2io15LogSessionScope15LogSessionScopeERK15LogSessionScope"></span><span id="io::LogSessionScope::LogSessionScope__LogSessionScopeCR"></span><span class="target" id="classio_1_1LogSessionScope_1a4d507c149d4a5ff8ced67434b7699377"></span><span class="sig-name descname"><span class="n"><span class="pre">LogSessionScope</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N2io15LogSessionScope15LogSessionScopeERK15LogSessionScope" title="io::LogSessionScope::LogSessionScope"><span class="n"><span class="pre">LogSessionScope</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="p"><span class="pre">&amp;</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">delete</span></span><a class="headerlink" href="#_CPPv4N2io15LogSessionScope15LogSessionScopeERK15LogSessionScope" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N2io15LogSessionScopeaSERK15LogSessionScope">
+<span id="_CPPv3N2io15LogSessionScopeaSERK15LogSessionScope"></span><span id="_CPPv2N2io15LogSessionScopeaSERK15LogSessionScope"></span><span id="io::LogSessionScope::assign-operator__LogSessionScopeCR"></span><span class="target" id="classio_1_1LogSessionScope_1a22abb8754a1266656b983139afcd571b"></span><a class="reference internal" href="#_CPPv4N2io15LogSessionScopeE" title="io::LogSessionScope"><span class="n"><span class="pre">LogSessionScope</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N2io15LogSessionScopeE" title="io::LogSessionScope"><span class="n"><span class="pre">LogSessionScope</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="p"><span class="pre">&amp;</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">delete</span></span><a class="headerlink" href="#_CPPv4N2io15LogSessionScopeaSERK15LogSessionScope" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N2io15LogSessionScope9_previousE">
+<span id="_CPPv3N2io15LogSessionScope9_previousE"></span><span id="_CPPv2N2io15LogSessionScope9_previousE"></span><span id="io::LogSessionScope::_previous__LogStateP"></span><span class="target" id="classio_1_1LogSessionScope_1a2e65bbde322910fb907f7d0e7651bbfd"></span><a class="reference internal" href="#_CPPv4N2io8LogStateE" title="io::LogState"><span class="n"><span class="pre">LogState</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_previous</span></span></span><a class="headerlink" href="#_CPPv4N2io15LogSessionScope9_previousE" title="Link to this definition"></a><br /></dt>
+<dd><p>state of the thread before the scope </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt class="sig sig-object cpp">
+<span class="target" id="structio_1_1LogState"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">LogState</span></span></span><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;log.hh&gt;</em></div>
+<p>Loggers and settings used by the LoggerManager. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp">
+<span class="target" id="structio_1_1LogState_1a1ed6bee7d9554c451fd5a9081ee12669"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">file_path</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">name</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the path of the log file of a logger </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp">
+<span class="target" id="structio_1_1LogState_1aeab8abb2c71ac3bf8e07e8a066f77b10"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">unordered_map</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io9TeeLoggerE" title="io::TeeLogger"><span class="n"><span class="pre">TeeLogger</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../model/model_desc.html#_CPPv411string_hash" title="string_hash"><span class="n"><span class="pre">string_hash</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">equal_to</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">tee_loggers</span></span></span><br /></dt>
+<dd><p>tee loggers by name </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp">
+<span class="target" id="structio_1_1LogState_1a5a0c19714cb5bcdd5152c33056e1ee1e"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">unordered_map</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io10FileLoggerE" title="io::FileLogger"><span class="n"><span class="pre">FileLogger</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../model/model_desc.html#_CPPv411string_hash" title="string_hash"><span class="n"><span class="pre">string_hash</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">equal_to</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">file_loggers</span></span></span><br /></dt>
+<dd><p>file loggers by name </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp">
+<span class="target" id="structio_1_1LogState_1a34ab405983ddfe6e5142d78074db8ace"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">logfile_name</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="s"><span class="pre">&quot;default&quot;</span></span><br /></dt>
 <dd><p>default log file name </p>
 </dd></dl>
 
 <dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N2io13LoggerManager10_log_levelE">
-<span id="_CPPv3N2io13LoggerManager10_log_levelE"></span><span id="_CPPv2N2io13LoggerManager10_log_levelE"></span><span id="io::LoggerManager::_log_level__LogLevel"></span><span class="target" id="classio_1_1LoggerManager_1ab915a0d11f595e6d4801d9fb05f73fd6"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io8LogLevelE" title="io::LogLevel"><span class="n"><span class="pre">LogLevel</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_log_level</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io8LogLevelE" title="io::LogLevel"><span class="n"><span class="pre">LogLevel</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N2io8LogLevel4INFOE" title="io::LogLevel::INFO"><span class="n"><span class="pre">INFO</span></span></a><a class="headerlink" href="#_CPPv4N2io13LoggerManager10_log_levelE" title="Link to this definition"></a><br /></dt>
+<dt class="sig sig-object cpp">
+<span class="target" id="structio_1_1LogState_1afad90082e2fd083f2bcf1ea6971bcfe3"></span><a class="reference internal" href="#_CPPv4N2io8LogLevelE" title="io::LogLevel"><span class="n"><span class="pre">LogLevel</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">log_level</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io8LogLevelE" title="io::LogLevel"><span class="n"><span class="pre">LogLevel</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N2io8LogLevel4INFOE" title="io::LogLevel::INFO"><span class="n"><span class="pre">INFO</span></span></a><br /></dt>
 <dd><p>default log level </p>
 </dd></dl>
 
 <dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N2io13LoggerManager13_file_loggersE">
-<span id="_CPPv3N2io13LoggerManager13_file_loggersE"></span><span id="_CPPv2N2io13LoggerManager13_file_loggersE"></span><span id="io::LoggerManager::_file_loggers__std::unordered_map:ss.FileLogger.string_hash.std::equal_to:::"></span><span class="target" id="classio_1_1LoggerManager_1a66ca57ce3e0e6caedf622761c59fb07a"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">unordered_map</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N2io10FileLoggerE" title="io::FileLogger"><span class="n"><span class="pre">FileLogger</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../model/model_desc.html#_CPPv411string_hash" title="string_hash"><span class="n"><span class="pre">string_hash</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">equal_to</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_file_loggers</span></span></span><a class="headerlink" href="#_CPPv4N2io13LoggerManager13_file_loggersE" title="Link to this definition"></a><br /></dt>
-<dd><p>static storage of the file logger </p>
+<dt class="sig sig-object cpp">
+<span class="target" id="structio_1_1LogState_1a260dab34effb4073abbe7a9203f69939"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">filesystem</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">path</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">directory</span></span></span><br /></dt>
+<dd><p>directory of the log files (current directory if empty) </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp">
+<span class="target" id="structio_1_1LogState_1ada254e39c0b8c32f693e3c85f79181d1"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">console</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><br /></dt>
+<dd><p>do the tee loggers also write to the standard output </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp">
+<span class="target" id="structio_1_1LogState_1a127cc4ee2af29abe24228e45c21318df"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">mutex</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">mutex</span></span></span><br /></dt>
+<dd><p>protects the loggers maps (threads of a pool share the state of their session) </p>
 </dd></dl>
 
 </div>
